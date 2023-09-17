@@ -1,0 +1,179 @@
+* {
+  height: auto;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  width: 100%;
+  height: auto;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  min-width: 320px;
+}
+
+#root {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.app_class {
+  width: 100%;
+  height: auto;
+}
+
+.App_router {
+  width: 100%;
+}
+
+.layout {
+  width: 100%;
+  height: 100vh;
+}
+
+.main_container {
+  position: relative;
+  width: calc(100% - 240px);
+  height: calc(100vh - 60px);
+  margin-left: 240px;
+  padding: 20px;
+  z-index: 50;
+  overflow: auto;
+  transition: all 0.3s ease-in-out;
+}
+
+.main_container.close {
+  width: calc(100% - 60px);
+  margin-left: 60px;
+}
+.div_falso{
+  width: 100%;
+  height: 60px;
+}
+
+/* para el input searchg  */
+
+.input_search {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease-in-out;
+}
+
+.input_search.close {
+  width: 50px;
+}
+
+.sidebar_container.close:hover .input_search.close {
+  width: 100%;
+}
+
+.input_search.close input {
+  width: 10px;
+}
+
+.sidebar_container.close:hover .input_search.close input {
+  width: 100%;
+}
+
+.input_search i {
+  width: 30px;
+  min-height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #000A34;
+  color: #fff;
+  border-radius: 10px 0 0 10px;
+}
+
+.input_search input {
+  display: block;
+  height: 30px;
+  border: none;
+  border-radius: 0 10px 10px 0;
+}
+
+.input_search input:focus {
+  outline: none;
+}
+
+.input_search input::placeholder,
+.input_search input:valid {
+  font-size: 14px;
+  padding-left: 5px;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+}
+
+@media (max-width: 767px) {
+  .main_container {
+    width: 100%;
+    margin-left: 0px;
+  }
+
+  .main_container.close {
+    width: 100%;
+    margin-left: 0px;
+  }
+
+  .input_search {
+    width: 100%;
+  }
+
+  .input_search.close {
+    width: 100%;
+  }
+
+  .input_search input {
+    width: 100%;
+  }
+
+  .input_search.close input {
+    width: 100%;
+  }
+}
+
+
+/* para los links  */
+
+.decoration_text{
+  text-decoration: none;
+}
+
+.button_border {
+  border: none;
+}
+
+.active_simple_link{
+  pointer-events: none;
+}
+.active_simple_link .link_sidebar_simple{
+  background-color: #000A34;
+}
+
+.active_simple_link .link_sidebar_simple span{
+  color: #fff;
+}
+
+.active_simple_link .link_sidebar_simple i{
+  background-color: #fff;
+  color: #000A34;
+}

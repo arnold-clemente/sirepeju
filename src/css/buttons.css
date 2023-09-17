@@ -1,0 +1,206 @@
+.button_green {
+    width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background-color: rgb(32, 184, 32);
+    color: white;
+    padding: 5px;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 14px;
+    transition: all 0.3s ease-in-out;
+}
+
+.button_green:hover {
+    background-color: rgb(4, 95, 4);
+    color: white;
+    font-size: 600;
+}
+
+.button_green i {
+    width: 20px;
+}
+
+/* para el crud  */
+.button_show {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    border: none;
+    justify-content: center;
+    font-size: 15px;
+    padding: 7px;
+    background-color: #FF7A00;
+    color: #fff;
+    transition: all 0.3s ease-in-out;
+}
+
+.button_show:hover {
+    background-color: #fff;
+    color: #FF7A00;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+.button_edit {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    font-size: 15px;
+    padding: 7px;
+    background-color: #0A9DBD;
+    color: #fff;
+    border: none;
+    transition: all 0.3s ease-in-out;
+}
+
+.button_edit:hover {
+    background-color: #fff;
+    color: #0A9DBD;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+.button_delete {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;  
+    padding: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 15px;
+    background-color: #FF0000;
+    color: #fff;
+    border: none;
+    transition: all 0.3s ease-in-out;
+}
+
+.button_delete:hover {
+    background-color: #fff;
+    color: #FF0000;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+.button_download {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    padding: 7px;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    font-size: 15px;
+    border: none;
+    background-color: #5F037B;
+    color: #fff;
+    transition: all 0.3s ease-in-out;
+}
+
+.button_print {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    font-size: 15px;
+    justify-content: center;
+    border: none;
+    padding: 7px;
+    background-color: #13752b;
+    color: #fff;
+    transition: all 0.3s ease-in-out;
+}
+
+.button_print:hover {
+    background-color: #fff;
+    color: #13752b;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+.button_download:hover {
+    background-color: #fff;
+    color: #5F037B;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+.button_crud_anadir {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.contain_button {
+    display: flex;
+    width: 100px;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    background-color: #69B41E;
+    color: #fff;
+    border: none;
+    font-size: 14px;
+    justify-content: center;
+    border-radius: 10px;
+    transition: all 0.3s ease-in-out;
+}
+
+.contain_button:hover {
+    background-color: #fff;
+    color: #69B41E;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+
+.button_verificar {
+    width: 50px;
+    height: 30px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    border: none;
+    font-size: 12px;
+    background-color: #FF0000;
+    color: #fff;
+    transition: all 0.3s ease-in-out;
+}
+
+.button_verificar:hover {
+    background-color: #fff;
+    color: #FF0000;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+
+.button_reservar {
+    width: 50px;
+    height: 30px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    font-size: 12px;
+    justify-content: center;
+    border: none;
+    background-color: #0A9DBD;
+    color: #fff;
+    transition: all 0.3s ease-in-out;
+}
+
+.button_reservar:hover {
+    background-color: #fff;
+    color: #0A9DBD;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
