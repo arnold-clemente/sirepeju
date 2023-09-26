@@ -187,6 +187,14 @@ const EditReserva = () => {
                             : ''}
                     </div>
                 </div>
+                <div className="form-group py-2">
+                    <label>Observaión</label>
+                    <input type="text" className="form-control" placeholder="Escriba alguna observacion"
+                        name="obs" value={obs} onChange={handleInputChange} />
+                    {errorval.obs
+                        ? <ValidationError text={errorval.obs} />
+                        : ''}
+                </div>    
                 <Link to='/reservas' type="submit" className="btn btn-danger my-4">Cancelar</Link>
                 <button type="submit" className="btn btn-primary my-4 mx-4">Actualizar</button>
             </form>

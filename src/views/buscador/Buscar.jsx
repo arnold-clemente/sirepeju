@@ -12,18 +12,23 @@ import { show_alerta } from '../../components/MessageAlert';
 import storage from '../../Storage/storage'
 
 import { getEntidadesGlobal, createHonimia, createRegistro } from '../../api/buscardorApi';
+import ModalDiv from '../../components/ModalDiv'; //contendor
+import { useModal } from '../../hooks/useModal'; //metodos
 
 const Buscar = () => {
 
     const [search, setSearch] = useState('');
     const [loading, setLoading] = useState(false);
     const queryClient = useQueryClient();
+    // par el modal true - false
+    const [showregistro, openRegistro, closeRegistro] = useModal(false);
+    // declarar un hook 
+    const [registroShow, setregistroShow] = useState({});
 
     const { isLoading, data: registros, isError, error } = useQuery({
         queryKey: ['entidades'],
         queryFn: getEntidadesGlobal
     })
-
     const filteredRegistros = () => {
         if (search.length == 0)
             return registros;
@@ -77,8 +82,8 @@ const Buscar = () => {
 
     const handleReserva = (e, row) => {
         e.preventDefault();
-        const user = {user_id: storage.get('authUser').id, name: storage.get('authUser').name}
-        const setregistro = {...row, ...user};
+        const user = { user_id: storage.get('authUser').id, name: storage.get('authUser').name }
+        const setregistro = { ...row, ...user };
         Swal.fire({
             title: "¿Reserva Entidad?",
             text: "¡No podrás revertir esto!",
@@ -113,6 +118,13 @@ const Buscar = () => {
         });
     };
 
+    const handleShow = (e, row) => {
+        e.preventDefault();
+        openRegistro();
+        const prueba = row;
+        setregistroShow({ ...registroShow, ...prueba })
+    }
+
     const columns = [
         {
             name: 'Acciones',
@@ -124,7 +136,7 @@ const Buscar = () => {
                             <button onClick={(e) => handleReserva(e, row)} className="button_edit"><i className="fa-solid fa-square-check"></i></button>
                             <button onClick={(e) => handleHomonimia(e, row)} className="button_delete"><i className="fa-solid fa-ban"></i></button>
                         </div>
-                        : <button onClick={(e) => handlePassword(e, row)} className="button_show"><i className="fa-solid fa-eye"></i></button>
+                        : <button onClick={(e) => handleShow(e, row)} className="button_show"><i className="fa-solid fa-eye"></i></button>
 
                     }
 
@@ -183,6 +195,13 @@ const Buscar = () => {
     else if (isError) return <div>Error: {error.message}</div>
     return (
         <>
+            <ModalDiv isOpen={showregistro} closeModal={closeRegistro} title={'MOSTRAR DATOS DE LA BUSUQEDA'}>
+                <h1>Hola  munod </h1>
+                <h3>{registroShow.entidad}</h3>
+
+                
+
+            </ModalDiv>
             <div>
                 {loading === true ? <Loading /> : ''}
                 <Banner text="VERIFICACIÓN DE PERSONA JURIDICA" />

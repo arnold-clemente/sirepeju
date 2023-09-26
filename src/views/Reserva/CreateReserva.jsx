@@ -23,6 +23,7 @@ const CreateReserva = () => {
     const addReserva = useMutation({
         mutationFn: createReserva,
         onSuccess: (response) => {
+            console.log(response)
             if (response.status === true) {
                 queryClient.invalidateQueries('reservas')
                 show_alerta('Creado con exito', '<i class="fa-solid fa-check border_alert_green"></i>', 'alert_green')
@@ -41,7 +42,7 @@ const CreateReserva = () => {
     });
 
     const [formValues, handleInputChange] = useForm({
-        hr: undefined,
+        hr: '',
         entidad: '',
         sigla: '',
         persona_colectiva: 'PERSONA NATURAL',
@@ -167,7 +168,15 @@ const CreateReserva = () => {
                             ? <ValidationError text={error.correo} />
                             : ''}
                     </div>
-                </div>              
+                </div>   
+                <div className="form-group py-2">
+                    <label>Observaión</label>
+                    <input type="text" className="form-control" placeholder="Escriba alguna observacion"
+                        name="obs" value={obs} onChange={handleInputChange} />
+                    {error.obs
+                        ? <ValidationError text={error.obs} />
+                        : ''}
+                </div>           
                 <Link to='/reservas' type="submit" className="btn btn-danger my-4">Cancelar</Link>
                 <button type="submit" className="btn btn-primary my-4 mx-4">Enviar</button>
             </form>

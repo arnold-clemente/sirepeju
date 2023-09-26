@@ -29,6 +29,11 @@ export const links = [
         icon: 'fa-regular fa-square-check',
         texto: 'Registro'
     },
+    {
+        path: '/otorgaciones',
+        icon: 'fa-solid fa-file-shield',
+        texto: 'Otogaciones'
+    },
     
     // {
     //     icon: 'fa-solid fa-file-shield',

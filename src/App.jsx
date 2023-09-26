@@ -7,6 +7,7 @@ import './css/navbar.css'
 import './css/user.css'
 import './css/buttons.css'
 import './css/loading.css'
+import './css/modal.css'
 
 import AppRouter from './routes/AppRouter'
 

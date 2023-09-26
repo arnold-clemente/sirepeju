@@ -1,31 +1,20 @@
 import React, { useEffect, useState } from 'react'
+import ModalDiv from '../components/ModalDiv'
+import { useModal } from '../hooks/useModal'
+
 
 const Dashboard = () => {
 
-  const [pame, pamecabiado] = useState({
-    id: 1,
-    nombre : 'Pamela',
-    edad: 12,
-    estatura: 2
-  });
-
-  const {edad, nombre} = pame
-
-  const [saludo, setsaludo] = useState('hola');
-
-  const handle = ({target}) => {
-    pamecabiado({...pame, edad: 27});
-  }
-
-
+  const [isOpenModal1, openModal1, closeModal] = useModal(false);
   return (
     <div>
       Bienvendio a sirepeju
-      <div>{edad}</div>
-      <div>{nombre}</div>
-
-      <button onClick={handle} className='clase prueba'> cambiar</button>
-
+      <ModalDiv isOpen={isOpenModal1} closeModal={closeModal} title={'REGISTRO DE OTORGACION'}>
+       <div className=''>
+          <h1>hola munod</h1>
+       </div>
+      </ModalDiv>
+      <button onClick={openModal1}>abrir</button>
     </div>
   )
 }

@@ -24,7 +24,7 @@ export const updateReserva = async (reserva) => {
 }
 
 export const entregarReserva = async (reserva) => {
-    const response = await axios.post(`/api/reserva-nombres/verificar`, reserva)
+    const response = await axios.post(`/api/reserva-nombres/entregar/${reserva.id}`)
         .then((response) => { return response.data })
         .catch((error) => { return error.data });
     return response;

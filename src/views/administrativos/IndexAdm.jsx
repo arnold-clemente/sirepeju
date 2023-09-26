@@ -66,7 +66,6 @@ const IndexAdministrativos = () => {
     const passAdministrativo = useMutation({
         mutationFn: passwordAdministrativo,
         onSuccess: (response) => {
-            console.log(response);
             queryClient.invalidateQueries('administrativos')
             show_alerta('Contraseña Actualizada', '<i class="fa-solid fa-check border_alert_green"></i>', 'alert_green')
             setLoading(false);

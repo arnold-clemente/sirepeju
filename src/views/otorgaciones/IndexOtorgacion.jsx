@@ -10,17 +10,16 @@ import Loading from '../../components/Loading';
 import Banner from '../../components/Banner';
 import { show_alerta } from '../../components/MessageAlert';
 
-import { getReservas, entregarReserva } from '../../api/reservaApi';
+import { getOtorgaciones } from '../../api/otorgacionesApi';
 
-const IndexReserva = () => {
-
+const IndexOtorgacion = () => {
     const [search, setSearch] = useState('');
     const [loading, setLoading] = useState(false);
     const queryClient = useQueryClient();
 
     const { isLoading, data: registros, isError, error } = useQuery({
-        queryKey: ['reservas'],
-        queryFn: getReservas,
+        queryKey: ['otorgaciones'],
+        queryFn: getOtorgaciones,
         select: reservas => reservas.sort((a, b) => b.id - a.id)
     })
 
@@ -29,10 +28,10 @@ const IndexReserva = () => {
             return registros;
         const filtered = registros.filter(registro => {
             if (
-                registro.entidad.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
+                registro.personalidad_juridica.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
                 registro.sigla.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
-                registro.representante.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
-                registro.nro_certificado.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
+                registro.domicilio_legal.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
+                registro.objeto.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
                 registro.ci_rep.toLowerCase().includes(search.toLowerCase())
             ) {
                 return registro;
@@ -46,21 +45,6 @@ const IndexReserva = () => {
         e.persist();
         await setSearch(e.target.value);
     };
-
-
-    const fechaReserva = useMutation({
-        mutationFn: entregarReserva,
-        onSuccess: (response) => {
-            queryClient.invalidateQueries('reservas')
-            show_alerta('Fecha Registrada', '<i class="fa-solid fa-check border_alert_green"></i>', 'alert_green')
-            setLoading(false);
-        },
-        onError: (error) => {
-            console.log(error)
-            show_alerta('No conectado', '<i class="fa-solid fa-xmark border_alert_red"></i>', 'alert_red')
-            setLoading(false);
-        },
-    });
 
     const handleEntregar = (e, row) => {
         e.preventDefault();
@@ -90,7 +74,7 @@ const IndexReserva = () => {
                         ? <Link to={`/buscar-reserva/${row.entidad.toLowerCase().replace(/ /g, '_')}`} className="button_verificar"><span className=''>Verificar</span></Link>
                         : <div className='d-flex flex-row justify-content-start'>
                             {row.fecha_entrega
-                                ? <button onClick={(e) => handleDelete(e, row)} className="button_print"><i className="fa-solid fa-print"></i></button>
+                                ? <button onClick={(e) => handleEntregar(e, row)} className="button_print"><i className="fa-solid fa-print"></i></button>
                                 : <button onClick={(e) => handleEntregar(e, row)} className="button_download"><i className="fa-solid fa-check"></i></button>
                             }
                         </div>
@@ -110,8 +94,14 @@ const IndexReserva = () => {
             grow: 1,
         },
         {
-            name: 'Entidad',
-            selector: row => row.entidad,
+            name: 'Mienbros',
+            selector: row => row.id,
+            sortable: true,
+            grow: 3
+        },
+        {
+            name: 'Persona Juridica',
+            selector: row => row.personalidad_juridica,
             sortable: true,
             grow: 3,
         },
@@ -126,8 +116,8 @@ const IndexReserva = () => {
             sortable: true,
         },
         {
-            name: 'Nro',
-            selector: row => row.nro_certificado,
+            name: 'Codigo',
+            selector: row => row.codigo_otorgacion,
             sortable: true,
         },
         {
@@ -192,4 +182,4 @@ const IndexReserva = () => {
     )
 }
 
-export default IndexReserva
+export default IndexOtorgacion

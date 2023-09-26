@@ -24,9 +24,10 @@ const Login = () => {
         go('/')
       }
     } catch (error) {
-      if (error.toJSON().message === 'Network Error') {
-        show_alerta('No conectado', '<i class="fa-solid fa-xmark border_alert_red"></i>', 'alert_red')
-      }
+      console.log(error)
+      // if (error.toJSON().message === 'Network Error') {
+      //   show_alerta('No conectado', '<i class="fa-solid fa-xmark border_alert_red"></i>', 'alert_red')
+      // }
     }
   }
   return (

@@ -25,6 +25,9 @@ import BuscarReserva from '../views/buscador/BuscarReserva'
 // rutas para registro 
 import IndexReg from '../views/Registro/IndexReg'
 
+//rutas para otorgacion
+import IndexOtorgacion from '../views/otorgaciones/IndexOtorgacion'
+
 
 const WebRoutes = () => {
 
@@ -64,6 +67,8 @@ const WebRoutes = () => {
                     <Route path='/buscar-reserva/:entidad' element={<BuscarReserva />} />
                     {/* Registro  */}
                     <Route path='/registro-reserva' element={<IndexReg />} />
+                    {/* otorgacion */}
+                    <Route path='/otorgaciones' element={<IndexOtorgacion />} />
                 </Routes>
             </div>
         </div>

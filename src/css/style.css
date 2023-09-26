@@ -46,7 +46,7 @@ body {
   height: calc(100vh - 60px);
   margin-left: 240px;
   padding: 20px;
-  z-index: 50;
+  z-index: 100;
   overflow: auto;
   transition: all 0.3s ease-in-out;
 }
@@ -115,6 +115,10 @@ body {
   font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
+/* para el hover de sidebar  */
+.sidebar_container.close:hover~.main_container{
+  z-index: 50;
+}
 
 @media (prefers-color-scheme: light) {
   :root {
@@ -127,6 +131,7 @@ body {
   .main_container {
     width: 100%;
     margin-left: 0px;
+    z-index: 50;
   }
 
   .main_container.close {
