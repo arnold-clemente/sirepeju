@@ -17,6 +17,7 @@ const IndexReserva = () => {
     const [search, setSearch] = useState('');
     const [loading, setLoading] = useState(false);
     const queryClient = useQueryClient();
+    const url = 'http://sirepeju.test/reporte/homonimia/';
 
     const { isLoading, data: registros, isError, error } = useQuery({
         queryKey: ['reservas'],
@@ -90,7 +91,7 @@ const IndexReserva = () => {
                         ? <Link to={`/buscar-reserva/${row.entidad.toLowerCase().replace(/ /g, '_')}`} className="button_verificar"><span className=''>Verificar</span></Link>
                         : <div className='d-flex flex-row justify-content-start'>
                             {row.fecha_entrega
-                                ? <button onClick={(e) => handleDelete(e, row)} className="button_print"><i className="fa-solid fa-print"></i></button>
+                                ? <a href={url+row.id} target='_blank' className="button_print"><i className="fa-solid fa-print"></i></a>
                                 : <button onClick={(e) => handleEntregar(e, row)} className="button_download"><i className="fa-solid fa-check"></i></button>
                             }
                         </div>

@@ -18,6 +18,7 @@ import { useModal } from '../../hooks/useModal'
 
 const IndexReg = () => {
 
+    const url = 'http://sirepeju.test/reporte/reserva/'
     const [search, setSearch] = useState('');
     const [loading, setLoading] = useState(false);
     const queryClient = useQueryClient();
@@ -117,7 +118,7 @@ const IndexReg = () => {
 
     const handleEnviar = (e) => {
         e.preventDefault();
-        openModalOtorgacion();
+        closeModalOtorgacion();
         setLoading(true);
         const enviar = otorgacion;
         enviarRegistro.mutate(enviar);
@@ -153,7 +154,7 @@ const IndexReg = () => {
                         : <div className='d-flex flex-row justify-content-start'>
                             {row.fecha_entrega
                                 ? <div className='d-flex flex-row justify-content-starts'>
-                                    <button onClick={(e) => handleDelete(e, row)} className="button_print"><i className="fa-solid fa-print"></i></button>
+                                    <a href={url + row.id} target='_blank' className="button_print"><i className="fa-solid fa-print"></i></a>
                                     <button onClick={(e) => handleOtorgacion(e, row)} className="button_show"><i className="fa-solid fa-file-import"></i></button>
                                 </div>
                                 : <button onClick={(e) => handleEntregar(e, row)} className="button_download"><i className="fa-solid fa-check"></i></button>

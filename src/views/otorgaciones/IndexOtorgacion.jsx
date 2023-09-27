@@ -11,11 +11,16 @@ import Banner from '../../components/Banner';
 import { show_alerta } from '../../components/MessageAlert';
 
 import { getOtorgaciones } from '../../api/otorgacionesApi';
+// modal 
+import ModalDiv from '../../components/ModalDiv'
+import { useModal } from '../../hooks/useModal'
 
 const IndexOtorgacion = () => {
+
     const [search, setSearch] = useState('');
     const [loading, setLoading] = useState(false);
     const queryClient = useQueryClient();
+    const [fundadorModal, openFundadorModal, closeFundadorModal] = useModal(false);
 
     const { isLoading, data: registros, isError, error } = useQuery({
         queryKey: ['otorgaciones'],
@@ -46,22 +51,20 @@ const IndexOtorgacion = () => {
         await setSearch(e.target.value);
     };
 
-    const handleEntregar = (e, row) => {
+    const handleFundadores = (e, row) => {
         e.preventDefault();
-        Swal.fire({
-            title: "¿Entregar Documento?",
-            icon: "info",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "¡Sí, entrega!",
-        }).then((result) => {
-            if (result.isConfirmed) {
-                setLoading(true);
-                fechaReserva.mutate(row);
-            }
-        });
+        openFundadorModal();
+        console.log(row);
+       
     }; 
+
+    const enviarFundadores = (e) => {
+        e.preventDefault();
+        // closeModalOtorgacion();
+        // setLoading(true);
+        const enviar = otorgacion;
+        // enviarRegistro.mutate(enviar);
+    }
 
     const columns = [
         {
@@ -74,8 +77,8 @@ const IndexOtorgacion = () => {
                         ? <Link to={`/buscar-reserva/${row.entidad.toLowerCase().replace(/ /g, '_')}`} className="button_verificar"><span className=''>Verificar</span></Link>
                         : <div className='d-flex flex-row justify-content-start'>
                             {row.fecha_entrega
-                                ? <button onClick={(e) => handleEntregar(e, row)} className="button_print"><i className="fa-solid fa-print"></i></button>
-                                : <button onClick={(e) => handleEntregar(e, row)} className="button_download"><i className="fa-solid fa-check"></i></button>
+                                ? <button onClick={(e) => handleFundadores(e, row)} className="button_print"><i className="fa-solid fa-print"></i></button>
+                                : <button onClick={(e) => handleFundadores(e, row)} className="button_download"><i className="fa-regular fa-user"></i></button>
                             }
                         </div>
                     }
@@ -144,8 +147,46 @@ const IndexOtorgacion = () => {
     return (
 
         <div>
+            <ModalDiv isOpen={fundadorModal} closeModal={closeFundadorModal} title={'AGREGAR FUNDADORES'}>
+            <div className="row">
+                    <div className="col-md-6">
+                        <label className="form-label">Fecha de Ingreso:</label>
+                        <input type="date" className="form-control" placeholder="fecha" aria-label="First name"
+                            name="fecha" value={fecha} onChange={handleInputChange} />
+                        {errorval.fecha
+                            ? <ValidationError text={errorval.fecha} />
+                            : ''}
+                    </div>
+                    <div className="col-md-6">
+                        <label className="form-label">Codigo OPJ</label>
+                        <input type="text" className="form-control" placeholder="Escriba codigo OPJ" aria-label="Last name"
+                            name="codigo" value={codigo} onChange={handleInputChange} />
+                        {errorval.codigo
+                            ? <ValidationError text={errorval.codigo} />
+                            : ''}
+                    </div>
+                    <div className="col-md-12">
+                        <label className="form-label">Domicilio Legal</label>
+                        <input type="text" className="form-control" placeholder="Escriba la direccion" aria-label="Last name" name="domicilio" value={domicilio} onChange={handleInputChange} />
+                        {errorval.domicilio
+                            ? <ValidationError text={errorval.domicilio} />
+                            : ''}
+                    </div>
+                    <div className="col-md-12">
+                        <label className="form-label">Objeto</label>
+                        <textarea rows={5} className="form-control" placeholder="Escriba el objeto" aria-label="Last name" name="objeto" value={objeto} onChange={handleInputChange} />
+                        {errorval.objeto
+                            ? <ValidationError text={errorval.objeto} />
+                            : ''}
+                    </div>
+                </div>
+                <div className='container-fluid d-flex gap-2 justify-content-end pt-4'>
+                    <button onClick={closeModalOtorgacion} className='btn btn-danger'>Cerrar</button>
+                    <button onClick={handleEnviar} className='btn btn-primary'>Enviar</button>
+                </div>
+            </ModalDiv>
             {loading === true ? <Loading /> : ''}
-            <Banner text="RESERVA DE NOMBRES" />
+            <Banner text="REGISTRO DE OTORGACION" />
 
             <div className='container-fluid d-flex flex-row md:flex-columns my-4'>
                 <div className='input_search'>

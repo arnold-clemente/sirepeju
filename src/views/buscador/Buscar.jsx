@@ -123,6 +123,7 @@ const Buscar = () => {
         openRegistro();
         const prueba = row;
         setregistroShow({ ...registroShow, ...prueba })
+        console.log(registroShow)
     }
 
     const columns = [
@@ -196,9 +197,14 @@ const Buscar = () => {
     return (
         <>
             <ModalDiv isOpen={showregistro} closeModal={closeRegistro} title={'MOSTRAR DATOS DE LA BUSUQEDA'}>
-                <h1>Hola  munod </h1>
+                <h1><span>Entidad</span>{registroShow.entidad}</h1>
+                <div className='d-flex fs-4 text-danger'>
+                <h2>Sigla: {registroShow.sigla}</h2>
                 <h3>{registroShow.entidad}</h3>
-
+                </div>
+                <div className='d-flex'>
+                    <button className='btn btn-success' onClick={closeRegistro}>cerrar</button>
+                </div>
                 
 
             </ModalDiv>
