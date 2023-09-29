@@ -81,12 +81,13 @@ const IndexReg = () => {
         mutationFn: createOtorgacion,
         onSuccess: (response) => {
             if (response.status === true) {
-                console.log(response)
+
                 queryClient.invalidateQueries('registros')
                 show_alerta('Creado con exito', '<i class="fa-solid fa-check border_alert_green"></i>', 'alert_green')
                 setLoading(false);
                 // go('/user-gobernaciones')
             } else {
+                openModalOtorgacion();
                 show_alerta('Fallo de Validacion', '<i class="fa-solid fa-xmark border_alert_red"></i>', 'alert_red');
                 serErroreval(response.errors);
                 setLoading(false);
@@ -146,7 +147,6 @@ const IndexReg = () => {
         {
             name: 'Acciones',
             cell: (row) => (
-
                 <div className='d-flex flex-row justify-content-start'>
                     <Link to={`/reserva/edit/${row.id}`} className="button_edit"><i className="fa-solid fa-pen-to-square"></i></Link>
                     {row.estado === 1
@@ -161,9 +161,7 @@ const IndexReg = () => {
                             }
                         </div>
                     }
-
                 </div>
-
             ),
             ignoreRowClick: true,
             allowOverflow: true,

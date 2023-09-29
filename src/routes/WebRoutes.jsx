@@ -27,6 +27,7 @@ import IndexReg from '../views/Registro/IndexReg'
 
 //rutas para otorgacion
 import IndexOtorgacion from '../views/otorgaciones/IndexOtorgacion'
+import FundOtorgacion from '../views/otorgaciones/FundOtorgacion'
 
 
 const WebRoutes = () => {
@@ -69,6 +70,7 @@ const WebRoutes = () => {
                     <Route path='/registro-reserva' element={<IndexReg />} />
                     {/* otorgacion */}
                     <Route path='/otorgaciones' element={<IndexOtorgacion />} />
+                    <Route path='/otorgaciones/:otorgacionId/fundadores' element={<FundOtorgacion />} />
                 </Routes>
             </div>
         </div>
