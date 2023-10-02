@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { createRef, useState } from 'react'
 import { Link } from 'react-router-dom';
 import DataTable from "react-data-table-component";
 import { useQuery } from 'react-query';
@@ -33,16 +33,15 @@ const IndexOtorgacion = () => {
         numero_informe_final: '',
         fecha_envio: '',
     })
+    const [file, setFile] = useState(null);
+
+    const inputRef = createRef()
+
+
     const { nota_interna_final, alfanumerico, numero_informe_final, fecha_envio, otorgacion_id } = registroFinal;
 
     const [personaCol, setPersonaCol] = useState({
         otorgacion_id: 1,
-        estatuto_organico: [],
-        reglamento_interno: [],
-        informe_final: [],
-        nota_final: [],
-        resolucion_ministerial: '',
-        fecha_resolucion: '',
     })
     const { estatuto_organico, reglamento_interno, informe_final, nota_final, resolucion_ministerial, fecha_resolucion } = personaCol
 
@@ -112,21 +111,7 @@ const IndexOtorgacion = () => {
             ...registroFinal,
             [target.name]: target.value
         });
-    };
-
-    const handleInputChangePersona = ({ target }) => {
-        setPersonaCol({
-            ...personaCol,
-            [target.name]: target.value
-        });
-    };
-
-    const handleInputFile = ({ target }) => {
-        setPersonaCol({
-            ...personaCol,
-            [target.name]: target.files[0]
-        });
-    }
+    }; 
 
     const handleGuardarRegistro = (e) => {
         e.preventDefault();
@@ -178,30 +163,25 @@ const IndexOtorgacion = () => {
 
     const handleGuardarPersona = (e) => {
         e.preventDefault();
+        const formData = new FormData(e.currentTarget)
+        const otorgacion_id = formData.append('otorgacion_id', personaCol.otorgacion_id)
+        const estatuto_organico = formData.get('estatuto_organico')
+        const reglamento_interno = formData.get('reglamento_interno')
+        const informe_final = formData.get('informe_final')
+        const nota_final = formData.get('nota_final')
+        const resolucion_ministerial = formData.get('resolucion_ministerial')
+        const fecha_resolucion = formData.get('fecha_resolucion')
         setLoading(true);
         closePersonaModal();
-        addPersonaColectiva.mutate(personaCol)
-        console.log(personaCol)
+        addPersonaColectiva.mutate(formData)
     }
 
     const addPersonaColectiva = useMutation({
         mutationFn: createRegisroPersonaColectiva,
         onSuccess: (response) => {
-            setLoading(false);
-            return console.log(response)
-            setLoading(false);
-            if (response.status === true) {
-                let auxiliar = {
-                    otorgacion_id: 1,
-                    estatuto_organico: [],
-                    reglamento_interno: [],
-                    informe_final: [],
-                    nota_final: [],
-                    resolucion_ministerial: '',
-                    fecha_resolucion: '',
-                }
-                setPersonaCol({ ...auxiliar })
-                serErrorval({});
+            setLoading(false);  
+            console.log(response)
+            if (response.status === true) {  
                 queryClient.invalidateQueries('otorgaciones')
                 show_alerta('Actualizado con exito', '<i class="fa-solid fa-check border_alert_green"></i>', 'alert_green')
                 setLoading(false);
@@ -365,14 +345,14 @@ const IndexOtorgacion = () => {
 
             {/* modal para registro persona colectiva  */}
             <ModalMd isOpen={personaModal} closeModal={closePersonaModal} title={'REGISTRO PERSONA COLECTIVA'}>
-                <div className='container-fluid'>
+                <form onSubmit={handleGuardarPersona} className='container-fluid' >
                     <div className='row mt-1'>
                         <div className='col-sm-5 px-0'>
                             <span className='font_span_input'>ESTATUTO ORGANICO: </span>
                         </div>
                         <div className='col-sm-7 px-0'>
                             <input type="file" className='form-control' placeholder='Rellenar Campo'
-                                name='estatuto_organico' onChange={handleInputFile} />
+                                name='estatuto_organico' accept="application/pdf"/>
                             {errorval.estatuto_organico
                                 ? <ValidationError text={errorval.estatuto_organico} />
                                 : ''}
@@ -384,7 +364,7 @@ const IndexOtorgacion = () => {
                         </div>
                         <div className='col-sm-7 px-0'>
                             <input type="file" className='form-control' placeholder='Rellenar Campo'
-                                name='reglamento_interno' onChange={handleInputFile} />
+                                name='reglamento_interno' accept="application/pdf"/>
                             {errorval.reglamento_interno
                                 ? <ValidationError text={errorval.reglamento_interno} />
                                 : ''}
@@ -396,7 +376,7 @@ const IndexOtorgacion = () => {
                         </div>
                         <div className='col-sm-7 px-0'>
                             <input type="file" className='form-control' placeholder='Rellenar Campo'
-                                name='informe_final' onChange={handleInputFile} />
+                                name='informe_final' accept="application/pdf"/>
                             {errorval.informe_final
                                 ? <ValidationError text={errorval.informe_final} />
                                 : ''}
@@ -408,7 +388,7 @@ const IndexOtorgacion = () => {
                         </div>
                         <div className='col-sm-7 px-0'>
                             <input type="file" className='form-control' placeholder='Rellenar Campo'
-                                name='nota_final' onChange={handleInputFile} />
+                                name='nota_final' accept="application/pdf"/>
                             {errorval.nota_final
                                 ? <ValidationError text={errorval.nota_final} />
                                 : ''}
@@ -420,7 +400,7 @@ const IndexOtorgacion = () => {
                         </div>
                         <div className='col-sm-7 px-0'>
                             <input type="text" className='form-control' placeholder='Rellenar Campo'
-                                name='resolucion_ministerial' value={resolucion_ministerial} onChange={handleInputChangePersona} />
+                                name='resolucion_ministerial'/>
                             {errorval.resolucion_ministerial
                                 ? <ValidationError text={errorval.resolucion_ministerial} />
                                 : ''}
@@ -432,7 +412,7 @@ const IndexOtorgacion = () => {
                         </div>
                         <div className='col-sm-7 px-0'>
                             <input type="date" className='form-control' placeholder='Rellenar Campo'
-                                name='fecha_resolucion' value={fecha_resolucion} onChange={handleInputChangePersona} />
+                                name='fecha_resolucion' />
                             {errorval.fecha_resolucion
                                 ? <ValidationError text={errorval.fecha_resolucion} />
                                 : ''}
@@ -440,9 +420,9 @@ const IndexOtorgacion = () => {
                     </div>
                     <div className='d-flex justify-content-between mt-2'>
                         <button onClick={closePersonaModal} className='btn btn-danger'>Cancelar</button>
-                        <button onClick={handleGuardarPersona} className='btn btn-primary'>Guardar</button>
+                        <button type='submit' className='btn btn-primary'>Guardar</button>
                     </div>
-                </div>
+                </form>
             </ModalMd>
 
             <Banner text="REGISTRO DE OTORGACION" />

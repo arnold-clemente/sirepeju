@@ -34,7 +34,11 @@ export const links = [
         icon: 'fa-solid fa-file-shield',
         texto: 'Otogaciones'
     },
-    
+    {
+        path: '/personalidades-juridicas',
+        icon: 'fa-solid fa-file-contract',
+        texto: 'Personalidades Juridicas'
+    },
     // {
     //     icon: 'fa-solid fa-file-shield',
     //     texto: 'Importacion de personas colectivas de entodades externas',
