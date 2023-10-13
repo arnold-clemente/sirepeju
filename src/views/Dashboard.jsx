@@ -14,7 +14,8 @@ const Dashboard = () => {
           <h1>hola munod</h1>
        </div>
       </ModalDiv>
-      <button onClick={openModal1}>abrir</button>
+     
+      <button onClick={openModal1}><i className="fa-solid fa-eye"></i></button>
     </div>
   )
 }

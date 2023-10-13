@@ -10,14 +10,19 @@ import { useQueryClient } from 'react-query';
 import { destroyGobernacion } from '../../api/gobernacionApi';
 import Swal from 'sweetalert2';
 import { show_alerta } from '../../components/MessageAlert';
-
+import ModalDiv from '../../components/ModalDiv'; //contendoresto hay importar siempre
+import { useModal } from '../../hooks/useModal'; //metodos siempre gg
 const IndexGob = () => {
 
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(false);
   const queryClient = useQueryClient();
-
-  const { isLoading, data: registros, isError, error } = useQuery({
+// par el modal true - false
+const [showgobernacion, openGobernacion, closeGobernacion] = useModal(false);
+// declarar un hook 
+const [gobernacionShow, setgobernacionShow] = useState({});
+  
+const { isLoading, data: registros, isError, error } = useQuery({
     queryKey: ['gobernacions'],
     queryFn: getGobernacions,
     select: gobernacions => gobernacions.sort((a, b) => b.id - a.id)
@@ -56,6 +61,14 @@ const IndexGob = () => {
     },
   });
 
+  const handleShow = (e, row) => {
+    e.preventDefault();
+    openGobernacion();
+    const prueba = row;
+    setgobernacionShow({ ...gobernacionShow, ...prueba })
+    console.log(gobernacionShow)
+}
+
   const handleDelete = (e, row) => {
     e.preventDefault();
     Swal.fire({
@@ -82,6 +95,10 @@ const IndexGob = () => {
           <div className='d-flex flex-row'>
             <button onClick={(e) => handleDelete(e, row)} className="button_delete"><i className="fa-solid fa-x"></i></button>
             <Link to={`/user-gobernacion/edit/${row.id}`} className="button_edit"><i className="fa-solid fa-pen-to-square"></i></Link>
+            <button onClick={(e) => handleShow(e, row)} className="button_show"><i className="fa-solid fa-eye"></i></button> 
+        
+            
+            
           </div>
           : ''
       ),
@@ -135,6 +152,18 @@ const IndexGob = () => {
             onChange={searchOnChange}
           />
         </div>
+        <ModalDiv isOpen={showgobernacion} closeModal={closeGobernacion} title={'Lista de Gobernacion'}>
+        <div  class="modal-dialog modal-lg">
+                    <h2 class="fs-6"><b>Cargo departamental:</b>{gobernacionShow.id}</h2> <hr />
+                    <h2 class="fs-6"><b>Responsable departamental:</b> &nbsp;&nbsp; </h2><b>CI:</b> <hr />
+                    <h2 class="fs-6"><b>Cargo departamental:</b></h2> <hr />
+                    <h2 class="fs-6"><b>Correo Electronico:</b> &nbsp;&nbsp;</h2>       
+                </div>
+                <hr />
+                <div className='d-flex'>
+                    <button button class="btn btn-secondary" title="cerrar" onClick={closeGobernacion}>cerrar</button>
+                </div>
+        </ModalDiv>
         <div>
           <Link to="/user-gobernacion/create" className='btn button_green'>
             <span>AÑADIR</span>

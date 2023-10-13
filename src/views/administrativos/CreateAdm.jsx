@@ -142,11 +142,10 @@ const CreateAdm = () => {
                             <label>Nivel de Acceso</label>
                             <select className="form-control" id="exampleFormControlSelect1"
                                 name="usuario" value={usuario} onChange={handleInputChange}>
-                                <option>ejecutivo</option>
-                                <option>tecnico</option>
-                                <option>especialista</option>
-                                <option>ejecutivo</option>
-                                <option>operativo</option>
+                                <option>Tecnico en registro</option>
+                                <option>Tecnico Operativo</option>
+                                <option>Jefe de Unidad</option>
+                                <option>Ejecutivo</option>
                             </select>
                         </div>
                     </div>

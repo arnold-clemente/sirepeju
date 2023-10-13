@@ -89,13 +89,14 @@ const CreateGob = () => {
                         : ''}
                 </div>
                 <div className="form-group py-2">
-                    <label>Contraseña</label>
+                    <label>Contraseña:</label>
                     <input type="text" className="form-control" placeholder="Escriba una contraseña"
                         name="password" value={password} onChange={handleInputChange} />
                     {error.password
                         ? <ValidationError text={error.password} />
                         : ''}
                 </div>
+                
 
                 <Link to='/user-gobernaciones' type="submit" className="btn btn-danger my-4">Cancelar</Link>
                 <button type="submit" className="btn btn-primary my-4 mx-4">Enviar</button>

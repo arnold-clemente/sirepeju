@@ -12,8 +12,8 @@ import { show_alerta } from '../../components/MessageAlert';
 import storage from '../../Storage/storage'
 
 import { getEntidadesGlobal, createHonimia, createRegistro } from '../../api/buscardorApi';
-import ModalDiv from '../../components/ModalDiv'; //contendor
-import { useModal } from '../../hooks/useModal'; //metodos
+import ModalDiv from '../../components/ModalDiv'; //contendoresto hay importar siempre
+import { useModal } from '../../hooks/useModal'; //metodos siempre gg
 
 const Buscar = () => {
 
@@ -196,18 +196,29 @@ const Buscar = () => {
     else if (isError) return <div>Error: {error.message}</div>
     return (
         <>
-            <ModalDiv isOpen={showregistro} closeModal={closeRegistro} title={'MOSTRAR DATOS DE LA BUSUQEDA'}>
-                <h1><span>Entidad</span>{registroShow.entidad}</h1>
-                <div className='d-flex fs-4 text-danger'>
-                <h2>Sigla: {registroShow.sigla}</h2>
-                <h3>{registroShow.entidad}</h3>
-                </div>
-                <div className='d-flex'>
-                    <button className='btn btn-success' onClick={closeRegistro}>cerrar</button>
+         
+
+<ModalDiv isOpen={showregistro} closeModal={closeRegistro} title={'Ver Detalle de Otorgacion'}>
+                <h3 class="fs-5"><center><b>Naturaleza:</b> {registroShow.naturaleza} &nbsp;<b>Entidad:</b>  {registroShow.entidad}</center></h3>
+                <hr />
+                    <div  class="modal-dialog modal-lg">
+                    <h2 class="fs-6"><b>Sigla:</b> &nbsp;&nbsp;{registroShow.sigla} </h2> <hr />
+                    <h2 class="fs-6"><b>Representante Legal:</b></h2> <hr />
+                    <nav class="navbar bg-body-tertiary">
+                    {registroShow.representante}&nbsp;<b> CI:</b>{registroShow.ci_rep}
+                    </nav> <hr />
+                    <h2 class="fs-6"><b>Persona Colectiva:</b> &nbsp;&nbsp;{registroShow.persona_colectiva} </h2>
+                    
+                            
                 </div>
                 
-
-            </ModalDiv>
+                <hr></hr>
+                <div className='d-flex'>
+                    <button button class="btn btn-secondary" title="cerrar" onClick={closeRegistro}>cerrar</button>
+                    &nbsp;
+                    <button button class="btn btn-secondary" title="Imprimir" onClick={closeRegistro}>Imprimir</button>
+                </div>
+</ModalDiv>
             <div>
                 {loading === true ? <Loading /> : ''}
                 <Banner text="VERIFICACIÓN DE PERSONA JURIDICA" />

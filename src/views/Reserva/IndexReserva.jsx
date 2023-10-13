@@ -9,6 +9,8 @@ import Swal from 'sweetalert2';
 import Loading from '../../components/Loading';
 import Banner from '../../components/Banner';
 import { show_alerta } from '../../components/MessageAlert';
+import ModalDiv from '../../components/ModalDiv'; //contendoresto hay importar siempre
+import { useModal } from '../../hooks/useModal'; //metodos siempre gg
 
 import { getReservas, entregarReserva } from '../../api/reservaApi';
 
@@ -18,6 +20,10 @@ const IndexReserva = () => {
     const [loading, setLoading] = useState(false);
     const queryClient = useQueryClient();
     const url = 'http://sirepeju.test/reporte/homonimia/';
+    //para el modal
+    const [showreserva, openReserva, closeReserva] = useModal(false);
+    // declarar un hook 
+    const [reservaShow, setreservaShow] = useState({});
 
     const { isLoading, data: registros, isError, error } = useQuery({
         queryKey: ['reservas'],
@@ -79,6 +85,13 @@ const IndexReserva = () => {
             }
         });
     }; 
+    const handleShow = (e, row) => {
+        e.preventDefault();
+        openReserva();
+        const prueba = row;
+        setreservaShow({ ...reservaShow, ...prueba })
+        console.log(reservaShow)
+    }
 
     const columns = [
         {
@@ -94,6 +107,7 @@ const IndexReserva = () => {
                                 ? <a href={url+row.id} target='_blank' className="button_print"><i className="fa-solid fa-print"></i></a>
                                 : <button onClick={(e) => handleEntregar(e, row)} className="button_download"><i className="fa-solid fa-check"></i></button>
                             }
+                          <button onClick={(e) => handleShow(e, row)} className="button_show"><i className="fa-solid fa-eye"></i></button> 
                         </div>
                     }
 
@@ -170,6 +184,19 @@ const IndexReserva = () => {
                         onChange={searchOnChange}
                     />
                 </div>
+        <ModalDiv isOpen={showreserva} closeModal={closeReserva} title={'LISTA DE RESERVA DE NOMBRE'}>
+        <div  class="modal-dialog modal-lg">
+                    <h2 class="fs-6"><b>Entidad:</b>&nbsp;&nbsp;{reservaShow.entidad}</h2> <hr />
+                    <h2 class="fs-6"><b>Sigla:</b>&nbsp;&nbsp;{reservaShow.sigla}<hr />
+                    <h2 class="fs-6"><b>Representante legal:</b>&nbsp;&nbsp; {reservaShow.representante}</h2><b>CI:</b>9999</h2> <hr />
+                    <h2 class="fs-6"><b>Nº Correlativo:</b> &nbsp;&nbsp;{reservaShow.nro_certificado}</h2><hr/>
+                    <h2 class="fs-6"><b>Naturaleza:</b> &nbsp;&nbsp;{reservaShow.naturaleza}</h2>     
+                </div>
+                <hr />
+                <div className='d-flex'>
+                    <button button class="btn btn-secondary" title="cerrar" onClick={closeReserva}>cerrar</button>
+                </div>
+        </ModalDiv>
                 <div>
                     <Link to="/reserva/create" className='btn button_green'>
                         <span>AÑADIR</span>
@@ -189,6 +216,7 @@ const IndexReserva = () => {
                     progressPending={isLoading}
                 />
             </div>
+        
         </div>
     )
 }

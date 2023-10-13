@@ -16,7 +16,8 @@ import { createRegisroPersonaColectiva } from '../../api/registroPersonaColectiv
 // modal 
 import ModalSm from '../../components/ModalSm'
 import ModalMd from '../../components/ModalMd'
-import { useModal } from '../../hooks/useModal'
+import { useModal } from '../../hooks/useModal'//esto ya estaba
+import ModalDiv from '../../components/ModalDiv'; //contendoresto hay importar siempre
 
 const IndexOtorgacion = () => {
 
@@ -26,6 +27,11 @@ const IndexOtorgacion = () => {
     const [registrorModal, openRegistrorModal, closeRegistrorModal] = useModal(false);
     const [personaModal, openPersonaModal, closePersonaModal] = useModal(false);
     const [errorval, serErrorval] = useState({});
+    // par el modal 
+        const [showotorgacion, openOtorgacion, closeOtorgacion] = useModal(false);
+        // declarar un hook 
+        const [otorgacionShow, setotorgacionShow] = useState({});
+
     const [registroFinal, setRegistroFinal] = useState({
         otorgacion_id: 1,
         alfanumerico: '',
@@ -160,6 +166,13 @@ const IndexOtorgacion = () => {
         setPersonaCol({ ...personaCol, ...auxiliar })
         openPersonaModal();
     }
+    const handleShow = (e, row) => {
+        e.preventDefault();
+        openOtorgacion();
+        const prueba = row;
+        setotorgacionShow({ ...otorgacionShow, ...prueba })
+        console.log(otorgacionShow)
+    }
 
     const handleGuardarPersona = (e) => {
         e.preventDefault();
@@ -199,6 +212,7 @@ const IndexOtorgacion = () => {
         }
     });
 
+   
 
     const columns = [
         {
@@ -217,8 +231,11 @@ const IndexOtorgacion = () => {
                                 : ''
                             }
                             <button onClick={(e) => handlePersonaModal(e, row)} className="button_delete"><i className="fa-solid fa-file-pdf"></i><span>Persona Colectiva</span></button>
+                            <button onClick={(e) => handleShow(e, row)} className="button_show"><i className="fa-solid fa-eye"></i></button> 
                         </div>
+                        
                     }
+                    
 
                 </div>
 
@@ -299,6 +316,7 @@ const IndexOtorgacion = () => {
                                 : ''}
                         </div>
                     </div>
+                
                     <div className='row mt-1'>
                         <div className='col-sm-5 px-0'>
                             <span className='font_span_input'>NUMERO INFORME FINAL: </span>
@@ -342,7 +360,7 @@ const IndexOtorgacion = () => {
                 </div>
 
             </ModalSm>
-
+            
             {/* modal para registro persona colectiva  */}
             <ModalMd isOpen={personaModal} closeModal={closePersonaModal} title={'REGISTRO PERSONA COLECTIVA'}>
                 <form onSubmit={handleGuardarPersona} className='container-fluid' >
@@ -424,7 +442,31 @@ const IndexOtorgacion = () => {
                     </div>
                 </form>
             </ModalMd>
-
+            <ModalDiv isOpen={showotorgacion} closeModal={closeOtorgacion} title={'LISTA DE PERSONERIAS JURIDICAS CON RESOLUCION MINISTERIAL'}>
+            <div  class="modal-dialog modal-lg">
+                    <h2 class="fs-6"><b>Codigo:</b> &nbsp;&nbsp; <b>Naturaleza:</b></h2> <hr />
+                    <h2 class="fs-6"><b>Institucion Sin Fin de Lucro:</b> &nbsp;&nbsp; <b>Sigla:</b></h2> <hr />
+                    <h2 class="fs-6"><b>Resolucion Ministerial:</b></h2> <hr />
+                    <h2 class="fs-6"><b>Fecha de Resolucion Ministerial:</b></h2> <hr />
+                    <h2 class="fs-6"><b>Domicilio Legal:</b></h2> <hr />
+                    <h2 class="fs-6"><b>Objeto:</b></h2><hr />
+                    <h2 class="fs-6"><b>Miembros Fundadores:</b>
+                    
+                    <center>
+                    <div className='d-flex'>
+                    <button button class="btn btn-secondary" title="Visualizar Miembros">Visualizar lista de fundadores</button>
+                    </div>
+                    </center>
+                    </h2>
+                       
+                </div>
+                <hr />
+                <div className='d-flex'>
+                    <button button class="btn btn-secondary" title="cerrar" onClick={closeOtorgacion}>cerrar</button>
+                </div>
+        
+        </ModalDiv>
+        
             <Banner text="REGISTRO DE OTORGACION" />
 
             <div className='container-fluid d-flex flex-row md:flex-columns my-4'>

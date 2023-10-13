@@ -11,12 +11,18 @@ import { destroyAdministrativo } from '../../api/administrativosApi';
 import { passwordAdministrativo } from '../../api/administrativosApi';
 import Swal from 'sweetalert2';
 import { show_alerta } from '../../components/MessageAlert';
+import ModalDiv from '../../components/ModalDiv'; //contendor  paso 1
+import { useModal } from '../../hooks/useModal'; //metodos paso 2
 
 const IndexAdministrativos = () => {
 
     const [search, setSearch] = useState('');
     const [loading, setLoading] = useState(false);
     const queryClient = useQueryClient();
+    // para el modal true- false - paso 3
+    const [showadministrativo, openAdministrativo, closeAdministrativo] = useModal(false);
+    // declar ar un hook - paso 4
+    const [administrativoShow, setadministrativoShow] = useState({});
 
     const { isLoading, data: registros, isError, error } = useQuery({
         queryKey: ['administrativos'],
@@ -50,6 +56,13 @@ const IndexAdministrativos = () => {
         await setSearch(e.target.value);
     };
 
+    const handleShow = (e, row) => {
+        e.preventDefault();
+        openAdministrativo();
+        const prueba = row; 
+        setadministrativoShow({ ...administrativoShow, ...prueba })
+        console.log(administrativoShow)
+    } 
     const dropAdministrativo = useMutation({
         mutationFn: destroyAdministrativo,
         onSuccess: (response) => {
@@ -122,7 +135,8 @@ const IndexAdministrativos = () => {
                         <Link to={`/administrativo/edit/${row.id}`} className="button_edit"><i className="fa-solid fa-pen-to-square"></i></Link>
                         <button onClick={(e) => handleDelete(e, row)} className="button_delete"><i className="fa-solid fa-x"></i></button>
                         <button onClick={(e) => handlePassword(e, row)} className="button_show"><i className="fa-solid fa-key"></i></button>
-                    </div>
+                        <button onClick={(e) => handleShow(e, row)} className="button_show"><i className="fa-solid fa-eye"></i></button>
+                        </div>
                     : ''
             ),
             ignoreRowClick: true,
@@ -169,6 +183,7 @@ const IndexAdministrativos = () => {
 
     return (
 
+        
         <div>
             {loading === true ? <Loading /> : ''}
             <Banner text="LISTA DE ADMINISTRATIVOS" />
@@ -185,6 +200,18 @@ const IndexAdministrativos = () => {
                         onChange={searchOnChange}
                     />
                 </div>
+                <ModalDiv isOpen={showadministrativo} closeModal={closeAdministrativo} title={'LISTA DEL PERSONAL ADMINISTRATIVO DE LA UNIDAD - UPJ'}>
+        
+                <div  class="modal-dialog modal-lg">
+                <h2 class="fs-6"><b>Nombre Completo:</b> &nbsp;&nbsp;{administrativoShow.nombres + ' ' + administrativoShow.paterno + ' ' + administrativoShow.materno} </h2>&nbsp;&nbsp;<b>CI:</b> {administrativoShow.ci+ ' ' +administrativoShow.ext_ci}<hr />
+                <h2 class="fs-6"><b>Cargo:</b> &nbsp;{administrativoShow.cargo}</h2> <hr />
+                <h2 class="fs-6"><b>Correo Electronico:</b> &nbsp;</h2>  
+                </div>
+                <hr />
+                <div className='d-flex'>
+                    <button button class="btn btn-secondary" title="cerrar" onClick={closeAdministrativo}>cerrar</button>
+                </div>
+                </ModalDiv>
                 <div>
                     <Link to="/administrativo/create" className='btn button_green'>
                         <span>AÑADIR</span>
@@ -205,7 +232,11 @@ const IndexAdministrativos = () => {
                 />
             </div>
         </div>
+        
     )
+    
+   
 }
+
 
 export default IndexAdministrativos
