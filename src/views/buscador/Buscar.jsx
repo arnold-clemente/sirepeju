@@ -134,8 +134,8 @@ const Buscar = () => {
                 <div className='d-flex flex-row justify-content-start'>
                     {row.estado === 1
                         ? <div className='d-flex'>
-                            <button onClick={(e) => handleReserva(e, row)} className="button_edit"><i className="fa-solid fa-square-check"></i></button>
-                            <button onClick={(e) => handleHomonimia(e, row)} className="button_delete"><i className="fa-solid fa-ban"></i></button>
+                            <button onClick={(e) => handleReserva(e, row)} className="button_edit"><i className="fa-solid fa-square-check"></i><span>Reservar</span></button>
+                            <button onClick={(e) => handleHomonimia(e, row)} className="button_delete"><i className="fa-solid fa-ban"></i><span>Homonimia</span></button>
                         </div>
                         : <button onClick={(e) => handleShow(e, row)} className="button_show"><i className="fa-solid fa-eye"></i></button>
 

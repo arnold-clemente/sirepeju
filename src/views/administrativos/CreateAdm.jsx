@@ -21,7 +21,8 @@ const CreateAdm = () => {
 
     const addAdministrativo = useMutation({
         mutationFn: createAdministrativo,
-        onSuccess: (response) => {
+        onSuccess: (response) => {            
+            console.log(response);
             if (response.status === true) {
                 queryClient.invalidateQueries('administrativos')
                 show_alerta('Creado con exito', '<i class="fa-solid fa-check border_alert_green"></i>', 'alert_green')
@@ -44,7 +45,7 @@ const CreateAdm = () => {
         paterno: '',
         materno: '',
         cargo: '',
-        usuario: '',
+        usuario: 'Operativo',
         estado: 1,
         ci: '',
         ext_ci: 'LP',
@@ -142,10 +143,10 @@ const CreateAdm = () => {
                             <label>Nivel de Acceso</label>
                             <select className="form-control" id="exampleFormControlSelect1"
                                 name="usuario" value={usuario} onChange={handleInputChange}>
-                                <option>Tecnico en registro</option>
-                                <option>Tecnico Operativo</option>
-                                <option>Jefe de Unidad</option>
-                                <option>Ejecutivo</option>
+                                <option value="Administrador">Administrador</option>
+                                <option value="Tecnico">Tecnico</option>
+                                <option value="Especialista">Especialista</option>
+                                <option value="Operativo">Operativo</option>
                             </select>
                         </div>
                     </div>

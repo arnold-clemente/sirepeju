@@ -12,13 +12,13 @@ import { show_alerta } from '../../components/MessageAlert';
 import ModalDiv from '../../components/ModalDiv'; //contendoresto hay importar siempre
 import { useModal } from '../../hooks/useModal'; //metodos siempre gg
 
-import { getReservas, entregarReserva } from '../../api/reservaApi';
+import { getHomonimias, entregarReserva } from '../../api/reservaApi';
 
-const IndexReserva = () => {
-
+const HomReserva = () => {
     const [search, setSearch] = useState('');
     const [loading, setLoading] = useState(false);
     const queryClient = useQueryClient();
+    const url = 'http://sirepeju.test/reporte/homonimia/';
     //para el modal
     const [showreserva, openReserva, closeReserva] = useModal(false);
     // declarar un hook 
@@ -26,7 +26,7 @@ const IndexReserva = () => {
 
     const { isLoading, data: registros, isError, error } = useQuery({
         queryKey: ['reservas'],
-        queryFn: getReservas,
+        queryFn: getHomonimias,
         select: reservas => reservas.sort((a, b) => b.id - a.id)
     })
 
@@ -53,6 +53,37 @@ const IndexReserva = () => {
         await setSearch(e.target.value);
     };
 
+
+    const fechaReserva = useMutation({
+        mutationFn: entregarReserva,
+        onSuccess: (response) => {
+            queryClient.invalidateQueries('reservas')
+            show_alerta('Fecha Registrada', '<i class="fa-solid fa-check border_alert_green"></i>', 'alert_green')
+            setLoading(false);
+        },
+        onError: (error) => {
+            console.log(error)
+            show_alerta('No conectado', '<i class="fa-solid fa-xmark border_alert_red"></i>', 'alert_red')
+            setLoading(false);
+        },
+    });
+
+    const handleEntregar = (e, row) => {
+        e.preventDefault();
+        Swal.fire({
+            title: "¿Entregar Documento?",
+            icon: "info",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "¡Sí, entrega!",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                setLoading(true);
+                fechaReserva.mutate(row);
+            }
+        });
+    };
     const handleShow = (e, row) => {
         e.preventDefault();
         openReserva();
@@ -68,9 +99,16 @@ const IndexReserva = () => {
 
                 <div className='d-flex flex-row justify-content-start'>
                     <button onClick={(e) => handleShow(e, row)} className="button_show"><i className="fa-solid fa-eye"></i><span>Ver</span></button>
-                    <Link to={`/reserva/edit/${row.id}`} className="button_edit"><i className="fa-solid fa-pen-to-square"></i><span>Editar</span></Link>
-                    <Link to={`/buscar-reserva/${row.entidad.toLowerCase().replace(/ /g, '~')}`}className="button_delete"><i className="fa-solid fa-magnifying-glass"></i><span>Verificar</span></Link>                
+                    <div className='d-flex flex-row justify-content-start'>
+                        <a href={url + row.id} target='_blank' className="button_print"><i className="fa-solid fa-print"></i><span>Imprimir</span></a>
+                        {!row.fecha_entrega
+                           ? <button onClick={(e) => handleEntregar(e, row)} className="button_download"><i className="fa-solid fa-check"></i><span>Entregar</span></button>
+                           : ''
+                        }
+                    </div>
+
                 </div >
+
             ),
             ignoreRowClick: true,
             allowOverflow: true,
@@ -128,7 +166,7 @@ const IndexReserva = () => {
 
         <div>
             {loading === true ? <Loading /> : ''}
-            <Banner text="SOLICITUDES DE RESERVA DE NOMBRES" />
+            <Banner text="RESERVAS HOMONIMIAS" />
 
             <div className='container-fluid d-flex flex-row md:flex-columns my-4'>
                 <div className='input_search'>
@@ -179,4 +217,4 @@ const IndexReserva = () => {
     )
 }
 
-export default IndexReserva
+export default HomReserva

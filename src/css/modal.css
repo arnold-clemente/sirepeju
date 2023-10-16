@@ -58,8 +58,24 @@
 
 .modal_title {
     width: 100%;
+    position: sticky;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
     background-color: #000A34;
     color: #fff;
+    z-index: 2;
+}
+
+.modal_title button{
+    position: absolute;
+    right: 0;
+    color: #fff;
+    background-color: transparent;
+    border: none;
+    padding: 5px 15px;
+    border-radius: 5px;
 }
 
 .modal_title h3 {
@@ -70,8 +86,23 @@
 
 .modal_title_red {
     width: 100%;
+    position: sticky;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
     background-color: #a31919;
     color: #fff;
+}
+
+.modal_title_red button{
+    position: absolute;
+    right: 0;
+    color: #fff;
+    background-color: transparent;
+    border: none;
+    padding: 5px 15px;
+    border-radius: 5px;
 }
 
 .modal_title_red h3 {
@@ -82,6 +113,10 @@
 
 .modal_title_azul {
     width: 100%;
+    position: sticky;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background-color: #0b85aa;
     color: #fff;
 }
@@ -90,6 +125,16 @@
     text-align: center;
     font-size: 18px;
     padding: 5px;
+}
+
+.modal_title_azul button{
+    position: absolute;
+    right: 0;
+    color: #fff;
+    background-color: transparent;
+    border: none;
+    padding: 5px 15px;
+    border-radius: 5px;
 }
 
 .modal_content {

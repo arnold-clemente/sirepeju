@@ -16,7 +16,7 @@ import { getEntidadesGlobal, createHonimia, createRegistro } from '../../api/bus
 const BuscarReserva = () => {
 
     const { entidad } = useParams();
-    const buscar = entidad.replace(/_/g, ' ');
+    const buscar = entidad.replace(/~/g, ' ');
     const [search, setSearch] = useState(buscar.normalize('NFD').replace(/[\u0300-\u036f]/g, ""));
     const [loading, setLoading] = useState(false);
     const queryClient = useQueryClient();    

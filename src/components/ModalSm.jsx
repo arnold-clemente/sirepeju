@@ -8,6 +8,7 @@ const ModalSm = ({ children, isOpen, closeModal, title }) => {
                 <div className='modal_card_sm'>
                     <div className='modal_title_red'>
                         <h3>{title}</h3>
+                        <button onClick={closeModal}><i className="fa-solid fa-x"></i></button>
                     </div>
                     <div className='modal_content'>
                         {children}

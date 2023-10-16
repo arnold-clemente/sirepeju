@@ -19,7 +19,6 @@ const EditGob = () => {
 
     const [gobernacion, setGobernacion] = useState({
         departamento_id: 4,
-        correo: '',
         id: 0,
     });
 
@@ -31,12 +30,14 @@ const EditGob = () => {
     })
 
     const [errorval, serErrorval] = useState({});
+    const { nombres, paterno, materno, cargo, ci, ext_ci, email, departamento_id, user_id } = gobernacion;
 
     const [loading, setLoading] = useState(false);
 
     const updateGob = useMutation({
         mutationFn: updateGobernacion,
         onSuccess: (response) => {
+            console.log(response);
             setLoading(false);
             if (response.status === true) {
                 queryClient.invalidateQueries('gobernacions')
@@ -65,26 +66,96 @@ const EditGob = () => {
 
 
     const handleUpdate = (e) => {
-        setLoading(true);
         e.preventDefault();
+        setLoading(true);
         updateGob.mutate(gobernacion);
     };
 
     if (isLoading) return <Loading />
-    else if (isError) return <div>Error: {error.message}</div>
+    else if (isError) return <div>Error: {errorval.message}</div>
     if (gobernacion.id === 0) return <Loading />
     else
         return (
             <>
                 {loading === true ? <Loading /> : ''}
                 <Banner text="ACTUALIZACIÓN DE USUARIO GOBERNACIÓN" />
-                <form onSubmit={handleUpdate} >
+                <form onSubmit={handleUpdate}>
+                    <div className="form-group py-2">
+                        <label>Nombres</label>
+                        <input type="text" className="form-control" placeholder="Escriba Nombre Completo"
+                            name="nombres" value={nombres} onChange={handleInputChange} />
+                        {errorval.nombres
+                            ? <ValidationError text={errorval.nombres} />
+                            : ''}
+                    </div>
                     <div className="row">
-                        <div className="form-group col-md-12 py-2">
+                        <div className="form-group col-md-6 py-2">
+                            <label>Apellido Paterno</label>
+                            <input type="text" className="form-control" placeholder="Escriba apellido paterno"
+                                name="paterno" value={paterno} onChange={handleInputChange} />
+                            {errorval.paterno
+                                ? <ValidationError text={errorval.paterno} />
+                                : ''}
+                        </div>
+                        <div className="form-group col-md-6 py-2">
+                            <label>Apellido Materno</label>
+                            <input type="text" className="form-control" placeholder="Escriba apellido materno"
+                                name="materno" value={materno} onChange={handleInputChange} />
+                            {errorval.materno
+                                ? <ValidationError text={errorval.materno} />
+                                : ''}
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="form-group col-md-6 py-2">
+                            <label>Cedula de Identidad</label>
+                            <input type="text" className="form-control" placeholder="Escriba la cedula de identidad"
+                                name="ci" value={ci} onChange={handleInputChange} />
+                            {errorval.length
+                                ? <ValidationError text={errorval.ci} />
+                                : ''}
+                        </div>
+                        <div className="form-group col-md-6 py-2">
                             <div className="form-group">
                                 <label>Expedido</label>
                                 <select className="form-control" id="exampleFormControlSelect1"
-                                    name="departamento_id" value={gobernacion.departamento_id} onChange={handleInputChange}>
+                                    name="ext_ci" value={ext_ci} onChange={handleInputChange}>
+                                    <option value="LP">LA PAZ</option>
+                                    <option value="OR">ORURO</option>
+                                    <option value="PT">POTOSI</option>
+                                    <option value="CB">COCHABAMBA</option>
+                                    <option value="SC">SANTA CRUZ</option>
+                                    <option value="BN">BENI</option>
+                                    <option value="PA">PANDO</option>
+                                    <option value="TJ">TARIJA</option>
+                                    <option value="CH">CHUQUISACA</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="form-group py-2">
+                        <label>Correo Electronico</label>
+                        <input type="email" className="form-control" placeholder="correo electronico de referencia"
+                            name="email" value={email} onChange={handleInputChange} />
+                        {errorval.email
+                            ? <ValidationError text={errorval.email} />
+                            : ''}
+                    </div>
+
+                    <div className="row">
+                        <div className="form-group col-md-6 py-2">
+                            <label>Cargo</label>
+                            <input type="text" className="form-control" placeholder="Escriba apellido paterno"
+                                name="cargo" value={cargo} onChange={handleInputChange} />
+                            {errorval.length
+                                ? <ValidationError text={errorval.cargo} />
+                                : ''}
+                        </div>
+                        <div className="form-group col-md-6 py-2">
+                            <div className="form-group">
+                                <label>Gobernacion Departamento </label>
+                                <select className="form-control" id="exampleFormControlSelect1"
+                                    name="departamento_id" value={departamento_id} onChange={handleInputChange}>
                                     <option value="1">BENI</option>
                                     <option value="2">CHUQUISACA</option>
                                     <option value="3">COCHABAMBA</option>
@@ -98,16 +169,8 @@ const EditGob = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="form-group py-2">
-                        <label>Correo Electronico</label>
-                        <input type="email" className="form-control" placeholder="correo electronico de referencia"
-                            name="correo" value={gobernacion.correo} onChange={handleInputChange} />
-                        {errorval.correo
-                            ? <ValidationError text={errorval.correo} />
-                            : ''}
-                    </div>
                     <Link to='/user-gobernaciones' type="submit" className="btn btn-danger my-4">Cancelar</Link>
-                    <button type="submit" className="btn btn-primary my-4 mx-4">Enviar</button>
+                    <button type="submit" className="btn btn-primary my-4 mx-4">Actualizar</button>
                 </form>
             </>
         )

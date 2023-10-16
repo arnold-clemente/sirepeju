@@ -37,6 +37,7 @@ const SidebarButtonLink = ({ icon, texto, sublinks, sidebar }) => {
                                 key={index}
                                 icon={link.icon}
                                 texto={link.texto}
+                                path={link.path}
                             />
                         ))}
                     </div>

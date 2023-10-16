@@ -31,6 +31,7 @@
     display: flex;
     align-items: center;
     text-align: center;
+    text-decoration: none;
     border: none;
     justify-content: center;
     font-size: 15px;
@@ -46,7 +47,7 @@
     box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 
-.button_show span{
+.button_show span {
     display: none;
     position: absolute;
     margin-top: 40px;
@@ -56,7 +57,7 @@
     transition: all 0.3s ease-in-out;
 }
 
-.button_show:hover span{
+.button_show:hover span {
     display: block;
 }
 
@@ -66,6 +67,7 @@
     border-radius: 50%;
     display: flex;
     align-items: center;
+    text-decoration: none;
     text-align: center;
     justify-content: center;
     font-size: 15px;
@@ -82,7 +84,7 @@
     box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 
-.button_edit span{
+.button_edit span {
     display: none;
     position: absolute;
     margin-top: 40px;
@@ -92,17 +94,18 @@
     transition: all 0.3s ease-in-out;
 }
 
-.button_edit:hover span{
+.button_edit:hover span {
     display: block;
 }
 
 .button_delete {
     width: 30px;
     height: 30px;
-    border-radius: 50%;  
+    border-radius: 50%;
     padding: 7px;
     display: flex;
     align-items: center;
+    text-decoration: none;
     justify-content: center;
     text-align: center;
     font-size: 15px;
@@ -118,7 +121,7 @@
     box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 
-.button_delete span{
+.button_delete span {
     display: none;
     position: absolute;
     margin-top: 40px;
@@ -128,7 +131,7 @@
     transition: all 0.3s ease-in-out;
 }
 
-.button_delete:hover span{
+.button_delete:hover span {
     display: block;
 }
 
@@ -142,6 +145,7 @@
     align-items: center;
     text-align: center;
     justify-content: center;
+    text-decoration: none;
     font-size: 15px;
     border: none;
     background-color: #5F037B;
@@ -156,7 +160,7 @@
     box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 
-.button_download span{
+.button_download span {
     display: none;
     position: absolute;
     margin-top: 40px;
@@ -166,7 +170,7 @@
     transition: all 0.3s ease-in-out;
 }
 
-.button_download:hover span{
+.button_download:hover span {
     display: block;
 }
 
@@ -179,6 +183,7 @@
     text-align: center;
     font-size: 15px;
     justify-content: center;
+    text-decoration: none;
     border: none;
     padding: 7px;
     background-color: #13752b;
@@ -192,7 +197,7 @@
     box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 
-.button_print span{
+.button_print span {
     display: none;
     position: absolute;
     margin-top: 40px;
@@ -202,7 +207,7 @@
     transition: all 0.3s ease-in-out;
 }
 
-.button_print:hover span{
+.button_print:hover span {
     display: block;
 }
 
@@ -222,6 +227,7 @@
     color: #fff;
     border: none;
     font-size: 14px;
+    text-decoration: none;
     justify-content: center;
     border-radius: 10px;
     transition: all 0.3s ease-in-out;
@@ -266,6 +272,7 @@
     text-align: center;
     font-size: 12px;
     justify-content: center;
+    text-decoration: none;
     border: none;
     background-color: #0A9DBD;
     color: #fff;
@@ -276,4 +283,131 @@
     background-color: #fff;
     color: #0A9DBD;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+/* botones de varias opciones datatable */
+
+.button_dropdown_table {
+    width: 40px;
+    height: 30px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    font-size: 12px;
+    justify-content: center;
+    text-decoration: none;
+    border: none;
+    background-color: #0A9DBD;
+    color: #fff;
+    margin: 0px 1px;
+    transition: all 0.3s ease-in-out;
+}
+
+.button_dropdown_table:hover {
+    background-color: #fff;
+    color: #0A9DBD;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+/* para el show  */
+.button_show_table {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    height: 25px;
+    padding: 5px 10px;
+    text-align: left;
+    font-size: 13px;
+    border: none;
+    text-decoration: none;
+    background-color: #FF7A00;
+    color: #fff;
+    transition: all 0.3s ease-in-out;
+}
+
+.button_show_table:hover {
+    background-color: #fff;
+    color: #FF7A00;
+}
+
+.button_edit_table {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    height: 25px;
+    padding: 5px 10px;
+    text-align: left;
+    font-size: 13px;
+    border: none;
+    text-decoration: none;
+    background-color: #0A9DBD;
+    color: #fff;
+    transition: all 0.3s ease-in-out;
+}
+
+.button_edit_table:hover {
+    background-color: #fff;
+    color: #0A9DBD;
+}
+
+.button_delete_table {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    height: 25px;
+    padding: 5px 10px;
+    text-align: left;
+    font-size: 13px;
+    border: none;
+    text-decoration: none;
+    background-color: #FF0000;
+    color: #fff;
+    transition: all 0.3s ease-in-out;
+}
+
+.button_delete_table:hover {
+    background-color: #fff;
+    color: #FF0000;
+}
+
+.button_download_table {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    height: 25px;
+    padding: 5px 10px;
+    text-align: left;
+    font-size: 13px;
+    border: none;
+    text-decoration: none;
+    background-color: #5F037B;
+    color: #fff;
+    transition: all 0.3s ease-in-out;
+}
+
+
+.button_download_table:hover {
+    background-color: #fff;
+    color: #5F037B;
+}
+
+.button_print_table {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    height: 25px;
+    padding: 5px 10px;
+    text-align: left;
+    font-size: 13px;
+    border: none;
+    text-decoration: none;
+    background-color: #13752b;
+    color: #fff;
+    transition: all 0.3s ease-in-out;
+}
+
+.button_print_table:hover {
+    background-color: #fff;
+    color: #13752b;
 }

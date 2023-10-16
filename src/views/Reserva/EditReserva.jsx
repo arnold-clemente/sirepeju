@@ -180,7 +180,7 @@ const EditReserva = () => {
                     </div>
                     <div className="form-group col-md-6 py-2">
                         <label>Correo</label>
-                        <input type="email" className="form-control" placeholder="Escriba el correo de contacto"
+                        <input type="text" className="form-control" placeholder="Escriba el correo de contacto"
                             name="correo" value={correo} onChange={handleInputChange} />
                         {errorval.correo
                             ? <ValidationError text={errorval.correo} />

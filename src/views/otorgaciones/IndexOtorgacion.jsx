@@ -28,9 +28,9 @@ const IndexOtorgacion = () => {
     const [personaModal, openPersonaModal, closePersonaModal] = useModal(false);
     const [errorval, serErrorval] = useState({});
     // par el modal 
-        const [showotorgacion, openOtorgacion, closeOtorgacion] = useModal(false);
-        // declarar un hook 
-        const [otorgacionShow, setotorgacionShow] = useState({});
+    const [showotorgacion, openOtorgacion, closeOtorgacion] = useModal(false);
+    // declarar un hook 
+    const [otorgacionShow, setotorgacionShow] = useState({});
 
     const [registroFinal, setRegistroFinal] = useState({
         otorgacion_id: 1,
@@ -117,7 +117,7 @@ const IndexOtorgacion = () => {
             ...registroFinal,
             [target.name]: target.value
         });
-    }; 
+    };
 
     const handleGuardarRegistro = (e) => {
         e.preventDefault();
@@ -171,7 +171,6 @@ const IndexOtorgacion = () => {
         openOtorgacion();
         const prueba = row;
         setotorgacionShow({ ...otorgacionShow, ...prueba })
-        console.log(otorgacionShow)
     }
 
     const handleGuardarPersona = (e) => {
@@ -192,9 +191,8 @@ const IndexOtorgacion = () => {
     const addPersonaColectiva = useMutation({
         mutationFn: createRegisroPersonaColectiva,
         onSuccess: (response) => {
-            setLoading(false);  
-            console.log(response)
-            if (response.status === true) {  
+            setLoading(false);
+            if (response.status === true) {
                 queryClient.invalidateQueries('otorgaciones')
                 show_alerta('Actualizado con exito', '<i class="fa-solid fa-check border_alert_green"></i>', 'alert_green')
                 setLoading(false);
@@ -212,7 +210,7 @@ const IndexOtorgacion = () => {
         }
     });
 
-   
+
 
     const columns = [
         {
@@ -231,11 +229,11 @@ const IndexOtorgacion = () => {
                                 : ''
                             }
                             <button onClick={(e) => handlePersonaModal(e, row)} className="button_delete"><i className="fa-solid fa-file-pdf"></i><span>Persona Colectiva</span></button>
-                            <button onClick={(e) => handleShow(e, row)} className="button_show"><i className="fa-solid fa-eye"></i></button> 
+                            <button onClick={(e) => handleShow(e, row)} className="button_show"><i className="fa-solid fa-eye"></i></button>
                         </div>
-                        
+
                     }
-                    
+
 
                 </div>
 
@@ -316,7 +314,7 @@ const IndexOtorgacion = () => {
                                 : ''}
                         </div>
                     </div>
-                
+
                     <div className='row mt-1'>
                         <div className='col-sm-5 px-0'>
                             <span className='font_span_input'>NUMERO INFORME FINAL: </span>
@@ -360,7 +358,7 @@ const IndexOtorgacion = () => {
                 </div>
 
             </ModalSm>
-            
+
             {/* modal para registro persona colectiva  */}
             <ModalMd isOpen={personaModal} closeModal={closePersonaModal} title={'REGISTRO PERSONA COLECTIVA'}>
                 <form onSubmit={handleGuardarPersona} className='container-fluid' >
@@ -370,7 +368,7 @@ const IndexOtorgacion = () => {
                         </div>
                         <div className='col-sm-7 px-0'>
                             <input type="file" className='form-control' placeholder='Rellenar Campo'
-                                name='estatuto_organico' accept="application/pdf"/>
+                                name='estatuto_organico' accept="application/pdf" />
                             {errorval.estatuto_organico
                                 ? <ValidationError text={errorval.estatuto_organico} />
                                 : ''}
@@ -382,7 +380,7 @@ const IndexOtorgacion = () => {
                         </div>
                         <div className='col-sm-7 px-0'>
                             <input type="file" className='form-control' placeholder='Rellenar Campo'
-                                name='reglamento_interno' accept="application/pdf"/>
+                                name='reglamento_interno' accept="application/pdf" />
                             {errorval.reglamento_interno
                                 ? <ValidationError text={errorval.reglamento_interno} />
                                 : ''}
@@ -394,7 +392,7 @@ const IndexOtorgacion = () => {
                         </div>
                         <div className='col-sm-7 px-0'>
                             <input type="file" className='form-control' placeholder='Rellenar Campo'
-                                name='informe_final' accept="application/pdf"/>
+                                name='informe_final' accept="application/pdf" />
                             {errorval.informe_final
                                 ? <ValidationError text={errorval.informe_final} />
                                 : ''}
@@ -406,7 +404,7 @@ const IndexOtorgacion = () => {
                         </div>
                         <div className='col-sm-7 px-0'>
                             <input type="file" className='form-control' placeholder='Rellenar Campo'
-                                name='nota_final' accept="application/pdf"/>
+                                name='nota_final' accept="application/pdf" />
                             {errorval.nota_final
                                 ? <ValidationError text={errorval.nota_final} />
                                 : ''}
@@ -418,7 +416,7 @@ const IndexOtorgacion = () => {
                         </div>
                         <div className='col-sm-7 px-0'>
                             <input type="text" className='form-control' placeholder='Rellenar Campo'
-                                name='resolucion_ministerial'/>
+                                name='resolucion_ministerial' />
                             {errorval.resolucion_ministerial
                                 ? <ValidationError text={errorval.resolucion_ministerial} />
                                 : ''}
@@ -443,30 +441,27 @@ const IndexOtorgacion = () => {
                 </form>
             </ModalMd>
             <ModalDiv isOpen={showotorgacion} closeModal={closeOtorgacion} title={'LISTA DE PERSONERIAS JURIDICAS CON RESOLUCION MINISTERIAL'}>
-            <div  class="modal-dialog modal-lg">
-                    <h2 class="fs-6"><b>Codigo:</b> &nbsp;&nbsp; <b>Naturaleza:</b></h2> <hr />
-                    <h2 class="fs-6"><b>Institucion Sin Fin de Lucro:</b> &nbsp;&nbsp; <b>Sigla:</b></h2> <hr />
-                    <h2 class="fs-6"><b>Resolucion Ministerial:</b></h2> <hr />
-                    <h2 class="fs-6"><b>Fecha de Resolucion Ministerial:</b></h2> <hr />
-                    <h2 class="fs-6"><b>Domicilio Legal:</b></h2> <hr />
-                    <h2 class="fs-6"><b>Objeto:</b></h2><hr />
-                    <h2 class="fs-6"><b>Miembros Fundadores:</b>
-                    
-                    <center>
-                    <div className='d-flex'>
-                    <button button class="btn btn-secondary" title="Visualizar Miembros">Visualizar lista de fundadores</button>
-                    </div>
-                    </center>
+                <div className="modal-dialog modal-lg">
+                    <h2 className="fs-6"><b>Codigo:</b> &nbsp;&nbsp; <b>Naturaleza:</b></h2> <hr />
+                    <h2 className="fs-6"><b>Institucion Sin Fin de Lucro:</b> &nbsp;&nbsp; <b>Sigla:</b></h2> <hr />
+                    <h2 className="fs-6"><b>Resolucion Ministerial:</b></h2> <hr />
+                    <h2 className="fs-6"><b>Fecha de Resolucion Ministerial:</b></h2> <hr />
+                    <h2 className="fs-6"><b>Domicilio Legal:</b></h2> <hr />
+                    <h2 className="fs-6"><b>Objeto:</b></h2><hr />
+                    <h2 className="fs-6"><b>Miembros Fundadores:</b>
+                        <center>
+                            <div className='d-flex'>
+                                {/* <button button className="btn btn-secondary" title="Visualizar Miembros">Visualizar lista de fundadores</button> */}
+                            </div>
+                        </center>
                     </h2>
-                       
                 </div>
                 <hr />
                 <div className='d-flex'>
-                    <button button class="btn btn-secondary" title="cerrar" onClick={closeOtorgacion}>cerrar</button>
+                    <button className="btn btn-secondary" onClick={closeOtorgacion}>cerrar</button>
                 </div>
-        
-        </ModalDiv>
-        
+            </ModalDiv>
+
             <Banner text="REGISTRO DE OTORGACION" />
 
             <div className='container-fluid d-flex flex-row md:flex-columns my-4'>

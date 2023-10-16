@@ -205,7 +205,7 @@
 .button_dropdopn_link {
   color: #000;
   padding: 5px;
-  font-size: 12px;
+  font-size: 14px;
   transition: all 0.3s ease-in-out;
 }
 
@@ -218,9 +218,11 @@
 }
 
 .button_dropdopn_link i {
-  width: 15px;
+  width: 25px;
+  padding: 5px 5px;
   margin-right: 10px;
   margin-left: 5px;
+  border-radius: 50%;
 }
 
 

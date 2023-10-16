@@ -36,6 +36,7 @@ const CreateReserva = () => {
             }
         },
         onError: (error) => {
+            console.log(error)
             show_alerta('No conectado', '<i class="fa-solid fa-xmark border_alert_red"></i>', 'alert_red')
             setLoading(false);
         },
@@ -57,9 +58,9 @@ const CreateReserva = () => {
     });
 
     const handleAdd = (e) => {
+        e.preventDefault();
         setLoading(true);
         serError({})
-        e.preventDefault();
         const reserva = formValues;
         addReserva.mutate(reserva);
     };

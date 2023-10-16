@@ -4,27 +4,27 @@ export const getAdministrativos = async () => {
     return response.data;
 }
 
+export const getAdministrativo = async (adminId) => {
+    const response = await axios.get(`/api/administrativo/show/${adminId}`)
+    return response.data;
+}
+
 export const createAdministrativo = async (administrativo) => {
-    const res = await axios.post('/api/administrativos', administrativo)
+    const res = await axios.post('/api/administrativo/store', administrativo)
         .then((response) => { return response.data })
         .catch((error) => { return error.data });
     return res;
 }
 
-export const getAdministrativo = async (adminId) => {
-    const response = await axios.get(`/api/administrativos/${adminId}`)
-    return response.data;
-}
-
 export const updateAdministrativo = async (admin) => {
-    const response = await axios.put(`/api/administrativos/${admin.id}`, admin)
+    const response = await axios.put(`/api/administrativo/update/${admin.id}`, admin)
         .then((response) => { return response.data })
         .catch((error) => { return error.data });
     return response;
 }
 
 export const destroyAdministrativo = async (admin) => {
-    const response = await axios.delete(`/api/administrativos/${admin.id}`)
+    const response = await axios.delete(`/api/administrativo/destroy/${admin.id}`)
         .then((response) => { return response.data })
         .catch((error) => { return error.data });
     return response;

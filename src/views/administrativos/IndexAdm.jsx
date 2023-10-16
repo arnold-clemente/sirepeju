@@ -59,10 +59,10 @@ const IndexAdministrativos = () => {
     const handleShow = (e, row) => {
         e.preventDefault();
         openAdministrativo();
-        const prueba = row; 
+        const prueba = row;
         setadministrativoShow({ ...administrativoShow, ...prueba })
         console.log(administrativoShow)
-    } 
+    }
     const dropAdministrativo = useMutation({
         mutationFn: destroyAdministrativo,
         onSuccess: (response) => {
@@ -131,17 +131,41 @@ const IndexAdministrativos = () => {
             name: 'Acciones',
             cell: (row) => (
                 row.estado === 1 ?
-                    <div className='d-flex flex-row'>
-                        <Link to={`/administrativo/edit/${row.id}`} className="button_edit"><i className="fa-solid fa-pen-to-square"></i></Link>
-                        <button onClick={(e) => handleDelete(e, row)} className="button_delete"><i className="fa-solid fa-x"></i></button>
-                        <button onClick={(e) => handlePassword(e, row)} className="button_show"><i className="fa-solid fa-key"></i></button>
-                        <button onClick={(e) => handleShow(e, row)} className="button_show"><i className="fa-solid fa-eye"></i></button>
+                    <div className='container-fluid d-flex flex-row'>
+                        <button onClick={(e) => handleShow(e, row)} className="button_show"><i className="fa-solid fa-eye"></i><span>Ver</span></button>
+                        <div className='dropdown'>
+                            <button className="button_dropdown_table dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i className="fa-solid fa-gear"></i>
+                            </button>
+                            <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                <li>
+                                    <Link to={`/administrativo/edit/${row.id}`} className="button_edit_table dropdown-item">
+                                        <i className="fa-solid fa-pen-to-square"></i>
+                                        <span className='mx-2'>Editar</span>
+                                    </Link>
+                                </li>
+                                <li>
+                                    <button onClick={(e) => handlePassword(e, row)} className="button_show_table dropdown-item">
+                                        <i className="fa-solid fa-key"></i>
+                                        <span className='mx-2'>Reiniciar Contraseña</span>
+                                    </button>
+                                </li>
+                                <li>
+                                    <button onClick={(e) => handleDelete(e, row)} className="button_delete_table dropdown-item">
+                                        <i className="fa-solid fa-x"></i>
+                                        <span className='mx-2'>Eliminar</span>
+                                    </button>
+                                </li>
+                            </ul>
                         </div>
+
+                    </div>
                     : ''
             ),
             ignoreRowClick: true,
             allowOverflow: true,
             button: true,
+            grow: 4,
         },
         {
             name: 'Id',
@@ -183,7 +207,7 @@ const IndexAdministrativos = () => {
 
     return (
 
-        
+
         <div>
             {loading === true ? <Loading /> : ''}
             <Banner text="LISTA DE ADMINISTRATIVOS" />
@@ -201,16 +225,18 @@ const IndexAdministrativos = () => {
                     />
                 </div>
                 <ModalDiv isOpen={showadministrativo} closeModal={closeAdministrativo} title={'LISTA DEL PERSONAL ADMINISTRATIVO DE LA UNIDAD - UPJ'}>
-        
-                <div  class="modal-dialog modal-lg">
-                <h2 class="fs-6"><b>Nombre Completo:</b> &nbsp;&nbsp;{administrativoShow.nombres + ' ' + administrativoShow.paterno + ' ' + administrativoShow.materno} </h2>&nbsp;&nbsp;<b>CI:</b> {administrativoShow.ci+ ' ' +administrativoShow.ext_ci}<hr />
-                <h2 class="fs-6"><b>Cargo:</b> &nbsp;{administrativoShow.cargo}</h2> <hr />
-                <h2 class="fs-6"><b>Correo Electronico:</b> &nbsp;</h2>  
-                </div>
-                <hr />
-                <div className='d-flex'>
-                    <button button class="btn btn-secondary" title="cerrar" onClick={closeAdministrativo}>cerrar</button>
-                </div>
+
+                    <div className="modal-dialog modal-lg">
+                        <h2 className="fs-6"><b>Nombre Completo:</b> &nbsp;&nbsp;{administrativoShow.nombres + ' ' + administrativoShow.paterno + ' ' + administrativoShow.materno} </h2>&nbsp;&nbsp;<b>CI:</b> {administrativoShow.ci + ' ' + administrativoShow.ext_ci}<hr />
+                        <h2 className="fs-6"><b>Cargo:</b> &nbsp;{administrativoShow.cargo}</h2> <hr />
+                        {administrativoShow.user
+                            ? <h2 className="fs-6"><b>Correo Electronico:</b> &nbsp;{administrativoShow.user.email}</h2>
+                            : ''}
+                    </div>
+                    <hr />
+                    <div className='d-flex'>
+                        <button className="btn btn-secondary" title="cerrar" onClick={closeAdministrativo}>cerrar</button>
+                    </div>
                 </ModalDiv>
                 <div>
                     <Link to="/administrativo/create" className='btn button_green'>
@@ -232,10 +258,10 @@ const IndexAdministrativos = () => {
                 />
             </div>
         </div>
-        
+
     )
-    
-   
+
+
 }
 
 

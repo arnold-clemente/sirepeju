@@ -18,6 +18,7 @@ import EditGob from '../views/gobernaciones/EditGob'
 import IndexReserva from '../views/Reserva/IndexReserva'
 import CreateReserva from '../views/Reserva/CreateReserva'
 import EditReserva from '../views/Reserva/EditReserva'
+import HomReserva from '../views/Reserva/HomReserva'
 // ruta de buscadores 
 import Buscar from '../views/buscador/Buscar'
 import BuscarReserva from '../views/buscador/BuscarReserva'
@@ -64,6 +65,7 @@ const WebRoutes = () => {
                     <Route path='/reservas' element={<IndexReserva />} />
                     <Route path='/reserva/create' element={<CreateReserva />} />
                     <Route path='/reserva/edit/:reservaId' element={<EditReserva />} />
+                    <Route path='/reserva-homonimia' element={<HomReserva />} />
                     {/* busqueda  */}
                     <Route path='/buscar/reserva' element={<Buscar />} />
                     <Route path='/buscar-reserva/:entidad' element={<BuscarReserva />} />

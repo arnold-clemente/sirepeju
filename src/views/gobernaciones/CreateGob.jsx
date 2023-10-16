@@ -41,30 +41,105 @@ const CreateGob = () => {
     });
 
     const [formValues, handleInputChange] = useForm({
+        nombres: '',
+        paterno: '',
+        materno: '',
+        cargo: '',
+        ci: '',
+        ext_ci: 'LP',
+        email: '',
         departamento_id: 4,
-        correo: 'marika@marika.com',
-        user_id: storage.get('authUser').id,
-        password: '87654321'
+        user_id: storage.get('authUser').id
     });
 
     const handleAdd = (e) => {
-        setLoading(true);
         e.preventDefault();
+        setLoading(true);
         const gobernacion = formValues;
         addGobernacion.mutate(gobernacion);
     };
 
-    const { departamento_id, correo, user_id, password } = formValues;
+    const { nombres, paterno, materno, cargo, ci, ext_ci, email, departamento_id, user_id } = formValues;
 
     return (
         <>
             {loading === true ? <Loading /> : ''}
             <Banner text="CREACIÓN DE NUEVO USUARIO GOBERNACIÓN" />
             <form onSubmit={handleAdd}>
+                <div className="form-group py-2">
+                    <label>Nombres</label>
+                    <input type="text" className="form-control" placeholder="Escriba Nombre Completo"
+                        name="nombres" value={nombres} onChange={handleInputChange} />
+                    {error.nombres
+                        ? <ValidationError text={error.nombres} />
+                        : ''}
+                </div>
                 <div className="row">
-                    <div className="form-group col-md-12 py-2">
+                    <div className="form-group col-md-6 py-2">
+                        <label>Apellido Paterno</label>
+                        <input type="text" className="form-control" placeholder="Escriba apellido paterno"
+                            name="paterno" value={paterno} onChange={handleInputChange} />
+                        {error.paterno
+                            ? <ValidationError text={error.paterno} />
+                            : ''}
+                    </div>
+                    <div className="form-group col-md-6 py-2">
+                        <label>Apellido Materno</label>
+                        <input type="text" className="form-control" placeholder="Escriba apellido materno"
+                            name="materno" value={materno} onChange={handleInputChange} />
+                        {error.materno
+                            ? <ValidationError text={error.materno} />
+                            : ''}
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="form-group col-md-6 py-2">
+                        <label>Cedula de Identidad</label>
+                        <input type="text" className="form-control" placeholder="Escriba la cedula de identidad"
+                            name="ci" value={ci} onChange={handleInputChange} />
+                        {error.length
+                            ? <ValidationError text={error.ci} />
+                            : ''}
+                    </div>
+                    <div className="form-group col-md-6 py-2">
                         <div className="form-group">
                             <label>Expedido</label>
+                            <select className="form-control" id="exampleFormControlSelect1"
+                                name="ext_ci" value={ext_ci} onChange={handleInputChange}>
+                                <option value="LP">LA PAZ</option>
+                                <option value="OR">ORURO</option>
+                                <option value="PT">POTOSI</option>
+                                <option value="CB">COCHABAMBA</option>
+                                <option value="SC">SANTA CRUZ</option>
+                                <option value="BN">BENI</option>
+                                <option value="PA">PANDO</option>
+                                <option value="TJ">TARIJA</option>
+                                <option value="CH">CHUQUISACA</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div className="form-group py-2">
+                    <label>Correo Electronico</label>
+                    <input type="email" className="form-control" placeholder="correo electronico de referencia"
+                        name="email" value={email} onChange={handleInputChange} />
+                    {error.email
+                        ? <ValidationError text={error.email} />
+                        : ''}
+                </div>
+
+                <div className="row">
+                    <div className="form-group col-md-6 py-2">
+                        <label>Cargo</label>
+                        <input type="text" className="form-control" placeholder="Escriba apellido paterno"
+                            name="cargo" value={cargo} onChange={handleInputChange} />
+                        {error.length
+                            ? <ValidationError text={error.cargo} />
+                            : ''}
+                    </div>
+                    <div className="form-group col-md-6 py-2">
+                        <div className="form-group">
+                            <label>Gobernacion Departamento </label>
                             <select className="form-control" id="exampleFormControlSelect1"
                                 name="departamento_id" value={departamento_id} onChange={handleInputChange}>
                                 <option value="1">BENI</option>
@@ -80,24 +155,6 @@ const CreateGob = () => {
                         </div>
                     </div>
                 </div>
-                <div className="form-group py-2">
-                    <label>Correo Electronico</label>
-                    <input type="email" className="form-control" placeholder="correo electronico de referencia"
-                        name="correo" value={correo} onChange={handleInputChange} />
-                    {error.correo
-                        ? <ValidationError text={error.correo} />
-                        : ''}
-                </div>
-                <div className="form-group py-2">
-                    <label>Contraseña:</label>
-                    <input type="text" className="form-control" placeholder="Escriba una contraseña"
-                        name="password" value={password} onChange={handleInputChange} />
-                    {error.password
-                        ? <ValidationError text={error.password} />
-                        : ''}
-                </div>
-                
-
                 <Link to='/user-gobernaciones' type="submit" className="btn btn-danger my-4">Cancelar</Link>
                 <button type="submit" className="btn btn-primary my-4 mx-4">Enviar</button>
             </form>
