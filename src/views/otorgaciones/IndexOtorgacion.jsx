@@ -448,7 +448,7 @@ const IndexOtorgacion = () => {
                     <h2 className="fs-6"><b>Fecha de Resolucion Ministerial:</b></h2> <hr />
                     <h2 className="fs-6"><b>Domicilio Legal:</b></h2> <hr />
                     <h2 className="fs-6"><b>Objeto:</b></h2><hr />
-                    <h2 className="fs-6"><b>Miembros Fundadores:</b>
+                    <h2 className="fs-6"><b>Miembros Fundadores:</b>                    
                         <center>
                             <div className='d-flex'>
                                 {/* <button button className="btn btn-secondary" title="Visualizar Miembros">Visualizar lista de fundadores</button> */}

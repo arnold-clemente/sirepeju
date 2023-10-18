@@ -18,11 +18,11 @@ export const links = [
                 icon: 'fa-solid fa-laptop-file',
                 texto: 'Gobernacion'
             },
-            {
-                path: '/user-roles',
-                icon: 'fa-solid fa-key',
-                texto: 'Roles de Usuario'
-            },
+            // {
+            //     path: '/user-roles',
+            //     icon: 'fa-solid fa-key',
+            //     texto: 'Roles de Usuario'
+            // },
         ],
     },
     {
@@ -60,6 +60,27 @@ export const links = [
         path: '/personalidades-juridicas',
         icon: 'fa-solid fa-file-contract',
         texto: 'Personalidades Juridicas'
+    },
+    {
+        icon: 'fa-solid fa-rectangle-ad',
+        texto: 'Adecuacion',
+        sublinks: [
+            {
+                path: '/adecuaciones',
+                icon: 'fa-solid fa-plus',
+                texto: 'Crear Adecuacion'
+            },
+            // {
+            //     path: '/reserva-homonimia',
+            //     icon: 'fa-solid fa-ban',
+            //     texto: 'Reserva Homonimia'
+            // },
+            // {
+            //     path: '/registro-reserva',
+            //     icon: 'fa-regular fa-square-check',
+            //     texto: 'Reservados'
+            // },
+        ],
     },
 
 ];

@@ -168,7 +168,7 @@ const IndexReserva = () => {
                     data={filteredRegistros()}
                     paginationComponentOptions={paginationOptions}
                     fixedHeader
-                    fixedHeaderScrollHeight='400px'
+                    fixedHeaderScrollHeight='800px'
                     pagination
                     noDataComponent={<span>No se encontro ningun elemento</span>}
                     progressPending={isLoading}

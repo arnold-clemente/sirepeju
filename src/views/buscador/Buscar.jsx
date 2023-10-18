@@ -130,19 +130,16 @@ const Buscar = () => {
         {
             name: 'Acciones',
             cell: (row) => (
-
                 <div className='d-flex flex-row justify-content-start'>
+                    <button onClick={(e) => handleShow(e, row)} className="button_show"><i className="fa-solid fa-eye"></i><span>Ver</span></button>
                     {row.estado === 1
                         ? <div className='d-flex'>
                             <button onClick={(e) => handleReserva(e, row)} className="button_edit"><i className="fa-solid fa-square-check"></i><span>Reservar</span></button>
                             <button onClick={(e) => handleHomonimia(e, row)} className="button_delete"><i className="fa-solid fa-ban"></i><span>Homonimia</span></button>
                         </div>
-                        : <button onClick={(e) => handleShow(e, row)} className="button_show"><i className="fa-solid fa-eye"></i></button>
-
+                        : ''
                     }
-
                 </div>
-
             ),
             ignoreRowClick: true,
             allowOverflow: true,
@@ -196,29 +193,25 @@ const Buscar = () => {
     else if (isError) return <div>Error: {error.message}</div>
     return (
         <>
-         
-
-<ModalDiv isOpen={showregistro} closeModal={closeRegistro} title={'Ver Detalle de Otorgacion'}>
-                <h3 class="fs-5"><center><b>Naturaleza:</b> {registroShow.naturaleza} &nbsp;<b>Entidad:</b>  {registroShow.entidad}</center></h3>
+            <ModalDiv isOpen={showregistro} closeModal={closeRegistro} title={'Detalle de la Entidad'}>
+                <h3 className="fs-5"><center><b>Naturaleza:</b> {registroShow.naturaleza} &nbsp;<b>Entidad:</b>  {registroShow.entidad}</center></h3>
                 <hr />
-                    <div  class="modal-dialog modal-lg">
-                    <h2 class="fs-6"><b>Sigla:</b> &nbsp;&nbsp;{registroShow.sigla} </h2> <hr />
-                    <h2 class="fs-6"><b>Representante Legal:</b></h2> <hr />
-                    <nav class="navbar bg-body-tertiary">
-                    {registroShow.representante}&nbsp;<b> CI:</b>{registroShow.ci_rep}
+                <div className="modal-dialog modal-lg">
+                    <h2 className="fs-6"><b>Sigla:</b> &nbsp;&nbsp;{registroShow.sigla} </h2> <hr />
+                    <h2 className="fs-6"><b>Representante Legal:</b></h2> <hr />
+                    <nav className="navbar bg-body-tertiary">
+                        {registroShow.representante}&nbsp;<b> CI:</b>{registroShow.ci_rep}
                     </nav> <hr />
-                    <h2 class="fs-6"><b>Persona Colectiva:</b> &nbsp;&nbsp;{registroShow.persona_colectiva} </h2>
-                    
-                            
+                    <h2 className="fs-6"><b>Persona Colectiva:</b> &nbsp;&nbsp;{registroShow.persona_colectiva} </h2>
                 </div>
-                
+
                 <hr></hr>
                 <div className='d-flex'>
-                    <button button class="btn btn-secondary" title="cerrar" onClick={closeRegistro}>cerrar</button>
+                    <button className="btn btn-secondary" title="cerrar" onClick={closeRegistro}>cerrar</button>
                     &nbsp;
-                    <button button class="btn btn-secondary" title="Imprimir" onClick={closeRegistro}>Imprimir</button>
+                    {/* <button className="btn btn-secondary" title="Imprimir" onClick={closeRegistro}>Imprimir</button> */}
                 </div>
-</ModalDiv>
+            </ModalDiv>
             <div>
                 {loading === true ? <Loading /> : ''}
                 <Banner text="VERIFICACIÓN DE PERSONA JURIDICA" />

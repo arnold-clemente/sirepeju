@@ -13,7 +13,6 @@ import Banner from '../../components/Banner';
 const CreateAdm = () => {
 
     const queryClient = useQueryClient();
-
     const go = useNavigate();
 
     const [error, serError] = useState({});
@@ -45,7 +44,7 @@ const CreateAdm = () => {
         paterno: '',
         materno: '',
         cargo: '',
-        usuario: 'Operativo',
+        usuario: 'operativo',
         estado: 1,
         ci: '',
         ext_ci: 'LP',
@@ -143,10 +142,11 @@ const CreateAdm = () => {
                             <label>Nivel de Acceso</label>
                             <select className="form-control" id="exampleFormControlSelect1"
                                 name="usuario" value={usuario} onChange={handleInputChange}>
-                                <option value="Administrador">Administrador</option>
-                                <option value="Tecnico">Tecnico</option>
-                                <option value="Especialista">Especialista</option>
-                                <option value="Operativo">Operativo</option>
+                                <option value="superadmin">Administrador</option>
+                                <option value="ejecutivo">Ejecutivo</option>
+                                <option value="tecnico">Tecnico</option>
+                                <option value="especialista">Especialista</option>
+                                <option value="operativo">Operativo</option>
                             </select>
                         </div>
                     </div>

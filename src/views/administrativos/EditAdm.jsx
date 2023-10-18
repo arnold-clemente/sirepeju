@@ -36,7 +36,7 @@ const EditAdm = () => {
         }
     })
 
-    if(!registro){
+    if (!registro) {
         return <Navigate to='/administrativos' />
     }
 
@@ -165,11 +165,11 @@ const EditAdm = () => {
                                 <label>Nivel de Acceso</label>
                                 <select className="form-control" id="exampleFormControlSelect1"
                                     name="usuario" value={admin.usuario} onChange={handleInputChange}>
-                                    <option>ejecutivo</option>
-                                    <option>tecnico</option>
-                                    <option>especialista</option>
-                                    <option>ejecutivo</option>
-                                    <option>operativo</option>
+                                    <option value="superadmin">Administrador</option>
+                                    <option value="ejecutivo">Ejecutivo</option>
+                                    <option value="tecnico">Tecnico</option>
+                                    <option value="especialista">Especialista</option>
+                                    <option value="operativo">Operativo</option>
                                 </select>
                             </div>
                         </div>

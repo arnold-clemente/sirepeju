@@ -10,6 +10,7 @@ import Loading from '../../components/Loading';
 import Banner from '../../components/Banner';
 import { show_alerta } from '../../components/MessageAlert';
 import ValidationError from '../../components/ValidationError';
+import storage from '../../Storage/storage'
 
 import { getRegistros, entregarRegistro, createOtorgacion } from '../../api/registroApi';
 // modal 
@@ -23,12 +24,16 @@ const IndexReg = () => {
     const [loading, setLoading] = useState(false);
     const queryClient = useQueryClient();
     const [isModalOtorgacion, openModalOtorgacion, closeModalOtorgacion] = useModal(false);
+    //para el modal
+    const [showregistro, openRegistro, closeRegistro] = useModal(false);
+    const [registroShow, setRegistroShow] = useState({});
     const [otorgacion, setOtorgacion] = useState({
         id: 0,
         fecha: '',
         codigo: '',
         domicilio: '',
         objeto: '',
+        user_id: storage.get('authUser').id
     })
     const [errorval, serErroreval] = useState({});
 
@@ -134,6 +139,7 @@ const IndexReg = () => {
         const resetval = { fecha: '', codigo: '', domicilio: '', objeto: '' }
         serErroreval({ ...errorval, ...resetval });
         openModalOtorgacion();
+        console.log(otorgacion)
     }
 
     const handleInputChange = ({ target }) => {
@@ -143,24 +149,28 @@ const IndexReg = () => {
         });
     };
 
+    const handleShow = (e, row) => {
+        e.preventDefault();
+        const prueba = row;
+        setRegistroShow({ ...registroShow, ...prueba })
+        openRegistro();
+    }
+
     const columns = [
         {
             name: 'Acciones',
             cell: (row) => (
                 <div className='d-flex flex-row justify-content-start'>
-                    <Link to={`/reserva/edit/${row.id}`} className="button_edit"><i className="fa-solid fa-pen-to-square"></i></Link>
-                    {row.estado === 1
-                        ? <Link to={`/buscar-reserva/${row.entidad.toLowerCase().replace(/ /g, '_')}`} className="button_verificar"><span className=''>Verificar</span></Link>
-                        : <div className='d-flex flex-row justify-content-start'>
-                            {row.fecha_entrega
-                                ? <div className='d-flex flex-row justify-content-starts'>
-                                    <a href={url + row.id} target='_blank' className="button_print"><i className="fa-solid fa-print"></i></a>
-                                    <button onClick={(e) => handleOtorgacion(e, row)} className="button_show"><i className="fa-solid fa-file-import"></i></button>
-                                </div>
-                                : <button onClick={(e) => handleEntregar(e, row)} className="button_download"><i className="fa-solid fa-check"></i></button>
-                            }
-                        </div>
-                    }
+                    <button onClick={(e) => handleShow(e, row)} className="button_show"><i className="fa-solid fa-eye"></i><span>Ver</span></button>
+                    <a href={url + row.id} target='_blank' className="button_print"><i className="fa-solid fa-print"></i><span>Imprimir</span></a>
+                    <div className='d-flex flex-row justify-content-start'>
+                        {row.fecha_entrega
+                            ? <div className='d-flex flex-row justify-content-starts'>
+                                <button onClick={(e) => handleOtorgacion(e, row)} className="button_show"><i className="fa-solid fa-file-import"></i><span>Otorgacion</span></button>
+                            </div>
+                            : <button onClick={(e) => handleEntregar(e, row)} className="button_download"><i className="fa-solid fa-check"></i><span>Entregar</span></button>
+                        }
+                    </div>
                 </div>
             ),
             ignoreRowClick: true,
@@ -220,6 +230,19 @@ const IndexReg = () => {
         <div>
             {loading === true ? <Loading /> : ''}
             <Banner text="REGISTRO DE ENTIDADES" />
+            <ModalDiv isOpen={showregistro} closeModal={closeRegistro} title={'ENTIDAD RESERVADA'}>
+                <div className="modal-dialog modal-lg">
+                    <h2 className="fs-6"><b>Entidad:</b>&nbsp;&nbsp;{registroShow.entidad}</h2> <hr />
+                    <h2 className="fs-6"><b>Sigla:</b>&nbsp;&nbsp;{registroShow.sigla}<hr /></h2> <hr />
+                    <h2 className="fs-6"><b>Representante legal:</b>&nbsp;&nbsp; {registroShow.representante}<b>CI:</b>9999</h2> <hr />
+                    <h2 className="fs-6"><b>Nº Correlativo:</b> &nbsp;&nbsp;{registroShow.nro_certificado}</h2><hr />
+                    <h2 className="fs-6"><b>Naturaleza:</b> &nbsp;&nbsp;{registroShow.naturaleza}</h2>
+                </div>
+                <hr />
+                <div className='d-flex'>
+                    <button className="btn btn-secondary" title="cerrar" onClick={closeRegistro}>cerrar</button>
+                </div>
+            </ModalDiv>
             <ModalDiv isOpen={isModalOtorgacion} closeModal={closeModalOtorgacion} title={'REGISTRO DE OTORGACION'}>
                 <div className="row">
                     <div className="col-md-6">
@@ -270,12 +293,6 @@ const IndexReg = () => {
                         value={search}
                         onChange={searchOnChange}
                     />
-                </div>
-                <div>
-                    <Link to="/reserva/create" className='btn button_green'>
-                        <span>AÑADIR</span>
-                        <i className="fa fa-plus" aria-hidden="true"></i>
-                    </Link>
                 </div>
             </div>
             <div className='table-responsive'>

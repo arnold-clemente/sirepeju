@@ -11,7 +11,7 @@ export const entregarRegistro= async (registro) => {
 }
 
 export const createOtorgacion= async (registro) => {
-    const response = await axios.post(`/api/otorgaciones`, registro)
+    const response = await axios.post(`/api/otorgacion/store`, registro)
         .then((response) => { return response.data })
         .catch((error) => { return error.data });
     return response;

@@ -10,6 +10,8 @@ import Loading from '../../components/Loading';
 import Banner from '../../components/Banner';
 import { show_alerta } from '../../components/MessageAlert';
 import storage from '../../Storage/storage'
+import ModalDiv from '../../components/ModalDiv'; //contendoresto hay importar siempre
+import { useModal } from '../../hooks/useModal'; //metodos siempre gg
 
 import { getEntidadesGlobal, createHonimia, createRegistro } from '../../api/buscardorApi';
 
@@ -19,7 +21,11 @@ const BuscarReserva = () => {
     const buscar = entidad.replace(/~/g, ' ');
     const [search, setSearch] = useState(buscar.normalize('NFD').replace(/[\u0300-\u036f]/g, ""));
     const [loading, setLoading] = useState(false);
-    const queryClient = useQueryClient();    
+    const queryClient = useQueryClient();
+    // par el modal true - false
+    const [showregistro, openRegistro, closeRegistro] = useModal(false);
+    // declarar un hook 
+    const [registroShow, setregistroShow] = useState({});
 
     const { isLoading, data: registros, isError, error } = useQuery({
         queryKey: ['entidades'],
@@ -79,8 +85,8 @@ const BuscarReserva = () => {
 
     const handleReserva = (e, row) => {
         e.preventDefault();
-        const user = {user_id: storage.get('authUser').id, name: storage.get('authUser').name}
-        const setregistro = {...row, ...user};
+        const user = { user_id: storage.get('authUser').id, name: storage.get('authUser').name }
+        const setregistro = { ...row, ...user };
         Swal.fire({
             title: "¿Reserva Entidad?",
             text: "¡No podrás revertir esto!",
@@ -115,23 +121,28 @@ const BuscarReserva = () => {
         });
     };
 
+    const handleShow = (e, row) => {
+        e.preventDefault();
+        openRegistro();
+        const prueba = row;
+        setregistroShow({ ...registroShow, ...prueba })
+        console.log(registroShow)
+    }
+
     const columns = [
         {
             name: 'Acciones',
             cell: (row) => (
-
                 <div className='d-flex flex-row justify-content-start'>
+                    <button onClick={(e) => handleShow(e, row)} className="button_show"><i className="fa-solid fa-eye"></i><span>Ver</span></button>
                     {row.estado === 1
                         ? <div className='d-flex'>
-                            <button onClick={(e) => handleReserva(e, row)} className="button_edit"><i className="fa-solid fa-square-check"></i></button>
-                            <button onClick={(e) => handleHomonimia(e, row)} className="button_delete"><i className="fa-solid fa-ban"></i></button>
+                            <button onClick={(e) => handleReserva(e, row)} className="button_edit"><i className="fa-solid fa-square-check"></i><span>Reservar</span></button>
+                            <button onClick={(e) => handleHomonimia(e, row)} className="button_delete"><i className="fa-solid fa-ban"></i><span>Homonimia</span></button>
                         </div>
-                        : <button onClick={(e) => handlePassword(e, row)} className="button_show"><i className="fa-solid fa-eye"></i></button>
-
+                        : ''
                     }
-
                 </div>
-
             ),
             ignoreRowClick: true,
             allowOverflow: true,
@@ -185,6 +196,25 @@ const BuscarReserva = () => {
     else if (isError) return <div>Error: {error.message}</div>
     return (
         <>
+            <ModalDiv isOpen={showregistro} closeModal={closeRegistro} title={'Detalle de la Entidad'}>
+                <h3 className="fs-5"><center><b>Naturaleza:</b> {registroShow.naturaleza} &nbsp;<b>Entidad:</b>  {registroShow.entidad}</center></h3>
+                <hr />
+                <div className="modal-dialog modal-lg">
+                    <h2 className="fs-6"><b>Sigla:</b> &nbsp;&nbsp;{registroShow.sigla} </h2> <hr />
+                    <h2 className="fs-6"><b>Representante Legal:</b></h2> <hr />
+                    <nav className="navbar bg-body-tertiary">
+                        {registroShow.representante}&nbsp;<b> CI:</b>{registroShow.ci_rep}
+                    </nav> <hr />
+                    <h2 className="fs-6"><b>Persona Colectiva:</b> &nbsp;&nbsp;{registroShow.persona_colectiva} </h2>
+                </div>
+
+                <hr></hr>
+                <div className='d-flex'>
+                    <button className="btn btn-secondary" title="cerrar" onClick={closeRegistro}>cerrar</button>
+                    &nbsp;
+                    {/* <button className="btn btn-secondary" title="Imprimir" onClick={closeRegistro}>Imprimir</button> */}
+                </div>
+            </ModalDiv>
             <div>
                 {loading === true ? <Loading /> : ''}
                 <Banner text="VERIFICACIÓN DE PERSONA JURIDICA" />

@@ -192,13 +192,7 @@ const HomReserva = () => {
                     <div className='d-flex'>
                         <button className="btn btn-secondary" title="cerrar" onClick={closeReserva}>cerrar</button>
                     </div>
-                </ModalDiv>
-                <div>
-                    <Link to="/reserva/create" className='btn button_green'>
-                        <span>AÑADIR</span>
-                        <i className="fa fa-plus" aria-hidden="true"></i>
-                    </Link>
-                </div>
+                </ModalDiv>              
             </div>
             <div className='table-responsive'>
                 <DataTable
