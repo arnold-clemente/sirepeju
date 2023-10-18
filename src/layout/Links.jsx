@@ -70,17 +70,16 @@ export const links = [
                 icon: 'fa-solid fa-plus',
                 texto: 'Crear Adecuacion'
             },
-            // {
-            //     path: '/reserva-homonimia',
-            //     icon: 'fa-solid fa-ban',
-            //     texto: 'Reserva Homonimia'
-            // },
-            // {
-            //     path: '/registro-reserva',
-            //     icon: 'fa-regular fa-square-check',
-            //     texto: 'Reservados'
-            // },
+            {
+                path: '/adecuacion/personalidades',
+                icon: 'fa-solid fa-file-contract',
+                texto: 'Reserva Homonimia'
+            },
+            {
+                path: '/adecuacion/revocados',
+                icon: 'fa-solid fa-ban',
+                texto: 'Reservados'
+            },
         ],
     },
-
 ];

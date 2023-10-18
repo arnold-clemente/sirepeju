@@ -183,6 +183,7 @@ const IndexOtorgacion = () => {
         const nota_final = formData.get('nota_final')
         const resolucion_ministerial = formData.get('resolucion_ministerial')
         const fecha_resolucion = formData.get('fecha_resolucion')
+        return console.log(formData)
         setLoading(true);
         closePersonaModal();
         addPersonaColectiva.mutate(formData)

@@ -35,6 +35,8 @@ import IndesPersonalidad from '../views/personalidades/IndesPersonalidad'
 import IndexAdecuacion from '../views/adecuacion/IndexAdecuacion'
 import CreateAdecuacion from '../views/adecuacion/CreateAdecuacion'
 import FundAdecuacion from '../views/adecuacion/FundAdecuacion'
+import PersAdecuacion from '../views/adecuacion/PersAdecuacion'
+import RevAdecuacion from '../views/adecuacion/RevAdecuacion'
 
 
 const WebRoutes = () => {
@@ -84,6 +86,8 @@ const WebRoutes = () => {
                     <Route path='/adecuaciones' element={<IndexAdecuacion />} />
                     <Route path='/adecuacion/crear' element={<CreateAdecuacion />} />
                     <Route path='/adecuacion/:adecuacionId/fundadores' element={<FundAdecuacion />} />
+                    <Route path='/adecuacion/personalidades' element={<PersAdecuacion />} />
+                    <Route path='/adecuacion/revocados' element={<RevAdecuacion />} />
                 </Routes>
             </div>
         </div>

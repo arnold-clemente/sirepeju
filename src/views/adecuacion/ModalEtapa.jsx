@@ -97,7 +97,7 @@ const ModalEtapa = ({ registrorModal, openRegistrorModal, closeRegistrorModal, r
                             <span className='font_span_input'>ALFANUMERICO: </span>
                         </div>
                         <div className='col-sm-8 px-0'>
-                            <textarea cols="8" type="text" className='form-control' disabled
+                            <textarea rows="4" type="text" className='form-control' disabled
                                 name='alfanumerico' value={alfanumerico} />
                             {errorval.alfanumerico
                                 ? <ValidationError text={errorval.alfanumerico} />

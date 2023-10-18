@@ -14,6 +14,9 @@ import { useModal } from '../../hooks/useModal'
 // modal components 
 import ModalShow from './ModalShow';
 import ModalEtapa from './ModalEtapa';
+import ModalPersona from './ModalPersona';
+import ModalSeguimiento from './ModalSeguimiento';
+import ModalInforme from './ModalInforme';
 
 const IndexAdecuacion = () => {
   const queryClient = useQueryClient();
@@ -24,8 +27,17 @@ const IndexAdecuacion = () => {
   const [modalAdecuacion, openAdecuacion, closeAdecuacion] = useModal(false);
   const [adecuacionShow, setadecuacionShow] = useState({});
 
-  //para los errores de validacion
-  const [errorval, serErrorval] = useState({});
+  //para registro persona colectiva
+  const [personaModal, openPersonaModal, closePersonaModal] = useModal(false);
+  const [personaCol, setPersonaCol] = useState({ adecuacion_id: 1 });
+
+  //para el seguimiento
+  const [segumientoModal, openSeguimientoModal, closeSeguimientoModal] = useModal(false);
+  const [seguimiento, setSeguimiento] = useState({ adecuacion_id: 1, seguimiento: '', fecha: '' });
+
+  //para el informe
+  const [informeModal, openInformeModal, closeInformeModal] = useModal(false);
+  const [informe, setInforme] = useState({ adecuacion_id: 1, informe: '', fecha: '' });
 
   //para el registro final 
   const [registrorModal, openRegistrorModal, closeRegistrorModal] = useModal(false);
@@ -95,7 +107,6 @@ const IndexAdecuacion = () => {
 
   const handleRegistroFinal = (e, row) => {
     e.preventDefault();
-    serErrorval({});
     const encript = '$2a$10$CwTycUXWue0Thq9StjUM0u'
     const concatenar = row.personalidad_juridica + '-' + row.naturaleza + '-' + row.codigo_adecuacion;
     const alfanumerico_cript = bcrypt.hashSync(concatenar, encript)
@@ -110,9 +121,55 @@ const IndexAdecuacion = () => {
     openRegistrorModal()
   };
 
+  const handlePersonaModal = (e, row) => {
+    e.preventDefault();
+    const auxiliar = {
+      adecuacion_id: row.id,
+    }
+    setPersonaCol({ ...personaCol, ...auxiliar })
+    openPersonaModal();
+  }
+
+  const handleSeguimiento = (e, row) => {
+    e.preventDefault();
+    const auxiliar = {
+      adecuacion_id: row.id,
+      seguimiento: '',
+      fecha: '',
+    }
+    setSeguimiento({ ...seguimiento, ...auxiliar })
+    openSeguimientoModal();
+  }
+
+  const handleInforme = (e, row) => {
+    e.preventDefault();
+    const auxiliar = {
+      adecuacion_id: row.id,
+      informe: '',
+      fecha: '',
+    }
+    setInforme({ ...informe, ...auxiliar })
+    openInformeModal();
+  }
+
+
   const handleInputChange = ({ target }) => {
     setRegistroFinal({
       ...registroFinal,
+      [target.name]: target.value
+    });
+  };
+
+  const handleInputSeguimiento = ({ target }) => {
+    setSeguimiento({
+      ...seguimiento,
+      [target.name]: target.value
+    });
+  };
+
+  const handleInputInforme = ({ target }) => {
+    setInforme({
+      ...informe,
       [target.name]: target.value
     });
   };
@@ -128,6 +185,18 @@ const IndexAdecuacion = () => {
               <i className="fa-solid fa-gear"></i>
             </button>
             <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+              <li>
+                <button onClick={(e) => handleInforme(e, row)} className="button_download_table">
+                  <i className="fa-solid fa-file-pen"></i>
+                  <span className='mx-2'>Informe Preliminar</span>
+                </button>
+              </li>
+              <li>
+                <button onClick={(e) => handleSeguimiento(e, row)} className="button_show_table">
+                  <i className="fa-solid fa-pen"></i>
+                  <span className='mx-2'>Seguimiento</span>
+                </button>
+              </li>
               <li>
                 {!row.miembros_fundador
                   ? <Link to={`/adecuacion/${row.id}/fundadores`} className="button_edit_table">
@@ -148,10 +217,10 @@ const IndexAdecuacion = () => {
               </li>
               <li>
                 {row.miembros_fundador && row.alfanumerico && row.registro_persona_adecuacion == null
-                  ? <button onClick={(e) => handleRegistroFinal(e, row)} className="button_delete_table">
+                  ? <button onClick={(e) => handlePersonaModal(e, row)} className="button_delete_table">
                     <i className="fa-solid fa-file-pdf"></i>
                     <span className='mx-2'>Persona Colectiva
-                    
+
                     </span>
                   </button>
                   : ''
@@ -225,9 +294,20 @@ const IndexAdecuacion = () => {
       {loading === true ? <Loading /> : ''}
       {/* para le modal show adecuacion  */}
       <ModalShow showRegistro={adecuacionShow} modalRegistro={modalAdecuacion} closeRegistro={closeAdecuacion} />
+      {/* par el modal de seguimiento  */}
+      <ModalSeguimiento registrorModal={segumientoModal} closeRegistrorModal={closeSeguimientoModal} openRegistrorModal={openSeguimientoModal}
+        registro={seguimiento} handleInputChange={handleInputSeguimiento} />
+
+      {/* par el modal de citeinforme  */}
+      <ModalInforme registrorModal={informeModal} closeRegistrorModal={closeInformeModal} openRegistrorModal={openInformeModal}
+        registro={informe} handleInputChange={handleInputInforme} />
+
       {/* par el modal de etapa final  */}
       <ModalEtapa registrorModal={registrorModal} closeRegistrorModal={closeRegistrorModal} openRegistrorModal={openRegistrorModal}
         registroFinal={registroFinal} handleInputChange={handleInputChange} />
+
+      {/* para el modal de persona colectiva  */}
+      <ModalPersona persona={personaCol} modalRegistro={personaModal} openRegistrorModal={openPersonaModal} closeRegistrorModal={closePersonaModal} />
 
       <Banner text="REGISTRO DE ADECUACION" />
       <div className='container-fluid d-flex flex-row md:flex-columns my-4'>
