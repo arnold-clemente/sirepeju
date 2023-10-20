@@ -1,37 +1,47 @@
-import React, { createRef, useState } from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import DataTable from "react-data-table-component";
 import { useQuery } from 'react-query';
-import { useMutation } from 'react-query';
 import { useQueryClient } from 'react-query';
 import bcrypt from "bcryptjs-react";
 
 import Loading from '../../components/Loading';
 import Banner from '../../components/Banner';
-import { show_alerta } from '../../components/MessageAlert';
-import ValidationError from '../../components/ValidationError';
 
-import { getOtorgaciones, createRegistroFinal } from '../../api/otorgacionesApi';
-import { createRegisroPersonaColectiva } from '../../api/registroPersonaColectivaApi';
+import { getOtorgaciones } from '../../api/otorgacionesApi';
 // modal 
-import ModalSm from '../../components/ModalSm'
-import ModalMd from '../../components/ModalMd'
-import { useModal } from '../../hooks/useModal'//esto ya estaba
-import ModalDiv from '../../components/ModalDiv'; //contendoresto hay importar siempre
+import { useModal } from '../../hooks/useModal'
+// modal components 
+import ModalShowOtorgacion from './ModalShowOtorgacion';
+import ModalRegistroFinalOtorgacion from './ModalRegistroFinalOtorgacion';
+import ModalPersonaOtorgacion from './ModalPersonaOtorgacion';
+import ModalSeguimientoOtorgacion from './ModalSeguimientoOtorgacion';
+import ModalInformeOtorgacion from './ModalInformeOtorgacion';
 
 const IndexOtorgacion = () => {
-
+    
     const queryClient = useQueryClient();
     const [search, setSearch] = useState('');
     const [loading, setLoading] = useState(false);
-    const [registrorModal, openRegistrorModal, closeRegistrorModal] = useModal(false);
-    const [personaModal, openPersonaModal, closePersonaModal] = useModal(false);
-    const [errorval, serErrorval] = useState({});
-    // par el modal 
-    const [showotorgacion, openOtorgacion, closeOtorgacion] = useModal(false);
-    // declarar un hook 
+
+    // para el modal show Otorgacion
+    const [modalOtorgacion, openOtorgacion, closeOtorgacion] = useModal(false);
     const [otorgacionShow, setotorgacionShow] = useState({});
 
+    //para registro persona colectiva
+    const [personaModal, openPersonaModal, closePersonaModal] = useModal(false);
+    const [personaCol, setPersonaCol] = useState({ otorgacion_id: 1 });
+
+    //para el seguimiento
+    const [segumientoModal, openSeguimientoModal, closeSeguimientoModal] = useModal(false);
+    const [seguimiento, setSeguimiento] = useState({ otorgacion_id: 1, seguimiento: '', fecha: '' });
+
+    // para el informe
+    const [informeModal, openInformeModal, closeInformeModal] = useModal(false);
+    const [informe, setInforme] = useState({ otorgacion_id: 1, informe: '', fecha: '' });
+
+    // para el registro final 
+    const [registrorModal, openRegistrorModal, closeRegistrorModal] = useModal(false);
     const [registroFinal, setRegistroFinal] = useState({
         otorgacion_id: 1,
         alfanumerico: '',
@@ -39,22 +49,11 @@ const IndexOtorgacion = () => {
         numero_informe_final: '',
         fecha_envio: '',
     })
-    const [file, setFile] = useState(null);
-
-    const inputRef = createRef()
-
-
-    const { nota_interna_final, alfanumerico, numero_informe_final, fecha_envio, otorgacion_id } = registroFinal;
-
-    const [personaCol, setPersonaCol] = useState({
-        otorgacion_id: 1,
-    })
-    const { estatuto_organico, reglamento_interno, informe_final, nota_final, resolucion_ministerial, fecha_resolucion } = personaCol
 
     const { isLoading, data: registros, isError, error } = useQuery({
         queryKey: ['otorgaciones'],
         queryFn: getOtorgaciones,
-        select: reservas => reservas.sort((a, b) => b.id - a.id)
+        select: otorgaciones => otorgaciones.sort((a, b) => b.id - a.id)
     })
 
     const filteredRegistros = () => {
@@ -66,8 +65,9 @@ const IndexOtorgacion = () => {
                     registro.miembros_fundador.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
                     registro.personalidad_juridica.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
                     registro.sigla.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
-                    registro.domicilio_legal.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
-                    registro.objeto.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
+                    registro.representante.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
+                    registro.naturaleza.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
+                    registro.codigo_otorgacion.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
                     registro.ci_rep.toLowerCase().includes(search.toLowerCase())
                 ) {
                     return registro;
@@ -76,8 +76,9 @@ const IndexOtorgacion = () => {
                 if (
                     registro.personalidad_juridica.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
                     registro.sigla.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
-                    registro.domicilio_legal.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
-                    registro.objeto.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
+                    registro.representante.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
+                    registro.naturaleza.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
+                    registro.codigo_otorgacion.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
                     registro.ci_rep.toLowerCase().includes(search.toLowerCase())
                 ) {
                     return registro;
@@ -94,9 +95,17 @@ const IndexOtorgacion = () => {
         await setSearch(e.target.value);
     };
 
+    const handleShow = (e, row) => {
+        console.log(row)
+        e.preventDefault();
+        openOtorgacion();
+        const prueba = row;
+        setotorgacionShow({ ...otorgacionShow, ...prueba })
+
+    }
+
     const handleRegistroFinal = (e, row) => {
         e.preventDefault();
-        serErrorval({});
         const encript = '$2a$10$CwTycUXWue0Thq9StjUM0u'
         const concatenar = row.personalidad_juridica + '-' + row.naturaleza + '-' + row.codigo_otorgacion;
         const alfanumerico_cript = bcrypt.hashSync(concatenar, encript)
@@ -109,8 +118,39 @@ const IndexOtorgacion = () => {
         }
         setRegistroFinal({ ...auxiliar })
         openRegistrorModal()
-        // let comp = bcrypt.compareSync(concatenar, alfanumerico)
     };
+
+    const handlePersonaModal = (e, row) => {
+        e.preventDefault();
+        const auxiliar = {
+            otorgacion_id: row.id,
+        }
+        setPersonaCol({ ...personaCol, ...auxiliar })
+        openPersonaModal();
+    }
+
+    const handleSeguimiento = (e, row) => {
+        e.preventDefault();
+        const auxiliar = {
+            otorgacion_id: row.id,
+            seguimiento: '',
+            fecha: '',
+        }
+        setSeguimiento({ ...seguimiento, ...auxiliar })
+        openSeguimientoModal();
+    }
+
+    const handleInforme = (e, row) => {
+        e.preventDefault();
+        const auxiliar = {
+            otorgacion_id: row.id,
+            informe: '',
+            fecha: '',
+        }
+        setInforme({ ...informe, ...auxiliar })
+        openInformeModal();
+    }
+
 
     const handleInputChange = ({ target }) => {
         setRegistroFinal({
@@ -119,125 +159,76 @@ const IndexOtorgacion = () => {
         });
     };
 
-    const handleGuardarRegistro = (e) => {
-        e.preventDefault();
-        setLoading(true);
-        closeRegistrorModal();
-        addRegistroFinal.mutate(registroFinal)
-    }
+    const handleInputSeguimiento = ({ target }) => {
+        setSeguimiento({
+            ...seguimiento,
+            [target.name]: target.value
+        });
+    };
 
-    const addRegistroFinal = useMutation({
-        mutationFn: createRegistroFinal,
-        onSuccess: (response) => {
-            setLoading(false);
-            if (response.status === true) {
-                let auxiliar = {
-                    otorgacion_id: 1,
-                    alfanumerico: '',
-                    nota_interna_final: '',
-                    numero_informe_final: '',
-                    fecha_envio: '',
-                }
-                setRegistroFinal({ ...auxiliar })
-                serErrorval({});
-                queryClient.invalidateQueries('otorgaciones')
-                show_alerta('Actualizado con exito', '<i class="fa-solid fa-check border_alert_green"></i>', 'alert_green')
-                setLoading(false);
-            } else {
-                show_alerta('Fallo de Validacion', '<i class="fa-solid fa-xmark border_alert_red"></i>', 'alert_red');
-                serErrorval(response.errors);
-                openRegistrorModal();
-                setLoading(false);
-            }
-        },
-        onError: (error) => {
-            console.log(error)
-            show_alerta('No conectado', '<i class="fa-solid fa-xmark border_alert_red"></i>', 'alert_red')
-            setLoading(false);
-        }
-    });
-
-    const handlePersonaModal = (e, row) => {
-        e.preventDefault();
-        serErrorval({});
-        const auxiliar = {
-            otorgacion_id: row.id,
-        }
-        setPersonaCol({ ...personaCol, ...auxiliar })
-        openPersonaModal();
-    }
-    const handleShow = (e, row) => {
-        e.preventDefault();
-        openOtorgacion();
-        const prueba = row;
-        setotorgacionShow({ ...otorgacionShow, ...prueba })
-    }
-
-    const handleGuardarPersona = (e) => {
-        e.preventDefault();
-        const formData = new FormData(e.currentTarget)
-        const otorgacion_id = formData.append('otorgacion_id', personaCol.otorgacion_id)
-        const estatuto_organico = formData.get('estatuto_organico')
-        const reglamento_interno = formData.get('reglamento_interno')
-        const informe_final = formData.get('informe_final')
-        const nota_final = formData.get('nota_final')
-        const resolucion_ministerial = formData.get('resolucion_ministerial')
-        const fecha_resolucion = formData.get('fecha_resolucion')
-        return console.log(formData)
-        setLoading(true);
-        closePersonaModal();
-        addPersonaColectiva.mutate(formData)
-    }
-
-    const addPersonaColectiva = useMutation({
-        mutationFn: createRegisroPersonaColectiva,
-        onSuccess: (response) => {
-            setLoading(false);
-            if (response.status === true) {
-                queryClient.invalidateQueries('otorgaciones')
-                show_alerta('Actualizado con exito', '<i class="fa-solid fa-check border_alert_green"></i>', 'alert_green')
-                setLoading(false);
-            } else {
-                show_alerta('Fallo de Validacion', '<i class="fa-solid fa-xmark border_alert_red"></i>', 'alert_red');
-                serErrorval(response.errors);
-                openPersonaModal();
-                setLoading(false);
-            }
-        },
-        onError: (error) => {
-            console.log(error)
-            show_alerta('No conectado', '<i class="fa-solid fa-xmark border_alert_red"></i>', 'alert_red')
-            setLoading(false);
-        }
-    });
-
-
+    const handleInputInforme = ({ target }) => {
+        setInforme({
+            ...informe,
+            [target.name]: target.value
+        });
+    };
 
     const columns = [
         {
             name: 'Acciones',
             cell: (row) => (
+                <div className='container-fluid d-flex flex-row'>
+                    <button onClick={(e) => handleShow(e, row)} className="button_show"><i className="fa-solid fa-eye"></i><span>Ver</span></button>
+                    <div className='dropdown'>
+                        <button className="button_dropdown_table dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i className="fa-solid fa-gear"></i>
+                        </button>
+                        <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                           <li>
+                                <button onClick={(e) => handleInforme(e, row)} className="button_download_table">
+                                    <i className="fa-solid fa-file-pen"></i>
+                                    <span className='mx-2'>Informe Preliminar</span>
+                                </button>
+                            </li>
+                             <li>
+                                <button onClick={(e) => handleSeguimiento(e, row)} className="button_show_table">
+                                    <i className="fa-solid fa-pen"></i>
+                                    <span className='mx-2'>Seguimiento</span>
+                                </button>
+                            </li>
+                            <li>
+                                {!row.miembros_fundador
+                                    ? <Link to={`/otorgaciones/${row.id}/fundadores`} className="button_edit_table">
+                                        <i className="fa-solid fa-users"></i>
+                                        <span className='mx-2'>fundadores</span>
+                                    </Link>
+                                    : ''
+                                }
+                            </li>
+                            <li>
+                                {row.miembros_fundador && !row.alfanumerico
+                                    ? <button onClick={(e) => handleRegistroFinal(e, row)} className="button_print_table">
+                                        <i className="fa-regular fa-registered"></i>
+                                        <span className='mx-2'>Etapa Final</span>
+                                    </button>
+                                    : ''
+                                }
+                            </li>
+                            <li>
+                                {row.miembros_fundador && row.alfanumerico
+                                    ? <button onClick={(e) => handlePersonaModal(e, row)} className="button_delete_table">
+                                        <i className="fa-solid fa-file-pdf"></i>
+                                        <span className='mx-2'>Persona Colectiva
 
-                <div className='d-flex justify-content-start'>
-                    {!row.miembros_fundador
-                        ? <Link to={`/otorgaciones/${row.id}/fundadores`} className="button_edit"><i className="fa-solid fa-users"></i><span>fundadores</span></Link>
-                        : ''}
-                    {row.estado === 1
-                        ? <Link to={`/buscar-reserva/${row.entidad.toLowerCase().replace(/ /g, '_')}`} className="button_verificar"><span className=''>Verificar</span></Link>
-                        : <div className='d-flex justify-content-start'>
-                            {!row.alfanumerico
-                                ? <button onClick={(e) => handleRegistroFinal(e, row)} className="button_print"><i className="fa-regular fa-registered"></i><span>Etapa Final</span></button>
-                                : ''
-                            }
-                            <button onClick={(e) => handlePersonaModal(e, row)} className="button_delete"><i className="fa-solid fa-file-pdf"></i><span>Persona Colectiva</span></button>
-                            <button onClick={(e) => handleShow(e, row)} className="button_show"><i className="fa-solid fa-eye"></i></button>
-                        </div>
-
-                    }
-
+                                        </span>
+                                    </button>
+                                    : ''
+                                }
+                            </li>
+                        </ul>
+                    </div>
 
                 </div>
-
             ),
             ignoreRowClick: true,
             allowOverflow: true,
@@ -256,7 +247,7 @@ const IndexOtorgacion = () => {
             grow: 3,
         },
         {
-            name: 'Mienbros',
+            name: 'Miembros',
             selector: row => row.miembros_fundador,
             sortable: true,
             grow: 2
@@ -300,171 +291,24 @@ const IndexOtorgacion = () => {
     return (
         <div>
             {loading === true ? <Loading /> : ''}
-            {/* modal para el etapa final de registro  */}
-            <ModalSm isOpen={registrorModal} closeModal={closeRegistrorModal} title={'ETAPA FINAL DE REGISTRO'}>
-                <div className='container-fluid'>
-                    <div className='row mt-1'>
-                        <div className='col-sm-5 px-0'>
-                            <span className='font_span_input'>CITE NOTA INTERNA FINAL: </span>
-                        </div>
-                        <div className='col-sm-7 px-0'>
-                            <input type="text" className='form-control' placeholder='Rellenar Campo'
-                                name='nota_interna_final' value={nota_interna_final} onChange={handleInputChange} />
-                            {errorval.nota_interna_final
-                                ? <ValidationError text={errorval.nota_interna_final} />
-                                : ''}
-                        </div>
-                    </div>
+            {/* para le modal show adecuacion  */}
+            <ModalShowOtorgacion showRegistro={otorgacionShow} modalRegistro={modalOtorgacion} closeRegistro={closeOtorgacion} />
+            {/* par el modal de seguimiento  */}
+            <ModalSeguimientoOtorgacion registrorModal={segumientoModal} closeRegistrorModal={closeSeguimientoModal} openRegistrorModal={openSeguimientoModal}
+                registro={seguimiento} handleInputChange={handleInputSeguimiento} />
 
-                    <div className='row mt-1'>
-                        <div className='col-sm-5 px-0'>
-                            <span className='font_span_input'>NUMERO INFORME FINAL: </span>
-                        </div>
-                        <div className='col-sm-7 px-0'>
-                            <input type="text" className='form-control' placeholder='Rellenar Campo'
-                                name='numero_informe_final' value={numero_informe_final} onChange={handleInputChange} />
-                            {errorval.numero_informe_final
-                                ? <ValidationError text={errorval.numero_informe_final} />
-                                : ''}
-                        </div>
-                    </div>
-                    <div className='row mt-1'>
-                        <div className='col-sm-5 px-0'>
-                            <span className='font_span_input'>FECHA ENVIO: </span>
-                        </div>
-                        <div className='col-sm-7 px-0'>
-                            <input type="date" className='form-control' placeholder='Rellenar Campo'
-                                name='fecha_envio' value={fecha_envio} onChange={handleInputChange} />
-                            {errorval.fecha_envio
-                                ? <ValidationError text={errorval.fecha_envio} />
-                                : ''}
-                        </div>
-                    </div>
-                    <div className='row mt-1'>
-                        <div className='col-sm-4 px-0'>
-                            <span className='font_span_input'>ALFANUMERICO: </span>
-                        </div>
-                        <div className='col-sm-8 px-0'>
-                            <textarea cols="8" type="text" className='form-control' disabled
-                                name='alfanumerico' value={alfanumerico} />
-                            {errorval.alfanumerico
-                                ? <ValidationError text={errorval.alfanumerico} />
-                                : ''}
-                        </div>
-                    </div>
-                    <div className='d-flex justify-content-between mt-2'>
-                        <button onClick={closeRegistrorModal} className='btn btn-danger'>Cancelar</button>
-                        <button onClick={handleGuardarRegistro} className='btn btn-primary'>Guardar</button>
-                    </div>
-                </div>
+            {/* par el modal de citeinforme  */}
+            <ModalInformeOtorgacion registrorModal={informeModal} closeRegistrorModal={closeInformeModal} openRegistrorModal={openInformeModal}
+                registro={informe} handleInputChange={handleInputInforme} />
 
-            </ModalSm>
+            {/* par el modal de etapa final  */}
+            <ModalRegistroFinalOtorgacion registrorModal={registrorModal} closeRegistrorModal={closeRegistrorModal} openRegistrorModal={openRegistrorModal}
+                registroFinal={registroFinal} handleInputChange={handleInputChange} />
 
-            {/* modal para registro persona colectiva  */}
-            <ModalMd isOpen={personaModal} closeModal={closePersonaModal} title={'REGISTRO PERSONA COLECTIVA'}>
-                <form onSubmit={handleGuardarPersona} className='container-fluid' >
-                    <div className='row mt-1'>
-                        <div className='col-sm-5 px-0'>
-                            <span className='font_span_input'>ESTATUTO ORGANICO: </span>
-                        </div>
-                        <div className='col-sm-7 px-0'>
-                            <input type="file" className='form-control' placeholder='Rellenar Campo'
-                                name='estatuto_organico' accept="application/pdf" />
-                            {errorval.estatuto_organico
-                                ? <ValidationError text={errorval.estatuto_organico} />
-                                : ''}
-                        </div>
-                    </div>
-                    <div className='row mt-1'>
-                        <div className='col-sm-5 px-0'>
-                            <span className='font_span_input'>REGLAMENTO INTERNO: </span>
-                        </div>
-                        <div className='col-sm-7 px-0'>
-                            <input type="file" className='form-control' placeholder='Rellenar Campo'
-                                name='reglamento_interno' accept="application/pdf" />
-                            {errorval.reglamento_interno
-                                ? <ValidationError text={errorval.reglamento_interno} />
-                                : ''}
-                        </div>
-                    </div>
-                    <div className='row mt-1'>
-                        <div className='col-sm-5 px-0'>
-                            <span className='font_span_input'>INFORME FINAL: </span>
-                        </div>
-                        <div className='col-sm-7 px-0'>
-                            <input type="file" className='form-control' placeholder='Rellenar Campo'
-                                name='informe_final' accept="application/pdf" />
-                            {errorval.informe_final
-                                ? <ValidationError text={errorval.informe_final} />
-                                : ''}
-                        </div>
-                    </div>
-                    <div className='row mt-1'>
-                        <div className='col-sm-5 px-0'>
-                            <span className='font_span_input'>NOTA FINAL: </span>
-                        </div>
-                        <div className='col-sm-7 px-0'>
-                            <input type="file" className='form-control' placeholder='Rellenar Campo'
-                                name='nota_final' accept="application/pdf" />
-                            {errorval.nota_final
-                                ? <ValidationError text={errorval.nota_final} />
-                                : ''}
-                        </div>
-                    </div>
-                    <div className='row mt-1'>
-                        <div className='col-sm-5 px-0'>
-                            <span className='font_span_input'>N° RESOLUCION MINISTERIAL: </span>
-                        </div>
-                        <div className='col-sm-7 px-0'>
-                            <input type="text" className='form-control' placeholder='Rellenar Campo'
-                                name='resolucion_ministerial' />
-                            {errorval.resolucion_ministerial
-                                ? <ValidationError text={errorval.resolucion_ministerial} />
-                                : ''}
-                        </div>
-                    </div>
-                    <div className='row mt-1'>
-                        <div className='col-sm-5 px-0'>
-                            <span className='font_span_input'>FECHA RESOLUCION: </span>
-                        </div>
-                        <div className='col-sm-7 px-0'>
-                            <input type="date" className='form-control' placeholder='Rellenar Campo'
-                                name='fecha_resolucion' />
-                            {errorval.fecha_resolucion
-                                ? <ValidationError text={errorval.fecha_resolucion} />
-                                : ''}
-                        </div>
-                    </div>
-                    <div className='d-flex justify-content-between mt-2'>
-                        <button onClick={closePersonaModal} className='btn btn-danger'>Cancelar</button>
-                        <button type='submit' className='btn btn-primary'>Guardar</button>
-                    </div>
-                </form>
-            </ModalMd>
-            <ModalDiv isOpen={showotorgacion} closeModal={closeOtorgacion} title={'LISTA DE PERSONERIAS JURIDICAS CON RESOLUCION MINISTERIAL'}>
-                <div className="modal-dialog modal-lg">
-                    <h2 className="fs-6"><b>Codigo:</b> &nbsp;&nbsp; <b>Naturaleza:</b></h2> <hr />
-                    <h2 className="fs-6"><b>Institucion Sin Fin de Lucro:</b> &nbsp;&nbsp; <b>Sigla:</b></h2> <hr />
-                    <h2 className="fs-6"><b>Resolucion Ministerial:</b></h2> <hr />
-                    <h2 className="fs-6"><b>Fecha de Resolucion Ministerial:</b></h2> <hr />
-                    <h2 className="fs-6"><b>Domicilio Legal:</b></h2> <hr />
-                    <h2 className="fs-6"><b>Objeto:</b></h2><hr />
-                    <h2 className="fs-6"><b>Miembros Fundadores:</b>                    
-                        <center>
-                            <div className='d-flex'>
-                                {/* <button button className="btn btn-secondary" title="Visualizar Miembros">Visualizar lista de fundadores</button> */}
-                            </div>
-                        </center>
-                    </h2>
-                </div>
-                <hr />
-                <div className='d-flex'>
-                    <button className="btn btn-secondary" onClick={closeOtorgacion}>cerrar</button>
-                </div>
-            </ModalDiv>
+            {/* para el modal de persona colectiva  */}
+            <ModalPersonaOtorgacion persona={personaCol} modalRegistro={personaModal} openRegistrorModal={openPersonaModal} closeRegistrorModal={closePersonaModal} />
 
-            <Banner text="REGISTRO DE OTORGACION" />
-
+            <Banner text="PROCESO DE OTORGACION" />
             <div className='container-fluid d-flex flex-row md:flex-columns my-4'>
                 <div className='input_search'>
                     <i className="fa-solid fa-magnifying-glass"></i>
@@ -478,7 +322,7 @@ const IndexOtorgacion = () => {
                     />
                 </div>
                 <div>
-                    <Link to="/reserva/create" className='btn button_green'>
+                    <Link to="/adecuacion/crear" className='btn button_green'>
                         <span>AÑADIR</span>
                         <i className="fa fa-plus" aria-hidden="true"></i>
                     </Link>
@@ -490,7 +334,7 @@ const IndexOtorgacion = () => {
                     data={filteredRegistros()}
                     paginationComponentOptions={paginationOptions}
                     fixedHeader
-                    fixedHeaderScrollHeight='400px'
+                    fixedHeaderScrollHeight='800px'
                     pagination
                     noDataComponent={<span>No se encontro ningun elemento</span>}
                     progressPending={isLoading}

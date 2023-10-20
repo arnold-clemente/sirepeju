@@ -80,7 +80,7 @@ const ModalInforme = ({ registrorModal, openRegistrorModal, closeRegistrorModal,
                         </div>
                     </div>
 
-                    <div className='d-flex justify-content-between mt-2'>
+                    <div className='d-flex justify-content-between mt-4 pt-2'>
                         <button onClick={closeRegistrorModal} className='btn btn-danger'>Cancelar</button>
                         <button onClick={handleGuardar} className='btn btn-primary'>Guardar</button>
                     </div>

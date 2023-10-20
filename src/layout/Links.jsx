@@ -52,14 +52,25 @@ export const links = [
         texto: 'Verificación de Reserva'
     },
     {
-        path: '/otorgaciones',
         icon: 'fa-solid fa-file-shield',
-        texto: 'Otogaciones'
-    },
-    {
-        path: '/personalidades-juridicas',
-        icon: 'fa-solid fa-file-contract',
-        texto: 'Personalidades Juridicas'
+        texto: 'Otorgacion',
+        sublinks: [
+            {
+                path: '/otorgaciones',
+                icon: 'fa-solid fa-file-shield',
+                texto: 'Proceso Otorgacion'
+            },
+            {
+                path: '/otorgacion/personalidades-juridicas',
+                icon: 'fa-solid fa-file-contract',
+                texto: 'Personalidades Juridicas'
+            },
+            {
+                path: '/otorgacion/revocados',
+                icon: 'fa-solid fa-ban',
+                texto: 'Otorgacion Revocados'
+            },
+        ],
     },
     {
         icon: 'fa-solid fa-rectangle-ad',
@@ -73,13 +84,18 @@ export const links = [
             {
                 path: '/adecuacion/personalidades',
                 icon: 'fa-solid fa-file-contract',
-                texto: 'Reserva Homonimia'
+                texto: 'Adecuacion Personalidades'
             },
             {
                 path: '/adecuacion/revocados',
                 icon: 'fa-solid fa-ban',
-                texto: 'Reservados'
+                texto: 'Adecuacion Revocados'
             },
         ],
+    },
+    {
+        path: '/otorgaciones-gobernaciones',
+        icon: 'fa-solid fa-file-arrow-up',
+        texto: 'Otorgacion Gobernacion'
     },
 ];

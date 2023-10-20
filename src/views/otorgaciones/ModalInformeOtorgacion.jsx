@@ -7,33 +7,33 @@ import ValidationError from '../../components/ValidationError';
 
 import { useMutation } from 'react-query';
 import { useQueryClient } from 'react-query';
-import { createSeguimiento } from '../../api/adecuacionApi';
+import { createInforme } from '../../api/otorgacionesApi';
 
-const ModalSeguimiento = ({ registrorModal, openRegistrorModal, closeRegistrorModal, registro, handleInputChange }) => {
+const ModalInformeOtorgacion = ({ registrorModal, openRegistrorModal, closeRegistrorModal, registro, handleInputChange }) => {
 
     const queryClient = useQueryClient();
     //para los errores de validacion
     const [errorval, serErrorval] = useState({});
     const [loading, setLoading] = useState(false);
 
-    const { seguimiento, fecha } = registro;
+    const { informe, fecha } = registro;
 
     const handleGuardar = (e) => {
         e.preventDefault()
         closeRegistrorModal()
         setLoading(true)
         // return console.log(registro)
-        addSeguimiento.mutate(registro)
+        addInforme.mutate(registro)
     }
 
-    const addSeguimiento = useMutation({
-        mutationFn: createSeguimiento,
+    const addInforme = useMutation({
+        mutationFn: createInforme,
         onSuccess: (response) => {
             setLoading(false);
             console.log(response)
             if (response.status === true) {
                 serErrorval({});
-                queryClient.invalidateQueries('adecuaciones')
+                queryClient.invalidateQueries('otorgaciones')
                 show_alerta('Actualizado con exito', '<i class="fa-solid fa-check border_alert_green"></i>', 'alert_green')
                 setLoading(false);
             } else {
@@ -54,7 +54,7 @@ const ModalSeguimiento = ({ registrorModal, openRegistrorModal, closeRegistrorMo
         <>
             {loading === true ? <Loading /> : ''}
             {/* modal para el etapa final de registro  */}
-            <ModalSm isOpen={registrorModal} closeModal={closeRegistrorModal} title={'INSERTAR SEGUIMIENTO'}>
+            <ModalSm isOpen={registrorModal} closeModal={closeRegistrorModal} title={'INSERTAR INFORME PRELIMINAR'}>
                 <div className='container-fluid'>
                     <div className='row mt-1'>
                         <div className='col-sm-5 px-0'>
@@ -70,13 +70,13 @@ const ModalSeguimiento = ({ registrorModal, openRegistrorModal, closeRegistrorMo
                     </div>
                     <div className='row mt-1'>
                         <div className='col-sm-4 px-0'>
-                            <span className='font_span_input'>SEGUIMIENTO: </span>
+                            <span className='font_span_input'>INFORME: </span>
                         </div>
                         <div className='col-sm-8 px-0'>
                             <textarea rows="4" className='form-control' placeholder='Se realizo'
-                                name='seguimiento' value={seguimiento} onChange={handleInputChange} />
-                            {errorval.seguimiento
-                                ? <ValidationError text={errorval.seguimiento} />
+                                name='informe' value={informe} onChange={handleInputChange} />
+                            {errorval.informe
+                                ? <ValidationError text={errorval.informe} />
                                 : ''}
                         </div>
                     </div>
@@ -92,4 +92,4 @@ const ModalSeguimiento = ({ registrorModal, openRegistrorModal, closeRegistrorMo
     )
 }
 
-export default ModalSeguimiento
+export default ModalInformeOtorgacion

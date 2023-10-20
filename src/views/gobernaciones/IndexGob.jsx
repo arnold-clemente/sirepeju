@@ -163,13 +163,7 @@ const IndexGob = () => {
       allowOverflow: true,
       button: true,
       grow: 4,
-    },
-    {
-      name: 'Id',
-      selector: row => row.id,
-      sortable: true,
-      grow: 1,
-    },
+    },    
     {
       name: 'Nombres',
       selector: row => row.nombres + ' ' + row.paterno + ' ' + row.materno,

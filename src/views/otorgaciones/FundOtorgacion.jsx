@@ -8,7 +8,7 @@ import { show_alerta } from '../../components/MessageAlert';
 import { useMutation } from 'react-query';
 import { useQueryClient } from 'react-query';
 
-import { createFundadores } from '../../api/fundadoresApi';
+import { createFundadores } from '../../api/otorgacionesApi';
 
 const FundOtorgacion = () => {
 

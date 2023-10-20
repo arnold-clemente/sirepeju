@@ -168,12 +168,6 @@ const IndexAdministrativos = () => {
             grow: 4,
         },
         {
-            name: 'Id',
-            selector: row => row.id,
-            sortable: true,
-            grow: 1,
-        },
-        {
             name: 'Nombres',
             selector: row => row.nombres + ' ' + row.paterno + ' ' + row.materno,
             sortable: true,
@@ -230,7 +224,7 @@ const IndexAdministrativos = () => {
                         <h2 className="fs-6"><b>Nombre Completo:</b> &nbsp;&nbsp;{administrativoShow.nombres + ' ' + administrativoShow.paterno + ' ' + administrativoShow.materno} </h2>&nbsp;&nbsp;<b>CI:</b> {administrativoShow.ci + ' ' + administrativoShow.ext_ci}<hr />
                         <h2 className="fs-6"><b>Cargo:</b> &nbsp;{administrativoShow.cargo}</h2> <hr />
                         {administrativoShow.user
-                            ? <h2 className="fs-6"><b>Correo Electronico:</b> &nbsp;{administrativoShow.user.email}</h2>
+                            ? <div><h2 className="fs-6"><b>Correo Electronico:</b> &nbsp;{administrativoShow.user.email}</h2> </div>
                             : ''}
                     </div>
                     <hr />

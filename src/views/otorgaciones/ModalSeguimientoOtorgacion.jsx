@@ -7,10 +7,9 @@ import ValidationError from '../../components/ValidationError';
 
 import { useMutation } from 'react-query';
 import { useQueryClient } from 'react-query';
-import { createSeguimiento } from '../../api/adecuacionApi';
+import { createSeguimiento } from '../../api/otorgacionesApi';
 
-const ModalSeguimiento = ({ registrorModal, openRegistrorModal, closeRegistrorModal, registro, handleInputChange }) => {
-
+const ModalSeguimientoOtorgacion = ({ registrorModal, openRegistrorModal, closeRegistrorModal, registro, handleInputChange }) => {
     const queryClient = useQueryClient();
     //para los errores de validacion
     const [errorval, serErrorval] = useState({});
@@ -33,7 +32,7 @@ const ModalSeguimiento = ({ registrorModal, openRegistrorModal, closeRegistrorMo
             console.log(response)
             if (response.status === true) {
                 serErrorval({});
-                queryClient.invalidateQueries('adecuaciones')
+                queryClient.invalidateQueries('otorgaciones')
                 show_alerta('Actualizado con exito', '<i class="fa-solid fa-check border_alert_green"></i>', 'alert_green')
                 setLoading(false);
             } else {
@@ -92,4 +91,4 @@ const ModalSeguimiento = ({ registrorModal, openRegistrorModal, closeRegistrorMo
     )
 }
 
-export default ModalSeguimiento
+export default ModalSeguimientoOtorgacion

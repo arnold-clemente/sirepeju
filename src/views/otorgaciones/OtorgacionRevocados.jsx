@@ -5,29 +5,24 @@ import { useQuery } from 'react-query';
 import Loading from '../../components/Loading';
 import Banner from '../../components/Banner';
 
-import { getPersonalidades } from '../../api/adecuacionApi';
+import { getRevocatorias } from '../../api/otorgacionesApi';
 // modal 
 import { useModal } from '../../hooks/useModal'
-import ModalShow from './ModalShow';
-import ModalRevocar from './ModalRevocar';
+import ModalShowOtorgacion from './ModalShowOtorgacion';
 
-const PersAdecuacion = () => {
+const OtorgacionRevocados = () => {
 
     const [search, setSearch] = useState('');
     const [loading, setLoading] = useState(false);
 
-    // par el modal show
-    const [modalAdecuacion, openAdecuacion, closeAdecuacion] = useModal(false);
-    const [adecuacionShow, setadecuacionShow] = useState({});
-
-    //para el revocatoria
-    const [revocatoriaModal, openRevocatoriaModal, closeRevocatoriaModal] = useModal(false);
-    const [revocatoria, setRevocatoria] = useState({ adecuacion_id: 1, nota_revocatorio: '', fecha_revocatoria: '', observacion: '' });
+    // para el modal show Otorgacion
+    const [modalOtorgacion, openOtorgacion, closeOtorgacion] = useModal(false);
+    const [otorgacionShow, setotorgacionShow] = useState({});
 
     const { isLoading, data: registros, isError, error } = useQuery({
-        queryKey: ['personalidadesadecuacion'],
-        queryFn: getPersonalidades,
-        select: adecuaciones => adecuaciones.sort((a, b) => b.id - a.id)
+        queryKey: ['revocadosotorgacion'],
+        queryFn: getRevocatorias,
+        select: otorgaciones => otorgaciones.sort((a, b) => b.id - a.id)
     })
 
     const filteredRegistros = () => {
@@ -40,7 +35,7 @@ const PersAdecuacion = () => {
                 registro.sigla.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
                 registro.representante.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
                 registro.naturaleza.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
-                registro.codigo_adecuacion.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
+                registro.codigo_otorgacion.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
                 registro.ci_rep.toLowerCase().includes(search.toLowerCase())
             ) {
                 return registro;
@@ -58,31 +53,11 @@ const PersAdecuacion = () => {
     const handleShow = (e, row) => {
         console.log(row)
         e.preventDefault();
-        openAdecuacion();
+        openOtorgacion();
         const prueba = row;
-        setadecuacionShow({ ...adecuacionShow, ...prueba })
+        setotorgacionShow({ ...otorgacionShow, ...prueba })
 
     }
-
-    const handleInputRevocatoria = ({ target }) => {
-        setRevocatoria({
-            ...revocatoria,
-            [target.name]: target.value
-        });
-    };
-
-    const handleRevocar = (e, row) => {
-        e.preventDefault();
-        const auxiliar = {
-          adecuacion_id: row.id,
-          nota_revocatorio: '',
-          fecha_revocatoria: '',
-          observacion: ''
-        }
-        setRevocatoria({ ...revocatoria, ...auxiliar })
-        openRevocatoriaModal();
-      }
-    
 
     const columns = [
         {
@@ -90,7 +65,6 @@ const PersAdecuacion = () => {
             cell: (row) => (
                 <div className='container-fluid d-flex flex-row'>
                     <button onClick={(e) => handleShow(e, row)} className="button_show"><i className="fa-solid fa-eye"></i><span>Ver</span></button>
-                    <button onClick={(e) => handleRevocar(e, row)} className="button_delete"><i className="fa-solid fa-eye"></i><span>Revocar</span></button>
                 </div>
             ),
             ignoreRowClick: true,
@@ -110,7 +84,7 @@ const PersAdecuacion = () => {
             grow: 3,
         },
         {
-            name: 'Mienbros',
+            name: 'Miembros',
             selector: row => row.miembros_fundador,
             sortable: true,
             grow: 2
@@ -127,7 +101,7 @@ const PersAdecuacion = () => {
         },
         {
             name: 'Codigo',
-            selector: row => row.codigo_adecuacion,
+            selector: row => row.codigo_otorgacion,
             sortable: true,
         },
         {
@@ -153,14 +127,10 @@ const PersAdecuacion = () => {
     return (
         <>
             {loading === true ? <Loading /> : ''}
-            
-            {/* par el modal de revocatoria  */}
-            <ModalRevocar registrorModal={revocatoriaModal} closeRegistrorModal={closeRevocatoriaModal} openRegistrorModal={openRevocatoriaModal}
-                registro={revocatoria} handleInputChange={handleInputRevocatoria} />
 
-            {/* para le modal show adecuacion  */}
-            <ModalShow showRegistro={adecuacionShow} modalRegistro={modalAdecuacion} closeRegistro={closeAdecuacion} />
-            <Banner text="PERSONALIDAD JURIDICA ADECUACION" />
+            {/* para le modal show otorgacion  */}
+            <ModalShowOtorgacion showRegistro={otorgacionShow} modalRegistro={modalOtorgacion} closeRegistro={closeOtorgacion} />
+            <Banner text="REVOCADOS OTORGACION" />
             <div className='container-fluid d-flex flex-row md:flex-columns my-4'>
                 <div className='input_search'>
                     <i className="fa-solid fa-magnifying-glass"></i>
@@ -190,4 +160,4 @@ const PersAdecuacion = () => {
     )
 }
 
-export default PersAdecuacion
+export default OtorgacionRevocados

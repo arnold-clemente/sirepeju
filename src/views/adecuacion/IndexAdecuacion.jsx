@@ -49,8 +49,6 @@ const IndexAdecuacion = () => {
     fecha_envio: '',
   })
 
-  // const [personaModal, openPersonaModal, closePersonaModal] = useModal(false);
-
   const { isLoading, data: registros, isError, error } = useQuery({
     queryKey: ['adecuaciones'],
     queryFn: getAdecuaciones,

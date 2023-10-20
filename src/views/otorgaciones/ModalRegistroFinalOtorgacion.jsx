@@ -7,10 +7,9 @@ import ValidationError from '../../components/ValidationError';
 
 import { useMutation } from 'react-query';
 import { useQueryClient } from 'react-query';
-import { createRegistroFinal } from '../../api/adecuacionApi';
+import { createRegistroFinal } from '../../api/otorgacionesApi';
 
-const ModalEtapa = ({ registrorModal, openRegistrorModal, closeRegistrorModal, registroFinal, handleInputChange }) => {
-
+const ModalRegistroFinalOtorgacion = ({ registrorModal, openRegistrorModal, closeRegistrorModal, registroFinal, handleInputChange }) => {
     const queryClient = useQueryClient();
     //para los errores de validacion
     const [errorval, serErrorval] = useState({});
@@ -30,9 +29,9 @@ const ModalEtapa = ({ registrorModal, openRegistrorModal, closeRegistrorModal, r
         onSuccess: (response) => {
             setLoading(false);
             console.log(response)
-            if (response.status === true) {              
+            if (response.status === true) {
                 serErrorval({});
-                queryClient.invalidateQueries('adecuaciones')
+                queryClient.invalidateQueries('otorgaciones')
                 show_alerta('Actualizado con exito', '<i class="fa-solid fa-check border_alert_green"></i>', 'alert_green')
                 setLoading(false);
             } else {
@@ -47,7 +46,7 @@ const ModalEtapa = ({ registrorModal, openRegistrorModal, closeRegistrorModal, r
             show_alerta('No conectado', '<i class="fa-solid fa-xmark border_alert_red"></i>', 'alert_red')
             setLoading(false);
         }
-    }); 
+    });
 
     return (
         <>
@@ -116,4 +115,4 @@ const ModalEtapa = ({ registrorModal, openRegistrorModal, closeRegistrorModal, r
     )
 }
 
-export default ModalEtapa
+export default ModalRegistroFinalOtorgacion

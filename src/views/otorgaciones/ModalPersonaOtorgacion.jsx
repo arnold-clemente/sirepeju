@@ -6,10 +6,9 @@ import ModalMd from '../../components/ModalMd'
 
 import { useMutation } from 'react-query';
 import { useQueryClient } from 'react-query';
-import { createRegisroPersonaColectiva } from '../../api/adecuacionApi';
+import { createRegisroPersonaColectiva } from '../../api/otorgacionesApi';
 
-const ModalPersona = ({ persona, modalRegistro, openRegistrorModal, closeRegistrorModal }) => {
-
+const ModalPersonaOtorgacion = ({ persona, modalRegistro, openRegistrorModal, closeRegistrorModal }) => {
     const queryClient = useQueryClient();
     const [errorval, serErrorval] = useState({});
     const [loading, setLoading] = useState(false);
@@ -17,7 +16,7 @@ const ModalPersona = ({ persona, modalRegistro, openRegistrorModal, closeRegistr
     const handleGuardarPersona = (e) => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget)
-        formData.append('adecuacion_id', persona.adecuacion_id)
+        formData.append('otorgacion_id', persona.otorgacion_id)
         setLoading(true);
         closeRegistrorModal();
         addPersonaColectiva.mutate(formData)
@@ -29,7 +28,7 @@ const ModalPersona = ({ persona, modalRegistro, openRegistrorModal, closeRegistr
             console.log(response)
             setLoading(false);
             if (response.status === true) {
-                queryClient.invalidateQueries('adecuaciones')
+                queryClient.invalidateQueries('otorgaciones')
                 show_alerta('Actualizado con exito', '<i class="fa-solid fa-check border_alert_green"></i>', 'alert_green')
                 setLoading(false);
             } else {
@@ -45,8 +44,6 @@ const ModalPersona = ({ persona, modalRegistro, openRegistrorModal, closeRegistr
             setLoading(false);
         }
     });
-
-    // const { estatuto_organico, reglamento_interno, informe_final, nota_final, resolucion_ministerial, fecha_resolucion } = persona
 
     return (
         <>
@@ -136,4 +133,4 @@ const ModalPersona = ({ persona, modalRegistro, openRegistrorModal, closeRegistr
     )
 }
 
-export default ModalPersona
+export default ModalPersonaOtorgacion

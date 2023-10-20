@@ -93,6 +93,7 @@
     top: 0;
     background-color: #a31919;
     color: #fff;
+    z-index: 2;
 }
 
 .modal_title_red button{
@@ -114,11 +115,13 @@
 .modal_title_azul {
     width: 100%;
     position: sticky;
+    top: 0;
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: #0b85aa;
     color: #fff;
+    z-index: 2;
 }
 
 .modal_title_azul h3 {

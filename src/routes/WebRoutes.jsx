@@ -29,7 +29,8 @@ import IndexReg from '../views/Registro/IndexReg'
 //rutas para otorgacion
 import IndexOtorgacion from '../views/otorgaciones/IndexOtorgacion'
 import FundOtorgacion from '../views/otorgaciones/FundOtorgacion'
-import IndesPersonalidad from '../views/personalidades/IndesPersonalidad'
+import OtorgacionPersonalidades from '../views/otorgaciones/OtorgacionPersonalidades'
+import OtorgacionRevocados from '../views/otorgaciones/OtorgacionRevocados'
 
 //adecuciones
 import IndexAdecuacion from '../views/adecuacion/IndexAdecuacion'
@@ -37,6 +38,11 @@ import CreateAdecuacion from '../views/adecuacion/CreateAdecuacion'
 import FundAdecuacion from '../views/adecuacion/FundAdecuacion'
 import PersAdecuacion from '../views/adecuacion/PersAdecuacion'
 import RevAdecuacion from '../views/adecuacion/RevAdecuacion'
+
+//otorgaciones gobernacion
+import IndexOtorgacionGob from '../views/otorgaciongobs/IndexOtorgacionGob'
+import CreateOtorgacionGob from '../views/otorgaciongobs/CreateOtorgacionGob'
+import EditOtorgacionGob from '../views/otorgaciongobs/EditOtorgacionGob'
 
 
 const WebRoutes = () => {
@@ -81,13 +87,18 @@ const WebRoutes = () => {
                     {/* otorgacion */}
                     <Route path='/otorgaciones' element={<IndexOtorgacion />} />
                     <Route path='/otorgaciones/:otorgacionId/fundadores' element={<FundOtorgacion />} />
-                    <Route path='/personalidades-juridicas' element={<IndesPersonalidad />} />
+                    <Route path='/otorgacion/personalidades-juridicas' element={<OtorgacionPersonalidades />} />
+                    <Route path='/otorgacion/revocados' element={<OtorgacionRevocados />} />
                     {/* adecuaciones */}
                     <Route path='/adecuaciones' element={<IndexAdecuacion />} />
                     <Route path='/adecuacion/crear' element={<CreateAdecuacion />} />
                     <Route path='/adecuacion/:adecuacionId/fundadores' element={<FundAdecuacion />} />
                     <Route path='/adecuacion/personalidades' element={<PersAdecuacion />} />
                     <Route path='/adecuacion/revocados' element={<RevAdecuacion />} />
+                    {/* otorgacion gobernaciones */}
+                    <Route path='/otorgaciones-gobernaciones' element={<IndexOtorgacionGob />} />
+                    <Route path='/otorgaciones-gobernaciones/create' element={<CreateOtorgacionGob />} />
+                    <Route path='/otorgaciones-gobernaciones/edit/:otorgacionGobId' element={<EditOtorgacionGob />} />
                 </Routes>
             </div>
         </div>

@@ -97,7 +97,7 @@ const CreateGob = () => {
                         <label>Cedula de Identidad</label>
                         <input type="text" className="form-control" placeholder="Escriba la cedula de identidad"
                             name="ci" value={ci} onChange={handleInputChange} />
-                        {error.length
+                        {error.ci
                             ? <ValidationError text={error.ci} />
                             : ''}
                     </div>
@@ -131,9 +131,9 @@ const CreateGob = () => {
                 <div className="row">
                     <div className="form-group col-md-6 py-2">
                         <label>Cargo</label>
-                        <input type="text" className="form-control" placeholder="Escriba apellido paterno"
+                        <input type="text" className="form-control" placeholder="Escriba el cargo"
                             name="cargo" value={cargo} onChange={handleInputChange} />
-                        {error.length
+                        {error.cargo
                             ? <ValidationError text={error.cargo} />
                             : ''}
                     </div>

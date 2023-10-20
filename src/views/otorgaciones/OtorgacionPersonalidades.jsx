@@ -1,31 +1,33 @@
-import React, { createRef, useState } from 'react'
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react'
 import DataTable from "react-data-table-component";
 import { useQuery } from 'react-query';
-import { useMutation } from 'react-query';
-import { useQueryClient } from 'react-query';
 
 import Loading from '../../components/Loading';
 import Banner from '../../components/Banner';
-import { show_alerta } from '../../components/MessageAlert';
-import ValidationError from '../../components/ValidationError';
 
-import { getPersonalidadesJuridicas } from '../../api/personalidadApi';
+import { getPersonalidades } from '../../api/otorgacionesApi';
 // modal 
-import ModalSm from '../../components/ModalSm'
-import ModalMd from '../../components/ModalMd'
 import { useModal } from '../../hooks/useModal'
+import ModalShowOtorgacion from './ModalShowOtorgacion';
+import ModalRevocarOtorgacion from './ModalRevocarOtorgacion';
 
-const IndesPersonalidad = () => {
-    const queryClient = useQueryClient();
+const OtorgacionPersonalidades = () => {
+
     const [search, setSearch] = useState('');
     const [loading, setLoading] = useState(false);
-    const [errorval, serErrorval] = useState({});
+
+    // para el modal show Otorgacion
+    const [modalOtorgacion, openOtorgacion, closeOtorgacion] = useModal(false);
+    const [otorgacionShow, setotorgacionShow] = useState({});
+
+    //para el revocatoria
+    const [revocatoriaModal, openRevocatoriaModal, closeRevocatoriaModal] = useModal(false);
+    const [revocatoria, setRevocatoria] = useState({ otorgacion_id: 1, nota_revocatorio: '', fecha_revocatoria: '', observacion: '' });
 
     const { isLoading, data: registros, isError, error } = useQuery({
-        queryKey: ['personalidades'],
-        queryFn: getPersonalidadesJuridicas,
-        select: reservas => reservas.sort((a, b) => b.id - a.id)
+        queryKey: ['personalidadesotorgacion'],
+        queryFn: getPersonalidades,
+        select: otorgaciones => otorgaciones.sort((a, b) => b.id - a.id)
     })
 
     const filteredRegistros = () => {
@@ -36,13 +38,11 @@ const IndesPersonalidad = () => {
                 registro.miembros_fundador.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
                 registro.personalidad_juridica.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
                 registro.sigla.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
-                registro.domicilio_legal.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
-                registro.objeto.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
-                registro.ci_rep.toLowerCase().includes(search.toLowerCase())
+                registro.naturaleza.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
+                registro.codigo_otorgacion.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase())
             ) {
                 return registro;
             }
-
         });
 
         return filtered
@@ -53,9 +53,32 @@ const IndesPersonalidad = () => {
         await setSearch(e.target.value);
     };
 
-    const handlePersonaModal = (e, row) => {
-        e.preventDefault()
+    const handleShow = (e, row) => {
         console.log(row)
+        e.preventDefault();
+        openOtorgacion();
+        const prueba = row;
+        setotorgacionShow({ ...otorgacionShow, ...prueba })
+
+    }
+
+    const handleInputRevocatoria = ({ target }) => {
+        setRevocatoria({
+            ...revocatoria,
+            [target.name]: target.value
+        });
+    };
+
+    const handleRevocar = (e, row) => {
+        e.preventDefault();
+        const auxiliar = {
+            otorgacion_id: row.id,
+            nota_revocatorio: '',
+            fecha_revocatoria: '',
+            observacion: ''
+        }
+        setRevocatoria({ ...revocatoria, ...auxiliar })
+        openRevocatoriaModal();
     }
 
 
@@ -63,8 +86,9 @@ const IndesPersonalidad = () => {
         {
             name: 'Acciones',
             cell: (row) => (
-                <div className='d-flex justify-content-start'>
-                    <button onClick={(e) => handlePersonaModal(e, row)} className="button_delete"><i className="fa-solid fa-x"></i><span>Revocatoria</span></button>
+                <div className='container-fluid d-flex flex-row'>
+                    <button onClick={(e) => handleShow(e, row)} className="button_show"><i className="fa-solid fa-eye"></i><span>Ver</span></button>
+                    <button onClick={(e) => handleRevocar(e, row)} className="button_delete"><i className="fa-solid fa-eye"></i><span>Revocar</span></button>
                 </div>
             ),
             ignoreRowClick: true,
@@ -84,7 +108,7 @@ const IndesPersonalidad = () => {
             grow: 3,
         },
         {
-            name: 'Mienbros',
+            name: 'Miembros',
             selector: row => row.miembros_fundador,
             sortable: true,
             grow: 2
@@ -95,11 +119,6 @@ const IndesPersonalidad = () => {
             sortable: true,
         },
         {
-            name: 'Representante',
-            selector: row => row.representante,
-            sortable: true,
-        },
-        {
             name: 'Codigo',
             selector: row => row.codigo_otorgacion,
             sortable: true,
@@ -107,11 +126,6 @@ const IndesPersonalidad = () => {
         {
             name: 'Naturaleza',
             selector: row => row.naturaleza,
-            sortable: true,
-        },
-        {
-            name: 'Cedula',
-            selector: row => row.ci_rep + " " + row.ext_ci_rep,
             sortable: true,
         },
     ];
@@ -127,8 +141,14 @@ const IndesPersonalidad = () => {
     return (
         <>
             {loading === true ? <Loading /> : ''}
-            <Banner text="REGISTRO DE OTORGACION" />
 
+            {/* par el modal de revocatoria  */}
+            <ModalRevocarOtorgacion registrorModal={revocatoriaModal} closeRegistrorModal={closeRevocatoriaModal} openRegistrorModal={openRevocatoriaModal}
+                registro={revocatoria} handleInputChange={handleInputRevocatoria} />
+
+            {/* para le modal show otorgacion  */}
+            <ModalShowOtorgacion showRegistro={otorgacionShow} modalRegistro={modalOtorgacion} closeRegistro={closeOtorgacion} />
+            <Banner text="PERSONALIDAD JURIDICA OTORGACION" />
             <div className='container-fluid d-flex flex-row md:flex-columns my-4'>
                 <div className='input_search'>
                     <i className="fa-solid fa-magnifying-glass"></i>
@@ -141,12 +161,6 @@ const IndesPersonalidad = () => {
                         onChange={searchOnChange}
                     />
                 </div>
-                <div>
-                    <Link to="/reserva/create" className='btn button_green'>
-                        <span>AÑADIR</span>
-                        <i className="fa fa-plus" aria-hidden="true"></i>
-                    </Link>
-                </div>
             </div>
             <div className='table-responsive'>
                 <DataTable
@@ -154,7 +168,7 @@ const IndesPersonalidad = () => {
                     data={filteredRegistros()}
                     paginationComponentOptions={paginationOptions}
                     fixedHeader
-                    fixedHeaderScrollHeight='400px'
+                    fixedHeaderScrollHeight='800px'
                     pagination
                     noDataComponent={<span>No se encontro ningun elemento</span>}
                     progressPending={isLoading}
@@ -164,4 +178,4 @@ const IndesPersonalidad = () => {
     )
 }
 
-export default IndesPersonalidad
+export default OtorgacionPersonalidades

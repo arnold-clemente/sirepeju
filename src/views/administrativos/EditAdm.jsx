@@ -120,7 +120,7 @@ const EditAdm = () => {
                             <label>Cedula de Identidad</label>
                             <input type="text" className="form-control" placeholder="Escriba la cedula de identidad"
                                 name="ci" value={admin.ci} onChange={handleInputChange} />
-                            {errorval.length
+                            {errorval.ci
                                 ? <ValidationError text={errorval.ci} />
                                 : ''}
                         </div>
@@ -154,9 +154,9 @@ const EditAdm = () => {
                     <div className="row">
                         <div className="form-group col-md-6 py-2">
                             <label>Cargo</label>
-                            <input type="text" className="form-control" placeholder="Escriba apellido paterno"
+                            <input type="text" className="form-control" placeholder="Escriba el cargo"
                                 name="cargo" value={admin.cargo} onChange={handleInputChange} />
-                            {errorval.length
+                            {errorval.cargo
                                 ? <ValidationError text={errorval.cargo} />
                                 : ''}
                         </div>
