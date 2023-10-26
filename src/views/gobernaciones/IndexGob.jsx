@@ -163,7 +163,7 @@ const IndexGob = () => {
       allowOverflow: true,
       button: true,
       grow: 4,
-    },    
+    },
     {
       name: 'Nombres',
       selector: row => row.nombres + ' ' + row.paterno + ' ' + row.materno,
@@ -220,11 +220,18 @@ const IndexGob = () => {
             <h2 className="fs-6"><b>Responsable departamental:</b> &nbsp;&nbsp; </h2><b>{gobernacionShow.nombres + ' ' + gobernacionShow.paterno + ' ' + gobernacionShow.materno}</b> <hr />
             <h2 className="fs-6"><b>Cedula de Indentidad: </b>{gobernacionShow.ci + ' ' + gobernacionShow.ext_ci}</h2> <hr />
             <h2 className="fs-6"><b>Correo Electronico: </b> {gobernacionShow.user ? gobernacionShow.user.email : ''} &nbsp;&nbsp;</h2>
+           
+            {showgobernacion.departamento
+              ? (<div><h2 className='mx-2'>Departamento</h2> <p>{showgobernacion.departamento.nombre}</p></div>)
+              : 'NO reconocio'
+            }
+
           </div>
           <hr />
           <div className='d-flex'>
             <button className="btn btn-secondary" title="cerrar" onClick={closeGobernacion}>cerrar</button>
           </div>
+
         </ModalDiv>
         <div>
           <Link to="/user-gobernacion/create" className='btn button_green'>
