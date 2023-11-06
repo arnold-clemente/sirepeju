@@ -7,6 +7,7 @@ import bcrypt from "bcryptjs-react";
 
 import Loading from '../../components/Loading';
 import Banner from '../../components/Banner';
+import { estilos } from '../../components/estilosdatatables';
 
 import { getOtorgaciones } from '../../api/otorgacionesApi';
 // modal 
@@ -19,7 +20,7 @@ import ModalSeguimientoOtorgacion from './ModalSeguimientoOtorgacion';
 import ModalInformeOtorgacion from './ModalInformeOtorgacion';
 
 const IndexOtorgacion = () => {
-    
+
     const queryClient = useQueryClient();
     const [search, setSearch] = useState('');
     const [loading, setLoading] = useState(false);
@@ -184,13 +185,13 @@ const IndexOtorgacion = () => {
                             <i className="fa-solid fa-gear"></i>
                         </button>
                         <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                           <li>
+                            <li>
                                 <button onClick={(e) => handleInforme(e, row)} className="button_download_table">
                                     <i className="fa-solid fa-file-pen"></i>
                                     <span className='mx-2'>Informe Preliminar</span>
                                 </button>
                             </li>
-                             <li>
+                            <li>
                                 <button onClick={(e) => handleSeguimiento(e, row)} className="button_show_table">
                                     <i className="fa-solid fa-pen"></i>
                                     <span className='mx-2'>Seguimiento</span>
@@ -235,15 +236,10 @@ const IndexOtorgacion = () => {
             button: true,
         },
         {
-            name: 'Id',
-            selector: row => row.id,
-            sortable: true,
-            grow: 1,
-        },
-        {
             name: 'Persona Juridica',
             selector: row => row.personalidad_juridica,
             sortable: true,
+            wrap: false,
             grow: 3,
         },
         {
@@ -330,6 +326,7 @@ const IndexOtorgacion = () => {
             </div>
             <div className='table-responsive'>
                 <DataTable
+                    title='TABLA PROCESO DE OTORGACION'
                     columns={columns}
                     data={filteredRegistros()}
                     paginationComponentOptions={paginationOptions}
@@ -338,6 +335,9 @@ const IndexOtorgacion = () => {
                     pagination
                     noDataComponent={<span>No se encontro ningun elemento</span>}
                     progressPending={isLoading}
+                    customStyles={estilos}
+                    highlightOnHover={true}
+                    persistTableHead={true}
                 />
             </div>
         </div>

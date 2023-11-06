@@ -10,8 +10,10 @@ import { useQueryClient } from 'react-query';
 import { destroyGobernacion, passwordGobernacion } from '../../api/gobernacionApi';
 import Swal from 'sweetalert2';
 import { show_alerta } from '../../components/MessageAlert';
-import ModalDiv from '../../components/ModalDiv'; //contendoresto hay importar siempre
 import { useModal } from '../../hooks/useModal'; //metodos siempre gg
+import { estilos } from '../../components/estilosdatatables';
+import ShowGob from './ShowGob';
+
 const IndexGob = () => {
 
   const [search, setSearch] = useState('');
@@ -58,6 +60,7 @@ const IndexGob = () => {
       show_alerta('Eliminado', '<i class="fa-solid fa-check border_alert_green"></i>', 'alert_green')
       setLoading(false);
     },
+
     onError: (error) => {
       show_alerta('No conectado', '<i class="fa-solid fa-xmark border_alert_red"></i>', 'alert_red')
       setLoading(false);
@@ -165,25 +168,38 @@ const IndexGob = () => {
       grow: 4,
     },
     {
-      name: 'Nombres',
-      selector: row => row.nombres + ' ' + row.paterno + ' ' + row.materno,
+      name: 'G.A.D.',
+      selector: row => row.departamento_id,
       sortable: true,
+      lingh: 1,
       grow: 2,
     },
     {
-      name: 'Cargo',
+      name: 'Responsable Departamental',
+      selector: row => row.nombres + ' ' + row.paterno + ' ' + row.materno,
+      sortable: true,
+      ligth: 1,
+      grow: 3,
+    },
+    {
+      name: 'Cargo Departamental',
       selector: row => row.cargo,
       sortable: true,
+      center: 1,
+      grow: 3,
     },
+
     {
-      name: 'Cedula',
+      name: 'C.I.',
       selector: row => row.ci + ' ' + row.ext_ci,
       sortable: true,
+      lefth: 1,
     },
     {
-      name: 'Correo',
+      name: 'Correo Institucional',
       selector: row => row.user.email,
       sortable: true,
+      grow: 3,
     },
   ];
 
@@ -201,7 +217,7 @@ const IndexGob = () => {
     <div>
       {loading === true ? <Loading /> : ''}
       <Banner text="LISTA DE USUARIOS GOBERNACIÓN" />
-
+      <ShowGob modal={showgobernacion} close={closeGobernacion} registro={gobernacionShow} />
       <div className='container-fluid d-flex flex-row md:flex-columns my-4'>
         <div className='input_search'>
           <i className="fa-solid fa-magnifying-glass"></i>
@@ -214,25 +230,7 @@ const IndexGob = () => {
             onChange={searchOnChange}
           />
         </div>
-        <ModalDiv isOpen={showgobernacion} closeModal={closeGobernacion} title={'Responsable Gobernacion'}>
-          <div className="modal-dialog modal-lg">
-            <h2 className="fs-6"><b>Cargo departamental: </b>{gobernacionShow.cargo}</h2> <hr />
-            <h2 className="fs-6"><b>Responsable departamental:</b> &nbsp;&nbsp; </h2><b>{gobernacionShow.nombres + ' ' + gobernacionShow.paterno + ' ' + gobernacionShow.materno}</b> <hr />
-            <h2 className="fs-6"><b>Cedula de Indentidad: </b>{gobernacionShow.ci + ' ' + gobernacionShow.ext_ci}</h2> <hr />
-            <h2 className="fs-6"><b>Correo Electronico: </b> {gobernacionShow.user ? gobernacionShow.user.email : ''} &nbsp;&nbsp;</h2>
-           
-            {showgobernacion.departamento
-              ? (<div><h2 className='mx-2'>Departamento</h2> <p>{showgobernacion.departamento.nombre}</p></div>)
-              : 'NO reconocio'
-            }
 
-          </div>
-          <hr />
-          <div className='d-flex'>
-            <button className="btn btn-secondary" title="cerrar" onClick={closeGobernacion}>cerrar</button>
-          </div>
-
-        </ModalDiv>
         <div>
           <Link to="/user-gobernacion/create" className='btn button_green'>
             <span>AÑADIR</span>
@@ -250,6 +248,9 @@ const IndexGob = () => {
           pagination
           noDataComponent={<span>No se encontro ningun elemento</span>}
           progressPending={isLoading}
+          customStyles={estilos}
+          highlightOnHover={true}
+          persistTableHead={true}
         />
       </div>
     </div>

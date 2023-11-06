@@ -17,6 +17,7 @@ const ModalPersonaOtorgacion = ({ persona, modalRegistro, openRegistrorModal, cl
         e.preventDefault();
         const formData = new FormData(e.currentTarget)
         formData.append('otorgacion_id', persona.otorgacion_id)
+        return console.log(formData)
         setLoading(true);
         closeRegistrorModal();
         addPersonaColectiva.mutate(formData)

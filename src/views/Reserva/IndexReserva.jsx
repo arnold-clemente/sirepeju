@@ -5,12 +5,13 @@ import { useQuery } from 'react-query';
 import { useMutation } from 'react-query';
 import { useQueryClient } from 'react-query';
 import Swal from 'sweetalert2';
+import { estilos } from '../../components/estilosdatatables';
 
 import Loading from '../../components/Loading';
 import Banner from '../../components/Banner';
 import { show_alerta } from '../../components/MessageAlert';
-import ModalDiv from '../../components/ModalDiv'; //contendoresto hay importar siempre
 import { useModal } from '../../hooks/useModal'; //metodos siempre gg
+import ShowSolicitud from './ShowSolicitud';
 
 import { getReservas, entregarReserva } from '../../api/reservaApi';
 
@@ -69,7 +70,7 @@ const IndexReserva = () => {
                 <div className='d-flex flex-row justify-content-start'>
                     <button onClick={(e) => handleShow(e, row)} className="button_show"><i className="fa-solid fa-eye"></i><span>Ver</span></button>
                     <Link to={`/reserva/edit/${row.id}`} className="button_edit"><i className="fa-solid fa-pen-to-square"></i><span>Editar</span></Link>
-                    <Link to={`/buscar-reserva/${row.entidad.toLowerCase().replace(/ /g, '~')}`}className="button_delete"><i className="fa-solid fa-magnifying-glass"></i><span>Verificar</span></Link>                
+                    <Link to={`/buscar-reserva/${row.entidad.toLowerCase().replace(/ /g, '~')}`} className="button_delete"><i className="fa-solid fa-magnifying-glass"></i><span>Verificar</span></Link>
                 </div >
             ),
             ignoreRowClick: true,
@@ -77,13 +78,32 @@ const IndexReserva = () => {
             button: true,
         },
         {
-            name: 'Id',
+            name: 'Hoja de Ruta',
             selector: row => row.id,
             sortable: true,
+            center: 1,
             grow: 1,
         },
         {
-            name: 'Entidad',
+            name: 'Nº Correlativo',
+            selector: row => row.nro_certificado,
+            sortable: true,
+        },
+        {
+            name: 'Tipo de Persona Colectiva',
+            selector: row => row.persona_colectiva,
+            sortable: true,
+            ligth: 1,
+            grow: 2,
+        },
+        {
+            name: 'Naturaleza',
+            selector: row => row.naturaleza,
+            sortable: true,
+            grow: 2,
+        },
+        {
+            name: 'Nombre de la Persona Colectiva',
             selector: row => row.entidad,
             sortable: true,
             grow: 3,
@@ -92,27 +112,38 @@ const IndexReserva = () => {
             name: 'Sigla',
             selector: row => row.sigla,
             sortable: true,
+            center: 1,
+            grow: 1,
         },
         {
-            name: 'Representante',
+            name: 'Representante Legal',
             selector: row => row.representante,
             sortable: true,
+            left: 1,
+            grow: 3,
         },
+
         {
-            name: 'Nro',
-            selector: row => row.nro_certificado,
-            sortable: true,
-        },
-        {
-            name: 'Naturaleza',
-            selector: row => row.naturaleza,
-            sortable: true,
-        },
-        {
-            name: 'Cedula',
+            name: 'CI',
             selector: row => row.ci_rep + " " + row.ext_ci_rep,
             sortable: true,
+            left: 1,
+            grow: 1,
         },
+        {
+            name: 'Nº Celular',
+            selector: row => row.telefono,
+            sortable: true,
+            left: 1,
+            grow: 1,
+        },
+        {
+            name: 'Correo Registrado',
+            selector: row => row.correo,
+            sortable: true,
+            left: 1,
+            grow: 2
+        }
     ];
 
     const paginationOptions = {
@@ -142,19 +173,7 @@ const IndexReserva = () => {
                         onChange={searchOnChange}
                     />
                 </div>
-                <ModalDiv isOpen={showreserva} closeModal={closeReserva} title={'LISTA DE RESERVA DE NOMBRE'}>
-                    <div className="modal-dialog modal-lg">
-                        <h2 className="fs-6"><b>Entidad:</b>&nbsp;&nbsp;{reservaShow.entidad}</h2> <hr />
-                        <h2 className="fs-6"><b>Sigla:</b>&nbsp;&nbsp;{reservaShow.sigla}<hr /></h2> <hr />
-                        <h2 className="fs-6"><b>Representante legal:</b>&nbsp;&nbsp; {reservaShow.representante}<b>CI:</b>9999</h2> <hr />
-                        <h2 className="fs-6"><b>Nº Correlativo:</b> &nbsp;&nbsp;{reservaShow.nro_certificado}</h2><hr />
-                        <h2 className="fs-6"><b>Naturaleza:</b> &nbsp;&nbsp;{reservaShow.naturaleza}</h2>
-                    </div>
-                    <hr />
-                    <div className='d-flex'>
-                        <button className="btn btn-secondary" title="cerrar" onClick={closeReserva}>cerrar</button>
-                    </div>
-                </ModalDiv>
+                <ShowSolicitud registro={reservaShow} modal={showreserva} close={closeReserva} />
                 <div>
                     <Link to="/reserva/create" className='btn button_green'>
                         <span>AÑADIR</span>
@@ -164,6 +183,7 @@ const IndexReserva = () => {
             </div>
             <div className='table-responsive'>
                 <DataTable
+                    title={'TABLA DE SOLICITUDE DE RESERVA DE NOMBRE'}
                     columns={columns}
                     data={filteredRegistros()}
                     paginationComponentOptions={paginationOptions}
@@ -172,6 +192,9 @@ const IndexReserva = () => {
                     pagination
                     noDataComponent={<span>No se encontro ningun elemento</span>}
                     progressPending={isLoading}
+                    customStyles={estilos}
+                    highlightOnHover={true}
+                    persistTableHead={true}
                 />
             </div>
 

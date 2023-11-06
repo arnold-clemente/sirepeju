@@ -11,8 +11,9 @@ import { destroyAdministrativo } from '../../api/administrativosApi';
 import { passwordAdministrativo } from '../../api/administrativosApi';
 import Swal from 'sweetalert2';
 import { show_alerta } from '../../components/MessageAlert';
-import ModalDiv from '../../components/ModalDiv'; //contendor  paso 1
 import { useModal } from '../../hooks/useModal'; //metodos paso 2
+import { estilos } from '../../components/estilosdatatables';
+import ShowAdm from './ShowAdm';
 
 const IndexAdministrativos = () => {
 
@@ -168,26 +169,34 @@ const IndexAdministrativos = () => {
             grow: 4,
         },
         {
-            name: 'Nombres',
+            name: 'Nombre ',
             selector: row => row.nombres + ' ' + row.paterno + ' ' + row.materno,
             sortable: true,
+            left: 1,
+            grow: 3,
+        },
+        {
+            name: 'C.I.',
+            selector: row => row.ci + ' ' + row.ext_ci,
+            sortable: true,
+            left: 1,
+            grow: 1,
+        },
+        {
+            name: 'Correo Institucional',
+            selector: row => row.user.email,
+            sortable: true,
+            left: 1,
             grow: 2,
         },
         {
             name: 'Cargo',
             selector: row => row.cargo,
             sortable: true,
+            left: 1,
+            grow: 3,
         },
-        {
-            name: 'Cedula',
-            selector: row => row.ci + ' ' + row.ext_ci,
-            sortable: true,
-        },
-        {
-            name: 'Correo',
-            selector: row => row.user.email,
-            sortable: true,
-        },
+
     ];
 
     const paginationOptions = {
@@ -218,20 +227,7 @@ const IndexAdministrativos = () => {
                         onChange={searchOnChange}
                     />
                 </div>
-                <ModalDiv isOpen={showadministrativo} closeModal={closeAdministrativo} title={'LISTA DEL PERSONAL ADMINISTRATIVO DE LA UNIDAD - UPJ'}>
-
-                    <div className="modal-dialog modal-lg">
-                        <h2 className="fs-6"><b>Nombre Completo:</b> &nbsp;&nbsp;{administrativoShow.nombres + ' ' + administrativoShow.paterno + ' ' + administrativoShow.materno} </h2>&nbsp;&nbsp;<b>CI:</b> {administrativoShow.ci + ' ' + administrativoShow.ext_ci}<hr />
-                        <h2 className="fs-6"><b>Cargo:</b> &nbsp;{administrativoShow.cargo}</h2> <hr />
-                        {administrativoShow.user
-                            ? <div><h2 className="fs-6"><b>Correo Electronico:</b> &nbsp;{administrativoShow.user.email}</h2> </div>
-                            : ''}
-                    </div>
-                    <hr />
-                    <div className='d-flex'>
-                        <button className="btn btn-secondary" title="cerrar" onClick={closeAdministrativo}>cerrar</button>
-                    </div>
-                </ModalDiv>
+                <ShowAdm modal={showadministrativo} close={closeAdministrativo} registro={administrativoShow}/>
                 <div>
                     <Link to="/administrativo/create" className='btn button_green'>
                         <span>AÑADIR</span>
@@ -241,6 +237,7 @@ const IndexAdministrativos = () => {
             </div>
             <div className='table-responsive'>
                 <DataTable
+                    title='ADMINISTRATIVOS REGISTRADOS'
                     columns={columns}
                     data={filteredRegistros()}
                     paginationComponentOptions={paginationOptions}
@@ -249,6 +246,9 @@ const IndexAdministrativos = () => {
                     pagination
                     noDataComponent={<span>No se encontro ningun elemento</span>}
                     progressPending={isLoading}
+                    customStyles={estilos}
+                    highlightOnHover={true}
+                    persistTableHead={true}
                 />
             </div>
         </div>
