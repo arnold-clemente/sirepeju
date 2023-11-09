@@ -21,7 +21,7 @@ const ShowGob = ({ modal, close, registro }) => {
                     </h2>
                     <div className='container-fluid d-flex justify-content-end'>
                         <button onClick={openImprimir} className='button_print_show'>
-                            <i class="fa-solid fa-print"></i>
+                            <i className="fa-solid fa-print"></i>
                             <span>Imprimir</span>
                         </button>
                     </div>

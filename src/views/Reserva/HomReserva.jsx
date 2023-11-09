@@ -9,18 +9,20 @@ import Swal from 'sweetalert2';
 import Loading from '../../components/Loading';
 import Banner from '../../components/Banner';
 import { show_alerta } from '../../components/MessageAlert';
-import ModalDiv from '../../components/ModalDiv'; //contendoresto hay importar siempre
 import { useModal } from '../../hooks/useModal'; //metodos siempre gg
 
 import { getHomonimias, entregarReserva } from '../../api/reservaApi';
+import { estilos } from '../../components/estilosdatatables';
+import RepHominimia from './reporte/RepHominimia';
+import ShowHomonimia from './ShowHomonimia';
 
 const HomReserva = () => {
     const [search, setSearch] = useState('');
     const [loading, setLoading] = useState(false);
     const queryClient = useQueryClient();
-    const url = 'http://sirepeju.test/reporte/homonimia/';
     //para el modal
     const [showreserva, openReserva, closeReserva] = useModal(false);
+    const [Imprimir, openImprimir, closeImprimir] = useModal(false);
     // declarar un hook 
     const [reservaShow, setreservaShow] = useState({});
 
@@ -92,6 +94,14 @@ const HomReserva = () => {
         console.log(reservaShow)
     }
 
+    const handleImprimir = (e, row) => {
+        e.preventDefault();
+        openImprimir();
+        const prueba = row;
+        setreservaShow({ ...reservaShow, ...prueba })
+        console.log(reservaShow)
+    }
+
     const columns = [
         {
             name: 'Acciones',
@@ -100,10 +110,10 @@ const HomReserva = () => {
                 <div className='d-flex flex-row justify-content-start'>
                     <button onClick={(e) => handleShow(e, row)} className="button_show"><i className="fa-solid fa-eye"></i><span>Ver</span></button>
                     <div className='d-flex flex-row justify-content-start'>
-                        <a href={url + row.id} target='_blank' className="button_print"><i className="fa-solid fa-print"></i><span>Imprimir</span></a>
+                        <button onClick={(e) => handleImprimir(e, row)} className="button_print"><i className="fa-solid fa-print"></i><span>Imprimir</span></button>
                         {!row.fecha_entrega
-                           ? <button onClick={(e) => handleEntregar(e, row)} className="button_download"><i className="fa-solid fa-check"></i><span>Entregar</span></button>
-                           : ''
+                            ? <button onClick={(e) => handleEntregar(e, row)} className="button_download"><i className="fa-solid fa-check"></i><span>Entregar</span></button>
+                            : ''
                         }
                     </div>
 
@@ -115,13 +125,36 @@ const HomReserva = () => {
             button: true,
         },
         {
-            name: 'Id',
-            selector: row => row.id,
+            name: 'Nº Hoja Ruta',
+            selector: row => row.hr,
             sortable: true,
+            lintg: 1,
             grow: 1,
         },
         {
-            name: 'Entidad',
+            name: 'Nº Correlativo',
+            selector: row => row.nro_certificado,
+            sortable: true,
+            lintg: 1,
+            grow: 1,
+        },
+        {
+            name: 'Tipo de Persona Colectiva',
+            selector: row => row.persona_colectiva,
+            sortable: true,
+            center: 1,
+            grow: 2,
+        },
+
+        {
+            name: 'Naturaleza',
+            selector: row => row.naturaleza,
+            sortable: true,
+            lintg: 1,
+            grow: 2,
+        },
+        {
+            name: 'Nombre de la Persona Colectiva Colectiva',
             selector: row => row.entidad,
             sortable: true,
             grow: 3,
@@ -132,25 +165,40 @@ const HomReserva = () => {
             sortable: true,
         },
         {
-            name: 'Representante',
+            name: 'Representante Legal',
             selector: row => row.representante,
             sortable: true,
+            ligth: 1,
+            grow: 3,
         },
         {
-            name: 'Nro',
-            selector: row => row.nro_certificado,
-            sortable: true,
-        },
-        {
-            name: 'Naturaleza',
-            selector: row => row.naturaleza,
-            sortable: true,
-        },
-        {
-            name: 'Cedula',
+            name: 'CI',
             selector: row => row.ci_rep + " " + row.ext_ci_rep,
             sortable: true,
+            ligth: 1,
+            grow: 1,
         },
+        {
+            name: 'CI',
+            selector: row => row.ci_rep + " " + row.ext_ci_rep,
+            sortable: true,
+            left: 1,
+            grow: 1,
+        },
+        {
+            name: 'Nº Celular',
+            selector: row => row.telefono,
+            sortable: true,
+            left: 1,
+            grow: 1,
+        },
+        {
+            name: 'Correo Registrado',
+            selector: row => row.correo,
+            sortable: true,
+            left: 1,
+            grow: 2
+        }
     ];
 
     const paginationOptions = {
@@ -180,30 +228,23 @@ const HomReserva = () => {
                         onChange={searchOnChange}
                     />
                 </div>
-                <ModalDiv isOpen={showreserva} closeModal={closeReserva} title={'LISTA DE RESERVA DE NOMBRE'}>
-                    <div className="modal-dialog modal-lg">
-                        <h2 className="fs-6"><b>Entidad:</b>&nbsp;&nbsp;{reservaShow.entidad}</h2> <hr />
-                        <h2 className="fs-6"><b>Sigla:</b>&nbsp;&nbsp;{reservaShow.sigla}<hr /></h2> <hr />
-                        <h2 className="fs-6"><b>Representante legal:</b>&nbsp;&nbsp; {reservaShow.representante}<b>CI:</b>9999</h2> <hr />
-                        <h2 className="fs-6"><b>Nº Correlativo:</b> &nbsp;&nbsp;{reservaShow.nro_certificado}</h2><hr />
-                        <h2 className="fs-6"><b>Naturaleza:</b> &nbsp;&nbsp;{reservaShow.naturaleza}</h2>
-                    </div>
-                    <hr />
-                    <div className='d-flex'>
-                        <button className="btn btn-secondary" title="cerrar" onClick={closeReserva}>cerrar</button>
-                    </div>
-                </ModalDiv>              
+                <ShowHomonimia registro={reservaShow} modal={showreserva} close={closeReserva} />
+                <RepHominimia registro={reservaShow} modal={Imprimir} close={closeImprimir} />
             </div>
             <div className='table-responsive'>
                 <DataTable
+                    title={'TABLA DE HOMONIMIAS'}
                     columns={columns}
                     data={filteredRegistros()}
                     paginationComponentOptions={paginationOptions}
                     fixedHeader
-                    fixedHeaderScrollHeight='400px'
+                    fixedHeaderScrollHeight='800px'
                     pagination
                     noDataComponent={<span>No se encontro ningun elemento</span>}
                     progressPending={isLoading}
+                    customStyles={estilos}
+                    highlightOnHover={true}
+                    persistTableHead={true}
                 />
             </div>
 

@@ -1,21 +1,10 @@
 import React from 'react'
-import ModalDiv from '../../components/ModalDiv'; //contendoresto hay importar siempre
-import RepSolicitud from './reporte/RepSolicitud';
-import { useModal } from '../../hooks/useModal'
+import ModalDiv from '../../components/ModalDiv';
 
-const ShowSolicitud = ({ registro, modal, close }) => {
-
-    const [imprimir, openImprimir, closeImprimir] = useModal(false);
+const ShowRegistro = ({ registro, modal, close }) => {
     return (
         <>
-            <ModalDiv isOpen={modal} closeModal={close} title={'LISTA DE RESERVA DE NOMBRE'}>
-                <RepSolicitud registro={registro} modal={imprimir} close={closeImprimir} />
-                <div className='container-fluid d-flex justify-content-end'>
-                    <button onClick={openImprimir} className='button_print_show'>
-                        <i className="fa-solid fa-print"></i>
-                        <span>Imprimir</span>
-                    </button>
-                </div>
+            <ModalDiv isOpen={modal} closeModal={close} title={'ENTIDAD RESERVADA'}>
                 <div className="modal-dialog modal-lg">
                     <h2 className="fs-6"><b>Entidad:</b>&nbsp;&nbsp;{registro.entidad}</h2> <hr />
                     <h2 className="fs-6"><b>Sigla:</b>&nbsp;&nbsp;{registro.sigla}<hr /></h2> <hr />
@@ -32,4 +21,4 @@ const ShowSolicitud = ({ registro, modal, close }) => {
     )
 }
 
-export default ShowSolicitud
+export default ShowRegistro

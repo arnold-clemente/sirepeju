@@ -90,7 +90,7 @@ const CreateReserva = () => {
                 <div className="row">
                     <div className="form-group col-md-6 py-2">
                         <label>Hoja de Ruta</label>
-                        <input type="text" className="form-control" placeholder="Escriba el nuemro de  hoja de ruta"
+                        <input type="text" className="form-control" placeholder="Escriba el número de  hoja de ruta"
                             name="hr" value={hr} onChange={handleInputChange} />
                         {error.hr
                             ? <ValidationError text={error.hr} />

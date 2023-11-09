@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom';
 import DataTable from "react-data-table-component";
 import { useQuery } from 'react-query';
 import { useMutation } from 'react-query';
@@ -9,23 +8,25 @@ import Swal from 'sweetalert2';
 import Loading from '../../components/Loading';
 import Banner from '../../components/Banner';
 import { show_alerta } from '../../components/MessageAlert';
-import ValidationError from '../../components/ValidationError';
 import storage from '../../Storage/storage'
+import { estilos } from '../../components/estilosdatatables';
 
 import { getRegistros, entregarRegistro, createOtorgacion } from '../../api/registroApi';
 // modal 
-import ModalDiv from '../../components/ModalDiv'
 import { useModal } from '../../hooks/useModal'
+import ShowRegistro from './ShowRegistro';
+import ModalRegistro from './ModalRegistro';
+import RepReservados from './reporte/RepReservados';
 
 const IndexReg = () => {
 
-    const url = 'http://sirepeju.test/reporte/reserva/'
     const [search, setSearch] = useState('');
     const [loading, setLoading] = useState(false);
     const queryClient = useQueryClient();
     const [isModalOtorgacion, openModalOtorgacion, closeModalOtorgacion] = useModal(false);
     //para el modal
     const [showregistro, openRegistro, closeRegistro] = useModal(false);
+    const [imprimir, openImprimir, closeImprimir] = useModal(false);
     const [registroShow, setRegistroShow] = useState({});
     const [otorgacion, setOtorgacion] = useState({
         id: 0,
@@ -35,9 +36,7 @@ const IndexReg = () => {
         objeto: '',
         user_id: storage.get('authUser').id
     })
-    const [errorval, serErroreval] = useState({});
 
-    const { fecha, codigo, domicilio, objeto } = otorgacion;
 
     const { isLoading, data: registros, isError, error } = useQuery({
         queryKey: ['registros'],
@@ -68,7 +67,6 @@ const IndexReg = () => {
         await setSearch(e.target.value);
     };
 
-
     const fechaReserva = useMutation({
         mutationFn: entregarRegistro,
         onSuccess: (response) => {
@@ -77,29 +75,6 @@ const IndexReg = () => {
             setLoading(false);
         },
         onError: (error) => {
-            show_alerta('No conectado', '<i class="fa-solid fa-xmark border_alert_red"></i>', 'alert_red')
-            setLoading(false);
-        },
-    });
-
-    const enviarRegistro = useMutation({
-        mutationFn: createOtorgacion,
-        onSuccess: (response) => {
-            if (response.status === true) {
-
-                queryClient.invalidateQueries('registros')
-                show_alerta('Creado con exito', '<i class="fa-solid fa-check border_alert_green"></i>', 'alert_green')
-                setLoading(false);
-                // go('/user-gobernaciones')
-            } else {
-                openModalOtorgacion();
-                show_alerta('Fallo de Validacion', '<i class="fa-solid fa-xmark border_alert_red"></i>', 'alert_red');
-                serErroreval(response.errors);
-                setLoading(false);
-            }
-        },
-        onError: (error) => {
-            console.log(error)
             show_alerta('No conectado', '<i class="fa-solid fa-xmark border_alert_red"></i>', 'alert_red')
             setLoading(false);
         },
@@ -122,24 +97,13 @@ const IndexReg = () => {
         });
     };
 
-    const handleEnviar = (e) => {
-        e.preventDefault();
-        closeModalOtorgacion();
-        setLoading(true);
-        const enviar = otorgacion;
-        enviarRegistro.mutate(enviar);
-    }
-
     const handleOtorgacion = (e, row) => {
         e.preventDefault();
         setOtorgacion({
             ...otorgacion,
             ['id']: row.id
         });
-        const resetval = { fecha: '', codigo: '', domicilio: '', objeto: '' }
-        serErroreval({ ...errorval, ...resetval });
         openModalOtorgacion();
-        console.log(otorgacion)
     }
 
     const handleInputChange = ({ target }) => {
@@ -156,13 +120,20 @@ const IndexReg = () => {
         openRegistro();
     }
 
+    const handleImprimir = (e, row) => {
+        e.preventDefault();
+        const prueba = row;
+        setRegistroShow({ ...registroShow, ...prueba })
+        openImprimir();
+    }
+
     const columns = [
         {
             name: 'Acciones',
             cell: (row) => (
                 <div className='d-flex flex-row justify-content-start'>
                     <button onClick={(e) => handleShow(e, row)} className="button_show"><i className="fa-solid fa-eye"></i><span>Ver</span></button>
-                    <a href={url + row.id} target='_blank' className="button_print"><i className="fa-solid fa-print"></i><span>Imprimir</span></a>
+                    <button onClick={(e) => handleImprimir(e, row)} className="button_print"><i className="fa-solid fa-print"></i><span>Imprimir</span></button>
                     <div className='d-flex flex-row justify-content-start'>
                         {row.fecha_entrega
                             ? <div className='d-flex flex-row justify-content-starts'>
@@ -178,13 +149,32 @@ const IndexReg = () => {
             button: true,
         },
         {
-            name: 'Id',
+            name: 'Hoja de Ruta',
             selector: row => row.id,
             sortable: true,
+            center: 1,
             grow: 1,
         },
         {
-            name: 'Entidad',
+            name: 'Nº Correlativo',
+            selector: row => row.nro_certificado,
+            sortable: true,
+        },
+        {
+            name: 'Tipo de Personas Colectiva ',
+            selector: row => row.persona_colectiva,
+            sortable: true,
+            center: 1,
+            grow: 2,
+        },
+        {
+            name: 'Naturaleza',
+            selector: row => row.naturaleza,
+            sortable: true,
+            grow: 2,
+        },
+        {
+            name: 'Nombre de la Persona Colectiva',
             selector: row => row.entidad,
             sortable: true,
             grow: 3,
@@ -193,26 +183,37 @@ const IndexReg = () => {
             name: 'Sigla',
             selector: row => row.sigla,
             sortable: true,
+            center: 1,
+            grow: 1,
         },
         {
-            name: 'Representante',
+            name: 'Representante Legal',
             selector: row => row.representante,
             sortable: true,
+            left: 1,
+            grow: 3,
         },
+
         {
-            name: 'Nro',
-            selector: row => row.nro_certificado,
-            sortable: true,
-        },
-        {
-            name: 'Naturaleza',
-            selector: row => row.naturaleza,
-            sortable: true,
-        },
-        {
-            name: 'Cedula',
+            name: 'CI',
             selector: row => row.ci_rep + " " + row.ext_ci_rep,
             sortable: true,
+            left: 1,
+            grow: 1,
+        },
+        {
+            name: 'Nº Celular',
+            selector: row => row.telefono,
+            sortable: true,
+            left: 1,
+            grow: 1,
+        },
+        {
+            name: 'Correo Registrado',
+            selector: row => row.correo,
+            sortable: true,
+            left: 1,
+            grow: 2
         },
     ];
 
@@ -230,57 +231,10 @@ const IndexReg = () => {
         <div>
             {loading === true ? <Loading /> : ''}
             <Banner text="REGISTRO DE ENTIDADES" />
-            <ModalDiv isOpen={showregistro} closeModal={closeRegistro} title={'ENTIDAD RESERVADA'}>
-                <div className="modal-dialog modal-lg">
-                    <h2 className="fs-6"><b>Entidad:</b>&nbsp;&nbsp;{registroShow.entidad}</h2> <hr />
-                    <h2 className="fs-6"><b>Sigla:</b>&nbsp;&nbsp;{registroShow.sigla}<hr /></h2> <hr />
-                    <h2 className="fs-6"><b>Representante legal:</b>&nbsp;&nbsp; {registroShow.representante}<b>CI:</b>9999</h2> <hr />
-                    <h2 className="fs-6"><b>Nº Correlativo:</b> &nbsp;&nbsp;{registroShow.nro_certificado}</h2><hr />
-                    <h2 className="fs-6"><b>Naturaleza:</b> &nbsp;&nbsp;{registroShow.naturaleza}</h2>
-                </div>
-                <hr />
-                <div className='d-flex'>
-                    <button className="btn btn-secondary" title="cerrar" onClick={closeRegistro}>cerrar</button>
-                </div>
-            </ModalDiv>
-            <ModalDiv isOpen={isModalOtorgacion} closeModal={closeModalOtorgacion} title={'REGISTRO DE OTORGACION'}>
-                <div className="row">
-                    <div className="col-md-6">
-                        <label className="form-label">Fecha de Ingreso:</label>
-                        <input type="date" className="form-control" placeholder="fecha" aria-label="First name"
-                            name="fecha" value={fecha} onChange={handleInputChange} />
-                        {errorval.fecha
-                            ? <ValidationError text={errorval.fecha} />
-                            : ''}
-                    </div>
-                    <div className="col-md-6">
-                        <label className="form-label">Codigo OPJ</label>
-                        <input type="text" className="form-control" placeholder="Escriba codigo OPJ" aria-label="Last name"
-                            name="codigo" value={codigo} onChange={handleInputChange} />
-                        {errorval.codigo
-                            ? <ValidationError text={errorval.codigo} />
-                            : ''}
-                    </div>
-                    <div className="col-md-12">
-                        <label className="form-label">Domicilio Legal</label>
-                        <input type="text" className="form-control" placeholder="Escriba la direccion" aria-label="Last name" name="domicilio" value={domicilio} onChange={handleInputChange} />
-                        {errorval.domicilio
-                            ? <ValidationError text={errorval.domicilio} />
-                            : ''}
-                    </div>
-                    <div className="col-md-12">
-                        <label className="form-label">Objeto</label>
-                        <textarea rows={5} className="form-control" placeholder="Escriba el objeto" aria-label="Last name" name="objeto" value={objeto} onChange={handleInputChange} />
-                        {errorval.objeto
-                            ? <ValidationError text={errorval.objeto} />
-                            : ''}
-                    </div>
-                </div>
-                <div className='container-fluid d-flex gap-2 justify-content-end pt-4'>
-                    <button onClick={closeModalOtorgacion} className='btn btn-danger'>Cerrar</button>
-                    <button onClick={handleEnviar} className='btn btn-primary'>Enviar</button>
-                </div>
-            </ModalDiv>
+            <ShowRegistro registro={registroShow} modal={showregistro} close={closeRegistro} />
+            <ModalRegistro registro={otorgacion} modal={isModalOtorgacion} close={closeModalOtorgacion}
+                handleInputChange={handleInputChange} open={openModalOtorgacion} />
+            <RepReservados registro={registroShow} modal={imprimir} close={closeImprimir} />
 
             <div className='container-fluid d-flex flex-row md:flex-columns my-4'>
                 <div className='input_search'>
@@ -297,6 +251,7 @@ const IndexReg = () => {
             </div>
             <div className='table-responsive'>
                 <DataTable
+                    title={'TABLA DE RESERVADOS'}
                     columns={columns}
                     data={filteredRegistros()}
                     paginationComponentOptions={paginationOptions}
@@ -305,6 +260,9 @@ const IndexReg = () => {
                     pagination
                     noDataComponent={<span>No se encontro ningun elemento</span>}
                     progressPending={isLoading}
+                    customStyles={estilos}
+                    highlightOnHover={true}
+                    persistTableHead={true}
                 />
             </div>
         </div>
