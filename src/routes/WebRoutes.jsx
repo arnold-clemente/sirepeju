@@ -31,6 +31,7 @@ import IndexOtorgacion from '../views/otorgaciones/IndexOtorgacion'
 import FundOtorgacion from '../views/otorgaciones/FundOtorgacion'
 import OtorgacionPersonalidades from '../views/otorgaciones/OtorgacionPersonalidades'
 import OtorgacionRevocados from '../views/otorgaciones/OtorgacionRevocados'
+import IndexModificacionOtor from '../views/modificacion_otorgacion/IndexModificacionOtor'
 
 //adecuciones
 import IndexAdecuacion from '../views/adecuacion/IndexAdecuacion'
@@ -89,6 +90,7 @@ const WebRoutes = () => {
                     <Route path='/otorgaciones/:otorgacionId/fundadores' element={<FundOtorgacion />} />
                     <Route path='/otorgacion/personalidades-juridicas' element={<OtorgacionPersonalidades />} />
                     <Route path='/otorgacion/revocados' element={<OtorgacionRevocados />} />
+                    <Route path='/otorgacion/modificaciones' element={<IndexModificacionOtor />} />
                     {/* adecuaciones */}
                     <Route path='/adecuaciones' element={<IndexAdecuacion />} />
                     <Route path='/adecuacion/crear' element={<CreateAdecuacion />} />

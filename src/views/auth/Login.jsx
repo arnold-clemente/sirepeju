@@ -8,7 +8,7 @@ import storage from '../../Storage/storage'
 const Login = () => {
 
     const [formValues, handleInputChange] = useForm({
-        email: '',
+        email: 'admin@admin.com',
         password: '12345678',
     })
 

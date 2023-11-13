@@ -66,6 +66,11 @@ export const links = [
                 texto: 'Personalidades Juridicas'
             },
             {
+                path: '/otorgacion/modificaciones',
+                icon: 'fa-solid fa-pen-to-square',
+                texto: 'Otorgacion Modificacion'
+            },
+            {
                 path: '/otorgacion/revocados',
                 icon: 'fa-solid fa-ban',
                 texto: 'Otorgacion Revocados'

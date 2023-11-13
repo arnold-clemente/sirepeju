@@ -4,12 +4,15 @@ import { useQuery } from 'react-query';
 
 import Loading from '../../components/Loading';
 import Banner from '../../components/Banner';
+import { estilos } from '../../components/estilosdatatables';
+import storage from '../../Storage/storage'
 
 import { getPersonalidades } from '../../api/otorgacionesApi';
 // modal 
 import { useModal } from '../../hooks/useModal'
 import ModalShowOtorgacion from './ModalShowOtorgacion';
 import ModalRevocarOtorgacion from './ModalRevocarOtorgacion';
+import ModalModificacion from './ModalModificacion';
 
 const OtorgacionPersonalidades = () => {
 
@@ -18,11 +21,25 @@ const OtorgacionPersonalidades = () => {
 
     // para el modal show Otorgacion
     const [modalOtorgacion, openOtorgacion, closeOtorgacion] = useModal(false);
+    const [modificacion, openModificacion, closeModificacion] = useModal(false);
     const [otorgacionShow, setotorgacionShow] = useState({});
 
     //para el revocatoria
     const [revocatoriaModal, openRevocatoriaModal, closeRevocatoriaModal] = useModal(false);
     const [revocatoria, setRevocatoria] = useState({ otorgacion_id: 1, nota_revocatorio: '', fecha_revocatoria: '', observacion: '' });
+    const [update, setUpdate] = useState({
+        fecha: '',
+        otorgacion_id: 0,
+        codigo_modificacion: '',
+        personalidad_juridica: '',
+        estatuto_organico: '',
+        reglamento_interno: '',
+        domicilio_legal: '',
+        miembros_fundador: '',
+        seguimiento: '',
+        cite_informe_preliminar: '',
+        user_id: storage.get('authUser').id,
+    });
 
     const { isLoading, data: registros, isError, error } = useQuery({
         queryKey: ['personalidadesotorgacion'],
@@ -81,6 +98,24 @@ const OtorgacionPersonalidades = () => {
         openRevocatoriaModal();
     }
 
+    const handleModificar = (e, row) => {
+        e.preventDefault();
+        const auxiliar = {
+            fecha: '',
+            otorgacion_id: row.id,
+            codigo_modificacion: row.codigo_otorgacion,
+            personalidad_juridica: row.personalidad_juridica,
+            estatuto_organico: row.estatuto_organico,
+            reglamento_interno: row.reglamento_interno,
+            domicilio_legal: row.domicilio_legal,
+            miembros_fundador: row.miembros_fundador,
+            seguimiento: row.seguimiento,
+            cite_informe_preliminar: row.cite_informe_preliminar,
+        }
+        setUpdate({ ...update, ...auxiliar });
+        openModificacion();
+    }
+
 
     const columns = [
         {
@@ -88,7 +123,8 @@ const OtorgacionPersonalidades = () => {
             cell: (row) => (
                 <div className='container-fluid d-flex flex-row'>
                     <button onClick={(e) => handleShow(e, row)} className="button_show"><i className="fa-solid fa-eye"></i><span>Ver</span></button>
-                    <button onClick={(e) => handleRevocar(e, row)} className="button_delete"><i className="fa-solid fa-eye"></i><span>Revocar</span></button>
+                    <button onClick={(e) => handleModificar(e, row)} className="button_edit"><i className="fa-solid fa-pen-to-square"></i><span>Modificar</span></button>
+                    <button onClick={(e) => handleRevocar(e, row)} className="button_delete"><i className="fa-regular fa-circle-xmark"></i><span>Revocar</span></button>
                 </div>
             ),
             ignoreRowClick: true,
@@ -148,6 +184,8 @@ const OtorgacionPersonalidades = () => {
 
             {/* para le modal show otorgacion  */}
             <ModalShowOtorgacion showRegistro={otorgacionShow} modalRegistro={modalOtorgacion} closeRegistro={closeOtorgacion} />
+            {/* modal modoificacion  */}
+            <ModalModificacion registro={update} modal={modificacion} open={openModificacion} close={closeModificacion} />
             <Banner text="PERSONALIDAD JURIDICA OTORGACION" />
             <div className='container-fluid d-flex flex-row md:flex-columns my-4'>
                 <div className='input_search'>
@@ -164,6 +202,7 @@ const OtorgacionPersonalidades = () => {
             </div>
             <div className='table-responsive'>
                 <DataTable
+                    title={'TABLA DE OTORGACIONES'}
                     columns={columns}
                     data={filteredRegistros()}
                     paginationComponentOptions={paginationOptions}
@@ -172,6 +211,9 @@ const OtorgacionPersonalidades = () => {
                     pagination
                     noDataComponent={<span>No se encontro ningun elemento</span>}
                     progressPending={isLoading}
+                    customStyles={estilos}
+                    highlightOnHover={true}
+                    persistTableHead={true}
                 />
             </div>
         </>
