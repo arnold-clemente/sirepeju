@@ -44,7 +44,7 @@ const ModalPersonaOtorgacion = ({ persona, modalRegistro, openRegistrorModal, cl
             setLoading(false);
         }
     });
-
+    
     return (
         <>
             {loading === true ? <Loading /> : ''}

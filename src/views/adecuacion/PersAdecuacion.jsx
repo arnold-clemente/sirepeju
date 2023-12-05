@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import DataTable from "react-data-table-component";
 import { useQuery } from 'react-query';
+import storage from '../../Storage/storage'
 
 import Loading from '../../components/Loading';
 import Banner from '../../components/Banner';
@@ -10,6 +11,7 @@ import { getPersonalidades } from '../../api/adecuacionApi';
 import { useModal } from '../../hooks/useModal'
 import ModalShow from './ModalShow';
 import ModalRevocar from './ModalRevocar';
+import ModalModificacionAde from './ModalModificacionAde';
 
 const PersAdecuacion = () => {
 
@@ -18,14 +20,34 @@ const PersAdecuacion = () => {
 
     // par el modal show
     const [modalAdecuacion, openAdecuacion, closeAdecuacion] = useModal(false);
+    const [modificacion, openModificacion, closeModificacion] = useModal(false);
     const [adecuacionShow, setadecuacionShow] = useState({});
 
     //para el revocatoria
     const [revocatoriaModal, openRevocatoriaModal, closeRevocatoriaModal] = useModal(false);
-    const [revocatoria, setRevocatoria] = useState({ adecuacion_id: 1, nota_revocatorio: '', fecha_revocatoria: '', observacion: '' });
+    const [revocatoria, setRevocatoria] = useState({ 
+        adecuacion_id: 1, 
+        nota_revocatorio: '', 
+        fecha_revocatoria: '', 
+        observacion: '' 
+    });
+
+    const [update, setUpdate] = useState({
+        fecha: '',
+        adecuacion_id: 0,
+        codigo_modificacion: '',
+        personalidad_juridica: '',
+        estatuto_organico: '',
+        reglamento_interno: '',
+        domicilio_legal: '',
+        miembros_fundador: '',
+        seguimiento: '',
+        cite_informe_preliminar: '',
+        user_id: storage.get('authUser').id,
+    });
 
     const { isLoading, data: registros, isError, error } = useQuery({
-        queryKey: ['personalidadesadecuacion'],
+        queryKey: ['personalidades_adecuacion'],
         queryFn: getPersonalidades,
         select: adecuaciones => adecuaciones.sort((a, b) => b.id - a.id)
     })
@@ -82,6 +104,31 @@ const PersAdecuacion = () => {
         setRevocatoria({ ...revocatoria, ...auxiliar })
         openRevocatoriaModal();
       }
+
+      const handleInputModificacion = ({ target }) => {
+        setUpdate({
+            ...update,
+            [target.name]: target.value
+        });
+    }
+
+      const handleModificar = (e, row) => {
+        e.preventDefault();
+        const auxiliar = {
+            fecha: '',
+            adecuacion_id: row.id,
+            codigo_modificacion: '',
+            personalidad_juridica: row.personalidad_juridica,
+            estatuto_organico: row.registro_persona_adecuacion.estatuto_organico,
+            reglamento_interno: row.registro_persona_adecuacion.reglamento_interno,
+            domicilio_legal: row.domicilio_legal,
+            miembros_fundador: row.miembros_fundador,
+            seguimiento: row.seguimiento,
+            cite_informe_preliminar: row.cite_informe_preliminar,
+        }
+        setUpdate({ ...update, ...auxiliar });
+        openModificacion();
+    }
     
 
     const columns = [
@@ -90,6 +137,7 @@ const PersAdecuacion = () => {
             cell: (row) => (
                 <div className='container-fluid d-flex flex-row'>
                     <button onClick={(e) => handleShow(e, row)} className="button_show"><i className="fa-solid fa-eye"></i><span>Ver</span></button>
+                    <button onClick={(e) => handleModificar(e, row)} className="button_edit"><i className="fa-solid fa-pen-to-square"></i><span>Modificar</span></button>
                     <button onClick={(e) => handleRevocar(e, row)} className="button_delete"><i className="fa-solid fa-eye"></i><span>Revocar</span></button>
                 </div>
             ),
@@ -160,6 +208,7 @@ const PersAdecuacion = () => {
 
             {/* para le modal show adecuacion  */}
             <ModalShow showRegistro={adecuacionShow} modalRegistro={modalAdecuacion} closeRegistro={closeAdecuacion} />
+            <ModalModificacionAde registro={update} handleInputChange={handleInputModificacion} modal={modificacion} open={openModificacion} close={closeModificacion} />
             <Banner text="PERSONALIDAD JURIDICA ADECUACION" />
             <div className='container-fluid d-flex flex-row md:flex-columns my-4'>
                 <div className='input_search'>

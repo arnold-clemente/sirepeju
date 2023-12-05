@@ -317,12 +317,6 @@ const IndexOtorgacion = () => {
                         onChange={searchOnChange}
                     />
                 </div>
-                <div>
-                    <Link to="/adecuacion/crear" className='btn button_green'>
-                        <span>AÑADIR</span>
-                        <i className="fa fa-plus" aria-hidden="true"></i>
-                    </Link>
-                </div>
             </div>
             <div className='table-responsive'>
                 <DataTable

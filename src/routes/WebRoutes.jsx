@@ -39,11 +39,15 @@ import CreateAdecuacion from '../views/adecuacion/CreateAdecuacion'
 import FundAdecuacion from '../views/adecuacion/FundAdecuacion'
 import PersAdecuacion from '../views/adecuacion/PersAdecuacion'
 import RevAdecuacion from '../views/adecuacion/RevAdecuacion'
+import IndexModificacionAd from '../views/modificacion_adecuacion/IndexModificacionAd'
 
 //otorgaciones gobernacion
 import IndexOtorgacionGob from '../views/otorgaciongobs/IndexOtorgacionGob'
 import CreateOtorgacionGob from '../views/otorgaciongobs/CreateOtorgacionGob'
 import EditOtorgacionGob from '../views/otorgaciongobs/EditOtorgacionGob'
+
+// modificaciones 
+import IndexModificacion from '../views/modificacion/IndexModificacion'
 
 
 const WebRoutes = () => {
@@ -97,10 +101,13 @@ const WebRoutes = () => {
                     <Route path='/adecuacion/:adecuacionId/fundadores' element={<FundAdecuacion />} />
                     <Route path='/adecuacion/personalidades' element={<PersAdecuacion />} />
                     <Route path='/adecuacion/revocados' element={<RevAdecuacion />} />
+                    <Route path='/adecuacion/modificaciones' element={<IndexModificacionAd />} />
                     {/* otorgacion gobernaciones */}
                     <Route path='/otorgaciones-gobernaciones' element={<IndexOtorgacionGob />} />
                     <Route path='/otorgaciones-gobernaciones/create' element={<CreateOtorgacionGob />} />
                     <Route path='/otorgaciones-gobernaciones/edit/:otorgacionGobId' element={<EditOtorgacionGob />} />
+                    {/* modificacions  */}
+                    <Route path='/modificaciones' element={<IndexModificacion />} />
                 </Routes>
             </div>
         </div>

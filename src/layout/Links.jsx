@@ -1,3 +1,4 @@
+
 export const links = [
     {
         path: '/',
@@ -92,6 +93,11 @@ export const links = [
                 texto: 'Adecuacion Personalidades'
             },
             {
+                path: '/adecuacion/modificaciones',
+                icon: 'fa-solid fa-pen-to-square',
+                texto: 'Adecuacion Modificacion'
+            },
+            {
                 path: '/adecuacion/revocados',
                 icon: 'fa-solid fa-ban',
                 texto: 'Adecuacion Revocados'
@@ -102,5 +108,10 @@ export const links = [
         path: '/otorgaciones-gobernaciones',
         icon: 'fa-solid fa-file-arrow-up',
         texto: 'Otorgacion Gobernacion'
+    },
+    {
+        path: '/modificaciones',
+        icon: 'fa-solid fa-pen-to-square',
+        texto: 'Modificacion'
     },
 ];

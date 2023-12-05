@@ -1,50 +1,44 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom';
 import DataTable from "react-data-table-component";
 import { useQuery } from 'react-query';
 
 import Loading from '../../components/Loading';
 import Banner from '../../components/Banner';
 import { estilos } from '../../components/estilosdatatables';
-import storage from '../../Storage/storage'
 
-import { getPersonalidades } from '../../api/otorgacionesApi';
+import { getModificaciones } from '../../api/modificacionApi';
 // modal 
 import { useModal } from '../../hooks/useModal'
-import ModalShowOtorgacion from './ModalShowOtorgacion';
-import ModalRevocarOtorgacion from './ModalRevocarOtorgacion';
-import ModalModificacion from './ModalModificacion';
+// modal components 
+import ModalShowMod from './ModalShowMod';
 
-const OtorgacionPersonalidades = () => {
+
+const IndexModificacion = () => {
 
     const [search, setSearch] = useState('');
     const [loading, setLoading] = useState(false);
 
     // para el modal show Otorgacion
     const [modalOtorgacion, openOtorgacion, closeOtorgacion] = useModal(false);
-    const [modificacion, openModificacion, closeModificacion] = useModal(false);
-    const [otorgacionShow, setotorgacionShow] = useState({});
-
-    //para el revocatoria
-    const [revocatoriaModal, openRevocatoriaModal, closeRevocatoriaModal] = useModal(false);
-    const [revocatoria, setRevocatoria] = useState({ otorgacion_id: 1, nota_revocatorio: '', fecha_revocatoria: '', observacion: '' });
-    const [update, setUpdate] = useState({
-        fecha: '',
+    const [otorgacionShow, setotorgacionShow] = useState({
+        id: 0,
+        codigo_modificacion: 'APN - 000',
+        tipo: 'undefine',
+        personalidad_juridica: 'undefine',
+        miembros_fundador: 'undefine',
+        domicilio_legal: 'undefine',
+        seguimiento: 'undefine',
+        cite_informe_preliminar: 'undefine',
         otorgacion_id: 0,
-        codigo_modificacion: '',
-        personalidad_juridica: '',
-        estatuto_organico: '',
-        reglamento_interno: '',
-        domicilio_legal: '',
-        miembros_fundador: '',
-        seguimiento: '',
-        cite_informe_preliminar: '',
-        user_id: storage.get('authUser').id,
+        adecuacion_id: 0,
     });
 
+
     const { isLoading, data: registros, isError, error } = useQuery({
-        queryKey: ['personalidadesotorgacion'],
-        queryFn: getPersonalidades,
-        select: otorgaciones => otorgaciones.sort((a, b) => b.id - a.id)
+        queryKey: ['modificaciones'],
+        queryFn: getModificaciones,
+        select: modificaciones => modificaciones.sort((a, b) => b.id - a.id)
     })
 
     const filteredRegistros = () => {
@@ -55,8 +49,10 @@ const OtorgacionPersonalidades = () => {
                 registro.miembros_fundador.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
                 registro.personalidad_juridica.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
                 registro.sigla.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
+                registro.representante.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
                 registro.naturaleza.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
-                registro.codigo_otorgacion.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase())
+                registro.codigo_modificacion.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
+                registro.ci_rep.toLowerCase().includes(search.toLowerCase())
             ) {
                 return registro;
             }
@@ -71,56 +67,30 @@ const OtorgacionPersonalidades = () => {
     };
 
     const handleShow = (e, row) => {
-        console.log(row)
         e.preventDefault();
         openOtorgacion();
-        const prueba = row;
-        setotorgacionShow({ ...otorgacionShow, ...prueba })
-
-    }
-
-    const handleInputRevocatoria = ({ target }) => {
-        setRevocatoria({
-            ...revocatoria,
-            [target.name]: target.value
-        });
-    };
-
-    const handleRevocar = (e, row) => {
-        e.preventDefault();
         const auxiliar = {
-            otorgacion_id: row.id,
-            nota_revocatorio: '',
-            fecha_revocatoria: '',
-            observacion: ''
-        }
-        setRevocatoria({ ...revocatoria, ...auxiliar })
-        openRevocatoriaModal();
-    }
-
-    const handleInputModificacion = ({ target }) => {
-        setUpdate({
-            ...update,
-            [target.name]: target.value
-        });
-    }
-
-    const handleModificar = (e, row) => {
-        e.preventDefault();
-        const auxiliar = {
-            fecha: '',
-            otorgacion_id: row.id,
-            codigo_modificacion: '',
+            id: row.id,
+            estatuto_organico: row.estatuto_organico,
+            reglamento_interno: row.reglamento_interno,
+            codigo_modificacion: row.codigo_modificacion,
+            tipo: row.tipo,
             personalidad_juridica: row.personalidad_juridica,
-            estatuto_organico: row.registro_persona_colectiva.estatuto_organico,
-            reglamento_interno: row.registro_persona_colectiva.reglamento_interno,
-            domicilio_legal: row.domicilio_legal,
             miembros_fundador: row.miembros_fundador,
+            domicilio_legal: row.domicilio_legal,
             seguimiento: row.seguimiento,
             cite_informe_preliminar: row.cite_informe_preliminar,
+            otorgacion_id: row.otorgacion_id,
+            adecuacion_id: row.adecuacion_id,
         }
-        setUpdate({ ...update, ...auxiliar });
-        openModificacion();
+        setotorgacionShow({ ...otorgacionShow, ...auxiliar })
+    }
+
+    const handleImprimir = (e, row) => {
+        e.preventDefault();
+        const prueba = row;
+        setotorgacionShow({ ...otorgacionShow, ...prueba })
+        console.log(otorgacionShow)
     }
 
 
@@ -129,9 +99,14 @@ const OtorgacionPersonalidades = () => {
             name: 'Acciones',
             cell: (row) => (
                 <div className='container-fluid d-flex flex-row'>
-                    <button onClick={(e) => handleShow(e, row)} className="button_show"><i className="fa-solid fa-eye"></i><span>Ver</span></button>
-                    <button onClick={(e) => handleModificar(e, row)} className="button_edit"><i className="fa-solid fa-pen-to-square"></i><span>Modificar</span></button>
-                    <button onClick={(e) => handleRevocar(e, row)} className="button_delete"><i className="fa-regular fa-circle-xmark"></i><span>Revocar</span></button>
+                    <button onClick={(e) => handleShow(e, row)} className="button_show">
+                        <i className="fa-solid fa-eye"></i>
+                        <span>Ver</span>
+                    </button>
+                    <button onClick={(e) => handleImprimir(e, row)} className="button_print">
+                        <i className="fa-solid fa-print"></i>
+                        <span>Imprimir</span>
+                    </button>
                 </div>
             ),
             ignoreRowClick: true,
@@ -139,16 +114,22 @@ const OtorgacionPersonalidades = () => {
             button: true,
         },
         {
-            name: 'Id',
-            selector: row => row.id,
+            name: 'Codigo',
+            selector: row => row.codigo_modificacion,
             sortable: true,
             grow: 1,
+        },
+        {
+            name: 'Tipo',
+            selector: row => row.tipo,
+            sortable: true,
         },
         {
             name: 'Persona Juridica',
             selector: row => row.personalidad_juridica,
             sortable: true,
-            grow: 3,
+            wrap: false,
+            grow: 2,
         },
         {
             name: 'Miembros',
@@ -157,18 +138,18 @@ const OtorgacionPersonalidades = () => {
             grow: 2
         },
         {
-            name: 'Sigla',
-            selector: row => row.sigla,
+            name: 'Domicilio',
+            selector: row => row.domicilio_legal,
             sortable: true,
         },
         {
-            name: 'Codigo',
-            selector: row => row.codigo_otorgacion,
+            name: 'Seguimiento',
+            selector: row => row.seguimiento,
             sortable: true,
         },
         {
-            name: 'Naturaleza',
-            selector: row => row.naturaleza,
+            name: 'Informe',
+            selector: row => row.cite_informe_preliminar,
             sortable: true,
         },
     ];
@@ -181,19 +162,14 @@ const OtorgacionPersonalidades = () => {
     };
     if (isLoading) return <Loading />
     else if (isError) return <div>Error: {error.message}</div>
+
     return (
-        <>
+        <div>
             {loading === true ? <Loading /> : ''}
+            <ModalShowMod showRegistro={otorgacionShow} modalRegistro={modalOtorgacion} closeRegistro={closeOtorgacion} />
 
-            {/* par el modal de revocatoria  */}
-            <ModalRevocarOtorgacion registrorModal={revocatoriaModal} closeRegistrorModal={closeRevocatoriaModal} openRegistrorModal={openRevocatoriaModal}
-                registro={revocatoria} handleInputChange={handleInputRevocatoria} />
 
-            {/* para le modal show otorgacion  */}
-            <ModalShowOtorgacion showRegistro={otorgacionShow} modalRegistro={modalOtorgacion} closeRegistro={closeOtorgacion} />
-            {/* modal modoificacion  */}
-            <ModalModificacion registro={update} handleInputChange={handleInputModificacion} modal={modificacion} open={openModificacion} close={closeModificacion} />
-            <Banner text="PERSONALIDAD JURIDICA OTORGACION" />
+            <Banner text="MODIFICACIONES" />
             <div className='container-fluid d-flex flex-row md:flex-columns my-4'>
                 <div className='input_search'>
                     <i className="fa-solid fa-magnifying-glass"></i>
@@ -209,7 +185,7 @@ const OtorgacionPersonalidades = () => {
             </div>
             <div className='table-responsive'>
                 <DataTable
-                    title={'TABLA DE OTORGACIONES'}
+                    title='TABLA MODIFICACIONES OTORGACION'
                     columns={columns}
                     data={filteredRegistros()}
                     paginationComponentOptions={paginationOptions}
@@ -223,8 +199,8 @@ const OtorgacionPersonalidades = () => {
                     persistTableHead={true}
                 />
             </div>
-        </>
+        </div>
     )
 }
 
-export default OtorgacionPersonalidades
+export default IndexModificacion
