@@ -15,8 +15,9 @@ const ShowAdm = ({ modal, close, registro }) => {
                         <span>Imprimir</span>
                     </button>
                 </div>
+                
 
-                <RepAdm registro={registro} modal={imprimir} close={closeImprimir}/>
+                <RepAdm registro={registro} modal={imprimir} close={closeImprimir} />
 
                 <div className="modal-dialog modal-lg">
                     <h2 className="fs-6"><b>Nombre Completo:</b> &nbsp;&nbsp;{registro.nombres + ' ' + registro.paterno + ' ' + registro.materno} </h2>&nbsp;&nbsp;<b>CI:</b> {registro.ci + ' ' + registro.ext_ci}<hr />

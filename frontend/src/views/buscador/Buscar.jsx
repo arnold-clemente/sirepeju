@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom';
 import DataTable from "react-data-table-component";
 import { useQuery } from 'react-query';
 import { useMutation } from 'react-query';
 import { useQueryClient } from 'react-query';
 import Swal from 'sweetalert2';
+import { estilos } from '../../components/estilosdatatables';
 
 import Loading from '../../components/Loading';
 import Banner from '../../components/Banner';
@@ -24,6 +25,25 @@ const Buscar = () => {
     const [showregistro, openRegistro, closeRegistro] = useModal(false);
     // declarar un hook 
     const [registroShow, setregistroShow] = useState({});
+    const [selectedRows, setSelectedRows] = useState([]);
+    const [toggleCleared, setToggleCleared] = useState(false);
+
+    const handleRowSelected = useCallback(state => {
+		setSelectedRows(state.selectedRows);
+	}, []);
+
+    const contextActions = useMemo(() => {
+		const handleDelete = () => {            
+            console.log(selectedRows)			
+		};
+
+		return (
+			<button onClick={handleDelete} className='button_delete'>
+				Delete
+			</button>
+		);           
+		
+	}, [selectedRows, toggleCleared]);
 
     const { isLoading, data: registros, isError, error } = useQuery({
         queryKey: ['entidades'],
@@ -231,6 +251,7 @@ const Buscar = () => {
                 </div>
                 <div className='table-responsive'>
                     <DataTable
+                        title={'TABLA DE RESERVADOS'}
                         columns={columns}
                         data={filteredRegistros()}
                         paginationComponentOptions={paginationOptions}
@@ -239,6 +260,14 @@ const Buscar = () => {
                         pagination
                         noDataComponent={<span>No se encontro ningun elemento</span>}
                         progressPending={isLoading}
+                        customStyles={estilos}
+                        highlightOnHover={true}
+                        persistTableHead={true}
+                        selectableRows
+                        contextActions={contextActions}
+                        onSelectedRowsChange={handleRowSelected}
+                        clearSelectedRows={toggleCleared}
+
                     />
                 </div>
             </div>

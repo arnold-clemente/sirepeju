@@ -1,19 +1,19 @@
-import React, { useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom';
-import Loading from '../../components/Loading';
-import DataTable from "react-data-table-component";
-import Banner from '../../components/Banner';
-import { useQuery } from 'react-query';
-import { getAdministrativos } from '../../api/administrativosApi';
-import { useMutation } from 'react-query';
-import { useQueryClient } from 'react-query';
-import { destroyAdministrativo } from '../../api/administrativosApi';
-import { passwordAdministrativo } from '../../api/administrativosApi';
 import Swal from 'sweetalert2';
+import DataTable from "react-data-table-component";
+
 import { show_alerta } from '../../components/MessageAlert';
-import { useModal } from '../../hooks/useModal'; //metodos paso 2
 import { estilos } from '../../components/estilosdatatables';
+import Banner from '../../components/Banner';
+import Loading from '../../components/Loading';
+
+import { useQuery, useMutation, useQueryClient } from 'react-query';
+import { getAdministrativos, destroyAdministrativo, passwordAdministrativo } from '../../api/administrativosApi';
+import { useModal } from '../../hooks/useModal'; //metodos paso 2
+// modales 
 import ShowAdm from './ShowAdm';
+import SelectAdministrativos from './reporte/SelectAdministrativos';
 
 const IndexAdministrativos = () => {
 
@@ -22,8 +22,29 @@ const IndexAdministrativos = () => {
     const queryClient = useQueryClient();
     // para el modal true- false - paso 3
     const [showadministrativo, openAdministrativo, closeAdministrativo] = useModal(false);
+    const [selectpdf, openSelectpdf, closeSelectpdf] = useModal(false);
     // declar ar un hook - paso 4
     const [administrativoShow, setadministrativoShow] = useState({});
+    const [selectedRows, setSelectedRows] = useState([]);
+    const [toggleCleared, setToggleCleared] = useState(false);
+
+    const handleRowSelected = useCallback(state => {
+		setSelectedRows(state.selectedRows);
+	}, []);
+
+    const contextActions = useMemo(() => {
+		const handleDelete = () => {
+            openSelectpdf();    			
+		};
+
+		return (
+			<button onClick={handleDelete} className='button_select_pdf'>
+                <i class="fa-solid fa-print"></i>
+				<span>Imprimir</span>
+			</button>
+		);           
+		
+	}, [selectedRows, toggleCleared]);
 
     const { isLoading, data: registros, isError, error } = useQuery({
         queryKey: ['administrativos'],
@@ -227,7 +248,9 @@ const IndexAdministrativos = () => {
                         onChange={searchOnChange}
                     />
                 </div>
+                {/* modales  */}
                 <ShowAdm modal={showadministrativo} close={closeAdministrativo} registro={administrativoShow}/>
+                <SelectAdministrativos registro={selectedRows} modal={selectpdf} close={closeSelectpdf} />
                 <div>
                     <Link to="/administrativo/create" className='btn button_green'>
                         <span>AÑADIR</span>
@@ -249,6 +272,10 @@ const IndexAdministrativos = () => {
                     customStyles={estilos}
                     highlightOnHover={true}
                     persistTableHead={true}
+                    selectableRows
+                    contextActions={contextActions}
+                    onSelectedRowsChange={handleRowSelected}
+                    clearSelectedRows={toggleCleared}
                 />
             </div>
         </div>
