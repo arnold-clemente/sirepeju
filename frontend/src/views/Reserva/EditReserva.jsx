@@ -1,16 +1,15 @@
 import React, { useState } from 'react'
-import { Navigate, useParams } from 'react-router-dom'
-import { useMutation } from 'react-query';
-import { useQuery } from 'react-query';
-import { useNavigate, Link } from 'react-router-dom'
-import { useQueryClient } from 'react-query';
+import { useNavigate, Link, useParams } from 'react-router-dom'
+import Swal from 'sweetalert2';
+
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { updateReserva } from '../../api/reservaApi';
+import { getReserva } from '../../api/reservaApi';
 
 import storage from '../../Storage/storage'
 import Loading from '../../components/Loading';
 import { show_alerta } from '../../components/MessageAlert';
 import ValidationError from '../../components/ValidationError';
-import { updateReserva } from '../../api/reservaApi';
-import { getReserva } from '../../api/reservaApi';
 
 const EditReserva = () => {
 
@@ -77,9 +76,22 @@ const EditReserva = () => {
 
 
     const handleUpdate = (e) => {
-        setLoading(true);
         e.preventDefault();
-        UpdateRes.mutate(reserva);
+        Swal.fire({
+            title: "Está seguro?",
+            text: "Verifique los datos antes de enviar.",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#009186",
+            confirmButtonText: "Sí, estoy seguro!",
+            cancelButtonText: "Cancelar",
+            showLoaderOnConfirm: true,
+            preConfirm: () => {
+                setLoading(true);
+                UpdateRes.mutate(reserva);
+            }
+
+        });
     };  
 
     if (isLoading) return <Loading />

@@ -59,6 +59,7 @@ class OtorgacionController extends Controller
             'codigo_otorgacion' => $request->codigo,
             'domicilio_legal' => $request->domicilio,
             'objeto' => $request->objeto,
+            'miembros_fundador'=> 'sin agregar',
             'cite_informe_preliminar' => 'En tramite',
             'seguimiento' => $fecha . ' - En espera',
             'administrativo_id' => $administrativo->id,

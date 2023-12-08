@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import { useMutation } from 'react-query';
-import { useQueryClient } from 'react-query';
+import Swal from 'sweetalert2';
+
+import { useMutation, useQueryClient } from 'react-query';
+import { createReserva } from '../../api/reservaApi';
 
 import Loading from '../../components/Loading';
 import storage from '../../Storage/storage'
@@ -9,7 +11,6 @@ import { useForm } from '../../hooks/useForm';
 import ValidationError from '../../components/ValidationError';
 import { show_alerta } from '../../components/MessageAlert';
 
-import { createReserva } from '../../api/reservaApi';
 
 const CreateReserva = () => {
 
@@ -59,10 +60,23 @@ const CreateReserva = () => {
 
     const handleAdd = (e) => {
         e.preventDefault();
-        setLoading(true);
         serError({})
         const reserva = formValues;
-        addReserva.mutate(reserva);
+        Swal.fire({
+            title: "Está seguro?",
+            text: "Verifique los datos antes de enviar.",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#009186",
+            confirmButtonText: "Sí, estoy seguro!",
+            cancelButtonText: "Cancelar",
+            showLoaderOnConfirm: true,
+            preConfirm: () => {
+                setLoading(true);
+                addReserva.mutate(reserva);
+            }
+
+        });
     };
 
     const { hr, entidad, sigla, persona_colectiva, nro_certificado, naturaleza, obs, representante, ci_rep, ext_ci_rep, telefono, correo } = formValues;
@@ -169,7 +183,7 @@ const CreateReserva = () => {
                             ? <ValidationError text={error.correo} />
                             : ''}
                     </div>
-                </div>   
+                </div>
                 <div className="form-group py-2">
                     <label>Observaión</label>
                     <input type="text" className="form-control" placeholder="Escriba alguna observacion"
@@ -177,7 +191,7 @@ const CreateReserva = () => {
                     {error.obs
                         ? <ValidationError text={error.obs} />
                         : ''}
-                </div>           
+                </div>
                 <Link to='/reservas' type="submit" className="btn btn-danger my-4">Cancelar</Link>
                 <button type="submit" className="btn btn-primary my-4 mx-4">Enviar</button>
             </form>

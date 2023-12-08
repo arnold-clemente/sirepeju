@@ -1,12 +1,10 @@
 import React from 'react'
-import ModalDiv from '../../components/ModalDiv'; //contendoresto hay importar siempre
-import RepSolicitud from './reporte/RepSolicitud';
-import { useModal } from '../../hooks/useModal'
+import ModalDiv from '../../components/ModalDiv';
 
-const ShowHomonimia = ({ registro, modal, close }) => {
+const ModalRegCaducados = ({ registro, modal, close }) => {
     return (
         <>
-            <ModalDiv isOpen={modal} closeModal={close} title={'LISTA DE RESERVA DE NOMBRE'}>
+            <ModalDiv isOpen={modal} closeModal={close} title={'ENTIDAD CADUCADA'}>
                 <div className="modal-dialog modal-lg">
                     <h2 className="fs-6"><b>Entidad:</b>&nbsp;&nbsp;{registro.entidad}</h2> <hr />
                     <h2 className="fs-6"><b>Sigla:</b>&nbsp;&nbsp;{registro.sigla}<hr /></h2> <hr />
@@ -23,4 +21,4 @@ const ShowHomonimia = ({ registro, modal, close }) => {
     )
 }
 
-export default ShowHomonimia
+export default ModalRegCaducados

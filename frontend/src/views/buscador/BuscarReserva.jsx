@@ -1,19 +1,21 @@
-import React, { useState } from 'react'
-import { Navigate, useParams } from 'react-router-dom'
-import DataTable from "react-data-table-component";
-import { useQuery } from 'react-query';
-import { useMutation } from 'react-query';
-import { useQueryClient } from 'react-query';
+import React, { useCallback, useMemo, useState } from 'react'
+import { useParams } from 'react-router-dom'
 import Swal from 'sweetalert2';
+import DataTable from "react-data-table-component";
+
+import { useQuery, useMutation, useQueryClient } from 'react-query';
+import { getEntidadesGlobal, createHonimia, createRegistro } from '../../api/buscardorApi';
 
 import Loading from '../../components/Loading';
 import Banner from '../../components/Banner';
 import { show_alerta } from '../../components/MessageAlert';
 import storage from '../../Storage/storage'
-import ModalDiv from '../../components/ModalDiv'; //contendoresto hay importar siempre
-import { useModal } from '../../hooks/useModal'; //metodos siempre gg
+import { useModal } from '../../hooks/useModal';
+import { estilos } from '../../components/estilosdatatables';
 
-import { getEntidadesGlobal, createHonimia, createRegistro } from '../../api/buscardorApi';
+// modales 
+import ModalVerificacionShow from './ModalVerificacionShow';
+import SelectVerificacion from './reporte/SelectVerificacion';
 
 const BuscarReserva = () => {
 
@@ -24,8 +26,29 @@ const BuscarReserva = () => {
     const queryClient = useQueryClient();
     // par el modal true - false
     const [showregistro, openRegistro, closeRegistro] = useModal(false);
+    const [selectpdf, openSelectpdf, closeSelectpdf] = useModal(false);
     // declarar un hook 
     const [registroShow, setregistroShow] = useState({});
+    const [selectedRows, setSelectedRows] = useState([]);
+    const [toggleCleared, setToggleCleared] = useState(false);
+
+    const handleRowSelected = useCallback(state => {
+        setSelectedRows(state.selectedRows);
+    }, []);
+
+    const contextActions = useMemo(() => {
+        const handleDelete = () => {
+            openSelectpdf();
+        };
+
+        return (
+            <button onClick={handleDelete} className='button_select_pdf'>
+                <i class="fa-solid fa-print"></i>
+                <span>Imprimir</span>
+            </button>
+        );
+
+    }, [selectedRows, toggleCleared]);
 
     const { isLoading, data: registros, isError, error } = useQuery({
         queryKey: ['entidades'],
@@ -55,6 +78,7 @@ const BuscarReserva = () => {
         mutationFn: createHonimia,
         onSuccess: (response) => {
             queryClient.invalidateQueries('entidades')
+            queryClient.invalidateQueries('homonimias')
             show_alerta('Homonimia', '<i class="fa-solid fa-check border_alert_green"></i>', 'alert_green')
             setLoading(false);
         },
@@ -68,6 +92,7 @@ const BuscarReserva = () => {
         mutationFn: createRegistro,
         onSuccess: (response) => {
             queryClient.invalidateQueries('entidades')
+            queryClient.invalidateQueries('registros')
             show_alerta('Entidad reservada', '<i class="fa-solid fa-check border_alert_green"></i>', 'alert_green')
             setLoading(false);
         },
@@ -196,25 +221,9 @@ const BuscarReserva = () => {
     else if (isError) return <div>Error: {error.message}</div>
     return (
         <>
-            <ModalDiv isOpen={showregistro} closeModal={closeRegistro} title={'Detalle de la Entidad'}>
-                <h3 className="fs-5"><center><b>Naturaleza:</b> {registroShow.naturaleza} &nbsp;<b>Entidad:</b>  {registroShow.entidad}</center></h3>
-                <hr />
-                <div className="modal-dialog modal-lg">
-                    <h2 className="fs-6"><b>Sigla:</b> &nbsp;&nbsp;{registroShow.sigla} </h2> <hr />
-                    <h2 className="fs-6"><b>Representante Legal:</b></h2> <hr />
-                    <nav className="navbar bg-body-tertiary">
-                        {registroShow.representante}&nbsp;<b> CI:</b>{registroShow.ci_rep}
-                    </nav> <hr />
-                    <h2 className="fs-6"><b>Persona Colectiva:</b> &nbsp;&nbsp;{registroShow.persona_colectiva} </h2>
-                </div>
+            <ModalVerificacionShow registro={registroShow} modal={showregistro} close={closeRegistro} />
+            <SelectVerificacion registro={selectedRows} modal={selectpdf} close={closeSelectpdf} />
 
-                <hr></hr>
-                <div className='d-flex'>
-                    <button className="btn btn-secondary" title="cerrar" onClick={closeRegistro}>cerrar</button>
-                    &nbsp;
-                    {/* <button className="btn btn-secondary" title="Imprimir" onClick={closeRegistro}>Imprimir</button> */}
-                </div>
-            </ModalDiv>
             <div>
                 {loading === true ? <Loading /> : ''}
                 <Banner text="VERIFICACIÓN DE PERSONA JURIDICA" />
@@ -234,6 +243,7 @@ const BuscarReserva = () => {
                 </div>
                 <div className='table-responsive'>
                     <DataTable
+                        title={'TABLA DE RESERVADOS'}
                         columns={columns}
                         data={filteredRegistros()}
                         paginationComponentOptions={paginationOptions}
@@ -242,6 +252,13 @@ const BuscarReserva = () => {
                         pagination
                         noDataComponent={<span>No se encontro ningun elemento</span>}
                         progressPending={isLoading}
+                        customStyles={estilos}
+                        highlightOnHover={true}
+                        persistTableHead={true}
+                        selectableRows
+                        contextActions={contextActions}
+                        onSelectedRowsChange={handleRowSelected}
+                        clearSelectedRows={toggleCleared}
                     />
                 </div>
             </div>

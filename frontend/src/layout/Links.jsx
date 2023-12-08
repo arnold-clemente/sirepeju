@@ -45,6 +45,11 @@ export const links = [
                 icon: 'fa-regular fa-square-check',
                 texto: 'Reservados'
             },
+            {
+                path: '/registro-caducados',
+                icon: 'fa-solid fa-hourglass',
+                texto: 'Caducados'
+            },
         ],
     },
     {

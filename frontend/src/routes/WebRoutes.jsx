@@ -18,13 +18,14 @@ import EditGob from '../views/gobernaciones/EditGob'
 import IndexReserva from '../views/Reserva/IndexReserva'
 import CreateReserva from '../views/Reserva/CreateReserva'
 import EditReserva from '../views/Reserva/EditReserva'
-import HomReserva from '../views/Reserva/HomReserva'
+//rutas homonimia
+import HomReserva from '../views/homonimia/HomReserva'
+// rutas para registro 
+import IndexReg from '../views/Registro/IndexReg'
+import IndexRegCaducados from '../views/registro_caducados/IndexRegCaducados'
 // ruta de buscadores 
 import Buscar from '../views/buscador/Buscar'
 import BuscarReserva from '../views/buscador/BuscarReserva'
-
-// rutas para registro 
-import IndexReg from '../views/Registro/IndexReg'
 
 //rutas para otorgacion
 import IndexOtorgacion from '../views/otorgaciones/IndexOtorgacion'
@@ -89,6 +90,7 @@ const WebRoutes = () => {
                     <Route path='/buscar-reserva/:entidad' element={<BuscarReserva />} />
                     {/* Registro  */}
                     <Route path='/registro-reserva' element={<IndexReg />} />
+                    <Route path='/registro-caducados' element={<IndexRegCaducados />} />
                     {/* otorgacion */}
                     <Route path='/otorgaciones' element={<IndexOtorgacion />} />
                     <Route path='/otorgaciones/:otorgacionId/fundadores' element={<FundOtorgacion />} />

@@ -1,28 +1,49 @@
-import React, { useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom';
-import Loading from '../../components/Loading';
 import DataTable from "react-data-table-component";
-import Banner from '../../components/Banner';
-import { useQuery } from 'react-query';
-import { getGobernacions } from '../../api/gobernacionApi';
-import { useMutation } from 'react-query';
-import { useQueryClient } from 'react-query';
-import { destroyGobernacion, passwordGobernacion } from '../../api/gobernacionApi';
 import Swal from 'sweetalert2';
+
+import Loading from '../../components/Loading';
+import Banner from '../../components/Banner';
 import { show_alerta } from '../../components/MessageAlert';
 import { useModal } from '../../hooks/useModal'; //metodos siempre gg
 import { estilos } from '../../components/estilosdatatables';
+
+import { useQuery, useMutation, useQueryClient } from 'react-query';
+import { getGobernacions, destroyGobernacion, passwordGobernacion } from '../../api/gobernacionApi';
+
+// modales 
 import ShowGob from './ShowGob';
+import SelectGobernacion from './reporte/SelectGobernacion';
 
 const IndexGob = () => {
 
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(false);
   const queryClient = useQueryClient();
-  // par el modal true - false
   const [showgobernacion, openGobernacion, closeGobernacion] = useModal(false);
-  // declarar un hook 
+  const [selectpdf, openSelectpdf, closeSelectpdf] = useModal(false);
   const [gobernacionShow, setgobernacionShow] = useState({});
+  const [selectedRows, setSelectedRows] = useState([]);
+  const [toggleCleared, setToggleCleared] = useState(false);
+
+  const handleRowSelected = useCallback(state => {
+    setSelectedRows(state.selectedRows);
+  }, []);
+
+  const contextActions = useMemo(() => {
+    const handleDelete = () => {
+      openSelectpdf();
+    };
+
+    return (
+      <button onClick={handleDelete} className='button_select_pdf'>
+        <i class="fa-solid fa-print"></i>
+        <span>Imprimir</span>
+      </button>
+    );
+
+  }, [selectedRows, toggleCleared]);
 
   const { isLoading, data: registros, isError, error } = useQuery({
     queryKey: ['gobernacions'],
@@ -217,7 +238,9 @@ const IndexGob = () => {
     <div>
       {loading === true ? <Loading /> : ''}
       <Banner text="LISTA DE USUARIOS GOBERNACIÓN" />
+      {/* modales   */}
       <ShowGob modal={showgobernacion} close={closeGobernacion} registro={gobernacionShow} />
+      <SelectGobernacion registro={selectedRows} modal={selectpdf} close={closeSelectpdf} />
       <div className='container-fluid d-flex flex-row md:flex-columns my-4'>
         <div className='input_search'>
           <i className="fa-solid fa-magnifying-glass"></i>
@@ -240,17 +263,22 @@ const IndexGob = () => {
       </div>
       <div className='table-responsive'>
         <DataTable
+          title='GOBERNACIONES REGISTRADOS'
           columns={columns}
           data={filteredRegistros()}
           paginationComponentOptions={paginationOptions}
           fixedHeader
-          fixedHeaderScrollHeight='400px'
+          fixedHeaderScrollHeight='800px'
           pagination
           noDataComponent={<span>No se encontro ningun elemento</span>}
           progressPending={isLoading}
           customStyles={estilos}
           highlightOnHover={true}
           persistTableHead={true}
+          selectableRows
+          contextActions={contextActions}
+          onSelectedRowsChange={handleRowSelected}
+          clearSelectedRows={toggleCleared}
         />
       </div>
     </div>

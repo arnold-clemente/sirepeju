@@ -82,6 +82,10 @@ Route::middleware(['auth:sanctum'])->get('/registros', [RegistroController::clas
     ->name('registros');
 Route::middleware(['auth:sanctum'])->post('/registro/entregar/{registro}', [RegistroController::class, 'entregar'])
     ->name('registro.entregar');
+Route::middleware(['auth:sanctum'])->post('/registro/caducar/{registro}', [RegistroController::class, 'caducar'])
+    ->name('registro.caducar');
+Route::middleware(['auth:sanctum'])->get('/registros/caducados', [RegistroController::class, 'getcaducados'])
+    ->name('registros.caducados');
 
 // rutas para la verificacion buscador
 Route::middleware(['auth:sanctum'])->get('/verificacion/entidades', [VerificacionController::class, 'verificacion'])

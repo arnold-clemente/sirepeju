@@ -10,7 +10,6 @@ export const createHonimia= async (reserva) => {
     return res;
 }
 
-
 export const createRegistro= async (reserva) => {
     const res = await axios.post(`/api/verificacion/registro/${reserva.reserva_id}`, reserva)
         .then((response) => { return response.data })

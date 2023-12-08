@@ -3,14 +3,26 @@ export const getRegistros = async () => {
     return response.data;
 }
 
-export const entregarRegistro= async (registro) => {
+export const getCaducados = async () => {
+    const response = await axios.get('/api/registros/caducados')
+    return response.data;
+}
+
+export const entregarRegistro = async (registro) => {
     const response = await axios.post(`/api/registro/entregar/${registro.id}`)
         .then((response) => { return response.data })
         .catch((error) => { return error.data });
     return response;
 }
 
-export const createOtorgacion= async (registro) => {
+export const caducarRegistro = async (registro) => {
+    const response = await axios.post(`/api/registro/caducar/${registro.id}`)
+        .then((response) => { return response.data })
+        .catch((error) => { return error.data });
+    return response;
+}
+
+export const createOtorgacion = async (registro) => {
     const response = await axios.post(`/api/otorgacion/store`, registro)
         .then((response) => { return response.data })
         .catch((error) => { return error.data });

@@ -1,22 +1,22 @@
-import React, { useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import DataTable from "react-data-table-component";
-import { useQuery } from 'react-query';
-import { useMutation } from 'react-query';
-import { useQueryClient } from 'react-query';
 import Swal from 'sweetalert2';
+
+import { useQuery, useMutation, useQueryClient } from 'react-query';
+import { getRegistros, entregarRegistro, caducarRegistro } from '../../api/registroApi';
 
 import Loading from '../../components/Loading';
 import Banner from '../../components/Banner';
 import { show_alerta } from '../../components/MessageAlert';
 import storage from '../../Storage/storage'
 import { estilos } from '../../components/estilosdatatables';
-
-import { getRegistros, entregarRegistro, createOtorgacion } from '../../api/registroApi';
-// modal 
 import { useModal } from '../../hooks/useModal'
+
+// modal 
 import ShowRegistro from './ShowRegistro';
 import ModalRegistro from './ModalRegistro';
 import RepReservados from './reporte/RepReservados';
+import SelectReservados from './reporte/SelectReservados';
 
 const IndexReg = () => {
 
@@ -27,6 +27,7 @@ const IndexReg = () => {
     //para el modal
     const [showregistro, openRegistro, closeRegistro] = useModal(false);
     const [imprimir, openImprimir, closeImprimir] = useModal(false);
+    const [selectpdf, openSelectpdf, closeSelectpdf] = useModal(false);
     const [registroShow, setRegistroShow] = useState({});
     const [otorgacion, setOtorgacion] = useState({
         id: 0,
@@ -35,7 +36,29 @@ const IndexReg = () => {
         domicilio: '',
         objeto: '',
         user_id: storage.get('authUser').id
-    })
+    });
+    const now = new Date().getTime();
+
+    const [selectedRows, setSelectedRows] = useState([]);
+    const [toggleCleared, setToggleCleared] = useState(false);
+
+    const handleRowSelected = useCallback(state => {
+        setSelectedRows(state.selectedRows);
+    }, []);
+
+    const contextActions = useMemo(() => {
+        const handleDelete = () => {
+            openSelectpdf();
+        };
+
+        return (
+            <button onClick={handleDelete} className='button_select_pdf'>
+                <i class="fa-solid fa-print"></i>
+                <span>Imprimir</span>
+            </button>
+        );
+
+    }, [selectedRows, toggleCleared]);
 
 
     const { isLoading, data: registros, isError, error } = useQuery({
@@ -80,6 +103,20 @@ const IndexReg = () => {
         },
     });
 
+    const caduarReserva = useMutation({
+        mutationFn: caducarRegistro,
+        onSuccess: (response) => {
+            queryClient.invalidateQueries('registros')
+            queryClient.invalidateQueries('registros_caducados')
+            show_alerta('Registro caducado', '<i class="fa-solid fa-check border_alert_green"></i>', 'alert_green')
+            setLoading(false);
+        },
+        onError: (error) => {
+            show_alerta('No conectado', '<i class="fa-solid fa-xmark border_alert_red"></i>', 'alert_red')
+            setLoading(false);
+        },
+    });
+
     const handleEntregar = (e, row) => {
         e.preventDefault();
         Swal.fire({
@@ -93,6 +130,23 @@ const IndexReg = () => {
             if (result.isConfirmed) {
                 setLoading(true);
                 fechaReserva.mutate(row);
+            }
+        });
+    };
+
+    const handleCaducar = (e, row) => {
+        e.preventDefault();
+        Swal.fire({
+            title: "Caducar Reserva?",
+            icon: "error",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "¡Sí, caducar!",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                setLoading(true);
+                caduarReserva.mutate(row);
             }
         });
     };
@@ -132,21 +186,58 @@ const IndexReg = () => {
             name: 'Acciones',
             cell: (row) => (
                 <div className='d-flex flex-row justify-content-start'>
-                    <button onClick={(e) => handleShow(e, row)} className="button_show"><i className="fa-solid fa-eye"></i><span>Ver</span></button>
-                    <button onClick={(e) => handleImprimir(e, row)} className="button_print"><i className="fa-solid fa-print"></i><span>Imprimir</span></button>
-                    <div className='d-flex flex-row justify-content-start'>
-                        {row.fecha_entrega
-                            ? <div className='d-flex flex-row justify-content-starts'>
-                                <button onClick={(e) => handleOtorgacion(e, row)} className="button_show"><i className="fa-solid fa-file-import"></i><span>Otorgacion</span></button>
-                            </div>
-                            : <button onClick={(e) => handleEntregar(e, row)} className="button_download"><i className="fa-solid fa-check"></i><span>Entregar</span></button>
-                        }
+                    <button onClick={(e) => handleShow(e, row)} className="button_show">
+                        <i className="fa-solid fa-eye"></i>
+                        <span>Ver</span>
+                    </button>
+                    <button onClick={(e) => handleImprimir(e, row)} className="button_print">
+                        <i className="fa-solid fa-print"></i>
+                        <span>Imprimir</span>
+                    </button>
+                    <div className='dropdown'>
+                        <button className="button_dropdown_table dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i className="fa-solid fa-gear"></i>
+                        </button>
+                        <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1"> 
+                            <li>
+                                {row.fecha_entrega
+                                    ? <button onClick={(e) => handleOtorgacion(e, row)} className="button_show_table">
+                                        <i className="fa-solid fa-file-import"></i>
+                                        <span className='mx-2'>Otorgacion</span>
+                                    </button>
+                                    : ''
+                                }
+                            </li>
+                            <li>
+                                {!row.fecha_entrega
+                                    ? <button onClick={(e) => handleEntregar(e, row)} className="button_download_table">
+                                        <i className="fa-solid fa-check"></i>
+                                        <span className='mx-2'>Entregar</span>
+                                    </button>
+                                    : ''
+                                }
+                            </li>
+                            <li>
+                                {Math.round((now - (new Date(row.fecha_reg).getTime())) / (1000 * 60 * 60 * 24)) > 90
+                                    ? <button onClick={(e) => handleCaducar(e, row)} className="button_delete_table">
+                                        <i className="fa-solid fa-x"></i>
+                                        <span className='mx-2'>Caducar</span>
+                                    </button>
+                                    : ''
+                                }
+                            </li>
+                        </ul>
                     </div>
                 </div>
             ),
             ignoreRowClick: true,
             allowOverflow: true,
             button: true,
+        },
+        {
+            name: 'Tiempo',
+            selector: row => Math.round((now - (new Date(row.fecha_reg).getTime())) / (1000 * 60 * 60 * 24)) + ' dias',
+            sortable: true,
         },
         {
             name: 'Hoja de Ruta',
@@ -235,6 +326,7 @@ const IndexReg = () => {
             <ModalRegistro registro={otorgacion} modal={isModalOtorgacion} close={closeModalOtorgacion}
                 handleInputChange={handleInputChange} open={openModalOtorgacion} />
             <RepReservados registro={registroShow} modal={imprimir} close={closeImprimir} />
+            <SelectReservados registro={selectedRows} modal={selectpdf} close={closeSelectpdf} />
 
             <div className='container-fluid d-flex flex-row md:flex-columns my-4'>
                 <div className='input_search'>
@@ -263,6 +355,10 @@ const IndexReg = () => {
                     customStyles={estilos}
                     highlightOnHover={true}
                     persistTableHead={true}
+                    selectableRows
+                    contextActions={contextActions}
+                    onSelectedRowsChange={handleRowSelected}
+                    clearSelectedRows={toggleCleared}
                 />
             </div>
         </div>

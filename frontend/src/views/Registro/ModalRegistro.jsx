@@ -30,8 +30,8 @@ const ModalRegistro = ({ registro, modal, close, handleInputChange, open }) => {
         mutationFn: createOtorgacion,
         onSuccess: (response) => {
             if (response.status === true) {
-
-                queryClient.invalidateQueries('registros')
+                queryClient.invalidateQueries('registros') 
+                queryClient.invalidateQueries('otorgaciones') 
                 show_alerta('Creado con exito', '<i class="fa-solid fa-check border_alert_green"></i>', 'alert_green')
                 setLoading(false);
             } else {

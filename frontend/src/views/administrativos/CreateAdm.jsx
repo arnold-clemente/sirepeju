@@ -1,12 +1,15 @@
 import React, { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
+import Swal from 'sweetalert2';
+
 import storage from '../../Storage/storage'
 import { useForm } from '../../hooks/useForm';
-import { useMutation } from 'react-query';
+
+import { useMutation, useQueryClient } from 'react-query';
 import { createAdministrativo } from '../../api/administrativosApi';
+
 import { show_alerta } from '../../components/MessageAlert';
 import ValidationError from '../../components/ValidationError';
-import { useQueryClient } from 'react-query';
 import Loading from '../../components/Loading';
 import Banner from '../../components/Banner';
 
@@ -20,7 +23,7 @@ const CreateAdm = () => {
 
     const addAdministrativo = useMutation({
         mutationFn: createAdministrativo,
-        onSuccess: (response) => {            
+        onSuccess: (response) => {
             console.log(response);
             if (response.status === true) {
                 queryClient.invalidateQueries('administrativos')
@@ -53,17 +56,30 @@ const CreateAdm = () => {
     });
 
     const handleAdd = (e) => {
-        setLoading(true);
         e.preventDefault();
         const administrativo = formValues;
-        addAdministrativo.mutate(administrativo);
+        Swal.fire({
+            title: "Está seguro?",
+            text: "Verifique los datos antes de enviar.",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#009186",
+            confirmButtonText: "Sí, estoy seguro!",
+            cancelButtonText: "Cancelar",
+            showLoaderOnConfirm: true,
+            preConfirm: () => {
+                setLoading(true);
+                addAdministrativo.mutate(administrativo);
+            }
+
+        });
     };
 
     const { nombres, paterno, materno, cargo, usuario, ci, ext_ci, email } = formValues;
 
     return (
         <>
-            { loading === true ? <Loading /> : '' }
+            {loading === true ? <Loading /> : ''}
             <Banner text="CREACIÓN DE NUEVOS ADMINISTRATIVOS" />
             <form onSubmit={handleAdd}>
                 <div className="form-group py-2">

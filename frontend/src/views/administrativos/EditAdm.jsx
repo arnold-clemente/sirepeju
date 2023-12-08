@@ -1,14 +1,13 @@
 import React, { useState } from 'react'
-import { Navigate, useParams } from 'react-router-dom'
-import { useQuery } from 'react-query';
-import { getAdministrativo } from '../../api/administrativosApi';
+import { Navigate, useParams, useNavigate, Link } from 'react-router-dom'
+import Swal from 'sweetalert2';
+
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { getAdministrativo, updateAdministrativo } from '../../api/administrativosApi';
+
 import Loading from '../../components/Loading';
-import { useNavigate, Link } from 'react-router-dom'
 import { show_alerta } from '../../components/MessageAlert';
 import ValidationError from '../../components/ValidationError';
-import { useQueryClient } from 'react-query';
-import { updateAdministrativo } from '../../api/administrativosApi';
-import { useMutation } from 'react-query';
 import Banner from '../../components/Banner';
 
 const EditAdm = () => {
@@ -75,9 +74,22 @@ const EditAdm = () => {
 
 
     const handleUpdate = (e) => {
-        setLoading(true);
         e.preventDefault();
-        updateAdm.mutate(admin);
+        Swal.fire({
+            title: "Está seguro?",
+            text: "Verifique los datos antes de enviar.",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#009186",
+            confirmButtonText: "Sí, estoy seguro!",
+            cancelButtonText: "Cancelar",
+            showLoaderOnConfirm: true,
+            preConfirm: () => {
+                setLoading(true);
+                updateAdm.mutate(admin);
+            }
+
+        });
     };
 
     if (isLoading) return <Loading />

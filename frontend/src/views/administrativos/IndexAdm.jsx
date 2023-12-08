@@ -58,9 +58,6 @@ const IndexAdministrativos = () => {
         const filtered = registros.filter(registro => {
             const nombres = registro.nombres + ' ' + registro.paterno + ' ' + registro.materno;
             if (
-                // registro.nombres.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
-                // registro.paterno.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
-                // registro.materno.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
                 nombres.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
                 registro.cargo.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
                 registro.ci.toString().includes(search.toLowerCase()) ||
@@ -265,7 +262,7 @@ const IndexAdministrativos = () => {
                     data={filteredRegistros()}
                     paginationComponentOptions={paginationOptions}
                     fixedHeader
-                    fixedHeaderScrollHeight='400px'
+                    fixedHeaderScrollHeight='800px'
                     pagination
                     noDataComponent={<span>No se encontro ningun elemento</span>}
                     progressPending={isLoading}

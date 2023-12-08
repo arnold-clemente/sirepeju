@@ -1,13 +1,15 @@
 import React, { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
+import Swal from 'sweetalert2';
+
+import { useMutation, useQueryClient } from 'react-query';
+import { createGobernacion } from '../../api/gobernacionApi';
+
 import storage from '../../Storage/storage'
 import { useForm } from '../../hooks/useForm';
 import Banner from '../../components/Banner';
-import { useMutation } from 'react-query';
-import { createGobernacion } from '../../api/gobernacionApi';
 import { show_alerta } from '../../components/MessageAlert';
 import ValidationError from '../../components/ValidationError';
-import { useQueryClient } from 'react-query';
 import Loading from '../../components/Loading';
 
 const CreateGob = () => {
@@ -54,9 +56,22 @@ const CreateGob = () => {
 
     const handleAdd = (e) => {
         e.preventDefault();
-        setLoading(true);
         const gobernacion = formValues;
-        addGobernacion.mutate(gobernacion);
+        Swal.fire({
+            title: "Está seguro?",
+            text: "Verifique los datos antes de enviar.",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#009186",
+            confirmButtonText: "Sí, estoy seguro!",
+            cancelButtonText: "Cancelar",
+            showLoaderOnConfirm: true,
+            preConfirm: () => {
+                setLoading(true);
+                addGobernacion.mutate(gobernacion);
+            }
+
+        });
     };
 
     const { nombres, paterno, materno, cargo, ci, ext_ci, email, departamento_id, user_id } = formValues;

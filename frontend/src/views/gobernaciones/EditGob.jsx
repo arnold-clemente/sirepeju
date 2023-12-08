@@ -1,15 +1,14 @@
 import React, { useState } from 'react'
-import { useParams } from 'react-router-dom'
-import { useQuery } from 'react-query';
+import { useParams, useNavigate, Link } from 'react-router-dom'
+import Swal from 'sweetalert2';
+
+import { useQuery, useQueryClient, useMutation } from 'react-query';
+import { getGobernacion, updateGobernacion } from '../../api/gobernacionApi';
+
 import Banner from '../../components/Banner';
-import { getGobernacion } from '../../api/gobernacionApi';
 import Loading from '../../components/Loading';
-import { useNavigate, Link } from 'react-router-dom'
 import { show_alerta } from '../../components/MessageAlert';
 import ValidationError from '../../components/ValidationError';
-import { useQueryClient } from 'react-query';
-import { updateGobernacion } from '../../api/gobernacionApi';
-import { useMutation } from 'react-query';
 
 const EditGob = () => {
 
@@ -67,8 +66,21 @@ const EditGob = () => {
 
     const handleUpdate = (e) => {
         e.preventDefault();
-        setLoading(true);
-        updateGob.mutate(gobernacion);
+        Swal.fire({
+            title: "Está seguro?",
+            text: "Verifique los datos antes de enviar.",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#009186",
+            confirmButtonText: "Sí, estoy seguro!",
+            cancelButtonText: "Cancelar",
+            showLoaderOnConfirm: true,
+            preConfirm: () => {
+                setLoading(true);
+                updateGob.mutate(gobernacion);
+            }
+
+        });
     };
 
     if (isLoading) return <Loading />
