@@ -16,6 +16,8 @@ use App\Http\Controllers\GobernacionOtorgacionController;
 use App\Http\Controllers\ModificacionAdecuacionController;
 use App\Http\Controllers\ModificacionController;
 use App\Http\Controllers\ModificacionOtorgacionController;
+use App\Http\Controllers\OtorgacionArchivadosController;
+use App\Http\Controllers\OtorgacionCaducadosController;
 use App\Http\Controllers\OtorgacionController;
 use App\Http\Controllers\OtorgacionInformeController;
 use App\Http\Controllers\OtorgacionSeguimientoController;
@@ -98,9 +100,23 @@ Route::middleware(['auth:sanctum'])->post('/verificacion/registro/{reserva_nombr
 // rutas para otorgacion de nombre
 Route::middleware(['auth:sanctum'])->get('/otorgaciones', [OtorgacionController::class, 'index'])
     ->name('otorgaciones');
-// Route::middleware(['auth:sanctum'])->get('/otorgacion/show/{otorgacion}', [OtorgacionController::class, 'show'])->name('otorgacion.show');
+Route::middleware(['auth:sanctum'])->get('/otorgacion/show/{otorgacion}', [OtorgacionController::class, 'show'])
+    ->name('otorgacion.show');
 Route::middleware(['auth:sanctum'])->post('/otorgacion/store', [OtorgacionController::class, 'store'])
     ->name('otorgacion.store');
+// otorgacion caducados 
+Route::middleware(['auth:sanctum'])->get('/otorgacion/caducados', [OtorgacionCaducadosController::class, 'getcaducados'])
+    ->name('otorgaciones.caducados');
+Route::middleware(['auth:sanctum'])->post('/otorgacion/caducar/{otorgacion}', [OtorgacionCaducadosController::class, 'caducar'])
+    ->name('otorgacion.caducar');
+// otorgacion archivados 
+Route::middleware(['auth:sanctum'])->get('/otorgacion/archivados', [OtorgacionArchivadosController::class, 'getarchivados'])
+    ->name('otorgaciones.archivados');
+Route::middleware(['auth:sanctum'])->post('/otorgacion/archivar/{otorgacion}', [OtorgacionArchivadosController::class, 'archivar'])
+    ->name('otorgacion.archivar');
+Route::middleware(['auth:sanctum'])->post('/otorgacion/desarchivar/{otorgacion}', [OtorgacionArchivadosController::class, 'desarchivar'])
+    ->name('otorgacion.desarchivar');
+
 // Route::middleware(['auth:sanctum'])->put('/otorgacion/update/{otorgacion}', [OtorgacionController::class, 'update'])->name('otorgacion.update'); // todavia no existe
 Route::middleware(['auth:sanctum'])->post('/otorgacion/informe/store', [OtorgacionInformeController::class, 'store'])
     ->name('otorgacion.informe.store');

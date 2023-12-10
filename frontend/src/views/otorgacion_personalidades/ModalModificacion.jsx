@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import Swal from 'sweetalert2';
 import ModalDiv from '../../components/ModalMd';
 import Loading from '../../components/Loading';
 import { show_alerta } from '../../components/MessageAlert';
@@ -15,8 +16,6 @@ const ModalModificacion = ({ registro, handleInputChange, modal, open, close }) 
     otorgacion_id,
     codigo_modificacion,
     personalidad_juridica,
-    estatuto_organico,
-    reglamento_interno,
     domicilio_legal,
     miembros_fundador,
     seguimiento,
@@ -30,9 +29,23 @@ const ModalModificacion = ({ registro, handleInputChange, modal, open, close }) 
 
   const handleGuardar = (e) => {
     e.preventDefault();
-    setLoading(true);
-    close();
-    addModificacion.mutate(registro)
+
+    Swal.fire({
+      title: "Está seguro?",
+      text: "Verifique los datos antes de enviar.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#009186",
+      confirmButtonText: "Sí, estoy seguro!",
+      cancelButtonText: "Cancelar",
+      showLoaderOnConfirm: true,
+      preConfirm: () => {
+        setLoading(true);
+        close();
+        addModificacion.mutate(registro)
+      }
+
+    });
   }
 
   const addModificacion = useMutation({
@@ -82,7 +95,7 @@ const ModalModificacion = ({ registro, handleInputChange, modal, open, close }) 
             <div className='col-sm-7 px-0'>
               <div className="input-group mb-3">
                 <div className="input-group-prepend">
-                  <span className="input-group-text" id="basic-addon1">APN - </span>
+                  <span className="input-group-text" id="basic-addon1">NPJ - </span>
                 </div>
                 <input type="text" className='form-control' placeholder='Codigo de modificación'
                   name='codigo_modificacion' value={codigo_modificacion} onChange={handleInputChange} />

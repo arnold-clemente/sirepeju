@@ -3,14 +3,13 @@ import ModalDiv from '../../components/ModalDiv'; //contendoresto hay importar s
 
 // para el modal 
 import { useModal } from '../../hooks/useModal'
-import Alfanumerico from './reporte/Alfanumerico';
-import RepProcesoOtorgacion from './reporte/RepProcesoOtorgacion';
+import Alfanumerico from '../otorgaciones/reporte/Alfanumerico';
 
 import { useMutation } from 'react-query';
 import { getOtorgacion } from '../../api/otorgacionesApi';
+import RepArchivadoOtorgacion from './reporte/RepArchivadoOtorgacion';
 
-
-const ModalShowOtorgacion = ({ registro, modalRegistro, closeRegistro }) => {
+const ModalOtorgacionArchivadoShow = ({ registro, modalRegistro, closeRegistro }) => {
     // para el modal de reporte de
     const [modalAlfanumerico, openAlfanumerico, closeAlfanumerico] = useModal(false);
     const [modalpdf, openModalpdf, closeModalpdf] = useModal(false);
@@ -103,7 +102,7 @@ const ModalShowOtorgacion = ({ registro, modalRegistro, closeRegistro }) => {
                                     </button>
                                 </div>
                                 <Alfanumerico registro={otorgacion} modal={modalAlfanumerico} close={closeAlfanumerico} />
-                                <RepProcesoOtorgacion modal={modalpdf} close={closeModalpdf}
+                                <RepArchivadoOtorgacion modal={modalpdf} close={closeModalpdf}
                                     otorgacion={otorgacion} personalidad={personalidad} fundadores={fundadores} />
                             </>
                             : null
@@ -165,9 +164,6 @@ const ModalShowOtorgacion = ({ registro, modalRegistro, closeRegistro }) => {
             </ModalDiv >
         </>
     )
-
 }
 
-
-
-export default ModalShowOtorgacion
+export default ModalOtorgacionArchivadoShow

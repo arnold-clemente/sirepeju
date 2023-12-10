@@ -38,7 +38,7 @@ const IndexReserva = () => {
 
         return (
             <button onClick={handleDelete} className='button_select_pdf'>
-                <i class="fa-solid fa-print"></i>
+                <i className="fa-solid fa-print"></i>
                 <span>Imprimir</span>
             </button>
         );
@@ -88,7 +88,7 @@ const IndexReserva = () => {
             name: 'Acciones',
             cell: (row) => (
 
-                <div className='d-flex flex-row justify-content-start'>
+                <div className='d-flex flex-row justify-content-start gap-1'>
                     <button onClick={(e) => handleShow(e, row)} className="button_show"><i className="fa-solid fa-eye"></i><span>Ver</span></button>
                     <Link to={`/reserva/edit/${row.id}`} className="button_edit"><i className="fa-solid fa-pen-to-square"></i><span>Editar</span></Link>
                     <Link to={`/buscar-reserva/${row.entidad.toLowerCase().replace(/ /g, '~')}`} className="button_delete"><i className="fa-solid fa-magnifying-glass"></i><span>Verificar</span></Link>
@@ -97,73 +97,79 @@ const IndexReserva = () => {
             ignoreRowClick: true,
             allowOverflow: true,
             button: true,
+            width: '120px',
         },
         {
             name: 'Hoja de Ruta',
             selector: row => row.id,
             sortable: true,
-            center: 1,
-            grow: 1,
+            center: true,
+            wrap: true,         
+            width: '150px',
         },
         {
             name: 'Nº Correlativo',
             selector: row => row.nro_certificado,
             sortable: true,
+            wrap: true,         
+            width: '150px',
         },
         {
             name: 'Tipo de Persona Colectiva',
             selector: row => row.persona_colectiva,
             sortable: true,
-            ligth: 1,
-            grow: 2,
+            wrap: true,         
+            width: '200px',
         },
         {
             name: 'Naturaleza',
             selector: row => row.naturaleza,
             sortable: true,
-            grow: 2,
+            wrap: true,         
+            width: '200px',
         },
         {
             name: 'Nombre de la Persona Colectiva',
             selector: row => row.entidad,
             sortable: true,
-            grow: 3,
+            wrap: true,         
+            width: '300px',
         },
         {
             name: 'Sigla',
             selector: row => row.sigla,
             sortable: true,
-            center: 1,
-            grow: 1,
+            wrap: true,         
+            width: '150px',
         },
         {
             name: 'Representante Legal',
             selector: row => row.representante,
             sortable: true,
-            left: 1,
-            grow: 3,
+            wrap: true,         
+            width: '200px',
         },
 
         {
             name: 'CI',
             selector: row => row.ci_rep + " " + row.ext_ci_rep,
             sortable: true,
-            left: 1,
-            grow: 1,
+            wrap: true,         
+            width: '150px',
         },
         {
             name: 'Nº Celular',
             selector: row => row.telefono,
             sortable: true,
-            left: 1,
-            grow: 1,
+            wrap: true,         
+            width: '150px',
         },
         {
             name: 'Correo Registrado',
             selector: row => row.correo,
             sortable: true,
-            left: 1,
-            grow: 2
+            wrap: true,         
+            width: '250px',
         }
     ];
 

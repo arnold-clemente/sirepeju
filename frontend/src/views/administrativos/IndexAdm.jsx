@@ -39,7 +39,7 @@ const IndexAdministrativos = () => {
 
 		return (
 			<button onClick={handleDelete} className='button_select_pdf'>
-                <i class="fa-solid fa-print"></i>
+                <i className="fa-solid fa-print"></i>
 				<span>Imprimir</span>
 			</button>
 		);           
@@ -190,29 +190,29 @@ const IndexAdministrativos = () => {
             name: 'Nombre ',
             selector: row => row.nombres + ' ' + row.paterno + ' ' + row.materno,
             sortable: true,
-            left: 1,
-            grow: 3,
+            wrap: true,         
+            width: '300px',
         },
         {
             name: 'C.I.',
             selector: row => row.ci + ' ' + row.ext_ci,
             sortable: true,
-            left: 1,
-            grow: 1,
+            wrap: true,         
+            width: '150px',
         },
         {
             name: 'Correo Institucional',
             selector: row => row.user.email,
             sortable: true,
-            left: 1,
-            grow: 2,
+            wrap: true,         
+            width: '250px',
         },
         {
             name: 'Cargo',
             selector: row => row.cargo,
-            sortable: true,
-            left: 1,
-            grow: 3,
+            sortable: true,            
+            wrap: true,         
+            width: '150px',
         },
 
     ];

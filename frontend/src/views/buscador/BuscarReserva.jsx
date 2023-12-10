@@ -43,7 +43,7 @@ const BuscarReserva = () => {
 
         return (
             <button onClick={handleDelete} className='button_select_pdf'>
-                <i class="fa-solid fa-print"></i>
+                <i className="fa-solid fa-print"></i>
                 <span>Imprimir</span>
             </button>
         );
@@ -64,8 +64,7 @@ const BuscarReserva = () => {
                 registro.sigla.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
                 registro.representante.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
                 registro.persona_colectiva.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
-                registro.naturaleza.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
-                registro.ci_rep.toLowerCase().includes(search.toLowerCase())
+                registro.naturaleza.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase())
             ) {
                 return registro;
             }
@@ -158,10 +157,10 @@ const BuscarReserva = () => {
         {
             name: 'Acciones',
             cell: (row) => (
-                <div className='d-flex flex-row justify-content-start'>
+                <div className='d-flex flex-row justify-content-center gap-1'>
                     <button onClick={(e) => handleShow(e, row)} className="button_show"><i className="fa-solid fa-eye"></i><span>Ver</span></button>
                     {row.estado === 1
-                        ? <div className='d-flex'>
+                        ? <div className='d-flex justify-content-center gap-1'>
                             <button onClick={(e) => handleReserva(e, row)} className="button_edit"><i className="fa-solid fa-square-check"></i><span>Reservar</span></button>
                             <button onClick={(e) => handleHomonimia(e, row)} className="button_delete"><i className="fa-solid fa-ban"></i><span>Homonimia</span></button>
                         </div>
@@ -172,42 +171,42 @@ const BuscarReserva = () => {
             ignoreRowClick: true,
             allowOverflow: true,
             button: true,
+            width: '130px',
         },
-        // {
-        //     name: 'Id',
-        //     selector: row => uuidv4(),
-        //     sortable: true,
-        // },   
         {
             name: 'Entidad',
             selector: row => row.entidad,
             sortable: true,
-            grow: 3,
+            wrap: true,
+            width: '300px',
         },
         {
             name: 'Sigla',
             selector: row => row.sigla,
             sortable: true,
+            wrap: true,
+            width: '150px',
         },
         {
-            name: 'Representante',
+            name: 'Mienbros | Representante',
             selector: row => row.representante,
             sortable: true,
-        },
-        {
-            name: 'cedula',
-            selector: row => row.ci_rep + " " + row.ext_ci_rep,
-            sortable: true,
+            wrap: true,
+            width: '300px',
         },
         {
             name: 'Persona Colectiva',
             selector: row => row.persona_colectiva,
             sortable: true,
+            wrap: true,
+            width: '250px',
         },
         {
             name: 'Naturaleza',
             selector: row => row.naturaleza,
             sortable: true,
+            wrap: true,
+            width: '250px',
         },
     ];
 

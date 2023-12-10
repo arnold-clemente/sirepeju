@@ -63,14 +63,10 @@ class OtorgacionSeguimientoController extends Controller
             ->first();
         $modificacion->seguimiento = $modificacion->seguimiento . ", " . $mensaje;
         $modificacion->save();
-
-        $otorgacion = Otorgacion::find($request->otorgacion_id);
-        $otorgacion->seguimiento = $otorgacion->seguimiento . ", " . $mensaje;
-        $otorgacion->save();
+      
 
         return response()->json([
             'status' => true,
-            'data' => $otorgacion,
             'message' => 'Guardado con exito'
         ]);
     }

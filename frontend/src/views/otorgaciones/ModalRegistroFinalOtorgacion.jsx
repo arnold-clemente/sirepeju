@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import Swal from 'sweetalert2';
 import ModalSm from '../../components/ModalSm'
 import Loading from '../../components/Loading';
 import { show_alerta } from '../../components/MessageAlert';
@@ -19,9 +20,22 @@ const ModalRegistroFinalOtorgacion = ({ registrorModal, openRegistrorModal, clos
 
     const handleGuardar = (e) => {
         e.preventDefault()
-        closeRegistrorModal()
-        setLoading(true)
-        addRegistroFinal.mutate(registroFinal)
+        Swal.fire({
+            title: "Está seguro?",
+            text: "Verifique los datos antes de enviar.",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#009186",
+            confirmButtonText: "Sí, estoy seguro!",
+            cancelButtonText: "Cancelar",
+            showLoaderOnConfirm: true,
+            preConfirm: () => {
+                closeRegistrorModal()
+                setLoading(true)
+                addRegistroFinal.mutate(registroFinal)
+            }
+
+        });
     }
 
     const addRegistroFinal = useMutation({

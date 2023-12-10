@@ -30,8 +30,8 @@ const ModalRegistro = ({ registro, modal, close, handleInputChange, open }) => {
         mutationFn: createOtorgacion,
         onSuccess: (response) => {
             if (response.status === true) {
-                queryClient.invalidateQueries('registros') 
-                queryClient.invalidateQueries('otorgaciones') 
+                queryClient.invalidateQueries('registros')
+                queryClient.invalidateQueries('otorgaciones')
                 show_alerta('Creado con exito', '<i class="fa-solid fa-check border_alert_green"></i>', 'alert_green')
                 setLoading(false);
             } else {
@@ -41,7 +41,7 @@ const ModalRegistro = ({ registro, modal, close, handleInputChange, open }) => {
                 setLoading(false);
                 setTimeout(() => {
                     serErroreval({});
-                  }, 3000);
+                }, 3000);
             }
         },
         onError: (error) => {
@@ -65,12 +65,17 @@ const ModalRegistro = ({ registro, modal, close, handleInputChange, open }) => {
                             : ''}
                     </div>
                     <div className="col-md-6">
-                        <label className="form-label">Codigo OPJ</label>
-                        <input type="text" className="form-control" placeholder="Escriba codigo OPJ" aria-label="Last name"
-                            name="codigo" value={codigo} onChange={handleInputChange} />
-                        {errorval.codigo
-                            ? <ValidationError text={errorval.codigo} />
-                            : ''}
+                        <label className="form-label">Codigo</label>
+                        <div className="input-group mb-3">
+                            <div className="input-group-prepend">
+                                <span className="input-group-text" id="basic-addon1">OPJ - </span>
+                            </div>
+                            <input type="text" className="form-control" placeholder="Escriba codigo 123" aria-label="Last name"
+                                name="codigo" value={codigo} onChange={handleInputChange} />
+                            {errorval.codigo
+                                ? <ValidationError text={errorval.codigo} />
+                                : ''}
+                        </div>
                     </div>
                     <div className="col-md-12">
                         <label className="form-label">Domicilio Legal</label>

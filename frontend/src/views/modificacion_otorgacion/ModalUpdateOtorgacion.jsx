@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react'
+import Swal from 'sweetalert2';
+
 import ModalDiv from '../../components/ModalDiv'
 import { show_alerta } from '../../components/MessageAlert';
 import ValidationError from '../../components/ValidationError';
 import Loading from '../../components/Loading';
-import Spiner from '../../components/Spiner';
-import Swal from 'sweetalert2';
 import ModalSm from '../../components/ModalSm';
 import { useModal } from '../../hooks/useModal';
 
-import { useQuery, useMutation } from 'react-query';
-import { useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import { getFundadoresOtorgacion, createFundadorOtor, updateFundadorOtor, destroyFundadorOtor } from '../../api/modificacionOtorgacionApi';
 import { updateOtorgacionModificacion } from '../../api/modificacionOtorgacionApi';
 

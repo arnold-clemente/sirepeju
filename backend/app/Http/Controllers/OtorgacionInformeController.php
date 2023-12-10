@@ -64,13 +64,8 @@ class OtorgacionInformeController extends Controller
         $modificacion->cite_informe_preliminar = $modificacion->cite_informe_preliminar . ", " . $mensaje;
         $modificacion->save();
 
-        $otorgacion = Otorgacion::find($request->otorgacion_id);
-        $otorgacion->cite_informe_preliminar = $otorgacion->cite_informe_preliminar . ", " . $mensaje;
-        $otorgacion->save();
-
         return response()->json([
             'status' => true,
-            'data' => $otorgacion,
             'message' => 'Guardado con exito'
         ]);
     }

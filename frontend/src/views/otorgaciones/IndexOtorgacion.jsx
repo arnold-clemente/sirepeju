@@ -1,15 +1,16 @@
-import React, { useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import DataTable from "react-data-table-component";
-import { useQuery } from 'react-query';
-import { useQueryClient } from 'react-query';
+import { useQuery, useQueryClient, useMutation } from 'react-query';
 import bcrypt from "bcryptjs-react";
 
 import Loading from '../../components/Loading';
 import Banner from '../../components/Banner';
 import { estilos } from '../../components/estilosdatatables';
+import { show_alerta } from '../../components/MessageAlert';
 
-import { getOtorgaciones } from '../../api/otorgacionesApi';
+import { getOtorgaciones, archivarOtorgacion, caducarOtorgacion } from '../../api/otorgacionesApi';
 // modal 
 import { useModal } from '../../hooks/useModal'
 // modal components 
@@ -18,16 +19,17 @@ import ModalRegistroFinalOtorgacion from './ModalRegistroFinalOtorgacion';
 import ModalPersonaOtorgacion from './ModalPersonaOtorgacion';
 import ModalSeguimientoOtorgacion from './ModalSeguimientoOtorgacion';
 import ModalInformeOtorgacion from './ModalInformeOtorgacion';
+import SelectOtorgaciones from './reporte/SelectOtorgaciones';
 
 const IndexOtorgacion = () => {
 
-    const queryClient = useQueryClient();
     const [search, setSearch] = useState('');
     const [loading, setLoading] = useState(false);
+    const queryClient = useQueryClient();
 
     // para el modal show Otorgacion
     const [modalOtorgacion, openOtorgacion, closeOtorgacion] = useModal(false);
-    const [otorgacionShow, setotorgacionShow] = useState({});
+    const [otorgacionShow, setotorgacionShow] = useState({ id: 0 });
 
     //para registro persona colectiva
     const [personaModal, openPersonaModal, closePersonaModal] = useModal(false);
@@ -50,6 +52,29 @@ const IndexOtorgacion = () => {
         numero_informe_final: '',
         fecha_envio: '',
     })
+    const now = new Date().getTime();
+
+    const [selectpdf, openSelectpdf, closeSelectpdf] = useModal(false);
+    const [selectedRows, setSelectedRows] = useState([]);
+    const [toggleCleared, setToggleCleared] = useState(false);
+
+    const handleRowSelected = useCallback(state => {
+        setSelectedRows(state.selectedRows);
+    }, []);
+
+    const contextActions = useMemo(() => {
+        const handleDelete = () => {
+            openSelectpdf();
+        };
+
+        return (
+            <button onClick={handleDelete} className='button_select_pdf'>
+                <i className="fa-solid fa-print"></i>
+                <span>Imprimir</span>
+            </button>
+        );
+
+    }, [selectedRows, toggleCleared]);
 
     const { isLoading, data: registros, isError, error } = useQuery({
         queryKey: ['otorgaciones'],
@@ -61,31 +86,22 @@ const IndexOtorgacion = () => {
         if (search.length == 0)
             return registros;
         const filtered = registros.filter(registro => {
-            if (registro.miembros_fundador) {
-                if (
-                    registro.miembros_fundador.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
-                    registro.personalidad_juridica.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
-                    registro.sigla.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
-                    registro.representante.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
-                    registro.naturaleza.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
-                    registro.codigo_otorgacion.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
-                    registro.ci_rep.toLowerCase().includes(search.toLowerCase())
-                ) {
-                    return registro;
-                }
-            } else {
-                if (
-                    registro.personalidad_juridica.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
-                    registro.sigla.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
-                    registro.representante.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
-                    registro.naturaleza.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
-                    registro.codigo_otorgacion.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
-                    registro.ci_rep.toLowerCase().includes(search.toLowerCase())
-                ) {
-                    return registro;
-                }
+            if (
+                registro.codigo_otorgacion.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
+                registro.fecha_ingreso_tramite.includes(search.toLowerCase()) ||
+                registro.persona_colectiva.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
+                registro.naturaleza.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
+                registro.personalidad_juridica.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
+                registro.sigla.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
+                registro.objeto.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
+                registro.cite_informe_preliminar.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
+                registro.seguimiento.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
+                registro.miembros_fundador.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
+                registro.representante.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
+                registro.ci_rep.toLowerCase().includes(search.toLowerCase())
+            ) {
+                return registro;
             }
-
         });
 
         return filtered
@@ -174,11 +190,73 @@ const IndexOtorgacion = () => {
         });
     };
 
+    const handleArchivar = (e, row) => {
+        e.preventDefault();
+        Swal.fire({
+            title: "Archivar Otorgacion?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "¡Sí, Archivar!",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                setLoading(true);
+                archivateOtorgacion.mutate(row);
+            }
+        });
+    }
+
+    const archivateOtorgacion = useMutation({
+        mutationFn: archivarOtorgacion,
+        onSuccess: (response) => {
+            queryClient.invalidateQueries('otorgaciones')
+            queryClient.invalidateQueries('otorgaciones_archivados')
+            show_alerta('Otorgacion Archivado', '<i class="fa-solid fa-check border_alert_green"></i>', 'alert_green')
+            setLoading(false);
+        },
+        onError: (error) => {
+            show_alerta('No conectado', '<i class="fa-solid fa-xmark border_alert_red"></i>', 'alert_red')
+            setLoading(false);
+        },
+    });
+
+    const handleCaducar = (e, row) => {
+        e.preventDefault();
+        Swal.fire({
+            title: "Caducar Otorgacion?",
+            icon: "error",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "¡Sí, caducar!",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                setLoading(true);
+                caducateOtorgacion.mutate(row);
+            }
+        });
+    }
+
+    const caducateOtorgacion = useMutation({
+        mutationFn: caducarOtorgacion,
+        onSuccess: (response) => {
+            queryClient.invalidateQueries('otorgaciones')
+            queryClient.invalidateQueries('otorgaciones_caducados')
+            show_alerta('Otorgacion Caducado', '<i class="fa-solid fa-check border_alert_green"></i>', 'alert_green')
+            setLoading(false);
+        },
+        onError: (error) => {
+            show_alerta('No conectado', '<i class="fa-solid fa-xmark border_alert_red"></i>', 'alert_red')
+            setLoading(false);
+        },
+    });
+
     const columns = [
         {
             name: 'Acciones',
             cell: (row) => (
-                <div className='container-fluid d-flex flex-row'>
+                <div className='container-fluid d-flex flex-row gap-1'>
                     <button onClick={(e) => handleShow(e, row)} className="button_show"><i className="fa-solid fa-eye"></i><span>Ver</span></button>
                     <div className='dropdown'>
                         <button className="button_dropdown_table dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -198,7 +276,7 @@ const IndexOtorgacion = () => {
                                 </button>
                             </li>
                             <li>
-                                {!row.miembros_fundador
+                                {row.miembros_fundador == 'sin agregar'
                                     ? <Link to={`/otorgaciones/${row.id}/fundadores`} className="button_edit_table">
                                         <i className="fa-solid fa-users"></i>
                                         <span className='mx-2'>fundadores</span>
@@ -207,7 +285,7 @@ const IndexOtorgacion = () => {
                                 }
                             </li>
                             <li>
-                                {row.miembros_fundador && !row.alfanumerico
+                                {row.miembros_fundador != 'sin agregar' && !row.alfanumerico
                                     ? <button onClick={(e) => handleRegistroFinal(e, row)} className="button_print_table">
                                         <i className="fa-regular fa-registered"></i>
                                         <span className='mx-2'>Etapa Final</span>
@@ -226,6 +304,24 @@ const IndexOtorgacion = () => {
                                     : ''
                                 }
                             </li>
+                            <li>
+                                {Math.round((now - (new Date(row.fecha_ingreso_tramite).getTime())) / (1000 * 60 * 60 * 24)) > 60
+                                    ? <button onClick={(e) => handleArchivar(e, row)} className="button_show_table">
+                                        <i className="fa-solid fa-box-archive"></i>
+                                        <span className='mx-2'>Archivar</span>
+                                    </button>
+                                    : ''
+                                }
+                            </li>
+                            <li>
+                                {Math.round((now - (new Date(row.fecha_ingreso_tramite).getTime())) / (1000 * 60 * 60 * 24)) > 90
+                                    ? <button onClick={(e) => handleCaducar(e, row)} className="button_delete_table">
+                                        <i className="fa-solid fa-x"></i>
+                                        <span className='mx-2'>Caducar</span>
+                                    </button>
+                                    : ''
+                                }
+                            </li>
                         </ul>
                     </div>
 
@@ -234,44 +330,92 @@ const IndexOtorgacion = () => {
             ignoreRowClick: true,
             allowOverflow: true,
             button: true,
+            width: '120px',
         },
         {
-            name: 'Persona Juridica',
-            selector: row => row.personalidad_juridica,
+            name: 'Tiempo',
+            selector: row => Math.round((now - (new Date(row.fecha_ingreso_tramite).getTime())) / (1000 * 60 * 60 * 24)) + ' dias',
             sortable: true,
-            wrap: false,
-            grow: 3,
+            wrap: true,
+            width: '150px',
         },
         {
-            name: 'Miembros',
-            selector: row => row.miembros_fundador,
-            sortable: true,
-            grow: 2
-        },
-        {
-            name: 'Sigla',
-            selector: row => row.sigla,
-            sortable: true,
-        },
-        {
-            name: 'Representante',
-            selector: row => row.representante,
-            sortable: true,
-        },
-        {
-            name: 'Codigo',
+            name: 'Codigo OPJ',
             selector: row => row.codigo_otorgacion,
             sortable: true,
+            width: '150px',
+        },
+        {
+            name: 'Fecha de Ingreso',
+            selector: row => row.fecha_ingreso_tramite,
+            sortable: true,
+            width: '150px',
+        },
+        {
+            name: 'Tipo de Persona Colectiva',
+            selector: row => row.persona_colectiva,
+            sortable: true,
+            wrap: true,
+            width: '200px',
         },
         {
             name: 'Naturaleza',
             selector: row => row.naturaleza,
             sortable: true,
+            wrap: true,
+            width: '150px',
+        },
+        {
+            name: 'Nombre de la Persona Colectiva',
+            selector: row => row.personalidad_juridica,
+            sortable: true,
+            wrap: true,
+            width: '300px',
+        },
+        {
+            name: 'Sigla',
+            selector: row => row.sigla,
+            sortable: true,
+            wrap: true,
+            width: '150px',
+        },
+        {
+            name: 'Objeto',
+            selector: row => row.objeto,
+            width: '300px',
+        },
+        {
+            name: 'Informes',
+            selector: row => row.cite_informe_preliminar,
+            wrap: true,
+            width: '250px',
+        },
+        {
+            name: 'Seguimiento',
+            selector: row => row.seguimiento,
+            wrap: true,
+            width: '250px',
+        },
+        {
+            name: 'Representante',
+            selector: row => row.representante,
+            sortable: true,
+            wrap: true,
+            width: '150px',
+        },
+        {
+            name: 'Mienbros Fundadores',
+            selector: row => row.miembros_fundador,
+            sortable: true,
+            wrap: true,
+            width: '300px',
         },
         {
             name: 'Cedula',
             selector: row => row.ci_rep + " " + row.ext_ci_rep,
             sortable: true,
+            wrap: true,
+            width: '150px',
         },
     ];
 
@@ -288,7 +432,7 @@ const IndexOtorgacion = () => {
         <div>
             {loading === true ? <Loading /> : ''}
             {/* para le modal show adecuacion  */}
-            <ModalShowOtorgacion showRegistro={otorgacionShow} modalRegistro={modalOtorgacion} closeRegistro={closeOtorgacion} />
+            <ModalShowOtorgacion registro={otorgacionShow} modalRegistro={modalOtorgacion} closeRegistro={closeOtorgacion} />
             {/* par el modal de seguimiento  */}
             <ModalSeguimientoOtorgacion registrorModal={segumientoModal} closeRegistrorModal={closeSeguimientoModal} openRegistrorModal={openSeguimientoModal}
                 registro={seguimiento} handleInputChange={handleInputSeguimiento} />
@@ -303,6 +447,9 @@ const IndexOtorgacion = () => {
 
             {/* para el modal de persona colectiva  */}
             <ModalPersonaOtorgacion persona={personaCol} modalRegistro={personaModal} openRegistrorModal={openPersonaModal} closeRegistrorModal={closePersonaModal} />
+
+            {/* seleccionados  */}
+            <SelectOtorgaciones registro={selectedRows} modal={selectpdf} close={closeSelectpdf} />
 
             <Banner text="PROCESO DE OTORGACION" />
             <div className='container-fluid d-flex flex-row md:flex-columns my-4'>
@@ -332,6 +479,10 @@ const IndexOtorgacion = () => {
                     customStyles={estilos}
                     highlightOnHover={true}
                     persistTableHead={true}
+                    selectableRows
+                    contextActions={contextActions}
+                    onSelectedRowsChange={handleRowSelected}
+                    clearSelectedRows={toggleCleared}
                 />
             </div>
         </div>

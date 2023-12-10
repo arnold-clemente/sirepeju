@@ -81,6 +81,16 @@ export const links = [
                 icon: 'fa-solid fa-ban',
                 texto: 'Otorgacion Revocados'
             },
+            {
+                path: '/otorgacion/archivados',
+                icon: 'fa-solid fa-box-archive',
+                texto: 'Otorgacion Archivados'
+            },
+            {
+                path: '/otorgacion/caducados',
+                icon: 'fa-solid fa-hourglass',
+                texto: 'Otorgacion Caducados'
+            },
         ],
     },
     {

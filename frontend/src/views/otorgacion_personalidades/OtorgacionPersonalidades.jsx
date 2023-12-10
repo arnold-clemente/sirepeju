@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import DataTable from "react-data-table-component";
 import { useQuery } from 'react-query';
 
@@ -10,9 +10,10 @@ import storage from '../../Storage/storage'
 import { getPersonalidades } from '../../api/otorgacionesApi';
 // modal 
 import { useModal } from '../../hooks/useModal'
-import ModalShowOtorgacion from './ModalShowOtorgacion';
+import ModalShowPersonalidadesOtor from './ModalShowPersonalidadesOtor';
 import ModalRevocarOtorgacion from './ModalRevocarOtorgacion';
 import ModalModificacion from './ModalModificacion';
+import SelectOtorgacionPersonalidades from './reporte/SelectOtorgacionPersonalidades';
 
 const OtorgacionPersonalidades = () => {
 
@@ -22,7 +23,7 @@ const OtorgacionPersonalidades = () => {
     // para el modal show Otorgacion
     const [modalOtorgacion, openOtorgacion, closeOtorgacion] = useModal(false);
     const [modificacion, openModificacion, closeModificacion] = useModal(false);
-    const [otorgacionShow, setotorgacionShow] = useState({});
+    const [otorgacionShow, setotorgacionShow] = useState({ id: 0 });
 
     //para el revocatoria
     const [revocatoriaModal, openRevocatoriaModal, closeRevocatoriaModal] = useModal(false);
@@ -40,6 +41,28 @@ const OtorgacionPersonalidades = () => {
         cite_informe_preliminar: '',
         user_id: storage.get('authUser').id,
     });
+
+    const [selectpdf, openSelectpdf, closeSelectpdf] = useModal(false);
+    const [selectedRows, setSelectedRows] = useState([]);
+    const [toggleCleared, setToggleCleared] = useState(false);
+
+    const handleRowSelected = useCallback(state => {
+        setSelectedRows(state.selectedRows);
+    }, []);
+
+    const contextActions = useMemo(() => {
+        const handleDelete = () => {
+            openSelectpdf();
+        };
+
+        return (
+            <button onClick={handleDelete} className='button_select_pdf'>
+                <i className="fa-solid fa-print"></i>
+                <span>Imprimir</span>
+            </button>
+        );
+
+    }, [selectedRows, toggleCleared]);
 
     const { isLoading, data: registros, isError, error } = useQuery({
         queryKey: ['personalidadesotorgacion'],
@@ -112,8 +135,6 @@ const OtorgacionPersonalidades = () => {
             otorgacion_id: row.id,
             codigo_modificacion: '',
             personalidad_juridica: row.personalidad_juridica,
-            estatuto_organico: row.registro_persona_colectiva.estatuto_organico,
-            reglamento_interno: row.registro_persona_colectiva.reglamento_interno,
             domicilio_legal: row.domicilio_legal,
             miembros_fundador: row.miembros_fundador,
             seguimiento: row.seguimiento,
@@ -128,7 +149,7 @@ const OtorgacionPersonalidades = () => {
         {
             name: 'Acciones',
             cell: (row) => (
-                <div className='container-fluid d-flex flex-row'>
+                <div className='container-fluid d-flex flex-row gap-1'>
                     <button onClick={(e) => handleShow(e, row)} className="button_show"><i className="fa-solid fa-eye"></i><span>Ver</span></button>
                     <button onClick={(e) => handleModificar(e, row)} className="button_edit"><i className="fa-solid fa-pen-to-square"></i><span>Modificar</span></button>
                     <button onClick={(e) => handleRevocar(e, row)} className="button_delete"><i className="fa-regular fa-circle-xmark"></i><span>Revocar</span></button>
@@ -137,39 +158,85 @@ const OtorgacionPersonalidades = () => {
             ignoreRowClick: true,
             allowOverflow: true,
             button: true,
+            width: '120px',
         },
         {
-            name: 'Id',
-            selector: row => row.id,
-            sortable: true,
-            grow: 1,
-        },
-        {
-            name: 'Persona Juridica',
-            selector: row => row.personalidad_juridica,
-            sortable: true,
-            grow: 3,
-        },
-        {
-            name: 'Miembros',
-            selector: row => row.miembros_fundador,
-            sortable: true,
-            grow: 2
-        },
-        {
-            name: 'Sigla',
-            selector: row => row.sigla,
-            sortable: true,
-        },
-        {
-            name: 'Codigo',
+            name: 'Codigo OPJ',
             selector: row => row.codigo_otorgacion,
             sortable: true,
+            width: '150px',
+        },
+        {
+            name: 'Fecha de Ingreso',
+            selector: row => row.fecha_ingreso_tramite,
+            sortable: true,
+            width: '150px',
+        },
+        {
+            name: 'Tipo de Persona Colectiva',
+            selector: row => row.persona_colectiva,
+            sortable: true,
+            wrap: true,
+            width: '200px',
         },
         {
             name: 'Naturaleza',
             selector: row => row.naturaleza,
             sortable: true,
+            wrap: true,
+            width: '150px',
+        },
+        {
+            name: 'Nombre de la Persona Colectiva',
+            selector: row => row.personalidad_juridica,
+            sortable: true,
+            wrap: true,
+            width: '300px',
+        },
+        {
+            name: 'Sigla',
+            selector: row => row.sigla,
+            sortable: true,
+            wrap: true,
+            width: '150px',
+        },
+        {
+            name: 'Objeto',
+            selector: row => row.objeto,
+            width: '300px',
+        },
+        {
+            name: 'Informes',
+            selector: row => row.cite_informe_preliminar,
+            wrap: true,
+            width: '250px',
+        },
+        {
+            name: 'Seguimiento',
+            selector: row => row.seguimiento,
+            wrap: true,
+            width: '250px',
+        },
+        {
+            name: 'Representante',
+            selector: row => row.representante,
+            sortable: true,
+            wrap: true,
+            width: '150px',
+        },
+        {
+            name: 'Mienbros Fundadores',
+            selector: row => row.miembros_fundador,
+            sortable: true,
+            wrap: true,
+            width: '300px',
+        },
+        {
+            name: 'Cedula',
+            selector: row => row.ci_rep + " " + row.ext_ci_rep,
+            sortable: true,
+            wrap: true,
+            width: '150px',
         },
     ];
 
@@ -190,9 +257,11 @@ const OtorgacionPersonalidades = () => {
                 registro={revocatoria} handleInputChange={handleInputRevocatoria} />
 
             {/* para le modal show otorgacion  */}
-            <ModalShowOtorgacion showRegistro={otorgacionShow} modalRegistro={modalOtorgacion} closeRegistro={closeOtorgacion} />
+            <ModalShowPersonalidadesOtor registro={otorgacionShow} modalRegistro={modalOtorgacion} closeRegistro={closeOtorgacion} />
             {/* modal modoificacion  */}
             <ModalModificacion registro={update} handleInputChange={handleInputModificacion} modal={modificacion} open={openModificacion} close={closeModificacion} />
+            <SelectOtorgacionPersonalidades registro={selectedRows} modal={selectpdf} close={closeSelectpdf} />
+
             <Banner text="PERSONALIDAD JURIDICA OTORGACION" />
             <div className='container-fluid d-flex flex-row md:flex-columns my-4'>
                 <div className='input_search'>
@@ -221,6 +290,10 @@ const OtorgacionPersonalidades = () => {
                     customStyles={estilos}
                     highlightOnHover={true}
                     persistTableHead={true}
+                    selectableRows
+                    contextActions={contextActions}
+                    onSelectedRowsChange={handleRowSelected}
+                    clearSelectedRows={toggleCleared}
                 />
             </div>
         </>

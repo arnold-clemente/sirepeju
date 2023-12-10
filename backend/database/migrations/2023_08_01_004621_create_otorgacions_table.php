@@ -27,7 +27,7 @@ return new class extends Migration
 
             // se llena             
             $table->date('fecha_ingreso_tramite'); //se llena 
-            $table->string('codigo_otorgacion', 150); //OPJ-            
+            $table->string('codigo_otorgacion', 150)->unique(); //OPJ-            
             $table->string('domicilio_legal');
             $table->text('objeto');
             $table->text('seguimiento')->nullable();

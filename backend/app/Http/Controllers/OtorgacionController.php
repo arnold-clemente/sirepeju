@@ -3,23 +3,57 @@
 namespace App\Http\Controllers;
 
 use App\Models\Administrativo;
+use App\Models\FundadoresOtorgacion;
 use App\Models\Otorgacion;
 use App\Models\Registro;
 use App\Models\RegistroPersonaColectiva;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class OtorgacionController extends Controller
 {
     public function index()
     {
-        $otorgaciones = Otorgacion::with('fundadores')
-            ->whereIn('estado', [7, 8, 9])
+        $otorgaciones = Otorgacion::whereIn('estado', [7])
             ->get();
 
         return response()->json($otorgaciones);
+    }  
+
+    public function personalidades()
+    {
+        $personalidades = Otorgacion::where('estado', 10)
+            ->orderBy('id', 'asc')
+            ->get();
+
+        return response()->json($personalidades);
+    } 
+
+    public function getrevocatorias()
+    {
+        $revocatorias = Otorgacion::where('estado', 0)
+            ->orderBy('id', 'asc')
+            ->get();
+
+        return response()->json($revocatorias);
+    }   
+
+    public function show(Otorgacion $otorgacion)
+    {
+        $fundadores = FundadoresOtorgacion::where('otorgacion_id', $otorgacion->id)
+        ->where('estado', 1)
+        ->get();
+
+        $personalidades = RegistroPersonaColectiva::where('otorgacion_id', $otorgacion->id)
+        ->orderBy('id', 'desc')
+        ->first();
+
+        return response()->json([
+            'otorgacion' => $otorgacion,
+            'fundadores' => $fundadores,
+            'personalidad' => $personalidades 
+        ]);
     }
 
     public function store(Request $request)
@@ -45,6 +79,7 @@ class OtorgacionController extends Controller
 
         $registro = Registro::find($request->id);
         $administrativo = Administrativo::where('user_id', $request->user_id)->first();
+        $codigo_otorgacion = 'OPJ - ' . $request->codigo;
 
         $otorgacion = Otorgacion::create([
             'registro_id' => $request->id,
@@ -56,7 +91,7 @@ class OtorgacionController extends Controller
             'naturaleza' => $registro->naturaleza,
             'persona_colectiva' => $registro->persona_colectiva,
             'fecha_ingreso_tramite' => $request->fecha,
-            'codigo_otorgacion' => $request->codigo,
+            'codigo_otorgacion' => $codigo_otorgacion,
             'domicilio_legal' => $request->domicilio,
             'objeto' => $request->objeto,
             'miembros_fundador'=> 'sin agregar',
@@ -104,33 +139,6 @@ class OtorgacionController extends Controller
             'status' => true,
             'data' => $registroFinal
         ]);
-    }
-
-   
-
-    public function destroy(Otorgacion $otorgacion)
-    {
-        //
-    }
-
-    public function personalidades()
-    {
-        $personalidades = Otorgacion::with('fundadores', 'registro_persona_colectiva')
-            ->where('estado', 10)
-            ->orderBy('id', 'asc')
-            ->get();
-
-        return response()->json($personalidades);
-    }
-
-    public function getrevocatorias()
-    {
-        $revocatorias = Otorgacion::with('fundadores', 'registro_persona_colectiva')
-            ->where('estado', 0)
-            ->orderBy('id', 'asc')
-            ->get();
-
-        return response()->json($revocatorias);
     }
 
     public function revocatoria(Request $request)

@@ -3,15 +3,13 @@ import ModalDiv from '../../components/ModalDiv'; //contendoresto hay importar s
 
 // para el modal 
 import { useModal } from '../../hooks/useModal'
-import Alfanumerico from './reporte/Alfanumerico';
-import RepProcesoOtorgacion from './reporte/RepProcesoOtorgacion';
+import Alfanumerico from '../otorgaciones/reporte/Alfanumerico';
 
 import { useMutation } from 'react-query';
 import { getOtorgacion } from '../../api/otorgacionesApi';
+import RepCaducadoOtorgacion from './reporte/RepCaducadoOtorgacion';
 
-
-const ModalShowOtorgacion = ({ registro, modalRegistro, closeRegistro }) => {
-    // para el modal de reporte de
+const ModalOtorgacionCaducado = ({ registro, modalRegistro, closeRegistro }) => {
     const [modalAlfanumerico, openAlfanumerico, closeAlfanumerico] = useModal(false);
     const [modalpdf, openModalpdf, closeModalpdf] = useModal(false);
     const [cargando, setCargando] = useState(false);
@@ -97,16 +95,27 @@ const ModalShowOtorgacion = ({ registro, modalRegistro, closeRegistro }) => {
                                         <i className="fa-solid fa-print"></i>
                                         <span className='mx-1'>Alfanumerico</span>
                                     </button>
+                                </div>
+                                <Alfanumerico registro={otorgacion} modal={modalAlfanumerico} close={closeAlfanumerico} />
+                                
+                            </>
+                            : null
+                        }
+                        {otorgacion.id != 0
+                            ? <>
+                                <div className='container-fluid d-flex justify-content-end gap-1'>
+                                    
                                     <button className='btn btn-success' onClick={openModalpdf} >
                                         <i className="fa-solid fa-print"></i>
                                         <span className='mx-1'>Imprimir</span>
                                     </button>
                                 </div>
-                                <Alfanumerico registro={otorgacion} modal={modalAlfanumerico} close={closeAlfanumerico} />
-                                <RepProcesoOtorgacion modal={modalpdf} close={closeModalpdf}
+                                <RepCaducadoOtorgacion modal={modalpdf} close={closeModalpdf}
                                     otorgacion={otorgacion} personalidad={personalidad} fundadores={fundadores} />
+
                             </>
                             : null
+
                         }
 
                         <h2 className="fs-6"><b>Codigo: {otorgacion.codigo_adecuacion}</b> &nbsp;&nbsp; <b>Naturaleza: {otorgacion.naturaleza}</b></h2> <hr />
@@ -165,9 +174,6 @@ const ModalShowOtorgacion = ({ registro, modalRegistro, closeRegistro }) => {
             </ModalDiv >
         </>
     )
-
 }
 
-
-
-export default ModalShowOtorgacion
+export default ModalOtorgacionCaducado

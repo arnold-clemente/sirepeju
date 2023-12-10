@@ -53,7 +53,7 @@ const IndexReg = () => {
 
         return (
             <button onClick={handleDelete} className='button_select_pdf'>
-                <i class="fa-solid fa-print"></i>
+                <i className="fa-solid fa-print"></i>
                 <span>Imprimir</span>
             </button>
         );
@@ -185,7 +185,7 @@ const IndexReg = () => {
         {
             name: 'Acciones',
             cell: (row) => (
-                <div className='d-flex flex-row justify-content-start'>
+                <div className='d-flex flex-row justify-content-start gap-1'>
                     <button onClick={(e) => handleShow(e, row)} className="button_show">
                         <i className="fa-solid fa-eye"></i>
                         <span>Ver</span>
@@ -232,79 +232,86 @@ const IndexReg = () => {
             ),
             ignoreRowClick: true,
             allowOverflow: true,
-            button: true,
+            button: true,  
+            width: '120px',
         },
         {
             name: 'Tiempo',
             selector: row => Math.round((now - (new Date(row.fecha_reg).getTime())) / (1000 * 60 * 60 * 24)) + ' dias',
             sortable: true,
+            wrap: true,         
+            width: '150px',
         },
         {
             name: 'Hoja de Ruta',
             selector: row => row.id,
             sortable: true,
-            center: 1,
-            grow: 1,
+            wrap: true,         
+            width: '150px',
         },
         {
             name: 'Nº Correlativo',
             selector: row => row.nro_certificado,
             sortable: true,
+            wrap: true,         
+            width: '150px',
         },
         {
             name: 'Tipo de Personas Colectiva ',
             selector: row => row.persona_colectiva,
             sortable: true,
-            center: 1,
-            grow: 2,
+            wrap: true,         
+            width: '250px',
         },
         {
             name: 'Naturaleza',
             selector: row => row.naturaleza,
             sortable: true,
-            grow: 2,
+            wrap: true,         
+            width: '250px',
         },
         {
             name: 'Nombre de la Persona Colectiva',
             selector: row => row.entidad,
             sortable: true,
-            grow: 3,
+            wrap: true,         
+            width: '300px',
         },
         {
             name: 'Sigla',
             selector: row => row.sigla,
             sortable: true,
-            center: 1,
-            grow: 1,
+            wrap: true,         
+            width: '150px',
         },
         {
             name: 'Representante Legal',
             selector: row => row.representante,
             sortable: true,
-            left: 1,
-            grow: 3,
+            wrap: true,         
+            width: '250px',
         },
 
         {
             name: 'CI',
             selector: row => row.ci_rep + " " + row.ext_ci_rep,
             sortable: true,
-            left: 1,
-            grow: 1,
+            wrap: true,         
+            width: '150px',
         },
         {
             name: 'Nº Celular',
             selector: row => row.telefono,
             sortable: true,
-            left: 1,
-            grow: 1,
+            wrap: true,         
+            width: '150px',
         },
         {
             name: 'Correo Registrado',
             selector: row => row.correo,
             sortable: true,
-            left: 1,
-            grow: 2
+            wrap: true,         
+            width: '250px',
         },
     ];
 

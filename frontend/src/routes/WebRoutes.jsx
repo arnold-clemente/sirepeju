@@ -30,8 +30,11 @@ import BuscarReserva from '../views/buscador/BuscarReserva'
 //rutas para otorgacion
 import IndexOtorgacion from '../views/otorgaciones/IndexOtorgacion'
 import FundOtorgacion from '../views/otorgaciones/FundOtorgacion'
-import OtorgacionPersonalidades from '../views/otorgaciones/OtorgacionPersonalidades'
-import OtorgacionRevocados from '../views/otorgaciones/OtorgacionRevocados'
+//otorgacion personalidades
+import OtorgacionPersonalidades from '../views/otorgacion_personalidades/OtorgacionPersonalidades'
+// otorgacion revocados 
+import OtorgacionRevocados from '../views/otorgacion_revocados/OtorgacionRevocados'
+// otorgacion modificados 
 import IndexModificacionOtor from '../views/modificacion_otorgacion/IndexModificacionOtor'
 
 //adecuciones
@@ -41,6 +44,8 @@ import FundAdecuacion from '../views/adecuacion/FundAdecuacion'
 import PersAdecuacion from '../views/adecuacion/PersAdecuacion'
 import RevAdecuacion from '../views/adecuacion/RevAdecuacion'
 import IndexModificacionAd from '../views/modificacion_adecuacion/IndexModificacionAd'
+import OtorgacionArchivados from '../views/otorgacion_archivados/OtorgacionArchivados'
+import OtorgacionCaducados from '../views/otorgacion_caducados/OtorgacionCaducados'
 
 //otorgaciones gobernacion
 import IndexOtorgacionGob from '../views/otorgaciongobs/IndexOtorgacionGob'
@@ -97,6 +102,8 @@ const WebRoutes = () => {
                     <Route path='/otorgacion/personalidades-juridicas' element={<OtorgacionPersonalidades />} />
                     <Route path='/otorgacion/revocados' element={<OtorgacionRevocados />} />
                     <Route path='/otorgacion/modificaciones' element={<IndexModificacionOtor />} />
+                    <Route path='/otorgacion/archivados' element={<OtorgacionArchivados />} />
+                    <Route path='/otorgacion/caducados' element={<OtorgacionCaducados />} />
                     {/* adecuaciones */}
                     <Route path='/adecuaciones' element={<IndexAdecuacion />} />
                     <Route path='/adecuacion/crear' element={<CreateAdecuacion />} />

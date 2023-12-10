@@ -3,17 +3,20 @@ import ModalDiv from '../../components/ModalDiv'; //contendoresto hay importar s
 
 // para el modal 
 import { useModal } from '../../hooks/useModal'
-import Alfanumerico from './reporte/Alfanumerico';
-import RepProcesoOtorgacion from './reporte/RepProcesoOtorgacion';
+import Alfanumerico from '../otorgaciones/reporte/Alfanumerico';
+import ViewPdf from '../../components/ViewPdf';
+import RepOtorgacionPersonalidad from './reporte/RepOtorgacionPersonalidad';
 
 import { useMutation } from 'react-query';
 import { getOtorgacion } from '../../api/otorgacionesApi';
 
-
-const ModalShowOtorgacion = ({ registro, modalRegistro, closeRegistro }) => {
-    // para el modal de reporte de
+const ModalShowPersonalidadesOtor = ({ registro, modalRegistro, closeRegistro }) => {
     const [modalAlfanumerico, openAlfanumerico, closeAlfanumerico] = useModal(false);
+    const [modalEstatuto, openEstatuto, closeEstatuto] = useModal(false);
+    const [modalReglamento, openReglamento, closeReglamento] = useModal(false);
+    const [modalInforme, openInforme, closeInforme] = useModal(false);
     const [modalpdf, openModalpdf, closeModalpdf] = useModal(false);
+    const [modalNota, openNota, closeNota] = useModal(false);
     const [cargando, setCargando] = useState(false);
     const [otorgacion, setOtorgacion] = useState({
         id: 0,
@@ -90,6 +93,7 @@ const ModalShowOtorgacion = ({ registro, modalRegistro, closeRegistro }) => {
                     ? (<div className="container-fluid">
                         <h2 className='text-center fs-4'>{otorgacion.personalidad_juridica} </h2>
                         {/* para el modal de pdf de alfanumerico  */}
+                        {/* para el modal de pdf de alfanumerico  */}
                         {otorgacion.alfanumerico
                             ? <>
                                 <div className='container-fluid d-flex justify-content-end gap-1'>
@@ -103,7 +107,7 @@ const ModalShowOtorgacion = ({ registro, modalRegistro, closeRegistro }) => {
                                     </button>
                                 </div>
                                 <Alfanumerico registro={otorgacion} modal={modalAlfanumerico} close={closeAlfanumerico} />
-                                <RepProcesoOtorgacion modal={modalpdf} close={closeModalpdf}
+                                <RepOtorgacionPersonalidad modal={modalpdf} close={closeModalpdf}
                                     otorgacion={otorgacion} personalidad={personalidad} fundadores={fundadores} />
                             </>
                             : null
@@ -123,6 +127,30 @@ const ModalShowOtorgacion = ({ registro, modalRegistro, closeRegistro }) => {
                                 </div>
                             </div>)
                             : ''
+                        }
+
+                        {personalidad
+                            ? <>
+                                <div className='container-fluid d-flex justify-content-between my-4'>
+                                    <button className='btn btn-success' onClick={openEstatuto} >
+                                        Estatuto Organico
+                                    </button>
+                                    <button className='btn btn-success' onClick={openReglamento} >
+                                        Reglamento Interno
+                                    </button>
+                                    <button className='btn btn-success' onClick={openInforme} >
+                                        Informe Final
+                                    </button>
+                                    <button className='btn btn-success' onClick={openNota} >
+                                        Nota FInal
+                                    </button>
+                                </div>
+                                <ViewPdf resource={personalidad.estatuto_organico} modal={modalEstatuto} close={closeEstatuto} />
+                                <ViewPdf resource={personalidad.reglamento_interno} modal={modalReglamento} close={closeReglamento} />
+                                <ViewPdf resource={personalidad.informe_final} modal={modalInforme} close={closeInforme} />
+                                <ViewPdf resource={personalidad.nota_final} modal={modalNota} close={closeNota} />
+                            </>
+                            : null                            
                         }
 
                         {fundadores.length > 0
@@ -157,7 +185,6 @@ const ModalShowOtorgacion = ({ registro, modalRegistro, closeRegistro }) => {
                             : null
                         }
 
-
                     </div>)
                     : <div className='spiner_content'><span className='loader_spiner'></span></div>
                 }
@@ -165,9 +192,6 @@ const ModalShowOtorgacion = ({ registro, modalRegistro, closeRegistro }) => {
             </ModalDiv >
         </>
     )
-
 }
 
-
-
-export default ModalShowOtorgacion
+export default ModalShowPersonalidadesOtor
