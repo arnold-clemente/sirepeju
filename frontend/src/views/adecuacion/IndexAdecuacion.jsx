@@ -1,12 +1,12 @@
-import React, { useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom';
 import DataTable from "react-data-table-component";
-import { useQuery } from 'react-query';
-import { useQueryClient } from 'react-query';
+import { useQuery, useQueryClient } from 'react-query';
 import bcrypt from "bcryptjs-react";
 
 import Loading from '../../components/Loading';
 import Banner from '../../components/Banner';
+import { estilos } from '../../components/estilosdatatables';
 
 import { getAdecuaciones } from '../../api/adecuacionApi';
 // modal 
@@ -17,6 +17,7 @@ import ModalEtapa from './ModalEtapa';
 import ModalPersona from './ModalPersona';
 import ModalSeguimiento from './ModalSeguimiento';
 import ModalInforme from './ModalInforme';
+import SelectProcesoAdecuacion from './reporte/SelectProcesoAdecuacion';
 
 const IndexAdecuacion = () => {
   const queryClient = useQueryClient();
@@ -25,7 +26,7 @@ const IndexAdecuacion = () => {
 
   // par el modal show
   const [modalAdecuacion, openAdecuacion, closeAdecuacion] = useModal(false);
-  const [adecuacionShow, setadecuacionShow] = useState({});
+  const [adecuacionShow, setadecuacionShow] = useState({id: 0});
 
   //para registro persona colectiva
   const [personaModal, openPersonaModal, closePersonaModal] = useModal(false);
@@ -49,6 +50,28 @@ const IndexAdecuacion = () => {
     fecha_envio: '',
   })
 
+  const [selectpdf, openSelectpdf, closeSelectpdf] = useModal(false);
+  const [selectedRows, setSelectedRows] = useState([]);
+  const [toggleCleared, setToggleCleared] = useState(false);
+
+  const handleRowSelected = useCallback(state => {
+    setSelectedRows(state.selectedRows);
+  }, []);
+
+  const contextActions = useMemo(() => {
+    const handleDelete = () => {
+      openSelectpdf();
+    };
+
+    return (
+      <button onClick={handleDelete} className='button_select_pdf'>
+        <i className="fa-solid fa-print"></i>
+        <span>Imprimir</span>
+      </button>
+    );
+
+  }, [selectedRows, toggleCleared]);
+
   const { isLoading, data: registros, isError, error } = useQuery({
     queryKey: ['adecuaciones'],
     queryFn: getAdecuaciones,
@@ -59,31 +82,22 @@ const IndexAdecuacion = () => {
     if (search.length == 0)
       return registros;
     const filtered = registros.filter(registro => {
-      if (registro.miembros_fundador) {
-        if (
-          registro.miembros_fundador.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
-          registro.personalidad_juridica.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
-          registro.sigla.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
-          registro.representante.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
-          registro.naturaleza.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
-          registro.codigo_adecuacion.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
-          registro.ci_rep.toLowerCase().includes(search.toLowerCase())
-        ) {
-          return registro;
-        }
-      } else {
-        if (
-          registro.personalidad_juridica.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
-          registro.sigla.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
-          registro.representante.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
-          registro.naturaleza.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
-          registro.codigo_adecuacion.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
-          registro.ci_rep.toLowerCase().includes(search.toLowerCase())
-        ) {
-          return registro;
-        }
+      if (
+        registro.codigo_adecuacion.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
+        registro.fecha_ingreso_tramite.includes(search.toLowerCase()) ||
+        registro.persona_colectiva.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
+        registro.naturaleza.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
+        registro.personalidad_juridica.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
+        registro.sigla.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
+        registro.objeto.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
+        registro.cite_informe_preliminar.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
+        registro.seguimiento.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
+        registro.miembros_fundador.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
+        registro.representante.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
+        registro.ci_rep.toLowerCase().includes(search.toLowerCase())
+      ) {
+        return registro;
       }
-
     });
 
     return filtered
@@ -176,7 +190,7 @@ const IndexAdecuacion = () => {
     {
       name: 'Acciones',
       cell: (row) => (
-        <div className='container-fluid d-flex flex-row'>
+        <div className='container-fluid d-flex flex-row gap-1'>
           <button onClick={(e) => handleShow(e, row)} className="button_show"><i className="fa-solid fa-eye"></i><span>Ver</span></button>
           <div className='dropdown'>
             <button className="button_dropdown_table dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -196,7 +210,7 @@ const IndexAdecuacion = () => {
                 </button>
               </li>
               <li>
-                {!row.miembros_fundador
+                {row.miembros_fundador == 'sin asignar'
                   ? <Link to={`/adecuacion/${row.id}/fundadores`} className="button_edit_table">
                     <i className="fa-solid fa-users"></i>
                     <span className='mx-2'>fundadores</span>
@@ -205,7 +219,7 @@ const IndexAdecuacion = () => {
                 }
               </li>
               <li>
-                {row.miembros_fundador && !row.alfanumerico
+                {row.miembros_fundador != 'sin asignar' && !row.alfanumerico
                   ? <button onClick={(e) => handleRegistroFinal(e, row)} className="button_print_table">
                     <i className="fa-regular fa-registered"></i>
                     <span className='mx-2'>Etapa Final</span>
@@ -232,49 +246,85 @@ const IndexAdecuacion = () => {
       ignoreRowClick: true,
       allowOverflow: true,
       button: true,
+      width: '120px',
     },
     {
-      name: 'Id',
-      selector: row => row.id,
-      sortable: true,
-      grow: 1,
-    },
-    {
-      name: 'Persona Juridica',
-      selector: row => row.personalidad_juridica,
-      sortable: true,
-      grow: 3,
-    },
-    {
-      name: 'Mienbros',
-      selector: row => row.miembros_fundador,
-      sortable: true,
-      grow: 2
-    },
-    {
-      name: 'Sigla',
-      selector: row => row.sigla,
-      sortable: true,
-    },
-    {
-      name: 'Representante',
-      selector: row => row.representante,
-      sortable: true,
-    },
-    {
-      name: 'Codigo',
+      name: 'Codigo APJ',
       selector: row => row.codigo_adecuacion,
       sortable: true,
+      width: '150px',
+    },
+    {
+      name: 'Fecha de Ingreso',
+      selector: row => row.fecha_ingreso_tramite,
+      sortable: true,
+      width: '150px',
+    },
+    {
+      name: 'Tipo de Persona Colectiva',
+      selector: row => row.persona_colectiva,
+      sortable: true,
+      wrap: true,
+      width: '200px',
     },
     {
       name: 'Naturaleza',
       selector: row => row.naturaleza,
       sortable: true,
+      wrap: true,
+      width: '150px',
+    },
+    {
+      name: 'Nombre de la Persona Colectiva',
+      selector: row => row.personalidad_juridica,
+      sortable: true,
+      wrap: true,
+      width: '300px',
+    },
+    {
+      name: 'Sigla',
+      selector: row => row.sigla,
+      sortable: true,
+      wrap: true,
+      width: '150px',
+    },
+    {
+      name: 'Objeto',
+      selector: row => row.objeto,
+      width: '300px',
+    },
+    {
+      name: 'Informes',
+      selector: row => row.cite_informe_preliminar,
+      wrap: true,
+      width: '250px',
+    },
+    {
+      name: 'Seguimiento',
+      selector: row => row.seguimiento,
+      wrap: true,
+      width: '250px',
+    },
+    {
+      name: 'Representante',
+      selector: row => row.representante,
+      sortable: true,
+      wrap: true,
+      width: '150px',
+    },
+    {
+      name: 'Mienbros Fundadores',
+      selector: row => row.miembros_fundador,
+      sortable: true,
+      wrap: true,
+      width: '300px',
     },
     {
       name: 'Cedula',
       selector: row => row.ci_rep + " " + row.ext_ci_rep,
       sortable: true,
+      wrap: true,
+      width: '150px',
     },
   ];
 
@@ -291,7 +341,7 @@ const IndexAdecuacion = () => {
     <div>
       {loading === true ? <Loading /> : ''}
       {/* para le modal show adecuacion  */}
-      <ModalShow showRegistro={adecuacionShow} modalRegistro={modalAdecuacion} closeRegistro={closeAdecuacion} />
+      <ModalShow registro={adecuacionShow} modalRegistro={modalAdecuacion} closeRegistro={closeAdecuacion} />
       {/* par el modal de seguimiento  */}
       <ModalSeguimiento registrorModal={segumientoModal} closeRegistrorModal={closeSeguimientoModal} openRegistrorModal={openSeguimientoModal}
         registro={seguimiento} handleInputChange={handleInputSeguimiento} />
@@ -306,6 +356,8 @@ const IndexAdecuacion = () => {
 
       {/* para el modal de persona colectiva  */}
       <ModalPersona persona={personaCol} modalRegistro={personaModal} openRegistrorModal={openPersonaModal} closeRegistrorModal={closePersonaModal} />
+      {/* seleccionados  */}
+      <SelectProcesoAdecuacion registro={selectedRows} modal={selectpdf} close={closeSelectpdf} />
 
       <Banner text="REGISTRO DE ADECUACION" />
       <div className='container-fluid d-flex flex-row md:flex-columns my-4'>
@@ -329,6 +381,7 @@ const IndexAdecuacion = () => {
       </div>
       <div className='table-responsive'>
         <DataTable
+          title='TABLA PROCESO DE PROCESO DE ADECUACIÓN'
           columns={columns}
           data={filteredRegistros()}
           paginationComponentOptions={paginationOptions}
@@ -337,6 +390,13 @@ const IndexAdecuacion = () => {
           pagination
           noDataComponent={<span>No se encontro ningun elemento</span>}
           progressPending={isLoading}
+          customStyles={estilos}
+          highlightOnHover={true}
+          persistTableHead={true}
+          selectableRows
+          contextActions={contextActions}
+          onSelectedRowsChange={handleRowSelected}
+          clearSelectedRows={toggleCleared}
         />
       </div>
     </div>

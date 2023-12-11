@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import Swal from 'sweetalert2';
 import ModalDiv from '../../components/ModalMd';
 import Loading from '../../components/Loading';
 import { show_alerta } from '../../components/MessageAlert';
@@ -29,9 +30,33 @@ const ModalModificacionAde = ({ registro, handleInputChange, modal, open, close 
     
       const handleGuardar = (e) => {
         e.preventDefault();
+        const enviar = {
+          fecha: fecha,
+          adecuacion_id: adecuacion_id,
+          codigo_modificacion: 'MPJ - ' + codigo_modificacion,
+          personalidad_juridica: personalidad_juridica,
+          domicilio_legal: domicilio_legal,
+          miembros_fundador: miembros_fundador,
+          seguimiento: seguimiento,
+          cite_informe_preliminar: cite_informe_preliminar,
+          user_id: user_id,
+        };
         setLoading(true);
         close();
-        addModificacion.mutate(registro)
+        Swal.fire({
+          title: "Está seguro?",
+          text: "Verifique los datos antes de enviar.",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#009186",
+          confirmButtonText: "Sí, estoy seguro!",
+          cancelButtonText: "Cancelar",
+          showLoaderOnConfirm: true,
+          preConfirm: () => {
+            addModificacion.mutate(enviar)
+          }
+
+      });
       }
     
       const addModificacion = useMutation({
@@ -40,8 +65,8 @@ const ModalModificacionAde = ({ registro, handleInputChange, modal, open, close 
           console.log(response)
           setLoading(false);
           if (response.status === true) {
-            queryClient.invalidateQueries('personalidadesadecuacion')
-            queryClient.invalidateQueries('personalidadesadecuacion')
+            queryClient.invalidateQueries('personalidades_adecuacion')
+            queryClient.invalidateQueries('modificaciones_adecuacion')
             show_alerta('Actualizado con exito', '<i class="fa-solid fa-check border_alert_green"></i>', 'alert_green')
             setLoading(false);
           } else {

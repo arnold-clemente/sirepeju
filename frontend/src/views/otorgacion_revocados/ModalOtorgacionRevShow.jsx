@@ -93,25 +93,33 @@ const ModalOtorgacionRevShow = ({ registro, modalRegistro, closeRegistro }) => {
           ? (<div className="container-fluid">
             <h2 className='text-center fs-4'>{otorgacion.personalidad_juridica} </h2>
             {/* para el modal de pdf de alfanumerico  */}
-            {/* para el modal de pdf de alfanumerico  */}
-            {otorgacion.alfanumerico
-              ? <>
-                <div className='container-fluid d-flex justify-content-end gap-1'>
+            <div className='container-fluid d-flex justify-content-end gap-1'>
+              {otorgacion.alfanumerico
+                ? <>
                   <button className='btn btn-danger' onClick={openAlfanumerico} >
                     <i className="fa-solid fa-print"></i>
                     <span className='mx-1'>Alfanumerico</span>
                   </button>
+                  <div className='absolute'>
+                    <Alfanumerico registro={otorgacion} modal={modalAlfanumerico} close={closeAlfanumerico} />
+                  </div>
+                </>
+                : null
+              }
+              {otorgacion.id != 0
+                ? <>
                   <button className='btn btn-success' onClick={openModalpdf} >
                     <i className="fa-solid fa-print"></i>
                     <span className='mx-1'>Imprimir</span>
                   </button>
-                </div>
-                <Alfanumerico registro={otorgacion} modal={modalAlfanumerico} close={closeAlfanumerico} />
-                <RepOtorgacionRevocado modal={modalpdf} close={closeModalpdf}
-                  otorgacion={otorgacion} personalidad={personalidad} fundadores={fundadores} />
-              </>
-              : null
-            }
+                  <div className='absolute'>
+                    <RepOtorgacionRevocado modal={modalpdf} close={closeModalpdf}
+                      otorgacion={otorgacion} personalidad={personalidad} fundadores={fundadores} />
+                  </div>
+                </>
+                : null
+              }
+            </div>
 
             <h2 className="fs-6"><b>Codigo: {otorgacion.codigo_adecuacion}</b> &nbsp;&nbsp; <b>Naturaleza: {otorgacion.naturaleza}</b></h2> <hr />
             <h2 className="fs-6"><b>Institucion Sin Fin de Lucro:</b> &nbsp;&nbsp; <b>Sigla: {otorgacion.sigla}</b></h2> <hr />

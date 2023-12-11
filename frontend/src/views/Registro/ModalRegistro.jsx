@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import Swal from 'sweetalert2';
 import { show_alerta } from '../../components/MessageAlert';
 import ValidationError from '../../components/ValidationError';
 
@@ -7,6 +8,7 @@ import { useMutation } from 'react-query';
 import { useQueryClient } from 'react-query';
 import Loading from '../../components/Loading';
 import ModalDiv from '../../components/ModalDiv'
+import storage from '../../Storage/storage';
 
 const ModalRegistro = ({ registro, modal, close, handleInputChange, open }) => {
 
@@ -14,21 +16,41 @@ const ModalRegistro = ({ registro, modal, close, handleInputChange, open }) => {
     const [loading, setLoading] = useState(false);
 
     const [errorval, serErroreval] = useState({});
-    const { fecha, codigo, domicilio, objeto } = registro;
+    const { fecha, codigo_otorgacion, domicilio, objeto } = registro;
 
     const handleEnviar = (e) => {
         e.preventDefault();
-        close();
-        setLoading(true);
-        const enviar = registro;
-        enviarRegistro.mutate(enviar);
-        serErroreval({});
+        const enviar = {
+            fecha: fecha,
+            codigo_otorgacion: 'OPJ - ' + codigo_otorgacion,
+            domicilio: domicilio,
+            objeto: objeto,
+            user_id: storage.get('authUser').id
+        };
+
+        Swal.fire({
+            title: "Está seguro?",
+            text: "Verifique los datos antes de enviar.",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#009186",
+            confirmButtonText: "Sí, estoy seguro!",
+            cancelButtonText: "Cancelar",
+            showLoaderOnConfirm: true,
+            preConfirm: () => {
+                serErroreval({});
+                close();
+                setLoading(true);
+                enviarRegistro.mutate(enviar);
+            }
+        });
     }
 
 
     const enviarRegistro = useMutation({
         mutationFn: createOtorgacion,
         onSuccess: (response) => {
+            console.log(response)
             if (response.status === true) {
                 queryClient.invalidateQueries('registros')
                 queryClient.invalidateQueries('otorgaciones')
@@ -39,9 +61,9 @@ const ModalRegistro = ({ registro, modal, close, handleInputChange, open }) => {
                 show_alerta('Fallo de Validacion', '<i class="fa-solid fa-xmark border_alert_red"></i>', 'alert_red');
                 serErroreval(response.errors);
                 setLoading(false);
-                setTimeout(() => {
-                    serErroreval({});
-                }, 3000);
+                // setTimeout(() => {
+                //     serErroreval({});
+                // }, 3000);
             }
         },
         onError: (error) => {
@@ -71,9 +93,9 @@ const ModalRegistro = ({ registro, modal, close, handleInputChange, open }) => {
                                 <span className="input-group-text" id="basic-addon1">OPJ - </span>
                             </div>
                             <input type="text" className="form-control" placeholder="Escriba codigo 123" aria-label="Last name"
-                                name="codigo" value={codigo} onChange={handleInputChange} />
-                            {errorval.codigo
-                                ? <ValidationError text={errorval.codigo} />
+                                name="codigo_otorgacion" value={codigo_otorgacion} onChange={handleInputChange} />
+                            {errorval.codigo_otorgacion
+                                ? <ValidationError text={errorval.codigo_otorgacion} />
                                 : ''}
                         </div>
                     </div>

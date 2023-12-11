@@ -64,14 +64,11 @@ class AdecuacionSeguimientoController extends Controller
             ->first();
         $modificacion->seguimiento = $modificacion->seguimiento . ", " . $mensaje;
         $modificacion->save();
-
-        $adecuacion = Adecuacion::find($request->adecuacion_id);
-        $adecuacion->seguimiento = $adecuacion->seguimiento . ", " . $mensaje;
-        $adecuacion->save();
+   
 
         return response()->json([
             'status' => true,
-            'data' => $adecuacion,
+            'data' => $modificacion,
             'message' => 'Guardado con exito'
         ]);
     }

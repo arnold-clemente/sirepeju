@@ -141,7 +141,8 @@ Route::middleware(['auth:sanctum'])->post('/otorgacion/revocatoria/store', [Otor
 //rutas para adecuacion
 Route::middleware(['auth:sanctum'])->get('/adecuaciones', [AdecuacionController::class, 'index'])
     ->name('adecuaciones');
-// Route::middleware(['auth:sanctum'])->get('/adecuacion/show/{adecuacion}', [AdecuacionController::class, 'show'])->name('adecuacion.show');
+Route::middleware(['auth:sanctum'])->get('/adecuacion/show/{adecuacion}', [AdecuacionController::class, 'show'])
+    ->name('adecuacion.show');
 Route::middleware(['auth:sanctum'])->post('/adecuacion/store', [AdecuacionController::class, 'store'])
     ->name('adecuacion.store');
 // Route::middleware(['auth:sanctum'])->put('/adecuacion/update/{adecuacion}', [AdecuacionController::class, 'update'])->name('adecuacion.update'); // todavia no existe

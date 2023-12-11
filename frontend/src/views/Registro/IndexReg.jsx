@@ -32,7 +32,7 @@ const IndexReg = () => {
     const [otorgacion, setOtorgacion] = useState({
         id: 0,
         fecha: '',
-        codigo: '',
+        codigo_otorgacion: '',
         domicilio: '',
         objeto: '',
         user_id: storage.get('authUser').id

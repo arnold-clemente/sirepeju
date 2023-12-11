@@ -30,8 +30,6 @@ class ModificacionAdecuacionController extends Controller
             'fecha' => 'required',
             'codigo_modificacion' => 'required|string|max:150|unique:modificacions,codigo_modificacion',
             'personalidad_juridica' => 'required',
-            'estatuto_organico' => 'required',
-            'reglamento_interno' => 'required',
             'domicilio_legal' => 'required',
             'miembros_fundador' => 'required',
             'seguimiento' => 'required',

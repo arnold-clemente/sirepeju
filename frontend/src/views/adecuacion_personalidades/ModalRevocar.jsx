@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import Swal from 'sweetalert2';
 import ModalSm from '../../components/ModalSm'
 import Loading from '../../components/Loading';
 import { show_alerta } from '../../components/MessageAlert';
@@ -19,10 +20,22 @@ const ModalRevocar = ({ registrorModal, openRegistrorModal, closeRegistrorModal,
 
     const handleGuardar = (e) => {
         e.preventDefault()
-        // return console.log(registro)
-        closeRegistrorModal()
-        setLoading(true)
-        addSeguimiento.mutate(registro)
+        Swal.fire({
+            title: "Está seguro?",
+            text: "Verifique los datos antes de enviar.",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#009186",
+            confirmButtonText: "Sí, estoy seguro!",
+            cancelButtonText: "Cancelar",
+            showLoaderOnConfirm: true,
+            preConfirm: () => {
+                closeRegistrorModal()
+                setLoading(true)
+                addSeguimiento.mutate(registro)
+            }
+
+        });
     }
 
     const addSeguimiento = useMutation({
@@ -32,7 +45,8 @@ const ModalRevocar = ({ registrorModal, openRegistrorModal, closeRegistrorModal,
             console.log(response)
             if (response.status === true) {
                 serErrorval({});
-                queryClient.invalidateQueries('personalidadesadecuacion')
+                queryClient.invalidateQueries('personalidades_adecuacion')
+                queryClient.invalidateQueries('revocados_adecuacion')
                 show_alerta('Actualizado con exito', '<i class="fa-solid fa-check border_alert_green"></i>', 'alert_green')
                 setLoading(false);
             } else {

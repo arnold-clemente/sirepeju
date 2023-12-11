@@ -29,6 +29,17 @@ const ModalModificacion = ({ registro, handleInputChange, modal, open, close }) 
 
   const handleGuardar = (e) => {
     e.preventDefault();
+    const enviar = {
+      fecha: fecha,
+      otorgacion_id: otorgacion_id,
+      codigo_modificacion: 'MPJ - ' + codigo_modificacion,
+      personalidad_juridica: personalidad_juridica,
+      domicilio_legal: domicilio_legal,
+      miembros_fundador: miembros_fundador,
+      seguimiento: seguimiento,
+      cite_informe_preliminar: cite_informe_preliminar,
+      user_id: user_id,
+    };
 
     Swal.fire({
       title: "Está seguro?",
@@ -42,7 +53,7 @@ const ModalModificacion = ({ registro, handleInputChange, modal, open, close }) 
       preConfirm: () => {
         setLoading(true);
         close();
-        addModificacion.mutate(registro)
+        addModificacion.mutate(enviar)
       }
 
     });
@@ -95,7 +106,7 @@ const ModalModificacion = ({ registro, handleInputChange, modal, open, close }) 
             <div className='col-sm-7 px-0'>
               <div className="input-group mb-3">
                 <div className="input-group-prepend">
-                  <span className="input-group-text" id="basic-addon1">NPJ - </span>
+                  <span className="input-group-text" id="basic-addon1">MPJ - </span>
                 </div>
                 <input type="text" className='form-control' placeholder='Codigo de modificación'
                   name='codigo_modificacion' value={codigo_modificacion} onChange={handleInputChange} />

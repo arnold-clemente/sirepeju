@@ -3,11 +3,10 @@ export const getAdecuaciones = async () => {
     return response.data;
 }
 
-// en proceso 
-// export const getAdecuacion = async (adecuacionId) => {
-//     const response = await axios.get(`/api/adecuacion/show/${adecuacionId}`)
-//     return response.data;
-// }
+export const getAdecuacion = async (adecuacionId) => {
+    const response = await axios.get(`/api/adecuacion/show/${adecuacionId}`)
+    return response.data;
+}
 
 export const createAdecuacion = async (adecuacion) => {
     const response = await axios.post('/api/adecuacion/store', adecuacion)

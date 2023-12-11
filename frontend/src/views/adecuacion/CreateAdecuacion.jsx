@@ -1,4 +1,5 @@
 import React, { Component, useState } from 'react'
+import Swal from 'sweetalert2';
 import { useNavigate, Link } from 'react-router-dom'
 
 // Component
@@ -61,9 +62,34 @@ const CreateAdecuacion = () => {
 
     const handleAdd = (e) => {
         e.preventDefault();
-        setLoading(true);
-        const adecuacion = formValues;
-        addAdecuacion.mutate(adecuacion);
+        Swal.fire({
+            title: "Está seguro?",
+            text: "Verifique los datos antes de enviar.",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#009186",
+            confirmButtonText: "Sí, estoy seguro!",
+            cancelButtonText: "Cancelar",
+            showLoaderOnConfirm: true,
+            preConfirm: () => {
+                setLoading(true);
+                const adecuacion = {
+                    personalidad_juridica: personalidad_juridica,
+                    sigla: sigla,
+                    representante: representante,
+                    ci_rep: ci_rep,
+                    ext_ci_rep: ext_ci_rep,
+                    naturaleza: naturaleza,
+                    persona_colectiva: persona_colectiva,
+                    fecha_ingreso_tramite: fecha_ingreso_tramite,
+                    codigo_adecuacion: 'APJ - ' + codigo_adecuacion,
+                    domicilio_legal: domicilio_legal,
+                    objeto: objeto,
+                    user_id: storage.get('authUser').id                 
+                };
+                addAdecuacion.mutate(adecuacion);
+            }
+        });
     };
 
     const {
@@ -164,12 +190,17 @@ const CreateAdecuacion = () => {
                             : ''}
                     </div>
                     <div className="col-md-6">
-                        <label className="form-label">Codigo OPJ</label>
-                        <input type="text" className="form-control" placeholder="Escriba codigo OPJ" aria-label="Last name"
-                            name="codigo_adecuacion" value={codigo_adecuacion} onChange={handleInputChange} />
-                        {errorval.codigo_adecuacion
-                            ? <ValidationError text={errorval.codigo_adecuacion} />
-                            : ''}
+                        <label className="form-label">Codigo APJ</label>
+                        <div className="input-group mb-3">
+                            <div className="input-group-prepend">
+                                <span className="input-group-text" id="basic-addon1">APJ - </span>
+                            </div>
+                            <input type="text" className="form-control" placeholder="Escriba codigo 123" aria-label="Last name"
+                                name="codigo_adecuacion" value={codigo_adecuacion} onChange={handleInputChange} />
+                            {errorval.codigo_adecuacion
+                                ? <ValidationError text={errorval.codigo_adecuacion} />
+                                : ''}
+                        </div>
                     </div>
                     <div className="col-md-12">
                         <label className="form-label">Domicilio Legal</label>

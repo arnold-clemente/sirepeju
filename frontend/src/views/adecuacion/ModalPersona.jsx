@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import Swal from 'sweetalert2';
 import Loading from '../../components/Loading';
 import { show_alerta } from '../../components/MessageAlert';
 import ValidationError from '../../components/ValidationError';
@@ -18,9 +19,22 @@ const ModalPersona = ({ persona, modalRegistro, openRegistrorModal, closeRegistr
         e.preventDefault();
         const formData = new FormData(e.currentTarget)
         formData.append('adecuacion_id', persona.adecuacion_id)
-        setLoading(true);
-        closeRegistrorModal();
-        addPersonaColectiva.mutate(formData)
+        Swal.fire({
+            title: "Está seguro?",
+            text: "Verifique los datos antes de enviar.",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#009186",
+            confirmButtonText: "Sí, estoy seguro!",
+            cancelButtonText: "Cancelar",
+            showLoaderOnConfirm: true,
+            preConfirm: () => {
+                setLoading(true);
+                closeRegistrorModal();
+                addPersonaColectiva.mutate(formData)
+            }
+
+        });
     }
 
     const addPersonaColectiva = useMutation({

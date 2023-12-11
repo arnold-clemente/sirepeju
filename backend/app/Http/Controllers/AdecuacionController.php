@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Adecuacion;
 use App\Models\Administrativo;
+use App\Models\FundadoresAdecuacion;
+use App\Models\RegistroPersonaAdecuacion;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -12,12 +14,28 @@ class AdecuacionController extends Controller
 {
     public function index()
     {
-        $adecuaciones = Adecuacion::with('fundadores')
-            ->whereIn('estado', [7, 8, 9])
+        $adecuaciones = Adecuacion::whereIn('estado', [7, 8, 9])
             ->orderBy('id', 'asc')
             ->get();
 
         return response()->json($adecuaciones);
+    }
+
+    public function show(Adecuacion $adecuacion)
+    {
+        $fundadores = FundadoresAdecuacion::where('adecuacion_id', $adecuacion->id)
+        ->where('estado', 1)
+        ->get();
+
+        $personalidades = RegistroPersonaAdecuacion::where('adecuacion_id', $adecuacion->id)
+        ->orderBy('id', 'desc')
+        ->first();
+
+        return response()->json([
+            'adecuacion' => $adecuacion,
+            'fundadores' => $fundadores,
+            'personalidad' => $personalidades 
+        ]);
     }
 
     public function store(Request $request)
@@ -34,7 +52,7 @@ class AdecuacionController extends Controller
             'naturaleza' => 'required',
             'persona_colectiva' => 'required',
             'fecha_ingreso_tramite' => 'required',
-            'codigo_adecuacion' => 'required|string|max:150',
+            'codigo_adecuacion' => 'required|string|max:150|unique:adecuacions,codigo_adecuacion',
             'domicilio_legal' => 'required|string|max:255',
             'objeto' => 'required|string|max:65535',
             'user_id' => 'required',
@@ -61,6 +79,7 @@ class AdecuacionController extends Controller
             'codigo_adecuacion' => $request->codigo_adecuacion,
             'domicilio_legal' => $request->domicilio_legal,
             'objeto' => $request->objeto,
+            'miembros_fundador'=> 'sin asignar',
             'cite_informe_preliminar' => 'En tramite',
             'seguimiento' => $fecha . ' - En espera',
             'administrativo_id' => $administrativo->id,

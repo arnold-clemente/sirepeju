@@ -36,16 +36,18 @@ import OtorgacionPersonalidades from '../views/otorgacion_personalidades/Otorgac
 import OtorgacionRevocados from '../views/otorgacion_revocados/OtorgacionRevocados'
 // otorgacion modificados 
 import IndexModificacionOtor from '../views/modificacion_otorgacion/IndexModificacionOtor'
+// otorgacion archivados 
+import OtorgacionArchivados from '../views/otorgacion_archivados/OtorgacionArchivados'
+// otorgacion caducados 
+import OtorgacionCaducados from '../views/otorgacion_caducados/OtorgacionCaducados'
 
 //adecuciones
 import IndexAdecuacion from '../views/adecuacion/IndexAdecuacion'
 import CreateAdecuacion from '../views/adecuacion/CreateAdecuacion'
 import FundAdecuacion from '../views/adecuacion/FundAdecuacion'
-import PersAdecuacion from '../views/adecuacion/PersAdecuacion'
-import RevAdecuacion from '../views/adecuacion/RevAdecuacion'
+import PersAdecuacion from '../views/adecuacion_personalidades/PersAdecuacion'
+import RevAdecuacion from '../views/adecuacion_revocados/RevAdecuacion'
 import IndexModificacionAd from '../views/modificacion_adecuacion/IndexModificacionAd'
-import OtorgacionArchivados from '../views/otorgacion_archivados/OtorgacionArchivados'
-import OtorgacionCaducados from '../views/otorgacion_caducados/OtorgacionCaducados'
 
 //otorgaciones gobernacion
 import IndexOtorgacionGob from '../views/otorgaciongobs/IndexOtorgacionGob'

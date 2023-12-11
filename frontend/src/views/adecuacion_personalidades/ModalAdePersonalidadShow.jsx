@@ -3,18 +3,24 @@ import ModalDiv from '../../components/ModalDiv'; //contendoresto hay importar s
 
 // para el modal 
 import { useModal } from '../../hooks/useModal'
-import Alfanumerico from '../otorgaciones/reporte/Alfanumerico';
+import Alfanumerico from '../adecuacion/reporte/AdecuacionAlfanumerico';
+import RepPersonalidadAdecuacion from './reporte/ReppersonalidadAdecuacion';
 
 import { useMutation } from 'react-query';
-import { getOtorgacion } from '../../api/otorgacionesApi';
-import RepArchivadoOtorgacion from './reporte/RepArchivadoOtorgacion';
+import { getAdecuacion } from '../../api/adecuacionApi';
+import ViewPdf from '../../components/ViewPdf';
 
-const ModalOtorgacionArchivadoShow = ({ registro, modalRegistro, closeRegistro }) => {
+const ModalAdePersonalidadShow = ({ registro, modalRegistro, closeRegistro }) => {
+
     // para el modal de reporte de
     const [modalAlfanumerico, openAlfanumerico, closeAlfanumerico] = useModal(false);
+    const [modalEstatuto, openEstatuto, closeEstatuto] = useModal(false);
+    const [modalReglamento, openReglamento, closeReglamento] = useModal(false);
+    const [modalInforme, openInforme, closeInforme] = useModal(false);
     const [modalpdf, openModalpdf, closeModalpdf] = useModal(false);
+    const [modalNota, openNota, closeNota] = useModal(false);
     const [cargando, setCargando] = useState(false);
-    const [otorgacion, setOtorgacion] = useState({
+    const [adecuacion, setAdecuacion] = useState({
         id: 0,
         personalidad_juridica: '',
         sigla: '',
@@ -24,7 +30,7 @@ const ModalOtorgacionArchivadoShow = ({ registro, modalRegistro, closeRegistro }
         naturaleza: '',
         persona_colectiva: '',
         fecha_ingreso_tramite: '',
-        codigo_otorgacion: '',
+        codigo_adecuacion: '',
         domicilio_legal: '',
         objeto: '',
         seguimiento: '',
@@ -51,7 +57,7 @@ const ModalOtorgacionArchivadoShow = ({ registro, modalRegistro, closeRegistro }
         nota_final: '',
         resolucion_ministerial: '',
         fecha_resolucion: '',
-        otorgacion_id: 0,
+        adecuacion_id: 0,
         created_at: '',
         updated_at: '',
     });
@@ -62,17 +68,17 @@ const ModalOtorgacionArchivadoShow = ({ registro, modalRegistro, closeRegistro }
     useEffect(() => {
         if (id != 0) {
             setCargando(true);
-            showOtorgacion.mutate(id);
+            showAdecuacion.mutate(id);
         }
     }, [id])
 
-    const showOtorgacion = useMutation({
-        mutationFn: getOtorgacion,
+    const showAdecuacion = useMutation({
+        mutationFn: getAdecuacion,
         onSuccess: (response) => {
-            const otorgacionResp = response.otorgacion;
+            const adecuacionResp = response.adecuacion;
             const personalidadResp = response.personalidad;
             const fundadoresResp = response.fundadores;
-            setOtorgacion({ ...otorgacion, ...otorgacionResp });
+            setAdecuacion({ ...adecuacion, ...adecuacionResp });
             setPersonalidad({ ...personalidad, ...personalidadResp });
             setFundadores(fundadoresResp);
             setCargando(false);
@@ -87,49 +93,74 @@ const ModalOtorgacionArchivadoShow = ({ registro, modalRegistro, closeRegistro }
             <ModalDiv isOpen={modalRegistro} closeModal={closeRegistro} title={'LISTA DE PERSONERIAS JURIDICAS CON RESOLUCION MINISTERIAL'}>
                 {!cargando
                     ? (<div className="container-fluid">
-                        <h2 className='text-center fs-4'>{otorgacion.personalidad_juridica} </h2>
+                        <h2 className='text-center fs-4'>{adecuacion.personalidad_juridica} </h2>
                         {/* para el modal de pdf de alfanumerico  */}
                         <div className='container-fluid d-flex justify-content-end gap-1'>
-                            {otorgacion.alfanumerico
+                            {adecuacion.alfanumerico
                                 ? <>
                                     <button className='btn btn-danger' onClick={openAlfanumerico} >
                                         <i className="fa-solid fa-print"></i>
                                         <span className='mx-1'>Alfanumerico</span>
                                     </button>
                                     <div className='absolute'>
-                                        <Alfanumerico registro={otorgacion} modal={modalAlfanumerico} close={closeAlfanumerico} />
+                                        <Alfanumerico registro={adecuacion} modal={modalAlfanumerico} close={closeAlfanumerico} />
                                     </div>
                                 </>
                                 : null
                             }
-                            {otorgacion.id != 0
+                            {adecuacion.id != 0
                                 ? <>
                                     <button className='btn btn-success' onClick={openModalpdf} >
                                         <i className="fa-solid fa-print"></i>
                                         <span className='mx-1'>Imprimir</span>
                                     </button>
                                     <div className='absolute'>
-                                        <RepArchivadoOtorgacion modal={modalpdf} close={closeModalpdf}
-                                            otorgacion={otorgacion} personalidad={personalidad} fundadores={fundadores} />
+                                        <RepPersonalidadAdecuacion modal={modalpdf} close={closeModalpdf}
+                                            adecuacion={adecuacion} personalidad={personalidad} fundadores={fundadores} />
                                     </div>
                                 </>
                                 : null
                             }
                         </div>
-                        <h2 className="fs-6"><b>Codigo: {otorgacion.codigo_adecuacion}</b> &nbsp;&nbsp; <b>Naturaleza: {otorgacion.naturaleza}</b></h2> <hr />
-                        <h2 className="fs-6"><b>Institucion Sin Fin de Lucro:</b> &nbsp;&nbsp; <b>Sigla: {otorgacion.sigla}</b></h2> <hr />
-                        <h2 className="fs-6"><b>Domicilio Legal: {otorgacion.domicilio_legal}</b></h2> <hr />
-                        <h2 className="fs-6"><b>Objeto: <p className='fs-6'>{otorgacion.objeto}</p></b></h2><hr />
+
+                        <h2 className="fs-6"><b>Codigo: {adecuacion.codigo_adecuacion}</b> &nbsp;&nbsp; <b>Naturaleza: {adecuacion.naturaleza}</b></h2> <hr />
+                        <h2 className="fs-6"><b>Institucion Sin Fin de Lucro:</b> &nbsp;&nbsp; <b>Sigla: {adecuacion.sigla}</b></h2> <hr />
+                        <h2 className="fs-6"><b>Domicilio Legal: {adecuacion.domicilio_legal}</b></h2> <hr />
+                        <h2 className="fs-6"><b>Objeto: <p className='fs-6'>{adecuacion.objeto}</p></b></h2><hr />
 
 
-                        {otorgacion.estado == 0
+                        {adecuacion.estado == 0
                             ? (<div className='container-fluid '>
                                 <div className='row'>
                                     <div className='col-md-3'> <h1>OBSERVACION</h1></div>
-                                    <div className='col-md-9'><span>{otorgacion.observacion}</span></div>
+                                    <div className='col-md-9'><span>{adecuacion.observacion}</span></div>
                                 </div>
                             </div>)
                             : ''
+                        }
+
+                        {personalidad
+                            ? <>
+                                <div className='container-fluid d-flex justify-content-between my-4'>
+                                    <button className='btn btn-success' onClick={openEstatuto} >
+                                        Estatuto Organico
+                                    </button>
+                                    <button className='btn btn-success' onClick={openReglamento} >
+                                        Reglamento Interno
+                                    </button>
+                                    <button className='btn btn-success' onClick={openInforme} >
+                                        Informe Final
+                                    </button>
+                                    <button className='btn btn-success' onClick={openNota} >
+                                        Nota FInal
+                                    </button>
+                                </div>
+                                <ViewPdf resource={personalidad.estatuto_organico} modal={modalEstatuto} close={closeEstatuto} />
+                                <ViewPdf resource={personalidad.reglamento_interno} modal={modalReglamento} close={closeReglamento} />
+                                <ViewPdf resource={personalidad.informe_final} modal={modalInforme} close={closeInforme} />
+                                <ViewPdf resource={personalidad.nota_final} modal={modalNota} close={closeNota} />
+                            </>
+                            : null
                         }
 
                         {fundadores.length > 0
@@ -140,6 +171,7 @@ const ModalOtorgacionArchivadoShow = ({ registro, modalRegistro, closeRegistro }
                                             <table className='table'>
                                                 <thead>
                                                     <tr>
+                                                        <th className='col'>ID</th>
                                                         <th className='col'>Nombres</th>
                                                         <th className='col'>Cedula Indentidad</th>
                                                     </tr>
@@ -174,4 +206,4 @@ const ModalOtorgacionArchivadoShow = ({ registro, modalRegistro, closeRegistro }
     )
 }
 
-export default ModalOtorgacionArchivadoShow
+export default ModalAdePersonalidadShow

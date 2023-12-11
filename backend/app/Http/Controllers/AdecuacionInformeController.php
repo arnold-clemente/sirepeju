@@ -63,14 +63,11 @@ class AdecuacionInformeController extends Controller
             ->first();
         $modificacion->cite_informe_preliminar = $modificacion->cite_informe_preliminar . ", " . $mensaje;
         $modificacion->save();
-
-        $adecuacion = Adecuacion::find($request->adecuacion_id);
-        $adecuacion->cite_informe_preliminar = $adecuacion->cite_informe_preliminar . ", " . $mensaje;
-        $adecuacion->save();
+       
 
         return response()->json([
             'status' => true,
-            'data' => $adecuacion,
+            'data' => $modificacion,
             'message' => 'Guardado con exito'
         ]);
     }

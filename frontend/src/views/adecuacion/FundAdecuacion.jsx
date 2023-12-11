@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import Swal from 'sweetalert2';
 import { useParams } from 'react-router-dom';
 import { useNavigate, Link } from 'react-router-dom'
 
@@ -88,8 +89,21 @@ const FundAdecuacion = () => {
 
     const createdFundadores = (e) => {
         e.preventDefault();
-        setLoading(true);
-        addFundadores.mutate(arrayFundadores);
+        Swal.fire({
+            title: "Está seguro?",
+            text: "Verifique los datos antes de enviar.",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#009186",
+            confirmButtonText: "Sí, estoy seguro!",
+            cancelButtonText: "Cancelar",
+            showLoaderOnConfirm: true,
+            preConfirm: () => {
+                setLoading(true);
+                addFundadores.mutate(arrayFundadores);
+            }
+
+        });
     }
 
     return (

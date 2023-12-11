@@ -60,10 +60,9 @@ class OtorgacionController extends Controller
     {
         $date = Carbon::now();
         $fecha = $date->format('Y-m-d');
-
         $rules = [
             'id' => 'required',
-            'codigo' => 'required|string|max:150',
+            'codigo_otorgacion' => 'required|string|max:150|unique:otorgacions,codigo_otorgacion',
             'fecha' => 'required',
             'objeto' => 'required|string|max:65535',
             'domicilio' => 'required|string|max:255',
@@ -79,7 +78,6 @@ class OtorgacionController extends Controller
 
         $registro = Registro::find($request->id);
         $administrativo = Administrativo::where('user_id', $request->user_id)->first();
-        $codigo_otorgacion = 'OPJ - ' . $request->codigo;
 
         $otorgacion = Otorgacion::create([
             'registro_id' => $request->id,
@@ -91,7 +89,7 @@ class OtorgacionController extends Controller
             'naturaleza' => $registro->naturaleza,
             'persona_colectiva' => $registro->persona_colectiva,
             'fecha_ingreso_tramite' => $request->fecha,
-            'codigo_otorgacion' => $codigo_otorgacion,
+            'codigo_otorgacion' => $request->codigo_otorgacion,
             'domicilio_legal' => $request->domicilio,
             'objeto' => $request->objeto,
             'miembros_fundador'=> 'sin agregar',
