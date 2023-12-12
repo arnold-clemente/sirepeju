@@ -16,11 +16,12 @@ const ModalRegistro = ({ registro, modal, close, handleInputChange, open }) => {
     const [loading, setLoading] = useState(false);
 
     const [errorval, serErroreval] = useState({});
-    const { fecha, codigo_otorgacion, domicilio, objeto } = registro;
+    const { id, fecha, codigo_otorgacion, domicilio, objeto } = registro;
 
     const handleEnviar = (e) => {
         e.preventDefault();
         const enviar = {
+            id: id,
             fecha: fecha,
             codigo_otorgacion: 'OPJ - ' + codigo_otorgacion,
             domicilio: domicilio,
