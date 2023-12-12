@@ -51,7 +51,7 @@ class ModificacionAdecuacionController extends Controller
 
         $modificacion = Modificacion::create([
             'fecha' => $request->fecha,
-            'codigo_modificacion' => 'APN - ' . $request->codigo_modificacion,
+            'codigo_modificacion' => $request->codigo_modificacion,
             'personalidad_juridica' => 'En modificacion',
             'estatuto_organico' => 'En modificacion',
             'reglamento_interno' => 'En modificacion',

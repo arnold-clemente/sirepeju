@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import Swal from 'sweetalert2';
 import { useNavigate, Link } from 'react-router-dom'
 import storage from '../../Storage/storage'
 import Banner from '../../components/Banner';
@@ -58,9 +59,21 @@ const CreateOtorgacionGob = () => {
 
   const handleAdd = (e) => {
     e.preventDefault();
-    const enviar = { ...otorgacion, arrayFundadores }
-    setLoading(true);
-    addOtorgacion.mutate(enviar);
+    Swal.fire({
+      title: "Está seguro?",
+      text: "Verifique los datos antes de enviar.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#009186",
+      confirmButtonText: "Sí, estoy seguro!",
+      cancelButtonText: "Cancelar",
+      showLoaderOnConfirm: true,
+      preConfirm: () => {
+        const enviar = { ...otorgacion, arrayFundadores }
+        setLoading(true);
+        addOtorgacion.mutate(enviar);
+      }
+    });
   };
 
   const create = (e) => {

@@ -76,4 +76,5 @@ class AuthController extends Controller
             'message' => 'Desconectó con éxito',
         ], 200);
     }
+
 }

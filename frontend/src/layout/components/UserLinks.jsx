@@ -1,19 +1,20 @@
 import React from 'react'
 import propTypes from 'prop-types'
 
-const UserLinks = ({icon, text}) => {
+const UserLinks = ({icon, text, handleProfile}) => {
     return (
-        <div className='user_link'>
+        <button onClick={handleProfile} className='user_link'>
             <i className={icon}></i>
             <span>{text}</span>
-        </div>
+        </button>
     )
 }
 
 
 UserLinks.defaultProps = {
     icon: propTypes.string.isRequired,    
-    text: propTypes.string.isRequired
+    text: propTypes.string.isRequired,
+    handleProfile: propTypes.func.isRequired
 }
 
 export default UserLinks

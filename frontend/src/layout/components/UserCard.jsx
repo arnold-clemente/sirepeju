@@ -5,8 +5,9 @@ import { Link, useNavigate } from 'react-router-dom'
 import user from '../../images/user.png'
 import UserLinks from './UserLinks'
 import storage from '../../Storage/storage'
+import { url } from '../../conection/env'
 
-const UserCard = ({ sidebar }) => {
+const UserCard = ({ sidebar, handleProfile }) => {
     const [profile, setprofile] = useState(false)
     const [dropdown, setdropdown] = useState('')
     const profileAdd = () => {
@@ -30,7 +31,10 @@ const UserCard = ({ sidebar }) => {
         <div>
             <button onClick={profileAdd} className={'sidebar_user ' + sidebar}>
                 <div className={'user_image ' + sidebar}>
-                    <img src={user} alt="user" />
+                    {storage.get('authUser').profile_photo_path
+                        ?<img src={url + '/storage/' +  storage.get('authUser').profile_photo_path} alt="user" />
+                        :<img src={user} alt="user" />
+                    }
                 </div>
                 <div className={'user_profile ' + sidebar}>
                     <span>{storage.get('authUser').name}</span>
@@ -42,7 +46,7 @@ const UserCard = ({ sidebar }) => {
             {profile === false
                 ? ''
                 : <div className={'user_links ' + sidebar + ' animate__animated animate__fadeIn'}>
-                    <UserLinks icon='fa-solid fa-gear' text='Perfil' />
+                    <UserLinks handleProfile={handleProfile} icon='fa-solid fa-gear' text='Perfil' />
                     <button onClick={logout} className='user_link button_border'>
                         <i className='fa-solid fa-power-off'></i>
                         <span>Cerrar Sesión</span>
@@ -55,6 +59,7 @@ const UserCard = ({ sidebar }) => {
 }
 UserCard.defaultProps = {
     sidebar: propTypes.string.isRequired,
+    handleProfile: propTypes.func.isRequired,
 }
 
 export default UserCard

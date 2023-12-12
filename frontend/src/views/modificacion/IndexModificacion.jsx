@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom';
 import DataTable from "react-data-table-component";
 import { useQuery } from 'react-query';
@@ -12,7 +12,7 @@ import { getModificaciones } from '../../api/modificacionApi';
 import { useModal } from '../../hooks/useModal'
 // modal components 
 import ModalShowMod from './ModalShowMod';
-
+import SelectModificaciones from './reporte/SelectModificaciones';
 
 const IndexModificacion = () => {
 
@@ -33,6 +33,28 @@ const IndexModificacion = () => {
         otorgacion_id: 0,
         adecuacion_id: 0,
     });
+
+    const [selectpdf, openSelectpdf, closeSelectpdf] = useModal(false);
+    const [selectedRows, setSelectedRows] = useState([]);
+    const [toggleCleared, setToggleCleared] = useState(false);
+
+    const handleRowSelected = useCallback(state => {
+        setSelectedRows(state.selectedRows);
+    }, []);
+
+    const contextActions = useMemo(() => {
+        const handleDelete = () => {
+            openSelectpdf();
+        };
+
+        return (
+            <button onClick={handleDelete} className='button_select_pdf'>
+                <i className="fa-solid fa-print"></i>
+                <span>Imprimir</span>
+            </button>
+        );
+
+    }, [selectedRows, toggleCleared]);
 
 
     const { isLoading, data: registros, isError, error } = useQuery({
@@ -98,44 +120,43 @@ const IndexModificacion = () => {
         {
             name: 'Acciones',
             cell: (row) => (
-                <div className='container-fluid d-flex flex-row'>
+                <div className='container-fluid d-flex flex-row gap-1'>
                     <button onClick={(e) => handleShow(e, row)} className="button_show">
                         <i className="fa-solid fa-eye"></i>
                         <span>Ver</span>
-                    </button>
-                    <button onClick={(e) => handleImprimir(e, row)} className="button_print">
-                        <i className="fa-solid fa-print"></i>
-                        <span>Imprimir</span>
                     </button>
                 </div>
             ),
             ignoreRowClick: true,
             allowOverflow: true,
             button: true,
+            width: '80px',
         },
         {
             name: 'Codigo',
             selector: row => row.codigo_modificacion,
             sortable: true,
-            grow: 1,
+            width: '150px',
         },
         {
             name: 'Tipo',
             selector: row => row.tipo,
             sortable: true,
+            width: '150px',
         },
         {
             name: 'Persona Juridica',
             selector: row => row.personalidad_juridica,
             sortable: true,
-            wrap: false,
-            grow: 2,
+            wrap: true,
+            width: '300px',
         },
         {
             name: 'Miembros',
             selector: row => row.miembros_fundador,
             sortable: true,
-            grow: 2
+            wrap: true,
+            width: '300px',
         },
         {
             name: 'Domicilio',
@@ -145,12 +166,14 @@ const IndexModificacion = () => {
         {
             name: 'Seguimiento',
             selector: row => row.seguimiento,
-            sortable: true,
+            wrap: true,
+            width: '300px',
         },
         {
             name: 'Informe',
             selector: row => row.cite_informe_preliminar,
-            sortable: true,
+            wrap: true,
+            width: '300px',
         },
     ];
 
@@ -167,7 +190,7 @@ const IndexModificacion = () => {
         <div>
             {loading === true ? <Loading /> : ''}
             <ModalShowMod showRegistro={otorgacionShow} modalRegistro={modalOtorgacion} closeRegistro={closeOtorgacion} />
-
+            <SelectModificaciones registro={selectedRows} modal={selectpdf} close={closeSelectpdf} />
 
             <Banner text="MODIFICACIONES" />
             <div className='container-fluid d-flex flex-row md:flex-columns my-4'>
@@ -197,6 +220,10 @@ const IndexModificacion = () => {
                     customStyles={estilos}
                     highlightOnHover={true}
                     persistTableHead={true}
+                    selectableRows
+                    contextActions={contextActions}
+                    onSelectedRowsChange={handleRowSelected}
+                    clearSelectedRows={toggleCleared}
                 />
             </div>
         </div>

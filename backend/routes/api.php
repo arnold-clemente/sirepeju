@@ -22,6 +22,7 @@ use App\Http\Controllers\OtorgacionController;
 use App\Http\Controllers\OtorgacionInformeController;
 use App\Http\Controllers\OtorgacionSeguimientoController;
 use App\Http\Controllers\RegistroPersonaColectivaController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\VerificacionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -36,6 +37,8 @@ Route::post('/auth/login', [AuthController::class, 'login'])
     ->name('auth.login');
 Route::middleware(['auth:sanctum'])->get('auth/logout', [AuthController::class, 'logout'])
     ->name('auth.logout');
+Route::middleware(['auth:sanctum'])->post('/auth/update', [UserController::class, 'profile'])
+    ->name('user.profile');
 
 // rutas para administrativos
 Route::middleware(['auth:sanctum'])->get('/administrativos', [AdministrativoController::class, 'index'])

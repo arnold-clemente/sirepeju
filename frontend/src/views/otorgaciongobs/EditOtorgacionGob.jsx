@@ -182,23 +182,58 @@ const EditOtorgacionGob = () => {
 
   const createFun = (e) => {
     e.preventDefault();
-    closeModal();
-    setLoading(true);
-    addFundador.mutate(fundador);
+    Swal.fire({
+      title: "Está seguro?",
+      text: "Verifique los datos antes de enviar.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#009186",
+      confirmButtonText: "Sí, estoy seguro!",
+      cancelButtonText: "Cancelar",
+      showLoaderOnConfirm: true,
+      preConfirm: () => {
+        closeModal();
+        setLoading(true);
+        addFundador.mutate(fundador);
+      }
+    });
   }
 
   const guardarFun = (e) => {
     e.preventDefault();
-    updateFundador.mutate(fundador);
-    closeModal();
+    Swal.fire({
+      title: "Está seguro?",
+      text: "Verifique los datos antes de enviar.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#009186",
+      confirmButtonText: "Sí, estoy seguro!",
+      cancelButtonText: "Cancelar",
+      showLoaderOnConfirm: true,
+      preConfirm: () => {
+        closeModal();
+        updateFundador.mutate(fundador);
+      }
+    });
   }
 
   const handleSaved = (e) => {
     e.preventDefault();
-    setLoading(true);
-    updateOtorgacion.mutate(otorgacion);
+    Swal.fire({
+      title: "Está seguro?",
+      text: "Verifique los datos antes de enviar.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#009186",
+      confirmButtonText: "Sí, estoy seguro!",
+      cancelButtonText: "Cancelar",
+      showLoaderOnConfirm: true,
+      preConfirm: () => {
+        setLoading(true);
+        updateOtorgacion.mutate(otorgacion);
+      }
+    });
   }
-
 
   const {
     nombre_persona_colectiva,

@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import { Routes, Route } from 'react-router-dom'
 
+// layout
 import Sidebar from '../layout/Sidebar'
 import Navbar from '../layout/Navbar'
+import Profile from '../layout/Profile'
 // dashboard 
 import Dashboard from '../views/Dashboard'
 
@@ -60,8 +62,9 @@ import IndexModificacion from '../views/modificacion/IndexModificacion'
 
 const WebRoutes = () => {
 
-    const [menu, setmenu] = useState(false)
-    const [sidebar, setsidebar] = useState('')
+    const [menu, setmenu] = useState(false);
+    const [sidebar, setsidebar] = useState('');
+    const [profile, setProfile] = useState(false);
 
     const sidebarHandle = () => {
         setmenu(!menu);
@@ -71,10 +74,20 @@ const WebRoutes = () => {
             setsidebar('close')
         }
     }
+
+    const handleProfile = () =>{
+        setProfile(!profile);
+    }
+
+    const closeProfile = () => {
+        setProfile(false)
+    }
+
     return (
         <div className='layout'>
-            <Navbar sidebarHandle={sidebarHandle} sidebar={sidebar} />
-            <Sidebar sidebar={sidebar} />
+            <Navbar sidebarHandle={sidebarHandle} sidebar={sidebar} handleProfile={handleProfile}/>
+            <Sidebar sidebar={sidebar} handleProfile={handleProfile}/>
+            <Profile modal={profile} closeModa={closeProfile}/>
             <div className='div_falso'></div>
             <div className={'main_container ' + sidebar}>
                 <Routes>

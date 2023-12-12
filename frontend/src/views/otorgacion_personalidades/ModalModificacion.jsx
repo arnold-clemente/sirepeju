@@ -66,6 +66,8 @@ const ModalModificacion = ({ registro, handleInputChange, modal, open, close }) 
       setLoading(false);
       if (response.status === true) {
         queryClient.invalidateQueries('personalidadesotorgacion')
+        queryClient.invalidateQueries('modificaciones_otorgacion')
+        queryClient.invalidateQueries('modificaciones')
         show_alerta('Actualizado con exito', '<i class="fa-solid fa-check border_alert_green"></i>', 'alert_green')
         setLoading(false);
       } else {

@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import ModalDiv from '../../components/ModalDiv'; //contendoresto hay importar siempre
-import { url } from '../../conection/env';
-import Spiner from '../../components/Spiner';
 
 // para el modal 
 import { useModal } from '../../hooks/useModal'
-import EstatutoModificacion from './reporte/EstatutoModificacion';
+import ViewPdf from '../../components/ViewPdf';
 import { useMutation } from 'react-query';
 import { getOtorgacionMod } from '../../api/modificacionApi';
+import RepModificaciones from './reporte/RepModificaciones';
 
 const ModalShowMod = ({ showRegistro, modalRegistro, closeRegistro }) => {
     // para el modal de reporte de
-    const [modalAlfanumerico, openAlfanumerico, closeAlfanumerico] = useModal(false);
+    const [modalpdf, openModalpdf, closeModalpdf] = useModal(false);
     const [modalEstatuto, openEstatuto, closeEstatuto] = useModal(false);
+    const [modalReglamento, openReglamento, closeReglamento] = useModal(false);
 
     const [registro, setRegistro] = useState({});
     const [fundadores, setFundadores] = useState([]);
@@ -65,6 +65,20 @@ const ModalShowMod = ({ showRegistro, modalRegistro, closeRegistro }) => {
                 ? <div className="container-fluid">
                     <h2 className='text-center fs-4'>{registro.personalidad_juridica} </h2>
 
+                    {id != 0
+                        ? (<>
+                            <div className='container-fluid d-flex justify-content-end py-4'>
+                                <button className='btn btn-success' onClick={openModalpdf} >
+                                    <i className="fa-solid fa-print"></i>
+                                    <span className='mx-1'>Imprimir</span>
+                                </button>
+                            </div>
+                            <div className='absolute'>
+                                <RepModificaciones modal={modalpdf} close={closeModalpdf} registro={showRegistro} />
+                            </div>
+                        </>)
+                        : null
+                    }
 
                     {otorgacion_id != 0 && registro.codigo_otorgacion
                         ? (<><h2 className="fs-6"><b>Codigo: {registro.codigo_otorgacion}</b> &nbsp;&nbsp; <b>Naturaleza: {registro.naturaleza}</b></h2> <hr /></>)
@@ -85,17 +99,30 @@ const ModalShowMod = ({ showRegistro, modalRegistro, closeRegistro }) => {
                     <h2 className="fs-6"><b>Seguimiento: <p className='fs-6'>{seguimiento}</p></b></h2><hr />
                     <h2 className="fs-6"><b>Informes: <p className='fs-6'>{cite_informe_preliminar}</p></b></h2><hr />
 
-                    {estatuto_organico != 'En modificacion'
-                        ? (<>
-                            <div className='container-fluid d-flex justify-content-center'>
+                    <div className='container-fluid d-flex justify-content-center gap-2'>
+                        {estatuto_organico != 'En modificacion'
+                            ? (<>
                                 <button className='btn btn-danger' onClick={openEstatuto} >
-                                    Estatuto
+                                    Estatuto Organico
                                 </button>
-                            </div>
-                            <EstatutoModificacion registro={registro} modal={modalEstatuto} close={closeEstatuto} src={url} />
-                        </>)
-                        : ''
-                    }
+                                <div className='absolute'>
+                                    <ViewPdf resource={registro.estatuto_organico} modal={modalEstatuto} close={closeEstatuto} />
+                                </div>
+                            </>)
+                            : null
+                        }
+                        {reglamento_interno != 'En modificacion'
+                            ? (<>
+                                <button className='btn btn-danger' onClick={openReglamento} >
+                                    Reglamento Interno
+                                </button>
+                                <div className='absolute'>
+                                    <ViewPdf resource={registro.reglamento_interno} modal={modalReglamento} close={closeReglamento} />
+                                </div>
+                            </>)
+                            : null
+                        }
+                    </div>
 
                     {fundadores
                         ? <div>

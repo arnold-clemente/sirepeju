@@ -67,6 +67,7 @@ const ModalModificacionAde = ({ registro, handleInputChange, modal, open, close 
           if (response.status === true) {
             queryClient.invalidateQueries('personalidades_adecuacion')
             queryClient.invalidateQueries('modificaciones_adecuacion')
+            queryClient.invalidateQueries('modificaciones')
             show_alerta('Actualizado con exito', '<i class="fa-solid fa-check border_alert_green"></i>', 'alert_green')
             setLoading(false);
           } else {

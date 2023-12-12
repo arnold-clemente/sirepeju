@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom';
 import DataTable from "react-data-table-component";
 import { useQuery } from 'react-query';
@@ -15,6 +15,7 @@ import { getOtorgacionesGob, destroyOtorgacionGob } from '../../api/otorgacionGo
 import { useModal } from '../../hooks/useModal'
 import { useMutation } from 'react-query';
 import ShowOtorgacionGob from './ShowOtorgacionGob';
+import SelectOtorgaciongobernacion from './reporte/SelectOtorgaciongobernacion';
 
 const IndexOtorgacionGob = () => {
   const queryClient = useQueryClient();
@@ -24,6 +25,28 @@ const IndexOtorgacionGob = () => {
   // para el modal show Otorgacion
   const [modalOtorgacion, openOtorgacion, closeOtorgacion] = useModal(false);
   const [otorgacionShow, setotorgacionShow] = useState({});
+
+  const [selectpdf, openSelectpdf, closeSelectpdf] = useModal(false);
+  const [selectedRows, setSelectedRows] = useState([]);
+  const [toggleCleared, setToggleCleared] = useState(false);
+
+  const handleRowSelected = useCallback(state => {
+    setSelectedRows(state.selectedRows);
+  }, []);
+
+  const contextActions = useMemo(() => {
+    const handleDelete = () => {
+      openSelectpdf();
+    };
+
+    return (
+      <button onClick={handleDelete} className='button_select_pdf'>
+        <i className="fa-solid fa-print"></i>
+        <span>Imprimir</span>
+      </button>
+    );
+
+  }, [selectedRows, toggleCleared]);
 
   const { isLoading, data: registros, isError, error } = useQuery({
     queryKey: ['otorgaciones_gobs'],
@@ -66,7 +89,6 @@ const IndexOtorgacionGob = () => {
     e.preventDefault();
     const prueba = row;
     setotorgacionShow({ ...otorgacionShow, ...prueba })
-    // return console.log(otorgacionShow)
     Swal.fire({
       title: "¿Estas seguro",
       text: "¡No podrás revertir esto!",
@@ -83,7 +105,7 @@ const IndexOtorgacionGob = () => {
     });
   }
 
-  const destroyOtorgacion= useMutation({
+  const destroyOtorgacion = useMutation({
     mutationFn: destroyOtorgacionGob,
     onSuccess: (response) => {
       console.log(response);
@@ -102,7 +124,7 @@ const IndexOtorgacionGob = () => {
     {
       name: 'Acciones',
       cell: (row) => (
-        <div className='container-fluid d-flex flex-row'>
+        <div className='container-fluid d-flex flex-row gap-1'>
           <button onClick={(e) => handleShow(e, row)} className="button_show"><i className="fa-solid fa-eye"></i><span>Ver</span></button>
           <div className='dropdown'>
             <button className="button_dropdown_table dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -129,41 +151,35 @@ const IndexOtorgacionGob = () => {
       ignoreRowClick: true,
       allowOverflow: true,
       button: true,
-    },
-    {
-      name: 'ID ',
-      selector: row => row.id,
-      sortable: true,
-      left: 1,
-      grow: 3,
+      width: '120px',
     },
     {
       name: 'Resolucion ',
       selector: row => row.resolucion,
       sortable: true,
-      left: 1,
-      grow: 3,
+      wrap: true,
+      width: '150px',
     },
     {
       name: 'Naturaleza ',
       selector: row => row.naturaleza,
       sortable: true,
-      left: 1,
-      grow: 3,
+      wrap: true,
+      width: '200px',
     },
     {
       name: 'Nombre Persona Colectiva ',
       selector: row => row.nombre_persona_colectiva,
       sortable: true,
-      left: 1,
-      grow: 5,
+      wrap: true,
+      width: '300px',
     },
     {
       name: 'Sigla ',
       selector: row => row.sigla,
       sortable: true,
-      left: 1,
-      grow: 3,
+      wrap: true,
+      width: '150px',
     },
   ];
 
@@ -180,6 +196,7 @@ const IndexOtorgacionGob = () => {
     <div>
       {loading === true ? <Loading /> : ''}
       {/* para le modal show adecuacion  */}
+      <SelectOtorgaciongobernacion registro={selectedRows} modal={selectpdf} close={closeSelectpdf} />
       <ShowOtorgacionGob registro={otorgacionShow} modal={modalOtorgacion} close={closeOtorgacion} />
       <Banner text="PROCESO DE OTORGACION" />
       <div className='container-fluid d-flex flex-row md:flex-columns my-4'>
@@ -215,6 +232,10 @@ const IndexOtorgacionGob = () => {
           customStyles={estilos}
           highlightOnHover={true}
           persistTableHead={true}
+          selectableRows
+          contextActions={contextActions}
+          onSelectedRowsChange={handleRowSelected}
+          clearSelectedRows={toggleCleared}
         />
       </div>
     </div>

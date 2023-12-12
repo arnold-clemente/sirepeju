@@ -6,11 +6,11 @@ import InputSearch from './components/InputSearch'
 import SidebarLinks from './components/SidebarLinks'
 import { links } from './Links'
 
-const Sidebar = ({ sidebar }) => {
+const Sidebar = ({ sidebar, handleProfile }) => {
 
     return (
         <div className={'sidebar_container ' + sidebar + ' scroll_style'}>
-            <UserCard sidebar={sidebar} />
+            <UserCard sidebar={sidebar} handleProfile={handleProfile}/>
             {/* <div className='sidebar_input_search'>
                 <InputSearch placeholder='BUSQUEDA RAPIDA' sidebar={sidebar} />
             </div> */}
@@ -21,6 +21,7 @@ const Sidebar = ({ sidebar }) => {
 
 Sidebar.defaultProps = {
     sidebar: propTypes.string.isRequired,
+    handleProfile: propTypes.func.isRequired,
 }
 
 export default Sidebar
