@@ -276,11 +276,7 @@ const IndexAdministrativos = () => {
                 />
             </div>
         </div>
-
     )
-
-
 }
-
 
 export default IndexAdministrativos

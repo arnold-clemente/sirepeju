@@ -117,6 +117,16 @@ export const links = [
                 icon: 'fa-solid fa-ban',
                 texto: 'Adecuacion Revocados'
             },
+            {
+                path: '/adecuacion/archivados',
+                icon: 'fa-solid fa-box-archive',
+                texto: 'Adecuacion Archivados'
+            },
+            {
+                path: '/adecuacion/caducados',
+                icon: 'fa-solid fa-hourglass',
+                texto: 'Adecuacion Caducados'
+            },
         ],
     },
     {
@@ -129,4 +139,10 @@ export const links = [
         icon: 'fa-solid fa-pen-to-square',
         texto: 'Modificacion'
     },
+    {
+        path: '/registrados',
+        icon: 'fa-regular fa-bookmark',
+        texto: 'Registrados Adecuacion'
+    },
+
 ];

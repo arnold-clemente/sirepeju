@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AdecuacionArchivadosController;
+use App\Http\Controllers\AdecuacionCaducadosController;
 use App\Http\Controllers\AdecuacionController;
 use App\Http\Controllers\AdecuacionInformeController;
 use App\Http\Controllers\AdecuacionPersonaColectivaController;
@@ -21,6 +23,7 @@ use App\Http\Controllers\OtorgacionCaducadosController;
 use App\Http\Controllers\OtorgacionController;
 use App\Http\Controllers\OtorgacionInformeController;
 use App\Http\Controllers\OtorgacionSeguimientoController;
+use App\Http\Controllers\RegistradosController;
 use App\Http\Controllers\RegistroPersonaColectivaController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VerificacionController;
@@ -168,6 +171,19 @@ Route::middleware(['auth:sanctum'])->get('/adecuacion/revocatorias', [Adecuacion
 Route::middleware(['auth:sanctum'])->post('/adecuacion/revocatoria/store', [AdecuacionController::class, 'revocatoria'])
     ->name('adecuacion.revocatoria.store');
 
+// adecuacion caducados 
+Route::middleware(['auth:sanctum'])->get('/adecuacion/caducados', [AdecuacionCaducadosController::class, 'getcaducados'])
+    ->name('adecuaciones.caducados');
+Route::middleware(['auth:sanctum'])->post('/adecuacion/caducar/{adecuacion}', [AdecuacionCaducadosController::class, 'caducar'])
+    ->name('adecuacion.caducar');
+// adecuacion archivados 
+Route::middleware(['auth:sanctum'])->get('/adecuacion/archivados', [AdecuacionArchivadosController::class, 'getarchivados'])
+    ->name('adecuaciones.archivados');
+Route::middleware(['auth:sanctum'])->post('/adecuacion/archivar/{adecuacion}', [AdecuacionArchivadosController::class, 'archivar'])
+    ->name('adecuacion.archivar');
+Route::middleware(['auth:sanctum'])->post('/adecuacion/desarchivar/{adecuacion}', [AdecuacionArchivadosController::class, 'desarchivar'])
+    ->name('adecuacion.desarchivar');
+
 
 // para las otorgaciones gobernacions
 Route::middleware(['auth:sanctum'])->get('/otorgacion-gobernacions', [GobernacionOtorgacionController::class, 'index'])
@@ -225,6 +241,8 @@ Route::middleware(['auth:sanctum'])->delete('/modificacion-adecuacion-fundador-d
     ->name('modificacion.adecuacion.fundador.destroy');
 Route::middleware(['auth:sanctum'])->post('/modificacion-adecuacion-update', [ModificacionAdecuacionController::class, 'update'])
     ->name('modificacion.adecuacion.update');
+
+
 //rutas seguimiento modificacion adecuacion
 Route::middleware(['auth:sanctum'])->post('/adecuacion/informe/modificacion', [AdecuacionInformeController::class, 'modificacion_informe'])
     ->name('adecuacion.informe.modificacion');
@@ -236,3 +254,15 @@ Route::middleware(['auth:sanctum'])->get('/modificaciones', [ModificacionControl
     ->name('modificaciones');
 Route::middleware(['auth:sanctum'])->post('/modificacion-show-otorgacion', [ModificacionController::class, 'getOtorgacion'])
     ->name('modificacion.show.otorgacion');
+
+// rutas para registrados
+Route::middleware(['auth:sanctum'])->get('/registrados', [RegistradosController::class, 'index'])
+    ->name('registrados');
+Route::middleware(['auth:sanctum'])->get('/registrado/show/{registrado}', [RegistradosController::class, 'show'])
+    ->name('registrado.show');
+Route::middleware(['auth:sanctum'])->post('/registrado/store', [RegistradosController::class, 'store'])
+    ->name('registrado.store');
+Route::middleware(['auth:sanctum'])->put('/registrado/update/{registrado}', [RegistradosController::class, 'update'])
+    ->name('registrado.update');
+Route::middleware(['auth:sanctum'])->delete('/registrado/destroy/{registrado}', [RegistradosController::class, 'destroy'])
+    ->name('registrado.destroy');

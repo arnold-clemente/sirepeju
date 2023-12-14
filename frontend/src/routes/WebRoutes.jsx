@@ -50,6 +50,10 @@ import FundAdecuacion from '../views/adecuacion/FundAdecuacion'
 import PersAdecuacion from '../views/adecuacion_personalidades/PersAdecuacion'
 import RevAdecuacion from '../views/adecuacion_revocados/RevAdecuacion'
 import IndexModificacionAd from '../views/modificacion_adecuacion/IndexModificacionAd'
+// adecuacion archivados 
+import IndexAdecuacionArchivados from '../views/adecuacion_archivados/IndexAdecuacionArchivados'
+// adecuacion caducados 
+import IndexAdecuacionCaducados from '../views/adecuacion_caducados/IndexAdecuacionCaducados'
 
 //otorgaciones gobernacion
 import IndexOtorgacionGob from '../views/otorgaciongobs/IndexOtorgacionGob'
@@ -59,6 +63,10 @@ import EditOtorgacionGob from '../views/otorgaciongobs/EditOtorgacionGob'
 // modificaciones 
 import IndexModificacion from '../views/modificacion/IndexModificacion'
 
+//registrados
+import IndexRegistrados from '../views/registrados/IndexRegistrados'
+import CreatedRegistrados from '../views/registrados/CreatedRegistrados'
+import EditRegistrados from '../views/registrados/EditRegistrados'
 
 const WebRoutes = () => {
 
@@ -87,7 +95,7 @@ const WebRoutes = () => {
         <div className='layout'>
             <Navbar sidebarHandle={sidebarHandle} sidebar={sidebar} handleProfile={handleProfile}/>
             <Sidebar sidebar={sidebar} handleProfile={handleProfile}/>
-            <Profile modal={profile} closeModa={closeProfile}/>
+            <Profile modal={profile} closeModal={closeProfile}/>
             <div className='div_falso'></div>
             <div className={'main_container ' + sidebar}>
                 <Routes>
@@ -126,12 +134,18 @@ const WebRoutes = () => {
                     <Route path='/adecuacion/personalidades' element={<PersAdecuacion />} />
                     <Route path='/adecuacion/revocados' element={<RevAdecuacion />} />
                     <Route path='/adecuacion/modificaciones' element={<IndexModificacionAd />} />
+                    <Route path='/adecuacion/archivados' element={<IndexAdecuacionArchivados />} />
+                    <Route path='/adecuacion/caducados' element={<IndexAdecuacionCaducados />} />
                     {/* otorgacion gobernaciones */}
                     <Route path='/otorgaciones-gobernaciones' element={<IndexOtorgacionGob />} />
                     <Route path='/otorgaciones-gobernaciones/create' element={<CreateOtorgacionGob />} />
                     <Route path='/otorgaciones-gobernaciones/edit/:otorgacionGobId' element={<EditOtorgacionGob />} />
                     {/* modificacions  */}
                     <Route path='/modificaciones' element={<IndexModificacion />} />
+                    {/* registrados  */}
+                    <Route path='/registrados' element={<IndexRegistrados  />} />
+                    <Route path='/registrado/create' element={<CreatedRegistrados  />} />
+                    <Route path='/registrado/edit/:registradoId' element={<EditRegistrados  />} />
                 </Routes>
             </div>
         </div>

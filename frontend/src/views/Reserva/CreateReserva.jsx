@@ -128,7 +128,7 @@ const CreateReserva = () => {
                         <option value="FUNDACION">FUNDACION</option>
                         <option value="ENTIDAD SIN FINES DE LUCRO">ENTIDAD SIN FINES DE LUCRO</option>
                         <option value="ONG">ONG</option>
-                        <option value="ORGANIZACIÓN SOCIA">ORGANIZACIÓN SOCIAL</option>
+                        <option value="ORGANIZACIÓN SOCIAL">ORGANIZACIÓN SOCIAL</option>
                     </select>
                 </div>
                 <div className="form-group py-2">

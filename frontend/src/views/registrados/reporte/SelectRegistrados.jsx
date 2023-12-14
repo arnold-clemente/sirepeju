@@ -3,7 +3,8 @@ import Modal from '../../../components/ModalPdf'
 import { PDFViewer, Document, Page } from '@react-pdf/renderer'
 import { Text, View, StyleSheet, Image } from '@react-pdf/renderer'
 
-const SelectVerificacion = ({ registro, modal, close }) => {
+const SelectRegistrados = ({ registro, modal, close }) => {
+
     const styles = StyleSheet.create({
         main: {
             width: "100%",
@@ -74,7 +75,7 @@ const SelectVerificacion = ({ registro, modal, close }) => {
                     <Document>
                         <Page size="letter" style={styles.body}>
                             <View style={styles.contenedor}>
-                                <Text style={styles.title}>Verificacion</Text>
+                                <Text style={styles.title}>Adecuaciones Registrados</Text>
                             </View>
                             <View style={styles.table}>
                                 <Text style={styles.table_head}>Entidad</Text>
@@ -84,8 +85,8 @@ const SelectVerificacion = ({ registro, modal, close }) => {
                                 {registro.length > 0
                                     ? registro.map((row, index) => {
                                         return (
-                                            <View style={styles.table_tr} key={index}>
-                                                <Text style={styles.table_item}>{row.entidad}</Text>
+                                            <View style={styles.table_tr} key={row.id}>
+                                                <Text style={styles.table_item}>{row.personalidad_juridica}</Text>
                                                 <Text style={styles.table_item}>{row.sigla}</Text>
                                             </View>
                                         )
@@ -104,4 +105,4 @@ const SelectVerificacion = ({ registro, modal, close }) => {
     )
 }
 
-export default SelectVerificacion
+export default SelectRegistrados;

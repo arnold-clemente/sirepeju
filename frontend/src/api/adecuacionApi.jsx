@@ -69,4 +69,37 @@ export const createRevocatoria = async (adecuacion) => {
     return res;
 }
 
+// para los archivados 
+export const getArchivados = async () => {
+    const response = await axios.get('/api/adecuacion/archivados')
+    return response.data;
+}
+
+export const archivarAdecuacion = async (adecuacion) => {
+    const response = await axios.post(`/api/adecuacion/archivar/${adecuacion.id}`)
+        .then((response) => { return response.data })
+        .catch((error) => { return error.data });
+    return response;
+}
+
+export const desarchivarAdecuacion = async (adecuacion) => {
+    const response = await axios.post(`/api/adecuacion/desarchivar/${adecuacion.id}`)
+        .then((response) => { return response.data })
+        .catch((error) => { return error.data });
+    return response;
+}
+
+// para los caducados 
+
+export const getCaducados = async () => {
+    const response = await axios.get('/api/adecuacion/caducados')
+    return response.data;
+}
+
+export const caducarAdecuacion= async (adecuacion) => {
+    const response = await axios.post(`/api/adecuacion/caducar/${adecuacion.id}`)
+        .then((response) => { return response.data })
+        .catch((error) => { return error.data });
+    return response;
+}
 

@@ -1,14 +1,16 @@
 import React, { useCallback, useMemo, useState } from 'react'
+import Swal from 'sweetalert2';
 import { Link } from 'react-router-dom';
 import DataTable from "react-data-table-component";
-import { useQuery, useQueryClient } from 'react-query';
+import { useQuery, useQueryClient, useMutation } from 'react-query';
 import bcrypt from "bcryptjs-react";
+import { show_alerta } from '../../components/MessageAlert';
 
 import Loading from '../../components/Loading';
 import Banner from '../../components/Banner';
 import { estilos } from '../../components/estilosdatatables';
 
-import { getAdecuaciones } from '../../api/adecuacionApi';
+import { getAdecuaciones, archivarAdecuacion, caducarAdecuacion } from '../../api/adecuacionApi';
 // modal 
 import { useModal } from '../../hooks/useModal'
 // modal components 
@@ -26,7 +28,7 @@ const IndexAdecuacion = () => {
 
   // par el modal show
   const [modalAdecuacion, openAdecuacion, closeAdecuacion] = useModal(false);
-  const [adecuacionShow, setadecuacionShow] = useState({id: 0});
+  const [adecuacionShow, setadecuacionShow] = useState({ id: 0 });
 
   //para registro persona colectiva
   const [personaModal, openPersonaModal, closePersonaModal] = useModal(false);
@@ -39,6 +41,7 @@ const IndexAdecuacion = () => {
   //para el informe
   const [informeModal, openInformeModal, closeInformeModal] = useModal(false);
   const [informe, setInforme] = useState({ adecuacion_id: 1, informe: '', fecha: '' });
+  const now = new Date().getTime();
 
   //para el registro final 
   const [registrorModal, openRegistrorModal, closeRegistrorModal] = useModal(false);
@@ -186,6 +189,69 @@ const IndexAdecuacion = () => {
     });
   };
 
+
+  const handleArchivar = (e, row) => {
+    e.preventDefault();
+    Swal.fire({
+      title: "Archivar Adecuacion?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "¡Sí, Archivar!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        setLoading(true);
+        archivateAdecuacion.mutate(row);
+      }
+    });
+  }
+
+  const archivateAdecuacion = useMutation({
+    mutationFn: archivarAdecuacion,
+    onSuccess: (response) => {
+      queryClient.invalidateQueries('adecuaciones')
+      queryClient.invalidateQueries('adecuaciones_archivados')
+      show_alerta('Adecuacion Archivado', '<i class="fa-solid fa-check border_alert_green"></i>', 'alert_green')
+      setLoading(false);
+    },
+    onError: (error) => {
+      show_alerta('No conectado', '<i class="fa-solid fa-xmark border_alert_red"></i>', 'alert_red')
+      setLoading(false);
+    },
+  });
+
+  const handleCaducar = (e, row) => {
+    e.preventDefault();
+    Swal.fire({
+      title: "Caducar Adecuacion?",
+      icon: "error",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "¡Sí, caducar!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        setLoading(true);
+        caducateAdecuacion.mutate(row);
+      }
+    });
+  }
+
+  const caducateAdecuacion = useMutation({
+    mutationFn: caducarAdecuacion,
+    onSuccess: (response) => {
+      queryClient.invalidateQueries('adecuaciones')
+      queryClient.invalidateQueries('adecuaciones_caducados')
+      show_alerta('Adecuacion Caducado', '<i class="fa-solid fa-check border_alert_green"></i>', 'alert_green')
+      setLoading(false);
+    },
+    onError: (error) => {
+      show_alerta('No conectado', '<i class="fa-solid fa-xmark border_alert_red"></i>', 'alert_red')
+      setLoading(false);
+    },
+  });
+
   const columns = [
     {
       name: 'Acciones',
@@ -238,6 +304,24 @@ const IndexAdecuacion = () => {
                   : ''
                 }
               </li>
+              <li>
+                {Math.round((now - (new Date(row.fecha_ingreso_tramite).getTime())) / (1000 * 60 * 60 * 24)) > 10
+                  ? <button onClick={(e) => handleArchivar(e, row)} className="button_show_table">
+                    <i className="fa-solid fa-box-archive"></i>
+                    <span className='mx-2'>Archivar</span>
+                  </button>
+                  : ''
+                }
+              </li>
+              <li>
+                {Math.round((now - (new Date(row.fecha_ingreso_tramite).getTime())) / (1000 * 60 * 60 * 24)) > 305
+                  ? <button onClick={(e) => handleCaducar(e, row)} className="button_delete_table">
+                    <i className="fa-solid fa-x"></i>
+                    <span className='mx-2'>Caducar</span>
+                  </button>
+                  : ''
+                }
+              </li>
             </ul>
           </div>
 
@@ -247,6 +331,13 @@ const IndexAdecuacion = () => {
       allowOverflow: true,
       button: true,
       width: '120px',
+    },
+    {
+      name: 'Tiempo',
+      selector: row => Math.round((now - (new Date(row.fecha_ingreso_tramite).getTime())) / (1000 * 60 * 60 * 24)) + ' dias',
+      sortable: true,
+      wrap: true,
+      width: '150px',
     },
     {
       name: 'Codigo APJ',

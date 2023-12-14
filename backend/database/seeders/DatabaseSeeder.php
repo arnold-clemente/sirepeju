@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
         $this->call(AdministrativoSeeder::class);
         $this->call(GobernacionSeeder::class);
         $this->call(OtorgacionGobernacionSeeder::class);
+        $this->call(OtorgacionGobernacionSeeder::class);
         $this->call(ReservaSolicitadosSeeder::class);
         $this->call(ReservaHomonimiaSeeder::class);
         $this->call(ReservaReservadosSeeder::class);
@@ -31,7 +32,7 @@ class DatabaseSeeder extends Seeder
         $this->call(OtorgacionSeeder::class);
         $this->call(FundadoresOtorgacionSeeder::class);
         $this->call(AdecuacionSeeder::class);
-
+        $this->call(RegistradoSeeder::class);
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',

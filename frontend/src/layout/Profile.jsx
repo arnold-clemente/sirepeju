@@ -8,7 +8,7 @@ import { url } from '../conection/env';
 import { useMutation, useQueryClient } from 'react-query';
 import { updateProfile } from '../api/authApi';
 
-const Profile = ({ modal, closeModa }) => {
+const Profile = ({ modal, closeModal }) => {
 
     const queryClient = useQueryClient();
     const [error, serError] = useState({});
@@ -42,6 +42,7 @@ const Profile = ({ modal, closeModa }) => {
     const guardarPerfil = (e) => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget)
+        formData.append('user_id', user_id)
         setLoading(true);
         guardarProfile.mutate(formData)
     };
@@ -73,7 +74,7 @@ const Profile = ({ modal, closeModa }) => {
 
     return (
         <>
-            <button onClick={closeModa} className={'profile_close ' + (modal ? 'profile' : '')}></button>
+            <button onClick={closeModal} className={'profile_close ' + (modal ? 'profile' : '')}></button>
             <div className={'profile_layout ' + (modal ? 'profile' : '')}>
                 <div className={'scroll_style profile_content'}>
                     <form className='form_profile' onSubmit={guardarPerfil}>
@@ -93,15 +94,6 @@ const Profile = ({ modal, closeModa }) => {
                                     </>
                                     : <img src={profile_photo_path} alt="photo profile" />
                                 }
-                                {/* {image == false 
-                                    ? <>
-                                        {profile_photo_path
-                                            ? <img src={profile_photo_path} alt="photo profile" accept="image/*" />
-                                            : <img src={user} alt="photo profile" />
-                                        }
-                                    </>
-                                    : <img src={user} alt="photo profile" />
-                                } */}
 
                             </div>
                             <div className="row">
@@ -128,11 +120,6 @@ const Profile = ({ modal, closeModa }) => {
                                     {error.correo
                                         ? <ValidationError text={error.correo} />
                                         : ''}
-                                </div>
-                                <div className="form-group col-12 py-1 d-none">
-                                    <label>user_id</label>
-                                    <input type="number" className="form-control" placeholder="Escriba el correo"
-                                        name="user_id" value={user_id} />
                                 </div>
                                 <div className="form-group col-12 py-1">
                                     <div className='d-flex justify-content-between gap-1'>

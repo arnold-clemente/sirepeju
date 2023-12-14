@@ -32,7 +32,7 @@
     "redux": "^4.2.1",
     "redux-thunk": "^2.4.2",
     "sort-by": "^1.2.0",
-    "styled-components": "^6.0.8",
+    "styled-components": "^5.3.3",
     "sweetalert2": "^11.7.22",
     "uuid": "^9.0.0"
   },

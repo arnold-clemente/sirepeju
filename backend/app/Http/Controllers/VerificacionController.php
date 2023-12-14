@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Adecuacion;
 use App\Models\Administrativo;
 use App\Models\Otorgacion;
+use App\Models\OtorgacionGobernacion;
 use App\Models\Registro;
 use App\Models\Reservanombre;
 use Carbon\Carbon;
@@ -20,10 +22,7 @@ class VerificacionController extends Controller
             'entidad',
             'sigla',
             'representante',
-            'persona_colectiva',
             'estado',
-            'ci_rep',
-            'ext_ci_rep',
             'naturaleza'
         )
             ->whereIn('estado', [1])
@@ -34,17 +33,50 @@ class VerificacionController extends Controller
             'entidad',
             'sigla',
             'representante',
-            'persona_colectiva',
             'estado',
-            'ci_rep',
-            'ext_ci_rep',
             'naturaleza'
-        )      
+        )
             ->whereIn('estado', [4])
             ->orderBy('id', 'desc')
             ->get();
 
-        $entidades = $reservas->concat($registros);
+        $otorgaciones = Otorgacion::select(
+            'id as otorgacion_id',
+            'personalidad_juridica as entidad',
+            'sigla',
+            'miembros_fundador as representante',
+            'estado',
+            'naturaleza'
+        )
+            ->whereIn('estado', [7, 9, 10, 0, 13])
+            ->orderBy('id', 'desc')
+            ->get();
+
+        $adecuaciones = Adecuacion::select(
+            'id as adecuacion_id',
+            'personalidad_juridica as entidad',
+            'sigla',
+            'miembros_fundador as representante',
+            'estado',
+            'naturaleza'
+        )
+            ->whereIn('estado', [7, 9, 10, 0, 13])
+            ->orderBy('id', 'desc')
+            ->get();
+
+        $gobernaciones = OtorgacionGobernacion::select(
+            'id as gobernacion_id',
+            'nombre_persona_colectiva as entidad',
+            'sigla',
+            'miembros_fundador as representante',
+            'estado',
+            'naturaleza'
+        )
+            ->whereIn('estado', [11])
+            ->orderBy('id', 'desc')
+            ->get();
+
+        $entidades = $reservas->concat($registros)->concat($otorgaciones)->concat($adecuaciones)->concat($gobernaciones);
 
         return response()->json($entidades);
     }
