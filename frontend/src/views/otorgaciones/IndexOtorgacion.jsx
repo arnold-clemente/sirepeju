@@ -305,7 +305,7 @@ const IndexOtorgacion = () => {
                                 }
                             </li>
                             <li>
-                                {Math.round((now - (new Date(row.fecha_ingreso_tramite).getTime())) / (1000 * 60 * 60 * 24)) > 60
+                                {Math.round((now - (new Date(row.fecha_ingreso_tramite).getTime())) / (1000 * 60 * 60 * 24)) > 10
                                     ? <button onClick={(e) => handleArchivar(e, row)} className="button_show_table">
                                         <i className="fa-solid fa-box-archive"></i>
                                         <span className='mx-2'>Archivar</span>
@@ -314,7 +314,7 @@ const IndexOtorgacion = () => {
                                 }
                             </li>
                             <li>
-                                {Math.round((now - (new Date(row.fecha_ingreso_tramite).getTime())) / (1000 * 60 * 60 * 24)) > 90
+                                {Math.round((now - (new Date(row.fecha_ingreso_tramite).getTime())) / (1000 * 60 * 60 * 24)) > 365
                                     ? <button onClick={(e) => handleCaducar(e, row)} className="button_delete_table">
                                         <i className="fa-solid fa-x"></i>
                                         <span className='mx-2'>Caducar</span>
