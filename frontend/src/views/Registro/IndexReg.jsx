@@ -218,7 +218,7 @@ const IndexReg = () => {
                                 }
                             </li>
                             <li>
-                                {Math.round((now - (new Date(row.fecha_reg).getTime())) / (1000 * 60 * 60 * 24)) > 90
+                                {Math.round((now - (new Date(row.fecha_reg).getTime())) / (1000 * 60 * 60 * 24)) > 60
                                     ? <button onClick={(e) => handleCaducar(e, row)} className="button_delete_table">
                                         <i className="fa-solid fa-x"></i>
                                         <span className='mx-2'>Caducar</span>
