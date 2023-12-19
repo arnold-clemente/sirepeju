@@ -5,8 +5,11 @@ import logo_letra from '../images/logo_letra.png'
 import user from '../images/user.png'
 import storage from '../Storage/storage'
 import { url } from '../conection/env'
+import { useSelector } from 'react-redux'
 
 const Navbar = ({ sidebarHandle, sidebar, handleProfile }) => {
+
+  const usuario = useSelector(state => state.userStore.user);
 
   return (
     <div className='navbar_contain'>
@@ -24,13 +27,13 @@ const Navbar = ({ sidebarHandle, sidebar, handleProfile }) => {
       </div>
       <button onClick={handleProfile} className='nabvar_user'>
         <div className='nabvar_user_image'>
-          {storage.get('authUser').profile_photo_path
-            ? <img src={url + '/storage/' + storage.get('authUser').profile_photo_path} alt="user" />
+          {usuario.imagen
+            ? <img src={url + '/storage/' + usuario.imagen} alt="user" />
             : <img src={user} alt="user" />
           }
         </div>
         <div className='nabvar_user_profile'>
-          <span>{storage.get('authUser').name}</span>
+          <span>{usuario.nombre}</span>
         </div>
       </button>
     </div>

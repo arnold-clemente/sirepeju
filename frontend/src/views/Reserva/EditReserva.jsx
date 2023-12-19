@@ -3,13 +3,14 @@ import { useNavigate, Link, useParams } from 'react-router-dom'
 import Swal from 'sweetalert2';
 
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { updateReserva } from '../../api/reservaApi';
-import { getReserva } from '../../api/reservaApi';
+import { getReserva, updateReserva } from '../../api/reservaApi';
 
 import storage from '../../Storage/storage'
 import Loading from '../../components/Loading';
+import Spiner from '../../components/Spiner';
 import { show_alerta } from '../../components/MessageAlert';
 import ValidationError from '../../components/ValidationError';
+import Banner from '../../components/Banner';
 
 const EditReserva = () => {
 
@@ -18,6 +19,7 @@ const EditReserva = () => {
     const go = useNavigate();
 
     const [reserva, setReserva] = useState({
+        id: 0,
         hr: 1,
         entidad: '',
         sigla: '',
@@ -48,6 +50,7 @@ const EditReserva = () => {
     const UpdateRes = useMutation({
         mutationFn: updateReserva,
         onSuccess: (response) => {
+            console.log(response)
             setLoading(false);
             if (response.status === true) {
                 queryClient.invalidateQueries('reservas')
@@ -94,11 +97,12 @@ const EditReserva = () => {
         });
     };  
 
-    if (isLoading) return <Loading />
+    if (isLoading) return <Spiner />
     else if (isError) return <div>Error: {error.message}</div>
     return (
         <>
             {loading === true ? <Loading /> : ''}
+            <Banner text="ACTUALIZAR RESERVA DE OTORGACION" />
             <form onSubmit={handleUpdate}>
                 <div className="form-group py-2">
                     <label>Entidad</label>

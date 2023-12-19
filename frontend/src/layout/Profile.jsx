@@ -1,29 +1,44 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import user from '../images/user.png'
 import ValidationError from '../components/ValidationError';
-import storage from '../Storage/storage';
 import { show_alerta } from '../components/MessageAlert';
 import { url } from '../conection/env';
+import { useDispatch, useSelector } from 'react-redux'
 
 import { useMutation, useQueryClient } from 'react-query';
 import { updateProfile } from '../api/authApi';
+import { updateUser } from '../store/slices/userSlice';
 
 const Profile = ({ modal, closeModal }) => {
 
     const queryClient = useQueryClient();
+    const dispatch = useDispatch();
+    const usuario = useSelector(state => state.userStore.user);
     const [error, serError] = useState({});
     const [image, setImage] = useState(false);
     const [loading, setLoading] = useState(false);
-    // const [image, setImage] = useState(false);
 
     const [profile, setProfile] = useState({
-        user_id: storage.get('authUser').id,
-        nombres: storage.get('authUser').name,
-        correo: storage.get('authUser').email,
-        profile_photo_path: storage.get('authUser').profile_photo_path,
+        user_id: 0,
+        nombres: '',
+        correo: '',
+        profile_photo_path: '',
     });
-    const { user_id, nombres, correo, profile_photo_path } = profile;
 
+    useEffect(() => {
+        const user = {
+            user_id: usuario.id,
+            nombres: usuario.nombre,
+            correo: usuario.correo,
+            profile_photo_path: usuario.imagen,
+        }
+        setProfile({ ...profile, ...user });
+    }, [usuario]);
+
+
+
+
+    const { user_id, nombres, correo, profile_photo_path } = profile;
     const handleInputChange = ({ target }) => {
         setProfile({
             ...profile,
@@ -50,13 +65,20 @@ const Profile = ({ modal, closeModal }) => {
     const guardarProfile = useMutation({
         mutationFn: updateProfile,
         onSuccess: (response) => {
-            console.log(response)
             setLoading(false);
             if (response.status === true) {
                 queryClient.invalidateQueries('administrativos')
                 queryClient.invalidateQueries('gobernacions')
-                storage.set('authUser', response.data);
-                window.location.reload(false)
+                serError({});
+                const usuario_reponse = {
+                    id: response.data.id,
+                    nombre: response.data.name,
+                    correo: response.data.email,
+                    rol: response.data.rol,
+                    imagen: response.data.profile_photo_path,
+                }
+                setImage(false);
+                dispatch(updateUser(usuario_reponse));
                 show_alerta('Perfil Actualizado', '<i class="fa-solid fa-check border_alert_green"></i>', 'alert_green')
                 setLoading(false);
             } else {

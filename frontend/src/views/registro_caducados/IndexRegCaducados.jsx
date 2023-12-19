@@ -2,10 +2,11 @@ import React, { useCallback, useMemo, useState } from 'react'
 import DataTable from "react-data-table-component";
 
 import { useQuery } from 'react-query';
-import { getCaducados } from '../../api/registroApi';
+import { getCaducados } from '../../api/reservaApi';
 
 import Loading from '../../components/Loading';
 import Banner from '../../components/Banner';
+import Spiner from '../../components/Spiner';
 import { estilos } from '../../components/estilosdatatables';
 import { useModal } from '../../hooks/useModal'
 
@@ -190,7 +191,7 @@ const IndexRegCaducados = () => {
         selectAllRowsItem: true,
         selectAllRowsItemText: 'todos'
     };
-    if (isLoading) return <Loading />
+    if (isLoading) return <Spiner />
     else if (isError) return <div>Error: {error.message}</div>
 
     return (

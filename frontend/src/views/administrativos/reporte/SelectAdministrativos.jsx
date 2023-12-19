@@ -70,7 +70,7 @@ const SelectAdministrativos = ({ registro, modal, close }) => {
     return (
         <>
             <Modal isOpen={modal} closeModal={close}>
-               
+
                 <PDFViewer style={styles.main}>
                     <Document>
                         <Page size="letter" style={styles.body}>
@@ -90,10 +90,7 @@ const SelectAdministrativos = ({ registro, modal, close }) => {
                                             <View style={styles.table_tr} key={row.id}>
                                                 <Text style={styles.table_item}>{row.nombres + ' ' + row.paterno + ' ' + row.materno}</Text>
                                                 <Text style={styles.table_item}>{row.ci + ' ' + row.ext_ci}</Text>
-                                                {row.user
-                                                    ? <Text style={styles.table_item}>{row.user.email}</Text>
-                                                    : mull
-                                                }
+                                                <Text style={styles.table_item}>{row.email}</Text>
                                                 <Text style={styles.table_item}>{row.cargo}</Text>
                                             </View>
                                         )

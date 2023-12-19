@@ -6,6 +6,7 @@ import { useQuery, useMutation, useQueryClient } from 'react-query';
 import { getHomonimias, entregarReserva } from '../../api/reservaApi';
 
 import Loading from '../../components/Loading';
+import Spiner from '../../components/Spiner';
 import Banner from '../../components/Banner';
 import { show_alerta } from '../../components/MessageAlert';
 import { estilos } from '../../components/estilosdatatables';
@@ -224,7 +225,7 @@ const HomReserva = () => {
         selectAllRowsItem: true,
         selectAllRowsItemText: 'todos'
     };
-    if (isLoading) return <Loading />
+    if (isLoading) return <Spiner />
     else if (isError) return <div>Error: {error.message}</div>
 
     return (

@@ -3,6 +3,7 @@ import DataTable from "react-data-table-component";
 import { useQuery } from 'react-query';
 
 import Loading from '../../components/Loading';
+import Spiner from '../../components/Spiner';
 import Banner from '../../components/Banner';
 import { estilos } from '../../components/estilosdatatables';
 import storage from '../../Storage/storage'
@@ -13,6 +14,7 @@ import { useModal } from '../../hooks/useModal'
 import ModalShowPersonalidadesOtor from './ModalShowPersonalidadesOtor';
 import ModalRevocarOtorgacion from './ModalRevocarOtorgacion';
 import ModalModificacion from './ModalModificacion';
+import ModalExtinguirOtorgacion from './ModalExtinguirOtorgacion';
 import SelectOtorgacionPersonalidades from './reporte/SelectOtorgacionPersonalidades';
 
 const OtorgacionPersonalidades = () => {
@@ -28,6 +30,8 @@ const OtorgacionPersonalidades = () => {
     //para el revocatoria
     const [revocatoriaModal, openRevocatoriaModal, closeRevocatoriaModal] = useModal(false);
     const [revocatoria, setRevocatoria] = useState({ otorgacion_id: 1, nota_revocatorio: '', fecha_revocatoria: '', observacion: '' });
+    const [extintoModal, openExtintoModal, closeExtintoModal] = useModal(false);
+    const [extinto, setExtinto] = useState({ otorgacion_id: 1, nota_extincion: '', fecha_extenion: '', observacion: '' });
     const [update, setUpdate] = useState({
         fecha: '',
         otorgacion_id: 0,
@@ -128,6 +132,25 @@ const OtorgacionPersonalidades = () => {
         openRevocatoriaModal();
     }
 
+    const handleExtinguir = (e, row) => {
+        e.preventDefault();
+        const auxiliar = {
+            otorgacion_id: row.id,
+            nota_extincion: '',
+            fecha_extenion: '',
+            observacion: ''
+        };
+        setExtinto({ ...extinto, ...auxiliar })
+        openExtintoModal();
+    }
+
+    const handleInputExtinto = ({ target }) => {
+        setExtinto({
+            ...extinto,
+            [target.name]: target.value
+        });
+    };
+
     const handleInputModificacion = ({ target }) => {
         setUpdate({
             ...update,
@@ -157,9 +180,35 @@ const OtorgacionPersonalidades = () => {
             name: 'Acciones',
             cell: (row) => (
                 <div className='container-fluid d-flex flex-row gap-1'>
-                    <button onClick={(e) => handleShow(e, row)} className="button_show"><i className="fa-solid fa-eye"></i><span>Ver</span></button>
-                    <button onClick={(e) => handleModificar(e, row)} className="button_edit"><i className="fa-solid fa-pen-to-square"></i><span>Modificar</span></button>
-                    <button onClick={(e) => handleRevocar(e, row)} className="button_delete"><i className="fa-regular fa-circle-xmark"></i><span>Revocar</span></button>
+                    <button onClick={(e) => handleShow(e, row)} className="button_show">
+                        <i className="fa-solid fa-eye"></i>
+                        <span>Ver</span>
+                    </button>
+                    <div className='dropdown'>
+                        <button className="button_dropdown_table dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i className="fa-solid fa-gear"></i>
+                        </button>
+                        <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li>
+                                <button onClick={(e) => handleModificar(e, row)} className="button_edit_table">
+                                    <i className="fa-solid fa-pen-to-square"></i>
+                                    <span className='mx-1'>Modificar</span>
+                                </button>
+                            </li>
+                            <li>
+                                <button onClick={(e) => handleRevocar(e, row)} className="button_delete_table">
+                                    <i className="fa-regular fa-circle-xmark"></i>
+                                    <span className='mx-1'>Revocar</span>
+                                </button>
+                            </li>
+                            <li>
+                                <button onClick={(e) => handleExtinguir(e, row)} className="button_print_table">
+                                    <i className="fa-regular fa-circle-xmark"></i>
+                                    <span className='mx-1'>Extinguir</span>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             ),
             ignoreRowClick: true,
@@ -253,7 +302,7 @@ const OtorgacionPersonalidades = () => {
         selectAllRowsItem: true,
         selectAllRowsItemText: 'todos'
     };
-    if (isLoading) return <Loading />
+    if (isLoading) return <Spiner />
     else if (isError) return <div>Error: {error.message}</div>
     return (
         <>
@@ -262,6 +311,9 @@ const OtorgacionPersonalidades = () => {
             {/* par el modal de revocatoria  */}
             <ModalRevocarOtorgacion registrorModal={revocatoriaModal} closeRegistrorModal={closeRevocatoriaModal} openRegistrorModal={openRevocatoriaModal}
                 registro={revocatoria} handleInputChange={handleInputRevocatoria} />
+
+            <ModalExtinguirOtorgacion registrorModal={extintoModal} closeRegistrorModal={closeExtintoModal} openRegistrorModal={openExtintoModal}
+                registro={extinto} handleInputExtinto={handleInputExtinto} />
 
             {/* para le modal show otorgacion  */}
             <ModalShowPersonalidadesOtor registro={otorgacionShow} modalRegistro={modalOtorgacion} closeRegistro={closeOtorgacion} />

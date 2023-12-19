@@ -7,6 +7,8 @@ import { show_alerta } from '../../components/MessageAlert';
 import { estilos } from '../../components/estilosdatatables';
 import Banner from '../../components/Banner';
 import Loading from '../../components/Loading';
+import Spiner from '../../components/Spiner';
+import storage from '../../Storage/storage'
 
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 import { getAdministrativos, destroyAdministrativo, passwordAdministrativo } from '../../api/administrativosApi';
@@ -61,7 +63,8 @@ const IndexAdministrativos = () => {
                 nombres.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
                 registro.cargo.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
                 registro.ci.toString().includes(search.toLowerCase()) ||
-                registro.user.email.toLowerCase().includes(search.toLowerCase())
+                registro.usuario.toString().includes(search.toLowerCase()) ||
+                registro.email.toLowerCase().includes(search.toLowerCase())
             ) {
                 return registro;
             }
@@ -122,6 +125,8 @@ const IndexAdministrativos = () => {
         }).then((result) => {
             if (result.isConfirmed) {
                 setLoading(true);
+                const auxiliar = {auth_id: storage.get('authUser').id}
+                const enviar = {...row, ...auxiliar}
                 dropAdministrativo.mutate(row);
             }
         });
@@ -158,7 +163,7 @@ const IndexAdministrativos = () => {
                             </button>
                             <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                 <li>
-                                    <Link to={`/administrativo/edit/${row.id}`} className="button_edit_table dropdown-item">
+                                    <Link to={`/administrativo/editar/${row.id}`} className="button_edit_table dropdown-item">
                                         <i className="fa-solid fa-pen-to-square"></i>
                                         <span className='mx-2'>Editar</span>
                                     </Link>
@@ -202,7 +207,7 @@ const IndexAdministrativos = () => {
         },
         {
             name: 'Correo Institucional',
-            selector: row => row.user.email,
+            selector: row => row.email,
             sortable: true,
             wrap: true,         
             width: '250px',
@@ -223,12 +228,10 @@ const IndexAdministrativos = () => {
         selectAllRowsItem: true,
         selectAllRowsItemText: 'todos'
     };
-    if (isLoading) return <Loading />
+    if (isLoading) return <Spiner />
     else if (isError) return <div>Error: {error.message}</div>
 
     return (
-
-
         <div>
             {loading === true ? <Loading /> : ''}
             <Banner text="LISTA DE ADMINISTRATIVOS" />
@@ -249,7 +252,7 @@ const IndexAdministrativos = () => {
                 <ShowAdm modal={showadministrativo} close={closeAdministrativo} registro={administrativoShow}/>
                 <SelectAdministrativos registro={selectedRows} modal={selectpdf} close={closeSelectpdf} />
                 <div>
-                    <Link to="/administrativo/create" className='btn button_green'>
+                    <Link to="/administrativo/crear" className='button_green'>
                         <span>AÑADIR</span>
                         <i className="fa fa-plus" aria-hidden="true"></i>
                     </Link>

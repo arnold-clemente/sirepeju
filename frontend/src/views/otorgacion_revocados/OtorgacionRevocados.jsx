@@ -3,6 +3,7 @@ import DataTable from "react-data-table-component";
 import { useQuery } from 'react-query';
 
 import Loading from '../../components/Loading';
+import Spiner from '../../components/Spiner';
 import Banner from '../../components/Banner';
 
 import { getRevocatorias } from '../../api/otorgacionesApi';
@@ -54,11 +55,20 @@ const OtorgacionRevocados = () => {
             return registros;
         const filtered = registros.filter(registro => {
             if (
-                registro.miembros_fundador.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
+                registro.codigo_otorgacion.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
+                registro.fecha_ingreso_tramite.includes(search.toLowerCase()) ||
+                registro.persona_colectiva.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
+                registro.naturaleza.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
                 registro.personalidad_juridica.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
                 registro.sigla.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
-                registro.naturaleza.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
-                registro.codigo_otorgacion.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase())
+                registro.objeto.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
+                registro.cite_informe_preliminar.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
+                registro.seguimiento.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
+                registro.miembros_fundador.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
+                registro.representante.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
+                registro.nota_revocatorio.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
+                registro.fecha_revocatoria.toLowerCase().includes(search.toLowerCase()) ||
+                registro.ci_rep.toLowerCase().includes(search.toLowerCase())
             ) {
                 return registro;
             }
@@ -108,7 +118,7 @@ const OtorgacionRevocados = () => {
         },
         {
             name: 'Observacion',
-            selector: row => row.observacion,
+            selector: row => row.revocatoria,
             sortable: true,
             wrap: true,
             width: '250px',
@@ -199,7 +209,7 @@ const OtorgacionRevocados = () => {
         selectAllRowsItem: true,
         selectAllRowsItemText: 'todos'
     };
-    if (isLoading) return <Loading />
+    if (isLoading) return <Spiner />
     else if (isError) return <div>Error: {error.message}</div>
     return (
         <>

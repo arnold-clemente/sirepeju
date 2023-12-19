@@ -42,16 +42,5 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
-     //relacion uno a uno user - administrativo
-     public function administrativo()
-     {
-         return $this->hasOne(Administrativo::class);
-     }
-     
-      //relacion uno a uno user - gobernacion
-      public function gobernacion()
-      {
-          return $this->hasOne(Gobernacion::class);
-      }
+   
 }

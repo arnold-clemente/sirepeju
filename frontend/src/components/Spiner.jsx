@@ -3,7 +3,7 @@ import React from 'react'
 const Spiner = () => {
   return (
     <>
-      <span className='loader_spiner'></span>
+      <div className='spiner_content'><span className='loader_spiner'></span></div>
     </>
   )
 }
