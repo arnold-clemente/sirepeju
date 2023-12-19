@@ -253,20 +253,19 @@ const RepPersonalidadAdecuacion = ({ adecuacion, fundadores, personalidad, modal
                                     : null
                                 }
                             </View>
-                            {/* Contenido de tu documento */}
-<View style={styles.content}>
-        <Text style={styles.dato}>{"\n"}El contenido de este documento esta extraido del sistema SIREPEJU(Sistema de Registro de Personalidades Juroidícas).</Text>
-       
-        <Text style={styles.dato}>{"\n"}{"\n"}{"\n"}Fecha y Hora de Impresión: {"\n"}{getCurrentDateTime()}</Text>
-      </View>
-      <View style={styles.watermark}>
-        <Text>SIREPEJU</Text>
-      </View>
-      <View style={styles.footer}>
-          {/* Línea en el pie de página */}
-          <View style={styles.line}></View>
-          <Text>Casa Grande del Pueblo,calle Ayacucho - esq.Potosí,Tel:(591-2)2184178 {"\n"}La Paz -Bolivia {"\n"}{"\n"}Pagína{1}</Text>
-        </View> 
+                         {/* Contenido de tu documento */}
+                                <View style={styles.content}>
+                                <Text style={styles.dato}>{"\n"}El contenido de este documento esta extraido del sistema SIREPEJU(Sistema de Registro de Personalidades Juroidícas).</Text>
+                                <Text style={styles.dato}>{"\n"}{"\n"}{"\n"}Fecha y Hora de Impresión: {"\n"}{getCurrentDateTime()}</Text>
+                            </View>
+                            <View style={styles.watermark}>
+                                <Text>SIREPEJU</Text>
+                            </View>
+                            <View style={styles.footer}>
+                                {/* Línea en el pie de página */}
+                                <View style={styles.line}></View>
+                                <Text>Casa Grande del Pueblo,calle Ayacucho - esq.Potosí,Tel:(591-2)2184178 {"\n"}La Paz -Bolivia {"\n"}{"\n"}Pagína{1}</Text>
+                                </View> 
                         </Page>
                     </Document>
                 </PDFViewer>

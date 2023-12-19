@@ -32,7 +32,7 @@ const RepAdm = ({ registro, modal, close }) => {
         },
         contenedor: {
             width: '100%',
-            marginBottom: 'cm'
+            
         },
         contenedor_logo: {
             width: '100%',
@@ -80,12 +80,12 @@ const RepAdm = ({ registro, modal, close }) => {
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'flex-start',
-            marginBottom: '10px',
+            marginBottom: '6px',
         },
         tipo: {
             fontSize: '14px',
             fontWeight: 700,
-            paddingRight: '5px',
+            paddingRight: '2px',
         },
         dato: {
             fontSize: '11px',
@@ -204,10 +204,8 @@ const RepAdm = ({ registro, modal, close }) => {
         <Text style={styles.tableCell}>Price</Text> 
         </View> 
         </View>
-        
-        
-        {/* final de la tabla */}
       </View>
+       {/* final de la tabla */}
       
 
       <View style={styles.content}>
