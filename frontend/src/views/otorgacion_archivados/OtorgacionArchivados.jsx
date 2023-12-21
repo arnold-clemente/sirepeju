@@ -165,6 +165,7 @@ const OtorgacionArchivados = () => {
         mutationFn: caducarOtorgacion,
         onSuccess: (response) => {
             queryClient.invalidateQueries('otorgaciones')
+            queryClient.invalidateQueries('otorgaciones_archivados')
             queryClient.invalidateQueries('otorgaciones_caducados')
             show_alerta('Otorgacion Caducado', '<i class="fa-solid fa-check border_alert_green"></i>', 'alert_green')
             setLoading(false);
@@ -194,7 +195,7 @@ const OtorgacionArchivados = () => {
                             <span>Desarchivar</span>
                         </button>
                     }
-                    {Math.round((now - (new Date(row.fecha_ingreso_tramite).getTime())) / (1000 * 60 * 60 * 24)) > 365
+                    {Math.round((now - (new Date(row.fecha_ingreso_tramite).getTime())) / (1000 * 60 * 60 * 24)) > 100
                         ? (<button onClick={(e) => handleCaducar(e, row)} className="button_delete">
                             <i className="fa-solid fa-x"></i>
                             <span>Caducar</span>

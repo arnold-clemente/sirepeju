@@ -1,9 +1,10 @@
 
-reserva de nombre  -> 1
+reserva de nombre  -> 1 tipo
 1 -> solicitado 
 2 -> homonimia 
 3 -> reservado 
 4 -> caducado
+5 -> otorgacion
 
 otorgacion -> 2
 1 -> tramite 
@@ -34,3 +35,9 @@ gobernacion 4
 registro -> 5
 0 eliminado  
 1 activo
+
+
+
+
+
+

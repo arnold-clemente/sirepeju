@@ -24,8 +24,8 @@ class DatabaseSeeder extends Seeder
         $this->call(OtorgacionGobernacionSeeder::class);
         $this->call(GobernacionFundadorSeeder::class);
         $this->call(ReservaOtorgacionSeeder::class);
-        $this->call(SolicitudReservaController::class);
-        $this->call(HomonimiaReservaController::class);
+        $this->call(SolicitudReservaSeeder::class);
+        $this->call(HomonimiaReservaSeeder::class);
         $this->call(OtorgacionSeeder::class);
         $this->call(OtorgacionFundadorSeeder::class);
         $this->call(AdecuacionSeeder::class);

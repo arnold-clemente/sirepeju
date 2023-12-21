@@ -29,3 +29,6 @@ require('api/otorgacion_gobernacion.php');
 
 //rutas para los registrados 
 require('api/registros.php');
+
+//rutas modificaciones 
+require('api/modificacion.php');

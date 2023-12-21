@@ -6,7 +6,7 @@ use App\Models\ReservaOtorgacion;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class HomonimiaReservaController extends Seeder
+class HomonimiaReservaSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -125,5 +125,6 @@ class HomonimiaReservaController extends Seeder
         ReservaOtorgacion::create(['fecha_reg' => '2022-06-08', 'hr' => 9159, 'entidad' => 'CÁMARA BINACIONAL DE COMERCIO E INDUSTRIA BOLIVIANO COLOMBIANA', 'sigla' => 'CABOCO', 'persona_colectiva' => 'PERSONA NATURAL', 'nro_certificado' => '00-159', 'naturaleza' => 'ENTIDAD SIN FINES DE LUCRO', 'obs' => 'sin observacion', 'fecha_entrega' => '2022-06-18', 'representante' => 'MARIBEL MARINA HUANCA ', 'telefono' => '60500077', 'correo' => 'espacioeges@gmail.com', 'estado' => 2, 'ci_rep' => '1239926', 'ext_ci_rep' => 'BN', 'administrativo_id' => 1,]);
         ReservaOtorgacion::create(['fecha_reg' => '2022-06-09', 'hr' => 9160, 'entidad' => 'COLEGIO DE FISIOTERAPIA Y KINESIOLOGIA DE BOLIVIA', 'sigla' => 'COFYKBOL', 'persona_colectiva' => 'PERSONA NATURAL', 'nro_certificado' => '00-160', 'naturaleza' => 'ENTIDAD SIN FINES DE LUCRO', 'obs' => 'sin observacion', 'fecha_entrega' => '2022-06-19', 'representante' => 'VICTOR FERNANDO ARMAZA PACHECO', 'telefono' => '77605382', 'correo' => 'salomon.eid@berkeley.edu', 'estado' => 2, 'ci_rep' => '1239926', 'ext_ci_rep' => 'PA', 'administrativo_id' => 1,]);
         ReservaOtorgacion::create(['fecha_reg' => '2022-06-10', 'hr' => 9161, 'entidad' => 'ASOCIACIÓN NACIONAL DE ENTRENADORES DEL FUTBOL BOLIVIANO', 'sigla' => 'A.N.E.F.B.O.', 'persona_colectiva' => 'PERSONA NATURAL', 'nro_certificado' => '00-161', 'naturaleza' => 'ORGANIZACIÓN SOCIAL', 'obs' => 'sin observacion', 'fecha_entrega' => '2022-06-20', 'representante' => 'JOHAN UDALRICO ZAMBRANA OVANDO', 'telefono' => '3350707', 'correo' => 'johan.zambrana@zambranaabogados.com', 'estado' => 2, 'ci_rep' => '1239926', 'ext_ci_rep' => 'TJ', 'administrativo_id' => 1,]);
+    
     }
 }

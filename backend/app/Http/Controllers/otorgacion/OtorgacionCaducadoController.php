@@ -46,14 +46,14 @@ class OtorgacionCaducadoController extends Controller
         $fecha = $date->format('Y-m-d');
         $user_auth = auth()->user();
 
-        if ($otorgacion->estado == 1) {
+        if ($otorgacion->estado == 2) {
             $otorgacion->fecha_envio = $fecha;
             $otorgacion->estado = 3;
             $otorgacion->caducado = $user_auth->id; 
             $otorgacion->save();
         }
 
-        if ($otorgacion->estado == 7) {
+        if ($otorgacion->estado == 8) {
             $otorgacion->estado = 4;
             $otorgacion->save();
 

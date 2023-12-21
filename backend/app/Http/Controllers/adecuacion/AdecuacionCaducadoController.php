@@ -46,14 +46,14 @@ class AdecuacionCaducadoController extends Controller
         $fecha = $date->format('Y-m-d');
         $user_auth = auth()->user();
 
-        if ($adecuacion->estado == 1) {
+        if ($adecuacion->estado == 2) {
             $adecuacion->fecha_envio = $fecha;
             $adecuacion->estado = 3;
             $adecuacion->caducado = $user_auth->id; 
             $adecuacion->save();
         }
 
-        if ($adecuacion->estado == 7) {
+        if ($adecuacion->estado == 8) {
             $adecuacion->estado = 4;
             $adecuacion->save();
 
@@ -73,7 +73,7 @@ class AdecuacionCaducadoController extends Controller
 
         return response()->json([
             'status' => true,
-            'message' => 'Caducado satisfactoriamente'
+            'message' => 'Caducado Adecuacion satisfactoriamente'
         ]);
     }
 }

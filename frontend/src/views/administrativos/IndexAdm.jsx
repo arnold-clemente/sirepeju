@@ -60,7 +60,7 @@ const IndexAdministrativos = () => {
         const filtered = registros.filter(registro => {
             const nombres = registro.nombres + ' ' + registro.paterno + ' ' + registro.materno;
             if (
-                nombres.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
+                nombres.toLowerCase().normalize('NFD').includes(search.toLowerCase()) ||
                 registro.cargo.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
                 registro.ci.toString().includes(search.toLowerCase()) ||
                 registro.usuario.toString().includes(search.toLowerCase()) ||

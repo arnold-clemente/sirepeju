@@ -104,7 +104,7 @@ class OtorgacionController extends Controller
             'create' => $user_auth->id,
         ]);
 
-        $registro->estado = 1;
+        $registro->estado = 5;
         $registro->save();
 
         return response()->json([

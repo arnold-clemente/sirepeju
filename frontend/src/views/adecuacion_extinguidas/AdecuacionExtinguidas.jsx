@@ -3,10 +3,11 @@ import DataTable from "react-data-table-component";
 import { useQuery } from 'react-query';
 
 import Loading from '../../components/Loading';
+import Spiner from '../../components/Spiner';
 import Banner from '../../components/Banner';
 import { estilos } from '../../components/estilosdatatables';
 
-import { getRevocatorias } from '../../api/adecuacionApi';
+import { getExtinguidas } from '../../api/adecuacionApi';
 // modal 
 import { useModal } from '../../hooks/useModal'
 import ShowAdecuacionExtinguida from './ShowAdecuacionExtinguida';
@@ -43,8 +44,8 @@ const AdecuacionExtinguidas = () => {
     }, [selectedRows, toggleCleared]);
 
     const { isLoading, data: registros, isError, error } = useQuery({
-        queryKey: ['revocados_adecuacion'],
-        queryFn: getRevocatorias,
+        queryKey: ['adecuacion_extinguidas'],
+        queryFn: getExtinguidas,
         select: adecuaciones => adecuaciones.sort((a, b) => b.id - a.id)
     })
 
@@ -115,25 +116,6 @@ const AdecuacionExtinguidas = () => {
         {
             name: 'Observacion',
             selector: row => row.extincion,
-            sortable: true,
-            wrap: true,
-            width: '250px',
-        },
-        {
-            name: 'Nota Revocatoria',
-            selector: row => row.nota_revocatorio,
-            sortable: true,
-            width: '150px',
-        },
-        {
-            name: 'Fecha Revocatoria',
-            selector: row => row.fecha_revocatoria,
-            sortable: true,
-            width: '150px',
-        },
-        {
-            name: 'Observacion',
-            selector: row => row.observacion,
             sortable: true,
             wrap: true,
             width: '250px',
@@ -224,7 +206,7 @@ const AdecuacionExtinguidas = () => {
         selectAllRowsItem: true,
         selectAllRowsItemText: 'todos'
     };
-    if (isLoading) return <Loading />
+    if (isLoading) return <Spiner />
     else if (isError) return <div>Error: {error.message}</div>
     return (
         <>

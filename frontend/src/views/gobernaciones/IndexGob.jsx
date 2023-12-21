@@ -61,7 +61,7 @@ const IndexGob = () => {
         nombres.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
         registro.cargo.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
         registro.ci.toString().includes(search.toLowerCase()) ||
-        registro.institucion.toString().includes(search.toLowerCase()) ||
+        registro.institucion.toString().includes(search) ||
         registro.departamento.toString().includes(search.toLowerCase()) ||
         registro.usuario.toString().includes(search.toLowerCase()) ||
         registro.email.toLowerCase().includes(search.toLowerCase())

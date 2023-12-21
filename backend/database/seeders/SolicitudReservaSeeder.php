@@ -6,7 +6,7 @@ use App\Models\ReservaOtorgacion;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class SolicitudReservaController extends Seeder
+class SolicitudReservaSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -66,5 +66,6 @@ class SolicitudReservaController extends Seeder
         ReservaOtorgacion::create(['fecha_reg' => '2023-09-18', 'hr' => 9049, 'entidad' => 'FUNDACION JOSE KENTENICHE ', 'sigla' => 'FJK', 'persona_colectiva' => 'PERSONA NATURAL', 'nro_certificado' => '00-49', 'naturaleza' => 'FUNDACION', 'obs' => 'sin observacion', 'representante' => 'LUZ MARINA GUTIERREZ REGUERIN ', 'telefono' => '78112784', 'correo' => 'nicolasvalverde@wayarabogados.bo', 'estado' => 1, 'ci_rep' => '1239926', 'ext_ci_rep' => 'CB', 'administrativo_id' => 1,]);
         ReservaOtorgacion::create(['fecha_reg' => '2023-09-19', 'hr' => 9050, 'entidad' => 'ORGANIZACION DE RENTISTAS Y ADULTOS MAYORES DE BOLIVIA', 'sigla' => 'OREAM', 'persona_colectiva' => 'PERSONA NATURAL', 'nro_certificado' => '00-50', 'naturaleza' => 'ORGANIZACIÓN SOCIAL', 'obs' => 'sin observacion', 'representante' => 'MARIO ANGEL DELGADO JIMENEZ', 'telefono' => '79623253', 'correo' => 'mardeljim@hotmail.com', 'estado' => 1, 'ci_rep' => '1239926', 'ext_ci_rep' => 'SC', 'administrativo_id' => 1,]);
         ReservaOtorgacion::create(['fecha_reg' => '2023-09-20', 'hr' => 9051, 'entidad' => 'COLEGIO DE GASTRONOMOS DE BOLIVIA', 'sigla' => 'CGB', 'persona_colectiva' => 'PERSONA NATURAL', 'nro_certificado' => '00-51', 'naturaleza' => 'ORGANIZACIÓN SOCIAL', 'obs' => 'sin observacion', 'representante' => 'PEDRO CADENA FLORES', 'telefono' => '73732926', 'correo' => 'colegiogastronomosbolivia@gmail,com', 'estado' => 1, 'ci_rep' => '1239926', 'ext_ci_rep' => 'BN', 'administrativo_id' => 1,]);
+    
     }
 }
