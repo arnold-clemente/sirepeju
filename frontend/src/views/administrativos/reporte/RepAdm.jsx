@@ -8,32 +8,27 @@ const RepAdm = ({ registro, modal, close }) => {
     const styles = StyleSheet.create({
         main: {
             width: "100%",
-            height: "76vh",
+            height: "90vh",
             boxSizing: "border-box",
         },
-        page: {
-            flexDirection: 'row',
-            backgroundColor: '#E4E4E4',
-            margin: 100
+        page:{
+            flexDirection:'row',
+            backgroundColor:'#E4E4E4',
+            margin:8
         },
-        section: {
-            margin: 10,
-            padding: 10,
-            flexGrow: 1,
+        section:{
+            margin: "10px",
+            padding:10,
+            flexGrow:1,
         },
         body: {
             width: "100%",
             height: "100%",
-            margin: "2px",
-            paddingTop: "2.5px",
-            paddingBottom: "2.5px",
-            paddingRight: "2.5px",
-            paddingLeft: "3px",
-            
         },
         contenedor: {
             width: '100%',
-            marginBottom: '1cm'
+            margin: "2px"
+
         },
         contenedor_logo: {
             width: '100%',
@@ -172,6 +167,7 @@ const RepAdm = ({ registro, modal, close }) => {
                                 <Text style={styles.dato}>{registro.nombres + ' ' +  registro.paterno + ' ' + registro.materno}</Text>
                             </View>                        */}
 
+
                             {/* la tabla desde este lugar */}
 
                             <View style={styles.table}>
@@ -206,10 +202,8 @@ const RepAdm = ({ registro, modal, close }) => {
                                     </View>
                                 </View>
 
-
                                 {/* final de la tabla */}
                             </View>
-
 
                             <View style={styles.content}>
                                 {/* Contenido de tu documento */}
