@@ -2,29 +2,59 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Models\Administrativo;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class AdministrativoController extends Controller
 {
     public function index()
     {
-        $administrativos = Administrativo::with('user')->whereIn('estado', [1])->get();
+        $administrativos = DB::table('administrativos')
+            ->join('users', 'users.id', '=', 'administrativos.user_id')
+            ->selectRaw('
+                    administrativos.id as id, 
+                    administrativos.nombres as nombres, 
+                    administrativos.paterno as paterno,
+                    administrativos.materno as materno, 
+                    administrativos.cargo as cargo, 
+                    administrativos.ci as ci, 
+                    administrativos.ext_ci as ext_ci,
+                    administrativos.estado as estado,
+                    users.rol as usuario, 
+                    administrativos.user_id as user_id, 
+                    users.email as email
+                ')
+            ->whereIn('administrativos.estado', [1])
+            ->get();
+
+
         return response()->json($administrativos);
     }
 
     public function show(Administrativo $administrativo)
     {
-        $administrativoEdit = Administrativo::selectRaw('administrativos.id as id, administrativos.nombres as nombres, administrativos.paterno as paterno,
-        administrativos.materno as materno, administrativos.cargo as cargo, administrativos.ci as ci, administrativos.ext_ci as ext_ci, 
-        users.rol as usuario, administrativos.user_id as user_id, users.email as email')
+        $adminitrativo_show = DB::table('administrativos')
             ->join('users', 'users.id', '=', 'administrativos.user_id')
+                ->selectRaw('
+                    administrativos.id as id, 
+                    administrativos.nombres as nombres, 
+                    administrativos.paterno as paterno,
+                    administrativos.materno as materno, 
+                    administrativos.cargo as cargo, 
+                    administrativos.ci as ci, 
+                    administrativos.ext_ci as ext_ci, 
+                    users.rol as usuario, 
+                    administrativos.user_id as user_id, 
+                    users.email as email
+                ')
             ->where('administrativos.id', $administrativo->id)
             ->first();
-        return response()->json($administrativoEdit);
+
+        return response()->json($adminitrativo_show);
     }
 
     public function store(Request $request)
@@ -38,6 +68,7 @@ class AdministrativoController extends Controller
             'email' => 'required|email|unique:users,email',
             'ci' => 'required|string|max:12|unique:administrativos,ci',
             'ext_ci' => 'required',
+            'user_id' => 'required',
         ];
 
         $validator = Validator::make($request->input(), $rules);
@@ -62,9 +93,10 @@ class AdministrativoController extends Controller
             'cargo' => $request->cargo,
             'ci' =>  $request->ci,
             'ext_ci' => $request->ext_ci,
-            'user_id' => $user->id
+            'user_id' => $user->id,
+            'create' => $request->user_id,
         ]);
-     
+
 
         return response([
             'user' => $user,
@@ -73,7 +105,7 @@ class AdministrativoController extends Controller
             'message' => 'Creado satisfactoriamente'
         ]);
     }
-   
+
     public function update(Administrativo $administrativo, Request $request)
     {
         $rules = [
@@ -85,6 +117,7 @@ class AdministrativoController extends Controller
             'ci' => 'required|string|max:12|unique:administrativos,ci,' . $administrativo->id,
             'ext_ci' => 'required',
             'email' => 'required|email|unique:users,email,' . $request->user_id,
+            'auth_id' => 'required',
         ];
 
         $validator = Validator::make($request->input(), $rules);
@@ -101,6 +134,7 @@ class AdministrativoController extends Controller
         $administrativo->cargo = $request->cargo;
         $administrativo->ci = $request->ci;
         $administrativo->ext_ci = $request->ext_ci;
+        $administrativo->update = $request->auth_id;
         $administrativo->save();
 
         $user = User::find($request->user_id);
@@ -117,11 +151,12 @@ class AdministrativoController extends Controller
 
     public function destroy(Administrativo $administrativo)
     {
+        $user_auth = auth()->user();
+
         $caracteres_permitidos = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ#$%&/()?-+{}[]_${}*';
         $longitud = 20;
         $random = substr(str_shuffle($caracteres_permitidos), 0, $longitud);
         $usuario = $administrativo->user_id . $random;
-
 
         // cambiar el usuario 
         $user = User::find($administrativo->user_id);
@@ -129,6 +164,7 @@ class AdministrativoController extends Controller
         $user->save();
 
         $administrativo->estado = 0;
+        $administrativo->delete =  $user_auth->id;
         $administrativo->save();
 
         return response([
@@ -138,11 +174,14 @@ class AdministrativoController extends Controller
 
     public function password(Request $request)
     {
+        $user_auth = auth()->user();
+
         $user = User::find($request->user_id);
         $user->password =  Hash::make($request->ci);
         $user->save();
 
         return response([
+            'user' => $user_auth,
             'message' => 'Contraseña Actualizado'
         ]);
     }

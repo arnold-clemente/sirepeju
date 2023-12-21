@@ -7,6 +7,7 @@ import { getGobernacion, updateGobernacion } from '../../api/gobernacionApi';
 
 import Banner from '../../components/Banner';
 import Loading from '../../components/Loading';
+import Spiner from '../../components/Spiner';
 import { show_alerta } from '../../components/MessageAlert';
 import ValidationError from '../../components/ValidationError';
 
@@ -17,8 +18,15 @@ const EditGob = () => {
     const go = useNavigate();
 
     const [gobernacion, setGobernacion] = useState({
-        departamento_id: 4,
         id: 0,
+        nombres: '',
+        paterno: '',
+        materno: '',
+        cargo: '',
+        ci: '',
+        ext_ci: '',
+        user_id: '',
+        institucion_id: 4,
     });
 
     const { isLoading, data: registro, isError, error } = useQuery({
@@ -29,7 +37,7 @@ const EditGob = () => {
     })
 
     const [errorval, serErrorval] = useState({});
-    const { nombres, paterno, materno, cargo, ci, ext_ci, email, departamento_id, user_id } = gobernacion;
+    const { nombres, paterno, materno, cargo, ci, ext_ci, email, institucion_id, user_id } = gobernacion;
 
     const [loading, setLoading] = useState(false);
 
@@ -42,7 +50,7 @@ const EditGob = () => {
                 queryClient.invalidateQueries('gobernacions')
                 show_alerta('Actualizado con exito', '<i class="fa-solid fa-check border_alert_green"></i>', 'alert_green')
                 setLoading(false);
-                go('/user-gobernaciones')
+                go('/gobernaciones')
             } else {
                 show_alerta('Fallo de Validacion', '<i class="fa-solid fa-xmark border_alert_red"></i>', 'alert_red');
                 serErrorval(response.errors);
@@ -83,9 +91,9 @@ const EditGob = () => {
         });
     };
 
-    if (isLoading) return <Loading />
-    else if (isError) return <div>Error: {errorval.message}</div>
-    if (gobernacion.id === 0) return <Loading />
+    if (isLoading) return <Spiner />
+    else if (isError) return <div>Error: {error.message}</div>
+    if (gobernacion.id === 0) return <Spiner />
     else
         return (
             <>
@@ -167,7 +175,7 @@ const EditGob = () => {
                             <div className="form-group">
                                 <label>Gobernacion Departamento </label>
                                 <select className="form-control" id="exampleFormControlSelect1"
-                                    name="departamento_id" value={departamento_id} onChange={handleInputChange}>
+                                    name="institucion_id" value={institucion_id} onChange={handleInputChange}>
                                     <option value="1">BENI</option>
                                     <option value="2">CHUQUISACA</option>
                                     <option value="3">COCHABAMBA</option>
@@ -181,7 +189,7 @@ const EditGob = () => {
                             </div>
                         </div>
                     </div>
-                    <Link to='/user-gobernaciones' type="submit" className="btn btn-danger my-4">Cancelar</Link>
+                    <Link to='/gobernaciones' type="submit" className="btn btn-danger my-4">Cancelar</Link>
                     <button type="submit" className="btn btn-primary my-4 mx-4">Actualizar</button>
                 </form>
             </>

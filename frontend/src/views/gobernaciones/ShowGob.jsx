@@ -11,12 +11,7 @@ const ShowGob = ({ modal, close, registro }) => {
             <ModalDiv isOpen={modal} closeModal={close} title={'Responsable Gobernacion'}>
                 <RepGob registro={registro} modal={imprimir} close={closeImprimir} />
                 <div className="container-fluid">
-                    <h2><center>
-                        {
-                            registro.departamento
-                                ? registro.departamento.institucion
-                                : null
-                        }
+                    <h2><center>{registro.institucion}
                     </center>
                     </h2>
                     <div className='container-fluid d-flex justify-content-end'>
@@ -29,7 +24,7 @@ const ShowGob = ({ modal, close, registro }) => {
                     <h2 className="fs-6"><b>Cargo departamental: </b>{registro.cargo}</h2> <hr />
 
                     <h2 className="fs-6"><b>Cedula de Indentidad: </b>{registro.ci + ' ' + registro.ext_ci}</h2> <hr />
-                    <h2 className="fs-6"><b>Correo Institucional: </b> {registro.user ? registro.user.email : ''} &nbsp;&nbsp;</h2>
+                    <h2 className="fs-6"><b>Correo Institucional: </b> {registro.email} &nbsp;&nbsp;</h2>
                 </div>
                 <hr />
                 <div className='d-flex'>

@@ -3,7 +3,7 @@ import Swal from 'sweetalert2';
 import { show_alerta } from '../../components/MessageAlert';
 import ValidationError from '../../components/ValidationError';
 
-import { createOtorgacion } from '../../api/registroApi';
+import { createOtorgacion } from '../../api/otorgacionesApi';
 import { useMutation } from 'react-query';
 import { useQueryClient } from 'react-query';
 import Loading from '../../components/Loading';

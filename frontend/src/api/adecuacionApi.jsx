@@ -89,6 +89,13 @@ export const desarchivarAdecuacion = async (adecuacion) => {
     return response;
 }
 
+export const desarchivarModificacionAdecuacion= async (adecuacion) => {
+    const response = await axios.post(`/api/adecuacion/modificacion/desarchivar/${adecuacion.id}`)
+        .then((response) => { return response.data })
+        .catch((error) => { return error.data });
+    return response;
+}
+
 // para los caducados 
 
 export const getCaducados = async () => {
@@ -103,3 +110,16 @@ export const caducarAdecuacion= async (adecuacion) => {
     return response;
 }
 
+
+// para las extinguidas 
+export const createExtinguida = async (adecuacion) => {
+    const res = await axios.post('/api/adecuacion/extinguida/store', adecuacion)
+        .then((response) => { return response.data })
+        .catch((error) => { return error.data });
+    return res;
+}
+
+export const getExtinguidas = async () => {
+    const response = await axios.get('/api/adecuacion/extinguidas')
+    return response.data;
+}

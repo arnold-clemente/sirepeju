@@ -15,18 +15,16 @@ const ShowAdm = ({ modal, close, registro }) => {
                         <span>Imprimir</span>
                     </button>
                 </div>
-                
+
 
                 <RepAdm registro={registro} modal={imprimir} close={closeImprimir} />
 
                 <div className="modal-dialog modal-lg">
                     <h2 className="fs-6"><b>Nombre Completo:</b> &nbsp;&nbsp;{registro.nombres + ' ' + registro.paterno + ' ' + registro.materno} </h2>&nbsp;&nbsp;<b>CI:</b> {registro.ci + ' ' + registro.ext_ci}<hr />
                     <h2 className="fs-6"><b>Cargo:</b> &nbsp;{registro.cargo}</h2> <hr />
-                    {registro.user
-                        ? <div><h2 className="fs-6"><b>Correo Electronico:</b> &nbsp;{registro.user.email}</h2><hr />
-                            <h2 className="fs-6"><b>Rol:</b> &nbsp;{registro.user.rol}</h2> <hr />
-                        </div>
-                        : ''}
+                    <div><h2 className="fs-6"><b>Correo Electronico:</b> &nbsp;{registro.email}</h2><hr />
+                        <h2 className="fs-6"><b>Rol:</b> &nbsp;{registro.usuario}</h2> <hr />
+                    </div>
                 </div>
                 <hr />
                 <div className='d-flex'>

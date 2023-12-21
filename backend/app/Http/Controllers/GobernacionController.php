@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Gobernacion;
-use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -12,12 +13,60 @@ class GobernacionController extends Controller
 {
     public function index()
     {
-        $gobernacions = Gobernacion::with('user', 'departamento')->whereIn('estado', [1])->get();
+        $gobernacions = DB::table('gobernacions')
+            ->join('users', 'users.id', '=', 'gobernacions.user_id')
+            ->join('institucions', 'institucions.id', '=', 'gobernacions.institucion_id')
+            ->selectRaw('
+                    gobernacions.id as id, 
+                    gobernacions.nombres as nombres, 
+                    gobernacions.paterno as paterno,
+                    gobernacions.materno as materno, 
+                    gobernacions.cargo as cargo, 
+                    gobernacions.ci as ci, 
+                    gobernacions.ext_ci as ext_ci, 
+                    gobernacions.user_id as user_id, 
+                    gobernacions.estado as estado, 
+                    users.rol as usuario, 
+                    users.email as email,
+                    institucions.nombre as institucion,
+                    institucions.departamento as departamento
+                ')
+            ->whereIn('gobernacions.estado', [1])
+            ->get();
+
+
         return response()->json($gobernacions);
+    }
+
+    public function show(Gobernacion $gobernacion)
+    {
+        $gobernacion_show = DB::table('gobernacions')
+            ->join('users', 'users.id', '=', 'gobernacions.user_id')
+            ->join('institucions', 'institucions.id', '=', 'gobernacions.institucion_id')
+            ->selectRaw('
+                    gobernacions.id as id, 
+                    gobernacions.nombres as nombres, 
+                    gobernacions.paterno as paterno,
+                    gobernacions.materno as materno, 
+                    gobernacions.cargo as cargo, 
+                    gobernacions.ci as ci, 
+                    gobernacions.ext_ci as ext_ci, 
+                    gobernacions.user_id as user_id, 
+                    gobernacions.institucion_id as institucion_id, 
+                    users.rol as usuario, 
+                    users.email as email,
+                    institucions.nombre as institucion,
+                    institucions.departamento as departamento
+                ')
+            ->where('gobernacions.id', $gobernacion->id)
+            ->first();
+
+        return response()->json($gobernacion_show);
     }
 
     public function store(Request $request)
     {
+        $user_auth = auth()->user();
         $rules = [
             'nombres' => 'required|string|max:100',
             'paterno' => 'required|string|max:100',
@@ -26,7 +75,7 @@ class GobernacionController extends Controller
             'ci' => 'required|string|max:12|unique:gobernacions,ci',
             'ext_ci' => 'required',
             'email' => 'required|email|unique:users,email',
-            'departamento_id' => 'required',
+            'institucion_id' => 'required',
         ];
 
         $validator = Validator::make($request->input(), $rules);
@@ -51,8 +100,9 @@ class GobernacionController extends Controller
             'cargo' => $request->cargo,
             'ci' =>  $request->ci,
             'ext_ci' => $request->ext_ci,
-            'departamento_id' => $request->departamento_id,
-            'user_id' => $user->id
+            'institucion_id' => $request->institucion_id,
+            'user_id' => $user->id,
+            'create' => $user_auth->id,
         ]);
 
         return response([
@@ -63,20 +113,11 @@ class GobernacionController extends Controller
         ]);
     }
 
-    public function show(Gobernacion $gobernacion)
-    {
-        $user_gobernacion = Gobernacion::selectRaw('gobernacions.id as id, gobernacions.nombres as nombres, gobernacions.paterno as paterno,
-        gobernacions.materno as materno, users.email as email, gobernacions.cargo as cargo, gobernacions.ci as ci, gobernacions.ext_ci as ext_ci,
-        gobernacions.departamento_id as departamento_id, gobernacions.user_id as user_id')
-            ->join('users', 'gobernacions.user_id', '=', 'users.id')
-            ->where('gobernacions.id', $gobernacion->id)
-            ->first();
 
-        return response()->json($user_gobernacion);
-    }
 
     public function update(Gobernacion $gobernacion, Request $request)
     {
+        $user_auth = auth()->user();
         $rules = [
             'nombres' => 'required|string|max:100',
             'paterno' => 'required|string|max:100',
@@ -85,7 +126,7 @@ class GobernacionController extends Controller
             'ci' => 'required|string|max:12|unique:gobernacions,ci,' . $gobernacion->id,
             'ext_ci' => 'required',
             'email' => 'required|email|unique:users,email,' . $request->user_id,
-            'departamento_id' => 'required',
+            'institucion_id' => 'required',
         ];
 
         $validator = Validator::make($request->input(), $rules);
@@ -102,7 +143,8 @@ class GobernacionController extends Controller
         $gobernacion->cargo = $request->cargo;
         $gobernacion->ci = $request->ci;
         $gobernacion->ext_ci = $request->ext_ci;
-        $gobernacion->departamento_id = $request->departamento_id;
+        $gobernacion->institucion_id = $request->institucion_id;
+        $gobernacion->update = $user_auth->id;
         $gobernacion->save();
 
         $user = User::find($request->user_id);
@@ -119,11 +161,12 @@ class GobernacionController extends Controller
 
     public function destroy(Gobernacion $gobernacion)
     {
+        $user_auth = auth()->user();
+
         $caracteres_permitidos = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ#$%&/()?-+{}[]_${}*';
         $longitud = 20;
         $random = substr(str_shuffle($caracteres_permitidos), 0, $longitud);
         $usuario = $gobernacion->user_id . $random;
-
 
         // cambiar el usuario 
         $user = User::find($gobernacion->user_id);
@@ -131,10 +174,11 @@ class GobernacionController extends Controller
         $user->save();
 
         $gobernacion->estado = 0;
+        $gobernacion->delete = $user_auth->id;
         $gobernacion->save();
 
         return response([
-            'message' => 'Administrativo Eliminado'
+            'message' => 'Gobernacion Eliminado'
         ]);
     }
 

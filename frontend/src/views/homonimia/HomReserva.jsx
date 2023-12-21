@@ -6,6 +6,7 @@ import { useQuery, useMutation, useQueryClient } from 'react-query';
 import { getHomonimias, entregarReserva } from '../../api/reservaApi';
 
 import Loading from '../../components/Loading';
+import Spiner from '../../components/Spiner';
 import Banner from '../../components/Banner';
 import { show_alerta } from '../../components/MessageAlert';
 import { estilos } from '../../components/estilosdatatables';
@@ -24,7 +25,7 @@ const HomReserva = () => {
     const [Imprimir, openImprimir, closeImprimir] = useModal(false);
     const [selectpdf, openSelectpdf, closeSelectpdf] = useModal(false);
     // declarar un hook 
-    const [reservaShow, setreservaShow] = useState({}); 
+    const [reservaShow, setreservaShow] = useState({});
     const [selectedRows, setSelectedRows] = useState([]);
     const [toggleCleared, setToggleCleared] = useState(false);
 
@@ -61,6 +62,9 @@ const HomReserva = () => {
                 registro.sigla.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
                 registro.representante.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
                 registro.nro_certificado.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
+                registro.naturaleza.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
+                registro.correo.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
+                registro.persona_colectiva.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
                 registro.ci_rep.toLowerCase().includes(search.toLowerCase())
             ) {
                 return registro;
@@ -142,28 +146,28 @@ const HomReserva = () => {
             ),
             ignoreRowClick: true,
             allowOverflow: true,
-            button: true,       
+            button: true,
             width: '120px',
         },
         {
             name: 'Nº Hoja Ruta',
             selector: row => row.hr,
             sortable: true,
-            wrap: true,         
+            wrap: true,
             width: '150px',
         },
         {
             name: 'Nº Correlativo',
             selector: row => row.nro_certificado,
             sortable: true,
-            wrap: true,         
+            wrap: true,
             width: '150px',
         },
         {
             name: 'Tipo de Persona Colectiva',
             selector: row => row.persona_colectiva,
             sortable: true,
-            wrap: true,         
+            wrap: true,
             width: '200px',
         },
 
@@ -171,49 +175,49 @@ const HomReserva = () => {
             name: 'Naturaleza',
             selector: row => row.naturaleza,
             sortable: true,
-            wrap: true,         
+            wrap: true,
             width: '250px',
         },
         {
             name: 'Nombre de la Persona Colectiva Colectiva',
             selector: row => row.entidad,
             sortable: true,
-            wrap: true,         
+            wrap: true,
             width: '300px',
         },
         {
             name: 'Sigla',
             selector: row => row.sigla,
             sortable: true,
-            wrap: true,         
+            wrap: true,
             width: '150px',
         },
         {
             name: 'Representante Legal',
             selector: row => row.representante,
             sortable: true,
-            wrap: true,         
+            wrap: true,
             width: '250px',
         },
         {
             name: 'CI',
             selector: row => row.ci_rep + " " + row.ext_ci_rep,
             sortable: true,
-            wrap: true,         
+            wrap: true,
             width: '150px',
         },
         {
             name: 'Nº Celular',
             selector: row => row.telefono,
             sortable: true,
-            wrap: true,         
+            wrap: true,
             width: '150px',
         },
         {
             name: 'Correo Registrado',
             selector: row => row.correo,
             sortable: true,
-            wrap: true,         
+            wrap: true,
             width: '300px',
         }
     ];
@@ -224,7 +228,7 @@ const HomReserva = () => {
         selectAllRowsItem: true,
         selectAllRowsItemText: 'todos'
     };
-    if (isLoading) return <Loading />
+    if (isLoading) return <Spiner />
     else if (isError) return <div>Error: {error.message}</div>
 
     return (
@@ -247,7 +251,7 @@ const HomReserva = () => {
                 </div>
                 {/* modales  */}
                 <ShowHomonimia registro={reservaShow} modal={showreserva} close={closeReserva} />
-                <RepHominimia registro={reservaShow} modal={Imprimir} close={closeImprimir} />                
+                <RepHominimia registro={reservaShow} modal={Imprimir} close={closeImprimir} />
                 <SelectHomonimia registro={selectedRows} modal={selectpdf} close={closeSelectpdf} />
             </div>
             <div className='table-responsive'>

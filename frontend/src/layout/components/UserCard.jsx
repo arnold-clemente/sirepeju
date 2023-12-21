@@ -1,15 +1,20 @@
 import React, { useState } from 'react'
 import propTypes from 'prop-types'
 import { Link, useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import storage from '../../Storage/storage'
 
 import user from '../../images/user.png'
 import UserLinks from './UserLinks'
-import storage from '../../Storage/storage'
 import { url } from '../../conection/env'
 
 const UserCard = ({ sidebar, handleProfile }) => {
     const [profile, setprofile] = useState(false)
     const [dropdown, setdropdown] = useState('')
+
+    const usuario = useSelector(state => state.userStore.user);
+
+
     const profileAdd = () => {
         setprofile(!profile);
         if (profile) {
@@ -31,13 +36,13 @@ const UserCard = ({ sidebar, handleProfile }) => {
         <div>
             <button onClick={profileAdd} className={'sidebar_user ' + sidebar}>
                 <div className={'user_image ' + sidebar}>
-                    {storage.get('authUser').profile_photo_path
-                        ?<img src={url + '/storage/' +  storage.get('authUser').profile_photo_path} alt="user" />
+                    {usuario.imagen
+                        ?<img src={url + '/storage/' +  usuario.imagen} alt="user" />
                         :<img src={user} alt="user" />
                     }
                 </div>
                 <div className={'user_profile ' + sidebar}>
-                    <span>{storage.get('authUser').name}</span>
+                    <span>{usuario.nombre}</span>
                 </div>
                 <div className={'user_icondropdown ' + dropdown}>
                     <i className="fa-solid fa-caret-down"></i>

@@ -1,18 +1,21 @@
 import React, { useCallback, useMemo, useState } from 'react'
+import Swal from 'sweetalert2';
 import { Link } from 'react-router-dom';
 import DataTable from "react-data-table-component";
 import { useQuery } from 'react-query';
-import { useQueryClient } from 'react-query';
+import { useQueryClient, useMutation } from 'react-query';
 
 import Loading from '../../components/Loading';
 import Banner from '../../components/Banner';
 import { estilos } from '../../components/estilosdatatables';
 
 import { getModificacionesOtorgacion } from '../../api/modificacionOtorgacionApi';
+import { archivarOtorgacion } from '../../api/otorgacionesApi';
 // modal 
 import { useModal } from '../../hooks/useModal'
 // modal components 
 import ModalShowOtorgacion from './ModalShowModOtor';
+import { show_alerta } from '../../components/MessageAlert';
 import ModalSeguimientoMod from './ModalSeguimientoMod';
 import ModalInformeMod from './ModalInformeMod';
 import SelectModifcacionOtorgacion from './reporte/SelectModifcacionOtorgacion';
@@ -46,6 +49,8 @@ const IndexModificacionOtor = () => {
     reglamento_interno: '',
     domicilio_legal: '',
   })
+
+  const now = new Date().getTime();
 
   const [selectpdf, openSelectpdf, closeSelectpdf] = useModal(false);
   const [selectedRows, setSelectedRows] = useState([]);
@@ -154,8 +159,6 @@ const IndexModificacionOtor = () => {
     const auxiliar = {
       otorgacion_id: row.id,
       personalidad_juridica: row.personalidad_juridica,
-      estatuto_organico: row.registro_persona_colectiva.estatuto_organico,
-      reglamento_interno: row.registro_persona_colectiva.reglamento_interno,
       domicilio_legal: row.domicilio_legal,
     }
     setOtorgacion({ ...otorgacion, ...auxiliar })
@@ -168,6 +171,38 @@ const IndexModificacionOtor = () => {
       [target.name]: target.value
     });
   }
+
+
+  const handleArchivar = (e, row) => {
+    e.preventDefault();
+    Swal.fire({
+      title: "Archivar Otorgacion?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "¡Sí, Archivar!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        setLoading(true);
+        archivateOtorgacion.mutate(row);
+      }
+    });
+  }
+
+  const archivateOtorgacion = useMutation({
+    mutationFn: archivarOtorgacion,
+    onSuccess: (response) => {
+      queryClient.invalidateQueries('modificaciones_otorgacion')
+      queryClient.invalidateQueries('otorgaciones_archivados')
+      show_alerta('Otorgacion Archivado', '<i class="fa-solid fa-check border_alert_green"></i>', 'alert_green')
+      setLoading(false);
+    },
+    onError: (error) => {
+      show_alerta('No conectado', '<i class="fa-solid fa-xmark border_alert_red"></i>', 'alert_red')
+      setLoading(false);
+    },
+  });
 
   const columns = [
     {
@@ -201,6 +236,15 @@ const IndexModificacionOtor = () => {
                   : ''
                 }
               </li>
+              <li>
+                {Math.round((now - (new Date(row.fecha_modificacion).getTime())) / (1000 * 60 * 60 * 24)) > 10
+                  ? <button onClick={(e) => handleArchivar(e, row)} className="button_delete_table">
+                    <i className="fa-solid fa-box-archive"></i>
+                    <span className='mx-2'>Archivar</span>
+                  </button>
+                  : ''
+                }
+              </li>
             </ul>
           </div>
 
@@ -210,6 +254,13 @@ const IndexModificacionOtor = () => {
       allowOverflow: true,
       button: true,
       width: '120px',
+    },
+    {
+      name: 'Tiempo',
+      selector: row => Math.round((now - (new Date(row.fecha_modificacion).getTime())) / (1000 * 60 * 60 * 24)) + ' dias',
+      sortable: true,
+      wrap: true,
+      width: '150px',
     },
     {
       name: 'Codigo OPJ',

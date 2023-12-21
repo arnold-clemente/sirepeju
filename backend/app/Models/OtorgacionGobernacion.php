@@ -9,10 +9,4 @@ class OtorgacionGobernacion extends Model
 {
     use HasFactory;
     protected $guarded = ['id', 'created_at', 'updated_at'];
-
-    // relacion uno a uno otorgacion_gobernacion - gobernacion
-    public function gobernacion()
-    {
-        return $this->belongsTo(Gobernacion::class);
-    }
 }

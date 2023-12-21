@@ -4,11 +4,12 @@ import DataTable from "react-data-table-component";
 import { useQuery, useQueryClient, useMutation } from 'react-query';
 
 import Loading from '../../components/Loading';
+import Spiner from '../../components/Spiner';
 import Banner from '../../components/Banner';
 import { estilos } from '../../components/estilosdatatables';
 import { show_alerta } from '../../components/MessageAlert';
 
-import { getArchivados, desarchivarOtorgacion } from '../../api/otorgacionesApi';
+import { getArchivados, desarchivarOtorgacion, caducarOtorgacion, desarchivarModificacionOtorgacion } from '../../api/otorgacionesApi';
 // modal 
 import { useModal } from '../../hooks/useModal'
 // modal components 
@@ -105,7 +106,12 @@ const OtorgacionArchivados = () => {
         }).then((result) => {
             if (result.isConfirmed) {
                 setLoading(true);
-                desarchivateOtorgacion.mutate(row);
+                if (row.estado == 2) {
+                    desarchivateOtorgacion.mutate(row);
+                }
+                if (row.estado == 8) {
+                    desarchivateModificacionOtorgacion.mutate(row);
+                }
             }
         });
     }
@@ -124,6 +130,52 @@ const OtorgacionArchivados = () => {
         },
     });
 
+    const desarchivateModificacionOtorgacion = useMutation({
+        mutationFn: desarchivarModificacionOtorgacion,
+        onSuccess: (response) => {
+            queryClient.invalidateQueries('modificaciones_otorgacion')
+            queryClient.invalidateQueries('otorgaciones_archivados')
+            show_alerta('Otorgacion Desarchivado', '<i class="fa-solid fa-check border_alert_green"></i>', 'alert_green')
+            setLoading(false);
+        },
+        onError: (error) => {
+            show_alerta('No conectado', '<i class="fa-solid fa-xmark border_alert_red"></i>', 'alert_red')
+            setLoading(false);
+        },
+    });
+
+    const handleCaducar = (e, row) => {
+        e.preventDefault();
+        Swal.fire({
+            title: "Caducar Otorgacion?",
+            icon: "error",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "¡Sí, caducar!",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                setLoading(true);
+                caducateOtorgacion.mutate(row);
+            }
+        });
+    }
+
+    const caducateOtorgacion = useMutation({
+        mutationFn: caducarOtorgacion,
+        onSuccess: (response) => {
+            queryClient.invalidateQueries('otorgaciones')
+            queryClient.invalidateQueries('otorgaciones_archivados')
+            queryClient.invalidateQueries('otorgaciones_caducados')
+            show_alerta('Otorgacion Caducado', '<i class="fa-solid fa-check border_alert_green"></i>', 'alert_green')
+            setLoading(false);
+        },
+        onError: (error) => {
+            show_alerta('No conectado', '<i class="fa-solid fa-xmark border_alert_red"></i>', 'alert_red')
+            setLoading(false);
+        },
+    });
+
     const columns = [
         {
             name: 'Acciones',
@@ -133,10 +185,23 @@ const OtorgacionArchivados = () => {
                         <i className="fa-solid fa-eye"></i>
                         <span>Ver</span>
                     </button>
-                    <button onClick={(e) => handleDesarchivar(e, row)} className="button_print">
-                        <i className="fa-solid fa-check"></i>
-                        <span>Desarchivar</span>
-                    </button>
+                    {row.estado == 2
+                        ? <button onClick={(e) => handleDesarchivar(e, row)} className="button_edit">
+                            <i className="fa-solid fa-check"></i>
+                            <span>Desarchivar</span>
+                        </button>
+                        : <button onClick={(e) => handleDesarchivar(e, row)} className="button_print">
+                            <i className="fa-solid fa-check"></i>
+                            <span>Desarchivar</span>
+                        </button>
+                    }
+                    {Math.round((now - (new Date(row.fecha_ingreso_tramite).getTime())) / (1000 * 60 * 60 * 24)) > 100
+                        ? (<button onClick={(e) => handleCaducar(e, row)} className="button_delete">
+                            <i className="fa-solid fa-x"></i>
+                            <span>Caducar</span>
+                        </button>)
+                        : null
+                    }
 
 
                 </div>
@@ -239,7 +304,7 @@ const OtorgacionArchivados = () => {
         selectAllRowsItem: true,
         selectAllRowsItemText: 'todos'
     };
-    if (isLoading) return <Loading />
+    if (isLoading) return <Spiner />
     else if (isError) return <div>Error: {error.message}</div>
 
     return (
