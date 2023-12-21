@@ -5,6 +5,7 @@ import { useQuery } from 'react-query';
 import { useQueryClient } from 'react-query';
 
 import Loading from '../../components/Loading';
+import Spiner from '../../components/Spiner';
 import Banner from '../../components/Banner';
 import { estilos } from '../../components/estilosdatatables';
 import Swal from 'sweetalert2';
@@ -191,7 +192,7 @@ const IndexOtorgacionGob = () => {
     selectAllRowsItem: true,
     selectAllRowsItemText: 'todos'
   };
-  if (isLoading) return <Loading />
+  if (isLoading) return <Spiner />
   else if (isError) return <div>Error: {error.message}</div>
 
   return (

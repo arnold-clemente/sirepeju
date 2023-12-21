@@ -5,6 +5,7 @@ import Banner from '../../components/Banner';
 import { show_alerta } from '../../components/MessageAlert';
 import ValidationError from '../../components/ValidationError';
 import Loading from '../../components/Loading';
+import Spiner from '../../components/Spiner';
 import Swal from 'sweetalert2';
 
 import { useMutation } from 'react-query';
@@ -247,9 +248,9 @@ const EditOtorgacionGob = () => {
 
   const { nombre_completo, ci } = fundador;
 
-  if (isLoading) return <Loading />
+  if (isLoading) return <Spiner />
   else if (isError) return <div>Error: {error.message}</div>
-  if (otorgacion.id === 0) return <Loading />
+  if (otorgacion.id === 0) return <Spiner />
   else
     return (
       <>

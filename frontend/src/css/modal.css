@@ -35,12 +35,12 @@
 
 .modal_card_pdf {
     background-color: rgb(244, 248, 252);
-    width: 90%;
-    height: 85vh;
+    width: 70%;
+    height: 95vh;
     z-index: 2;
     border-radius: 15px;
     overflow-y: auto;
-    margin-top: 60px;
+    margin-top: 20px;
 }
 
 /* para el modal sm  */
@@ -189,7 +189,7 @@
 }
 
 .modal_content {
-    padding: 20px;
+    padding: 10px;
 }
 
 
