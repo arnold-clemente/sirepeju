@@ -25,10 +25,10 @@ const SelectAdministrativos = ({ registro, modal, close }) => {
         body: {
             width: "100%",
             height: "100%",
-            paddingTop: "2.5cm",
-            paddingBottom: "2.5cm",
-            paddingRight: "2.5cm",
-            paddingLeft: "3cm",
+            paddingTop: "25px",
+            paddingBottom: "25px",
+            paddingRight: "25px",
+            paddingLeft: "35px",
             
         },
         contenedor: {
@@ -56,7 +56,7 @@ const SelectAdministrativos = ({ registro, modal, close }) => {
         },
         
         fecha: {
-            fontSize: '14px',
+            fontSize: '8px',
             fontWeight: 700,
             paddingBottom: '20px'
         },
@@ -89,7 +89,7 @@ const SelectAdministrativos = ({ registro, modal, close }) => {
             paddingRight: '2px',
         },
         dato: {
-            fontSize: '11px',
+            fontSize: '8px',
         },
         celdaColorida: { backgroundColor: '#44556f' }, // Puedes cambiar el color aquí
         textoBlanco: { color: '#ffffff',fontSize: '12px', }, // Color blanco
@@ -168,7 +168,7 @@ const SelectAdministrativos = ({ registro, modal, close }) => {
     {/* fila 1 */}
     <View style={styles.tableRow}> 
         <View style={{ ...styles.tableCol, ...styles.celdaColorida}}> 
-        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>Product</Text> 
+        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>Productooooo</Text> 
         </View>
         <View style={{ ...styles.tableCol, ...styles.celdaColorida}}> 
         <Text style={{...styles.tableCell, ...styles.textoBlanco}}>Product</Text> 

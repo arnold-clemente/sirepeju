@@ -11,6 +11,17 @@ const RepAdm = ({ registro, modal, close }) => {
             height: "90vh",
             boxSizing: "border-box",
         },
+<<<<<<< HEAD
+        page:{
+            flexDirection:'row',
+            backgroundColor:'#E4E4E4',
+            margin:8
+        },
+        section:{
+            margin: "10px",
+            padding:10,
+            flexGrow:1,
+=======
         page: {
             flexDirection: 'row',
             backgroundColor: '#E4E4E4',
@@ -20,10 +31,23 @@ const RepAdm = ({ registro, modal, close }) => {
             margin: 10,
             padding: 10,
             flexGrow: 1,
+>>>>>>> 26f67cc2ff4d73bf9b1d99532f2b7b89781a6736
         },
         body: {
             width: "100%",
             height: "100%",
+<<<<<<< HEAD
+            margin: "2px",
+            paddingTop: "2.5px",
+            paddingBottom: "2.5px",
+            paddingRight: "2.5px",
+            paddingLeft: "3px",
+            
+        },
+        contenedor: {
+            width: '100%',
+            margin: "2px"
+=======
             paddingTop: "2.5cm",
             paddingBottom: "2.5cm",
             paddingRight: "2.5cm",
@@ -33,6 +57,7 @@ const RepAdm = ({ registro, modal, close }) => {
         contenedor: {
             width: '100%',
             marginBottom: '1cm'
+>>>>>>> 26f67cc2ff4d73bf9b1d99532f2b7b89781a6736
         },
         contenedor_logo: {
             width: '100%',
@@ -55,7 +80,7 @@ const RepAdm = ({ registro, modal, close }) => {
         },
 
         fecha: {
-            fontSize: '14px',
+            fontSize: '12px',
             fontWeight: 700,
             paddingBottom: '20px'
         },
@@ -73,7 +98,7 @@ const RepAdm = ({ registro, modal, close }) => {
         title: {
             textAlign: 'center',
             fontSize: '16px',
-            marginBottom: '20px'
+            marginBottom: '5px'
         },
         lista: {
             display: 'flex',
@@ -163,13 +188,53 @@ const RepAdm = ({ registro, modal, close }) => {
                                 <Image style={styles.logo} src={logo} />
                             </View>
                             <View style={styles.contenedor}>
-                                <Text style={styles.title}>LISTA DE ADMINISTRATIVOS</Text>
+                                <Text style={styles.title}>LISTAhhhh DE ADMINISTRATIVOS</Text>
                             </View>
 
                             {/* <View style={styles.lista}>
                                 <Text style={styles.tipo}>Nombre:</Text>
                                 <Text style={styles.dato}>{registro.nombres + ' ' +  registro.paterno + ' ' + registro.materno}</Text>
                             </View>                        */}
+<<<<<<< HEAD
+                      
+        {/* la tabla desde este lugar */}
+        
+        <View style={styles.table}>
+    {/* fila 1 */}
+    <View style={styles.tableRow}> 
+        <View style={{ ...styles.tableCol, ...styles.celdaColorida}}> 
+        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>Product</Text> 
+        </View>
+        <View style={{ ...styles.tableCol, ...styles.celdaColorida}}> 
+        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>Product</Text> 
+        </View>
+        <View style={{ ...styles.tableCol, ...styles.celdaColorida}}> 
+        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>Product</Text> 
+        </View>
+        <View style={{ ...styles.tableCol, ...styles.celdaColorida}}> 
+        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>Productiiiii</Text> 
+        </View> 
+        </View> 
+        {/* fila 2 */}
+        <View style={styles.tableRow}> 
+        <View style={styles.tableCol}> 
+        <Text style={styles.tableCell}>Productoooo</Text> 
+        </View> 
+        <View style={styles.tableCol}> 
+        <Text style={styles.tableCell}>Type</Text> 
+        </View> 
+        <View style={styles.tableCol}> 
+        <Text style={styles.tableCell}>Period</Text> 
+        </View> 
+        <View style={styles.tableCol}> 
+        <Text style={styles.tableCell}>Price</Text> 
+        </View> 
+        </View>
+      </View>
+       {/* final de la tabla */}
+      
+=======
+>>>>>>> 26f67cc2ff4d73bf9b1d99532f2b7b89781a6736
 
                             {/* la tabla desde este lugar */}
 
