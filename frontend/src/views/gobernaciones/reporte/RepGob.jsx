@@ -25,45 +25,43 @@ const RepGob = ({ registro, modal, close }) => {
                                 <Image style={styles.logo} src={logo} />
                             </View>
                             <View style={styles.contenedor}>
-                                <Text style={styles.title}>LISTA DE ENCARGADOS DE GOBIERNOS AUTONOMOS DEPARTAMENTALES</Text>
+                                <Text style={styles.title}>DATOS REGISTRADOS DEL PERSONAL RESPONSABLE POR DEPARTAMENTO</Text>
                             </View>
-
-                            {/* <View style={styles.lista}>
-                                <Text style={styles.tipo}>Nombre:</Text>
-                                <Text style={styles.dato}>{registro.nombres + ' ' +  registro.paterno + ' ' + registro.materno}</Text>
-                            </View>                        */}
-
-                            {/* la tabla desde este lugar */}
+                            
+                                <Text style={styles.title}>Institución: {registro.departamento
+                                ? registro.departamento.institucion
+                                : null} </Text>
+                           {/* la tabla desde este lugar */}
 
                             <View style={styles.table}>
                                 {/* fila 1 */}
                                 <View style={styles.tableRow}>
                                     <View style={{ ...styles.tableCol, ...styles.celdaColorida }}>
-                                        <Text style={{ ...styles.tableCell, ...styles.textoBlanco }}>Product</Text>
+                                        <Text style={{ ...styles.tableCell, ...styles.textoBlanco }}>NOMBRE</Text>
                                     </View>
                                     <View style={{ ...styles.tableCol, ...styles.celdaColorida }}>
-                                        <Text style={{ ...styles.tableCell, ...styles.textoBlanco }}>Product</Text>
+                                        <Text style={{ ...styles.tableCell, ...styles.textoBlanco }}>CARGO</Text>
                                     </View>
                                     <View style={{ ...styles.tableCol, ...styles.celdaColorida }}>
-                                        <Text style={{ ...styles.tableCell, ...styles.textoBlanco }}>Product</Text>
+                                        <Text style={{ ...styles.tableCell, ...styles.textoBlanco }}>CI</Text>
                                     </View>
                                     <View style={{ ...styles.tableCol, ...styles.celdaColorida }}>
-                                        <Text style={{ ...styles.tableCell, ...styles.textoBlanco }}>Product</Text>
+                                        <Text style={{ ...styles.tableCell, ...styles.textoBlanco }}>CORREO INSTITUCIONAL</Text>
                                     </View>
                                 </View>
                                 {/* fila 2 */}
                                 <View style={styles.tableRow}>
                                     <View style={styles.tableCol}>
-                                        <Text style={styles.tableCell}>Product</Text>
+                                        <Text style={styles.tableCell}>{registro.nombres + ' ' + registro.paterno + ' ' + registro.materno}</Text>
                                     </View>
                                     <View style={styles.tableCol}>
-                                        <Text style={styles.tableCell}>Type</Text>
+                                        <Text style={styles.tableCell}>{registro.cargo}</Text>
                                     </View>
                                     <View style={styles.tableCol}>
-                                        <Text style={styles.tableCell}>Period</Text>
+                                        <Text style={styles.tableCell}>{registro.ci + ' ' + registro.ext_ci}</Text>
                                     </View>
                                     <View style={styles.tableCol}>
-                                        <Text style={styles.tableCell}>Price</Text>
+                                        <Text style={styles.tableCell}>{registro.user ? registro.user.email : ''}</Text>
                                     </View>
                                 </View>
                                 {/* final de la tabla */}

@@ -14,6 +14,9 @@ const styles = {
         padding: 10,
         flexGrow: 1,
     },
+    h2:{
+        fontSize: '5px',
+    },
     body: {
         width: "100%",
         height: "100%",

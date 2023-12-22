@@ -8,11 +8,11 @@ const ShowAdm = ({ modal, close, registro }) => {
     const [imprimir, openImprimir, closeImprimir] = useModal(false);
     return (
         <>
-            <ModalDiv isOpen={modal} closeModal={close} title={'LISTA DEL PERSONAL ADMINISTRATIVO DE LA UNIDAD - UPJ'}>
+            <ModalDiv isOpen={modal} closeModal={close} title={'LISTA DEL PERSONAL ADMINISTRATIVO UPJ - VA'}>
                 <div className='container-fluid d-flex justify-content-end'>
                     <button onClick={openImprimir} className='button_print_show'>
                         <i className="fa-solid fa-print"></i>
-                        <span>Imprimir</span>
+                        <span>Imprimir Reporte</span>
                     </button>
                 </div>
                 
@@ -24,7 +24,7 @@ const ShowAdm = ({ modal, close, registro }) => {
                     <h2 className="fs-6"><b>Cargo:</b> &nbsp;{registro.cargo}</h2> <hr />
                     {registro.user
                         ? <div><h2 className="fs-6"><b>Correo Electronico:</b> &nbsp;{registro.user.email}</h2><hr />
-                            <h2 className="fs-6"><b>Rol:</b> &nbsp;{registro.user.rol}</h2> <hr />
+                            <h2 className="fs-6"><b>Rol:</b> &nbsp;{registro.user.rol}</h2>
                         </div>
                         : ''}
                 </div>

@@ -8,7 +8,7 @@ const ShowGob = ({ modal, close, registro }) => {
 
     return (
         <>
-            <ModalDiv isOpen={modal} closeModal={close} title={'Responsable Gobernacion'}>
+            <ModalDiv isOpen={modal} closeModal={close} title={'Datos del responsable Departamental'}>
                 <RepGob registro={registro} modal={imprimir} close={closeImprimir} />
                 <div className="container-fluid">
                     <h2><center>
@@ -22,7 +22,7 @@ const ShowGob = ({ modal, close, registro }) => {
                     <div className='container-fluid d-flex justify-content-end'>
                         <button onClick={openImprimir} className='button_print_show'>
                             <i className="fa-solid fa-print"></i>
-                            <span>Imprimir</span>
+                            <span>Imprimir reporte </span>
                         </button>
                     </div>
                     <h2 className="fs-6"><b>Responsable departamental:</b>&nbsp;&nbsp;{registro.nombres + ' ' + registro.paterno + ' ' + registro.materno} </h2><hr />

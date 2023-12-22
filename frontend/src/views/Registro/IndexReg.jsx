@@ -328,7 +328,7 @@ const IndexReg = () => {
 
         <div>
             {loading === true ? <Loading /> : ''}
-            <Banner text="REGISTRO DE ENTIDADES" />
+            <Banner text="PERSONAS COLECTIVAS QUE CUENTAN CON RESERVA DE NOMBRE" />
             <ShowRegistro registro={registroShow} modal={showregistro} close={closeRegistro} />
             <ModalRegistro registro={otorgacion} modal={isModalOtorgacion} close={closeModalOtorgacion}
                 handleInputChange={handleInputChange} open={openModalOtorgacion} />

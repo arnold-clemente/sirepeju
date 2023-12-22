@@ -3,6 +3,8 @@ import React from 'react'
 import Modal from '../../../components/ModalPdf'
 import { PDFViewer, Document, Page } from '@react-pdf/renderer'
 import { Text, View, StyleSheet, Image } from '@react-pdf/renderer'
+import logo from '../../../images/logovic.jpg'
+
 
 const Alfanumerico = ({ registro, modal, close }) => {
 
@@ -20,6 +22,10 @@ const Alfanumerico = ({ registro, modal, close }) => {
             paddingRight: "2.5cm",
             paddingLeft: "3cm",
         },
+        logo: {
+            width: '500px',
+            marginBottom: '2px',
+        },
         contenedor: {
             width: '100%',
             marginBottom: '1cm'
@@ -28,34 +34,64 @@ const Alfanumerico = ({ registro, modal, close }) => {
             textAlign: 'center',
             fontSize: '16px',
         },
+        content: {
+            flexGrow: 1,
+          },
         lista: {
             display: 'flex',
             justifyContent: 'flex-start',
             marginBottom: '10px',
         },
         tipo: {
-            fontSize: '14px',
+            fontSize: '12px',
             fontWeight: 700,
-            marginBottom: '5px',
+            marginBottom: '8px',
+            fontWeight: 'bold',
+            textDecoration: 'underline',
+            backgroundColor: '#FFB6C1',
         },
         dato: {
-            fontSize: '14px',
+            fontSize: '10px',
+            marginBottom: '8px',
         },
 
         estilos_h1: {
             fontSize: '8px',
             textAlign: 'center',
 
-        }
-
+        },
+        footer: {
+            textAlign: 'center',
+            fontSize: 10,
+            marginTop: 10,
+          },
+          line: {
+            borderBottom: '1px solid black',
+            width: '100%',
+          },
+          watermark: {
+            position: 'absolute',
+            top:500,
+            left:180,
+            opacity: 0.3, // Ajusta la opacidad según tus preferencias
+            transform: 'rotate(-30deg)', // Rotación de la marca de agua
+            fontSize: 60,
+            color: 'gray', // Color de la marca de agua
+          }
     });
-
+    const getCurrentDateTime = () => {
+        const currentDateTime = new Date();
+        return currentDateTime.toLocaleString();
+      };
     return (
         <>
             <Modal isOpen={modal} closeModal={close}>
                 <PDFViewer style={styles.main}>
                     <Document>
                         <Page size="letter" style={styles.body}>
+                        <View style={styles.contenedor_logo}>
+                        <Image style={styles.logo} src={logo} />
+                        </View>
                             <View style={styles.contenedor}>
                                 <Text style={styles.title}>T Codigo</Text>
                                 <Text style={styles.title}>Alfa[100]</Text>
@@ -77,12 +113,10 @@ const Alfanumerico = ({ registro, modal, close }) => {
                                 <Text style={styles.dato}>{registro.naturaleza}</Text>
                             </View>
                             <View style={styles.lista}>
-                                <Text style={styles.tipo}>NOTA: </Text>
                                 <Text style={styles.tipo}>NOTA INTERNA: </Text>
                                 <Text style={styles.dato}>{registro.nota_interna_final}</Text>
                             </View>
                             <View style={styles.lista}>
-                                <Text style={styles.tipo}>INFORME: </Text>
                                 <Text style={styles.tipo}>INFORME FINAL: </Text>
                                 <Text style={styles.dato}>{registro.numero_informe_final}</Text>
                             </View>
@@ -90,11 +124,15 @@ const Alfanumerico = ({ registro, modal, close }) => {
                                 <Text style={styles.tipo}>FECHA DE ENVIO: </Text>
                                 <Text style={styles.dato}>{registro.fecha_envio}</Text>
                             </View>
-                            <View style={styles.lista}>
-                                <Text style={styles.tipo}>CÓDIGO ALFANÚMERICO: </Text>
-                                <Text style={styles.estilos_h1}>{registro.alfanumerico}</Text>
-                                <Image src={'https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/1667px-PDF_file_icon.svg.png'}></Image>
+                            <View style={styles.watermark}>
+                            <Text>SIREPEJU</Text>
                             </View>
+                            <Text style={styles.dato}>{"\n"}{"\n"}{"\n"}Fecha y Hora de Impresión: {"\n"}{getCurrentDateTime()}</Text>
+                            <View style={styles.footer}>
+                            {/* Línea en el pie de página */}
+                            <View style={styles.line}></View>
+                            <Text>Casa Grande del Pueblo,calle Ayacucho - esq.Potosí,Tel:(591-2)2184178 {"\n"}La Paz -Bolivia {"\n"}{"\n"}Pagína{1}</Text>
+        </View>
                         </Page>
                     </Document>
                 </PDFViewer>

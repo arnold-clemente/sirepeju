@@ -165,7 +165,7 @@ const RepSolicitud = ({ registro, modal, close }) => {
                             <Image style={styles.logo} src={logo} />
                             </View>
                             <View style={styles.contenedor}>
-                                <Text style={styles.title}>REPORTE DE RESERVA DE NOMBRE EN TRÁMITE </Text>
+                                <Text style={styles.title}>REPORTE DE RESERVA DE NOMBRE DE LA PERSONA COLECTIVA </Text>
                             </View>        
         {/* la tabla desde este lugar */}
         
@@ -173,31 +173,66 @@ const RepSolicitud = ({ registro, modal, close }) => {
     {/* fila 1 */}
     <View style={styles.tableRow}> 
         <View style={{ ...styles.tableCol, ...styles.celdaColorida}}> 
-        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>Product</Text> 
+        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>NÚMERO CORRELATIVO</Text> 
         </View>
         <View style={{ ...styles.tableCol, ...styles.celdaColorida}}> 
-        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>Product</Text> 
+        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>NOMBRE</Text> 
         </View>
         <View style={{ ...styles.tableCol, ...styles.celdaColorida}}> 
-        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>Product</Text> 
+        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>SIGLA</Text> 
         </View>
         <View style={{ ...styles.tableCol, ...styles.celdaColorida}}> 
-        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>Product</Text> 
+        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>NATURALEZA</Text> 
         </View> 
         </View> 
         {/* fila 2 */}
         <View style={styles.tableRow}> 
         <View style={styles.tableCol}> 
-        <Text style={styles.tableCell}>Product</Text> 
+        <Text style={styles.tableCell}>{registro.nro_certificado}</Text> 
         </View> 
         <View style={styles.tableCol}> 
-        <Text style={styles.tableCell}>Type</Text> 
+        <Text style={styles.tableCell}> {registro.entidad}</Text> 
         </View> 
         <View style={styles.tableCol}> 
-        <Text style={styles.tableCell}>Period</Text> 
+        <Text style={styles.tableCell}>{registro.sigla}</Text> 
         </View> 
         <View style={styles.tableCol}> 
-        <Text style={styles.tableCell}>Price</Text> 
+        <Text style={styles.tableCell}>{registro.naturaleza}</Text> 
+        </View> 
+        </View>
+      </View>
+       {/* final de la tabla */}
+      {/* la tabla desde este lugar */}
+        
+      <View style={styles.table}>
+    {/* fila 1 */}
+    <View style={styles.tableRow}> 
+        <View style={{ ...styles.tableCol, ...styles.celdaColorida}}> 
+        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>SOLICITANTE</Text> 
+        </View>
+        <View style={{ ...styles.tableCol, ...styles.celdaColorida}}> 
+        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>CI</Text> 
+        </View>
+        <View style={{ ...styles.tableCol, ...styles.celdaColorida}}> 
+        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>CELULAR</Text> 
+        </View>
+        <View style={{ ...styles.tableCol, ...styles.celdaColorida}}> 
+        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>CORREO</Text> 
+        </View> 
+        </View> 
+        {/* fila 2 */}
+        <View style={styles.tableRow}> 
+        <View style={styles.tableCol}> 
+        <Text style={styles.tableCell}>{registro.representante}</Text> 
+        </View> 
+        <View style={styles.tableCol}> 
+        <Text style={styles.tableCell}> {registro.ci_rep}</Text> 
+        </View> 
+        <View style={styles.tableCol}> 
+        <Text style={styles.tableCell}>{registro.telefono}</Text> 
+        </View> 
+        <View style={styles.tableCol}> 
+        <Text style={styles.tableCell}>{registro.correo}</Text> 
         </View> 
         </View>
       </View>

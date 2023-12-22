@@ -3,6 +3,7 @@ import Modal from '../../../components/ModalPdf'
 import { PDFViewer, Document, Page } from '@react-pdf/renderer'
 import { Text, View, StyleSheet, Image } from '@react-pdf/renderer'
 import logo from '../../../images/logovic.jpg'
+import styles from '../../../estilos/Estilos'
 
 const SelectAdministrativos = ({ registro, modal, close }) => {
 
@@ -162,74 +163,56 @@ const SelectAdministrativos = ({ registro, modal, close }) => {
                         <View style={styles.contenedor_logo}>
                                 <Image style={styles.logo} src={logo} />
                             </View>
-                            {/* la tabla desde este lugar */}
-        
+                            <View style={styles.contenedor}>
+                                <Text style={styles.title}>ADMINISTRATIVOS REGISTRADOS EN LA UNIDAD DE PERSONALIDADES JURÍDICAS</Text>
+                            </View>
+
+ {/* la tabla desde este lugar */} 
         <View style={styles.table}>
     {/* fila 1 */}
     <View style={styles.tableRow}> 
         <View style={{ ...styles.tableCol, ...styles.celdaColorida}}> 
-        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>Product</Text> 
+        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>NOMBRES COMPLETO</Text> 
         </View>
         <View style={{ ...styles.tableCol, ...styles.celdaColorida}}> 
-        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>Product</Text> 
+        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>CI</Text> 
         </View>
         <View style={{ ...styles.tableCol, ...styles.celdaColorida}}> 
-        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>Product</Text> 
+        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>CORREO</Text> 
         </View>
         <View style={{ ...styles.tableCol, ...styles.celdaColorida}}> 
-        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>Product</Text> 
+        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>CARGO</Text> 
         </View> 
         </View> 
         {/* fila 2 */}
-        <View style={styles.tableRow}> 
-        <View style={styles.tableCol}> 
-        <Text style={styles.tableCell}>Product</Text> 
-        </View> 
-        <View style={styles.tableCol}> 
-        <Text style={styles.tableCell}>Type</Text> 
-        </View> 
-        <View style={styles.tableCol}> 
-        <Text style={styles.tableCell}>Period</Text> 
-        </View> 
-        <View style={styles.tableCol}> 
-        <Text style={styles.tableCell}>Price</Text> 
-        </View> 
-        </View>
-      </View>
-       {/* final de la tabla */}
-                            <View style={styles.contenedor}>
-                                <Text style={styles.title}>Administrativos</Text>
-                            </View>
-                            <View style={styles.table}>
-                                <Text style={styles.table_head}>Nombres</Text>
-                                <Text style={styles.table_head}>Cedula</Text>
-                                <Text style={styles.table_head}>Correo</Text>
-                                <Text style={styles.table_head}>Cargo</Text>
-                            </View>
-                            <View style={styles.table_body}>
-                                {registro.length > 0
+        {registro.length > 0
                                     ? registro.map((row, index) => {
                                         return (
-                                            <View style={styles.table_tr} key={row.id}>
-                                                <Text style={styles.table_item}>{row.nombres + ' ' + row.paterno + ' ' + row.materno}</Text>
-                                                <Text style={styles.table_item}>{row.ci + ' ' + row.ext_ci}</Text>
-                                                {row.user
-                                                    ? <Text style={styles.table_item}>{row.user.email}</Text>
-                                                    : mull
-                                                }
-                                                <Text style={styles.table_item}>{row.cargo}</Text>
-                                            </View>
-                                        )
-                                    })
-                                    : null
-                                }
-                            </View>
-                            <View>
-                                {/* <Image style={styles.logo} src={qr} /> */}
-                            </View>
+                <View style={styles.tableRow}> 
+                <View style={styles.tableCol}> 
+                <Text style={styles.tableCell}>{row.nombres + ' ' + row.paterno + ' ' + row.materno}</Text> 
+                </View> 
+                <View style={styles.tableCol}> 
+                <Text style={styles.tableCell}>{row.ci + ' ' + row.ext_ci}</Text> 
+                </View> 
+                <View style={styles.tableCol}> 
+                <Text style={styles.tableCell}>{row.user.email}</Text> 
+                </View> 
+                <View style={styles.tableCol}> 
+                <Text style={styles.tableCell}>{row.cargo}</Text> 
+                </View> 
+        </View>
+          )
+        })
+        : null
+    }
+      </View>
+
+       {/* final de la tabla */}
+                            
                             <View style={styles.content}>
                             {/* Contenido de tu documento */}
-                            <Text style={styles.dato}>{"\n"}El contenido de este documento esta extraido del sistema SIREPEJU(Sistema de Registro de Personalidades Juroidícas).</Text>
+                            <Text style={styles.dato}>{"\n"}El contenido de este documento esta extraido del sistema SIREPEJU (Sistema de Registro de Personalidades Juroidícas).</Text>
                         
                             <Text style={styles.dato}>{"\n"}{"\n"}{"\n"}Fecha y Hora de Impresión: {"\n"}{getCurrentDateTime()}</Text>
                         </View>

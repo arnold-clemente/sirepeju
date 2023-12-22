@@ -2,7 +2,7 @@ import React from 'react'
 import Modal from '../../../components/ModalPdf'
 import { PDFViewer, Document, Page } from '@react-pdf/renderer'
 import { Text, View, StyleSheet, Image } from '@react-pdf/renderer'
-import logo from '../../../images/logo.png'
+import logo from '../../../images/logovic.jpg'
 
 const RepReservados = ({ registro, modal, close }) => {
     let fecha_esp = ''

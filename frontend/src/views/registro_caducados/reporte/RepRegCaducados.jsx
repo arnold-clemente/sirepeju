@@ -2,7 +2,7 @@ import React from 'react'
 import Modal from '../../../components/ModalPdf'
 import { PDFViewer, Document, Page } from '@react-pdf/renderer'
 import { Text, View, StyleSheet, Image } from '@react-pdf/renderer'
-import logo from '../../../images/logo.png'
+import logo from '../../../images/logovic.jpg'
 
 const RepRegCaducados = ({ registro, modal, close }) => {
 
@@ -173,31 +173,31 @@ const RepRegCaducados = ({ registro, modal, close }) => {
     {/* fila 1 */}
     <View style={styles.tableRow}> 
         <View style={{ ...styles.tableCol, ...styles.celdaColorida}}> 
-        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>Product</Text> 
+        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>ENTIDAD</Text> 
         </View>
         <View style={{ ...styles.tableCol, ...styles.celdaColorida}}> 
-        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>Product</Text> 
+        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>SIGLA</Text> 
         </View>
         <View style={{ ...styles.tableCol, ...styles.celdaColorida}}> 
-        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>Product</Text> 
+        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>SOLICITANTE</Text> 
         </View>
         <View style={{ ...styles.tableCol, ...styles.celdaColorida}}> 
-        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>Product</Text> 
+        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>NATURALEZA</Text> 
         </View> 
         </View> 
         {/* fila 2 */}
         <View style={styles.tableRow}> 
         <View style={styles.tableCol}> 
-        <Text style={styles.tableCell}>Product</Text> 
+        <Text style={styles.tableCell}>{registro.entidad}</Text> 
         </View> 
         <View style={styles.tableCol}> 
-        <Text style={styles.tableCell}>Type</Text> 
+        <Text style={styles.tableCell}>{registro.sigla}</Text> 
         </View> 
         <View style={styles.tableCol}> 
-        <Text style={styles.tableCell}>Period</Text> 
+        <Text style={styles.tableCell}>{registro.representante}</Text> 
         </View> 
         <View style={styles.tableCol}> 
-        <Text style={styles.tableCell}>Price</Text> 
+        <Text style={styles.tableCell}>{registro.naturaleza}</Text> 
         </View> 
         </View>
         
@@ -208,7 +208,7 @@ const RepRegCaducados = ({ registro, modal, close }) => {
 
       <View style={styles.content}>
         {/* Contenido de tu documento */}
-        <Text style={styles.dato}>{"\n"}La persona colectiva solicitante no presento su trámite de otorgación en el plazo de 60 días por lo que se procede a eliminar de sistema de registro de personalidades juridícas (SIREPEJU).</Text>
+        <Text style={styles.dato}>{"\n"}La persona colectiva solicitante no presento su trámite de otorgación en el plazo de 60 días razón por lo cual se procedió a su eliminación de sistema de registro de personalidades juridícas (SIREPEJU) conforme al Art.9 del D.S. Nº 1597</Text>
         <Text style={styles.dato}>{"\n"}El contenido de este documento esta extraido del sistema SIREPEJU(Sistema de Registro de Personalidades Juroidícas).</Text>
        
         <Text style={styles.dato}>{"\n"}{"\n"}{"\n"}Fecha y Hora de Impresión: {"\n"}{getCurrentDateTime()}</Text>

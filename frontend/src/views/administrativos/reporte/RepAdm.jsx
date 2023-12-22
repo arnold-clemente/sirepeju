@@ -109,10 +109,11 @@ const RepAdm = ({ registro, modal, close }) => {
           tableRow: { 
             margin: "auto", 
             flexDirection: "row" 
+            
           }, 
           tableCol: { 
             
-            width: "25%", 
+            width: "26%", 
             borderStyle: "solid", 
             borderWidth: 1, 
             borderLeftWidth: 0, 
@@ -121,7 +122,7 @@ const RepAdm = ({ registro, modal, close }) => {
           tableCell: { 
             
             margin: "auto", 
-            marginTop: 5, 
+            marginTop: 2, 
             fontSize: 10,
             fontWeight: 'bold'
           },
@@ -145,7 +146,7 @@ const RepAdm = ({ registro, modal, close }) => {
             transform: 'rotate(-30deg)', // Rotación de la marca de agua
             fontSize: 60,
             color: 'gray', // Color de la marca de agua
-          },
+          }
 
     });
     const getCurrentDateTime = () => {
@@ -161,47 +162,40 @@ const RepAdm = ({ registro, modal, close }) => {
                         <Page size="letter" style={styles.body}>
                         <View style={styles.contenedor_logo}>
                                 <Image style={styles.logo} src={logo} />
-                            </View>
+                        </View>
                             <View style={styles.contenedor}>
-                                <Text style={styles.title}>LISTA DE ADMINISTRATIVOS</Text>
+                                <Text style={styles.title}>ADMINISTRATIVO REGISTRADO EN LA UNIDAD DE PERSONALIDADES JURÍDICAS</Text>
                             </View>
-
-                            {/* <View style={styles.lista}>
-                                <Text style={styles.tipo}>Nombre:</Text>
-                                <Text style={styles.dato}>{registro.nombres + ' ' +  registro.paterno + ' ' + registro.materno}</Text>
-                            </View>                        */}
-                      
-        {/* la tabla desde este lugar */}
-        
-        <View style={styles.table}>
+    {/* desde aqui empieza la tabla        */}
+    <View style={styles.table}>
     {/* fila 1 */}
     <View style={styles.tableRow}> 
         <View style={{ ...styles.tableCol, ...styles.celdaColorida}}> 
-        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>Product</Text> 
+        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>NOMBRE Y APELLIDO:</Text> 
         </View>
         <View style={{ ...styles.tableCol, ...styles.celdaColorida}}> 
-        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>Product</Text> 
+        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>CI:</Text> 
         </View>
         <View style={{ ...styles.tableCol, ...styles.celdaColorida}}> 
-        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>Product</Text> 
+        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>CARGO</Text> 
         </View>
         <View style={{ ...styles.tableCol, ...styles.celdaColorida}}> 
-        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>Product</Text> 
+        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>CORREO ELECTRÓNICO</Text> 
         </View> 
         </View> 
         {/* fila 2 */}
         <View style={styles.tableRow}> 
         <View style={styles.tableCol}> 
-        <Text style={styles.tableCell}>Product</Text> 
+        <Text style={styles.tableCell}>{registro.nombres + ' ' + registro.paterno + ' ' + registro.materno} </Text> 
         </View> 
         <View style={styles.tableCol}> 
-        <Text style={styles.tableCell}>Type</Text> 
+        <Text style={styles.tableCell}>{registro.ci + ' ' + registro.ext_ci}</Text> 
         </View> 
         <View style={styles.tableCol}> 
-        <Text style={styles.tableCell}>Period</Text> 
+        <Text style={styles.tableCell}>{registro.cargo}</Text> 
         </View> 
         <View style={styles.tableCol}> 
-        <Text style={styles.tableCell}>Price</Text> 
+        {/* <Text style={styles.tableCell}>{registro.user.email}</Text>  */}
         </View> 
         </View>
       </View>
@@ -210,7 +204,7 @@ const RepAdm = ({ registro, modal, close }) => {
 
       <View style={styles.content}>
         {/* Contenido de tu documento */}
-        <Text style={styles.dato}>{"\n"}El contenido de este documento esta extraido del sistema SIREPEJU(Sistema de Registro de Personalidades Juroidícas).</Text>
+        <Text style={styles.dato}>{"\n"}El contenido de este documento esta extraido del sistema SIREPEJU (Sistema de Registro de Personalidades Juroidícas).</Text>
        
         <Text style={styles.dato}>{"\n"}{"\n"}{"\n"}Fecha y Hora de Impresión: {"\n"}{getCurrentDateTime()}</Text>
       </View>
