@@ -10,6 +10,7 @@ import storage from '../../Storage/storage'
 import { useForm } from '../../hooks/useForm';
 import ValidationError from '../../components/ValidationError';
 import { show_alerta } from '../../components/MessageAlert';
+import Banner from '../../components/Banner';
 
 
 const CreateReserva = () => {
@@ -84,6 +85,7 @@ const CreateReserva = () => {
     return (
         <>
             {loading === true ? <Loading /> : ''}
+            <Banner text="AGREGAR RESERVA DE OTORGACION" />
             <form onSubmit={handleAdd}>
                 <div className="form-group py-2">
                     <label>Entidad</label>

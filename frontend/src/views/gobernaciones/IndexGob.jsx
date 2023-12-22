@@ -4,6 +4,7 @@ import DataTable from "react-data-table-component";
 import Swal from 'sweetalert2';
 
 import Loading from '../../components/Loading';
+import Spiner from '../../components/Spiner';
 import Banner from '../../components/Banner';
 import { show_alerta } from '../../components/MessageAlert';
 import { useModal } from '../../hooks/useModal'; //metodos siempre gg
@@ -60,7 +61,10 @@ const IndexGob = () => {
         nombres.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
         registro.cargo.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
         registro.ci.toString().includes(search.toLowerCase()) ||
-        registro.user.email.toLowerCase().includes(search.toLowerCase())
+        registro.institucion.toString().includes(search) ||
+        registro.departamento.toString().includes(search.toLowerCase()) ||
+        registro.usuario.toString().includes(search.toLowerCase()) ||
+        registro.email.toLowerCase().includes(search.toLowerCase())
       ) {
         return registro;
       }
@@ -160,7 +164,7 @@ const IndexGob = () => {
               </button>
               <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                 <li>
-                  <Link to={`/user-gobernacion/edit/${row.id}`} className="button_edit_table dropdown-item">
+                  <Link to={`/gobernacion/editar/${row.id}`} className="button_edit_table dropdown-item">
                     <i className="fa-solid fa-pen-to-square"></i>
                     <span className='mx-2'>Editar</span>
                   </Link>
@@ -190,7 +194,7 @@ const IndexGob = () => {
     },
     {
       name: 'G.A.D.',
-      selector: row => row.departamento.institucion,
+      selector: row => row.institucion,
       sortable: true,
       wrap: true,
       width: '250px',
@@ -220,7 +224,7 @@ const IndexGob = () => {
     },
     {
       name: 'Correo Institucional',
-      selector: row => row.user.email,
+      selector: row => row.email,
       wrap: true,
       width: '250px',
     },
@@ -232,7 +236,7 @@ const IndexGob = () => {
     selectAllRowsItem: true,
     selectAllRowsItemText: 'todos'
   };
-  if (isLoading) return <Loading />
+  if (isLoading) return <Spiner />
   else if (isError) return <div>Error: {error.message}</div>
 
   return (
@@ -257,7 +261,7 @@ const IndexGob = () => {
         </div>
 
         <div>
-          <Link to="/user-gobernacion/create" className='btn button_green'>
+          <Link to="/gobernacion/crear" className='button_green'>
             <span>AÑADIR</span>
             <i className="fa fa-plus" aria-hidden="true"></i>
           </Link>

@@ -1,4 +1,6 @@
-import { useState } from 'react'
+import AppRouter from './routes/AppRouter'
+
+// estilos 
 import './css/alert2.css'
 import './css/login.css'
 import './css/style.css'
@@ -9,9 +11,6 @@ import './css/buttons.css'
 import './css/loading.css'
 import './css/modal.css'
 import './css/profile.css'
-
-import AppRouter from './routes/AppRouter'
-
 
 function App() {
 

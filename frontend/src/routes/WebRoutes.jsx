@@ -27,7 +27,6 @@ import IndexReg from '../views/Registro/IndexReg'
 import IndexRegCaducados from '../views/registro_caducados/IndexRegCaducados'
 // ruta de buscadores 
 import Buscar from '../views/buscador/Buscar'
-import BuscarReserva from '../views/buscador/BuscarReserva'
 
 //rutas para otorgacion
 import IndexOtorgacion from '../views/otorgaciones/IndexOtorgacion'
@@ -42,6 +41,8 @@ import IndexModificacionOtor from '../views/modificacion_otorgacion/IndexModific
 import OtorgacionArchivados from '../views/otorgacion_archivados/OtorgacionArchivados'
 // otorgacion caducados 
 import OtorgacionCaducados from '../views/otorgacion_caducados/OtorgacionCaducados'
+//otorgacion extinguidas 
+import OtorgacionExtinguidas from '../views/otorgacion_extinguidas/OtorgacionExtinguidas'
 
 //adecuciones
 import IndexAdecuacion from '../views/adecuacion/IndexAdecuacion'
@@ -54,6 +55,7 @@ import IndexModificacionAd from '../views/modificacion_adecuacion/IndexModificac
 import IndexAdecuacionArchivados from '../views/adecuacion_archivados/IndexAdecuacionArchivados'
 // adecuacion caducados 
 import IndexAdecuacionCaducados from '../views/adecuacion_caducados/IndexAdecuacionCaducados'
+import AdecuacionExtinguidas from '../views/adecuacion_extinguidas/AdecuacionExtinguidas'
 
 //otorgaciones gobernacion
 import IndexOtorgacionGob from '../views/otorgaciongobs/IndexOtorgacionGob'
@@ -102,23 +104,21 @@ const WebRoutes = () => {
                     <Route path='/' element={<Dashboard />} />
                     {/* administrativos  */}
                     <Route path='/administrativos' element={<IndexAdministrativos />} />
-                    <Route path='/administrativo/create' element={<CreateAdm />} />
-                    <Route path='/administrativo/edit/:adminId' element={<EditAdm />} />
+                    <Route path='/administrativo/crear' element={<CreateAdm />} />
+                    <Route path='/administrativo/editar/:adminId' element={<EditAdm />} />
                     {/* gobernaciones  */}
-                    <Route path='/user-gobernaciones' element={<IndexGob />} />
-                    <Route path='/user-gobernacion/create' element={<CreateGob />} />
-                    <Route path='/user-gobernacion/edit/:gobernacionId' element={<EditGob />} />
+                    <Route path='/gobernaciones' element={<IndexGob />} />
+                    <Route path='/gobernacion/crear' element={<CreateGob />} />
+                    <Route path='/gobernacion/editar/:gobernacionId' element={<EditGob />} />
                     {/* reservas  */}
                     <Route path='/reservas' element={<IndexReserva />} />
-                    <Route path='/reserva/create' element={<CreateReserva />} />
-                    <Route path='/reserva/edit/:reservaId' element={<EditReserva />} />
-                    <Route path='/reserva-homonimia' element={<HomReserva />} />
+                    <Route path='/reserva/crear' element={<CreateReserva />} />
+                    <Route path='/reserva/editar/:reservaId' element={<EditReserva />} />
+                    <Route path='/reserva/homonimias' element={<HomReserva />} />
+                    <Route path='/reserva/reservados' element={<IndexReg />} />
+                    <Route path='/reserva/caducados' element={<IndexRegCaducados />} />
                     {/* busqueda  */}
-                    <Route path='/buscar/reserva' element={<Buscar />} />
-                    <Route path='/buscar-reserva/:entidad' element={<BuscarReserva />} />
-                    {/* Registro  */}
-                    <Route path='/registro-reserva' element={<IndexReg />} />
-                    <Route path='/registro-caducados' element={<IndexRegCaducados />} />
+                    <Route path='/verificar/reserva' element={<Buscar />} />
                     {/* otorgacion */}
                     <Route path='/otorgaciones' element={<IndexOtorgacion />} />
                     <Route path='/otorgaciones/:otorgacionId/fundadores' element={<FundOtorgacion />} />
@@ -127,6 +127,7 @@ const WebRoutes = () => {
                     <Route path='/otorgacion/modificaciones' element={<IndexModificacionOtor />} />
                     <Route path='/otorgacion/archivados' element={<OtorgacionArchivados />} />
                     <Route path='/otorgacion/caducados' element={<OtorgacionCaducados />} />
+                    <Route path='/otorgacion/extinguidas' element={<OtorgacionExtinguidas />} />
                     {/* adecuaciones */}
                     <Route path='/adecuaciones' element={<IndexAdecuacion />} />
                     <Route path='/adecuacion/crear' element={<CreateAdecuacion />} />
@@ -136,6 +137,7 @@ const WebRoutes = () => {
                     <Route path='/adecuacion/modificaciones' element={<IndexModificacionAd />} />
                     <Route path='/adecuacion/archivados' element={<IndexAdecuacionArchivados />} />
                     <Route path='/adecuacion/caducados' element={<IndexAdecuacionCaducados />} />
+                    <Route path='/adecuacion/extinguidas' element={<AdecuacionExtinguidas />} />
                     {/* otorgacion gobernaciones */}
                     <Route path='/otorgaciones-gobernaciones' element={<IndexOtorgacionGob />} />
                     <Route path='/otorgaciones-gobernaciones/create' element={<CreateOtorgacionGob />} />

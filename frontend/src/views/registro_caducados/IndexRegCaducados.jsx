@@ -2,10 +2,11 @@ import React, { useCallback, useMemo, useState } from 'react'
 import DataTable from "react-data-table-component";
 
 import { useQuery } from 'react-query';
-import { getCaducados } from '../../api/registroApi';
+import { getCaducados } from '../../api/reservaApi';
 
 import Loading from '../../components/Loading';
 import Banner from '../../components/Banner';
+import Spiner from '../../components/Spiner';
 import { estilos } from '../../components/estilosdatatables';
 import { useModal } from '../../hooks/useModal'
 
@@ -23,7 +24,7 @@ const IndexRegCaducados = () => {
     const [imprimir, openImprimir, closeImprimir] = useModal(false);
     const [selectpdf, openSelectpdf, closeSelectpdf] = useModal(false);
     const [registroShow, setRegistroShow] = useState({});
- 
+
     const now = new Date().getTime();
 
     const [selectedRows, setSelectedRows] = useState([]);
@@ -63,6 +64,9 @@ const IndexRegCaducados = () => {
                 registro.sigla.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
                 registro.representante.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
                 registro.nro_certificado.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
+                registro.naturaleza.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
+                registro.correo.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
+                registro.persona_colectiva.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
                 registro.ci_rep.toLowerCase().includes(search.toLowerCase())
             ) {
                 return registro;
@@ -75,8 +79,8 @@ const IndexRegCaducados = () => {
     const searchOnChange = async (e, row) => {
         e.persist();
         await setSearch(e.target.value);
-    };  
- 
+    };
+
     const handleShow = (e, row) => {
         e.preventDefault();
         const prueba = row;
@@ -103,61 +107,61 @@ const IndexRegCaducados = () => {
                     <button onClick={(e) => handleImprimir(e, row)} className="button_print">
                         <i className="fa-solid fa-print"></i>
                         <span>Imprimir</span>
-                    </button>                   
+                    </button>
                 </div>
             ),
             ignoreRowClick: true,
             allowOverflow: true,
-            button: true,         
+            button: true,
             width: '120px',
         },
         {
             name: 'Hoja de Ruta',
             selector: row => row.id,
             sortable: true,
-            wrap: true,         
+            wrap: true,
             width: '150px',
         },
         {
             name: 'Nº Correlativo',
             selector: row => row.nro_certificado,
             sortable: true,
-            wrap: true,         
+            wrap: true,
             width: '150px',
         },
         {
             name: 'Tipo de Personas Colectiva ',
             selector: row => row.persona_colectiva,
             sortable: true,
-            wrap: true,         
+            wrap: true,
             width: '150px',
         },
         {
             name: 'Naturaleza',
             selector: row => row.naturaleza,
             sortable: true,
-            wrap: true,         
+            wrap: true,
             width: '250px',
         },
         {
             name: 'Nombre de la Persona Colectiva',
             selector: row => row.entidad,
             sortable: true,
-            wrap: true,         
+            wrap: true,
             width: '300px',
         },
         {
             name: 'Sigla',
             selector: row => row.sigla,
             sortable: true,
-            wrap: true,         
+            wrap: true,
             width: '150px',
         },
         {
             name: 'Representante Legal',
             selector: row => row.representante,
             sortable: true,
-            wrap: true,         
+            wrap: true,
             width: '250px',
         },
 
@@ -165,21 +169,21 @@ const IndexRegCaducados = () => {
             name: 'CI',
             selector: row => row.ci_rep + " " + row.ext_ci_rep,
             sortable: true,
-            wrap: true,         
+            wrap: true,
             width: '150px',
         },
         {
             name: 'Nº Celular',
             selector: row => row.telefono,
             sortable: true,
-            wrap: true,         
+            wrap: true,
             width: '150px',
         },
         {
             name: 'Correo Registrado',
             selector: row => row.correo,
             sortable: true,
-            wrap: true,         
+            wrap: true,
             width: '250px',
         },
     ];
@@ -190,7 +194,7 @@ const IndexRegCaducados = () => {
         selectAllRowsItem: true,
         selectAllRowsItemText: 'todos'
     };
-    if (isLoading) return <Loading />
+    if (isLoading) return <Spiner />
     else if (isError) return <div>Error: {error.message}</div>
 
     return (

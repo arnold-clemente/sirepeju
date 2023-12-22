@@ -26,10 +26,10 @@ const SelectAdministrativos = ({ registro, modal, close }) => {
         body: {
             width: "100%",
             height: "100%",
-            paddingTop: "2.5cm",
-            paddingBottom: "2.5cm",
-            paddingRight: "2.5cm",
-            paddingLeft: "3cm",
+            paddingTop: "25px",
+            paddingBottom: "25px",
+            paddingRight: "25px",
+            paddingLeft: "35px",
             
         },
         contenedor: {
@@ -57,7 +57,7 @@ const SelectAdministrativos = ({ registro, modal, close }) => {
         },
         
         fecha: {
-            fontSize: '14px',
+            fontSize: '8px',
             fontWeight: 700,
             paddingBottom: '20px'
         },
@@ -90,7 +90,7 @@ const SelectAdministrativos = ({ registro, modal, close }) => {
             paddingRight: '2px',
         },
         dato: {
-            fontSize: '11px',
+            fontSize: '8px',
         },
         celdaColorida: { backgroundColor: '#44556f' }, // Puedes cambiar el color aquí
         textoBlanco: { color: '#ffffff',fontSize: '12px', }, // Color blanco
@@ -156,7 +156,7 @@ const SelectAdministrativos = ({ registro, modal, close }) => {
     return (
         <>
             <Modal isOpen={modal} closeModal={close}>
-               
+
                 <PDFViewer style={styles.main}>
                     <Document>
                         <Page size="letter" style={styles.body}>
@@ -172,7 +172,7 @@ const SelectAdministrativos = ({ registro, modal, close }) => {
     {/* fila 1 */}
     <View style={styles.tableRow}> 
         <View style={{ ...styles.tableCol, ...styles.celdaColorida}}> 
-        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>NOMBRES COMPLETO</Text> 
+        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>Product</Text> 
         </View>
         <View style={{ ...styles.tableCol, ...styles.celdaColorida}}> 
         <Text style={{...styles.tableCell, ...styles.textoBlanco}}>CI</Text> 
@@ -185,31 +185,52 @@ const SelectAdministrativos = ({ registro, modal, close }) => {
         </View> 
         </View> 
         {/* fila 2 */}
-        {registro.length > 0
+        <View style={styles.tableRow}> 
+        <View style={styles.tableCol}> 
+        <Text style={styles.tableCell}>Product</Text> 
+        </View> 
+        <View style={styles.tableCol}> 
+        <Text style={styles.tableCell}>Type</Text> 
+        </View> 
+        <View style={styles.tableCol}> 
+        <Text style={styles.tableCell}>Period</Text> 
+        </View> 
+        <View style={styles.tableCol}> 
+        <Text style={styles.tableCell}>Price</Text> 
+        </View> 
+        </View>
+      </View>
+       {/* final de la tabla */}
+                            <View style={styles.contenedor}>
+                                <Text style={styles.title}>Administrativos</Text>
+                            </View>
+                            <View style={styles.table}>
+                                <Text style={styles.table_head}>Nombres</Text>
+                                <Text style={styles.table_head}>Cedula</Text>
+                                <Text style={styles.table_head}>Correo</Text>
+                                <Text style={styles.table_head}>Cargo</Text>
+                            </View>
+                            <View style={styles.table_body}>
+                                {registro.length > 0
                                     ? registro.map((row, index) => {
                                         return (
-                <View style={styles.tableRow}> 
-                <View style={styles.tableCol}> 
-                <Text style={styles.tableCell}>{row.nombres + ' ' + row.paterno + ' ' + row.materno}</Text> 
-                </View> 
-                <View style={styles.tableCol}> 
-                <Text style={styles.tableCell}>{row.ci + ' ' + row.ext_ci}</Text> 
-                </View> 
-                <View style={styles.tableCol}> 
-                <Text style={styles.tableCell}>{row.user.email}</Text> 
-                </View> 
-                <View style={styles.tableCol}> 
-                <Text style={styles.tableCell}>{row.cargo}</Text> 
-                </View> 
-        </View>
-          )
-        })
-        : null
-    }
-      </View>
-
-       {/* final de la tabla */}
-                            
+                                            <View style={styles.table_tr} key={row.id}>
+                                                <Text style={styles.table_item}>{row.nombres + ' ' + row.paterno + ' ' + row.materno}</Text>
+                                                <Text style={styles.table_item}>{row.ci + ' ' + row.ext_ci}</Text>
+                                                {row.user
+                                                    ? <Text style={styles.table_item}>{row.user.email}</Text>
+                                                    : mull
+                                                }
+                                                <Text style={styles.table_item}>{row.cargo}</Text>
+                                            </View>
+                                        )
+                                    })
+                                    : null
+                                }
+                            </View>
+                            <View>
+                                {/* <Image style={styles.logo} src={qr} /> */}
+                            </View>
                             <View style={styles.content}>
                             {/* Contenido de tu documento */}
                             <Text style={styles.dato}>{"\n"}El contenido de este documento esta extraido del sistema SIREPEJU (Sistema de Registro de Personalidades Juroidícas).</Text>

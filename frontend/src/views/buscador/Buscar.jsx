@@ -1,9 +1,10 @@
 import React, { useCallback, useMemo, useState } from 'react'
 import DataTable from "react-data-table-component";
 import Swal from 'sweetalert2';
+import { useSelector } from 'react-redux';
 
 import { useQuery, useMutation, useQueryClient } from 'react-query';
-import { getEntidadesGlobal, createHonimia, createRegistro } from '../../api/buscardorApi';
+import { getEntidadesGlobal, createHomonimia, createRegistro } from '../../api/verificadorApi';
 
 import { estilos } from '../../components/estilosdatatables';
 import Loading from '../../components/Loading';
@@ -17,7 +18,7 @@ import SelectVerificacion from './reporte/SelectVerificacion';
 
 const Buscar = () => {
 
-    const [search, setSearch] = useState('');
+    const [search, setSearch] = useState(useSelector(state => state.searchStore.busqueda));
     const [loading, setLoading] = useState(false);
     const queryClient = useQueryClient();
     // par el modal true - false
@@ -27,6 +28,8 @@ const Buscar = () => {
     const [registroShow, setregistroShow] = useState({});
     const [selectedRows, setSelectedRows] = useState([]);
     const [toggleCleared, setToggleCleared] = useState(false);
+
+    const tipos = ['reserva', 'otorgacion', 'adecuacion', 'gobernacion'];
 
     const handleRowSelected = useCallback(state => {
 		setSelectedRows(state.selectedRows);
@@ -57,8 +60,8 @@ const Buscar = () => {
             if (
                 registro.entidad.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
                 registro.sigla.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
-                registro.representante.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase())
-                // registro.naturaleza.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase())
+                registro.representante.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
+                registro.naturaleza.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase())
             ) {
                 return registro;
             }
@@ -68,8 +71,9 @@ const Buscar = () => {
     }
 
     const homonimiaReserva = useMutation({
-        mutationFn: createHonimia,
+        mutationFn: createHomonimia,
         onSuccess: (response) => {
+            console.log(response);
             queryClient.invalidateQueries('entidades')
             queryClient.invalidateQueries('homonimias')
             show_alerta('Homonimia', '<i class="fa-solid fa-check border_alert_green"></i>', 'alert_green')
@@ -84,6 +88,7 @@ const Buscar = () => {
     const registroReserva = useMutation({
         mutationFn: createRegistro,
         onSuccess: (response) => {
+            console.log(response);
             queryClient.invalidateQueries('entidades')
             queryClient.invalidateQueries('registros')
             show_alerta('Entidad reservada', '<i class="fa-solid fa-check border_alert_green"></i>', 'alert_green')
@@ -153,7 +158,7 @@ const Buscar = () => {
             cell: (row) => (
                 <div className='d-flex flex-row justify-content-center gap-1'>
                     <button onClick={(e) => handleShow(e, row)} className="button_show"><i className="fa-solid fa-eye"></i><span>Ver</span></button>
-                    {row.estado === 1
+                    {row.tipo === 1 && row.estado == 1
                         ? <div className='d-flex justify-content-center gap-1'>
                             <button onClick={(e) => handleReserva(e, row)} className="button_edit"><i className="fa-solid fa-square-check"></i><span>Reservar</span></button>
                             <button onClick={(e) => handleHomonimia(e, row)} className="button_delete"><i className="fa-solid fa-ban"></i><span>Homonimia</span></button>
@@ -166,6 +171,13 @@ const Buscar = () => {
             allowOverflow: true,
             button: true,
             width: '130px',
+        },
+        {
+            name: 'Tipo Tramite',
+            selector: row => tipos[row.tipo - 1],
+            sortable: true,
+            wrap: true,
+            width: '120px',
         },
         {
             name: 'Entidad',

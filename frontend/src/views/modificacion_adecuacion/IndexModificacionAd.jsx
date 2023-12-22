@@ -1,12 +1,16 @@
 import React, { useCallback, useMemo, useState } from 'react'
+import Swal from 'sweetalert2';
 import { Link } from 'react-router-dom';
 import DataTable from "react-data-table-component";
 import { useQuery } from 'react-query';
-import { useQueryClient } from 'react-query';
+import { useQueryClient, useMutation } from 'react-query';
+import { archivarAdecuacion } from '../../api/adecuacionApi';
 
 import Loading from '../../components/Loading';
+import Spiner from '../../components/Spiner';
 import Banner from '../../components/Banner';
 import { estilos } from '../../components/estilosdatatables';
+import { show_alerta } from '../../components/MessageAlert';
 
 import { getModificacionesAdecuacion } from '../../api/modificacionAdecuacionApi';
 // modal 
@@ -24,6 +28,8 @@ const IndexModificacionAd = () => {
   const queryClient = useQueryClient();
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(false);
+  
+  const now = new Date().getTime();
 
   // para el modal show Adecuacion
   const [modalAdecuacion, openAdecuacion, closeAdecuacion] = useModal(false);
@@ -154,8 +160,6 @@ const IndexModificacionAd = () => {
     const auxiliar = {
       adecuacion_id: row.id,
       personalidad_juridica: row.personalidad_juridica,
-      estatuto_organico: row.registro_persona_adecuacion.estatuto_organico,
-      reglamento_interno: row.registro_persona_adecuacion.reglamento_interno,
       domicilio_legal: row.domicilio_legal,
     }
     setAdecuacion({ ...adecuacion, ...auxiliar })
@@ -169,6 +173,37 @@ const IndexModificacionAd = () => {
       [target.name]: target.value
     });
   }
+
+  const handleArchivar = (e, row) => {
+    e.preventDefault();
+    Swal.fire({
+      title: "Archivar Adecuacion?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "¡Sí, Archivar!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        setLoading(true);
+        archivateAdecuacion.mutate(row);
+      }
+    });
+  }
+
+  const archivateAdecuacion = useMutation({
+    mutationFn: archivarAdecuacion,
+    onSuccess: (response) => {
+      queryClient.invalidateQueries('modificaciones_adecuacion')
+      queryClient.invalidateQueries('adecuaciones_archivados')
+      show_alerta('Adecuacion Archivado', '<i class="fa-solid fa-check border_alert_green"></i>', 'alert_green')
+      setLoading(false);
+    },
+    onError: (error) => {
+      show_alerta('No conectado', '<i class="fa-solid fa-xmark border_alert_red"></i>', 'alert_red')
+      setLoading(false);
+    },
+  });
 
   const columns = [
     {
@@ -203,6 +238,15 @@ const IndexModificacionAd = () => {
                   : ''
                 }
               </li>
+              <li>
+                {Math.round((now - (new Date(row.fecha_modificacion).getTime())) / (1000 * 60 * 60 * 24)) > 10
+                  ? <button onClick={(e) => handleArchivar(e, row)} className="button_delete_table">
+                    <i className="fa-solid fa-box-archive"></i>
+                    <span className='mx-2'>Archivar</span>
+                  </button>
+                  : ''
+                }
+              </li>
             </ul>
           </div>
 
@@ -212,6 +256,14 @@ const IndexModificacionAd = () => {
       allowOverflow: true,
       button: true,
       width: '120px',
+    },
+
+    {
+      name: 'Tiempo',
+      selector: row => Math.round((now - (new Date(row.fecha_modificacion).getTime())) / (1000 * 60 * 60 * 24)) + ' dias',
+      sortable: true,
+      wrap: true,
+      width: '150px',
     },
     {
       name: 'Codigo APJ',
@@ -299,7 +351,7 @@ const IndexModificacionAd = () => {
     selectAllRowsItem: true,
     selectAllRowsItemText: 'todos'
   };
-  if (isLoading) return <Loading />
+  if (isLoading) return <Spiner />
   else if (isError) return <div>Error: {error.message}</div>
 
   return (

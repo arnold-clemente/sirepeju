@@ -1,12 +1,15 @@
 import React, { useCallback, useMemo, useState } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import DataTable from "react-data-table-component";
+import { useDispatch } from 'react-redux'
+import { updateSearch } from '../../store/slices/searchSlice';
 
 import { useQuery, useQueryClient } from 'react-query';
 import { getReservas, entregarReserva } from '../../api/reservaApi';
 
 import { estilos } from '../../components/estilosdatatables';
 import Loading from '../../components/Loading';
+import Spiner from '../../components/Spiner';
 import Banner from '../../components/Banner';
 import { useModal } from '../../hooks/useModal';
 
@@ -15,7 +18,9 @@ import ShowSolicitud from './ShowSolicitud';
 import SelectSolicitudes from './reporte/selectSolicitudes';
 
 const IndexReserva = () => {
-
+    
+    const go = useNavigate();
+    const dispatch = useDispatch();
     const [search, setSearch] = useState('');
     const [loading, setLoading] = useState(false);
     const queryClient = useQueryClient();
@@ -61,6 +66,9 @@ const IndexReserva = () => {
                 registro.sigla.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
                 registro.representante.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
                 registro.nro_certificado.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
+                registro.naturaleza.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
+                registro.correo.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
+                registro.persona_colectiva.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
                 registro.ci_rep.toLowerCase().includes(search.toLowerCase())
             ) {
                 return registro;
@@ -83,6 +91,13 @@ const IndexReserva = () => {
         console.log(reservaShow)
     }
 
+    const handleVerificar = (e, row) => {
+        e.preventDefault();
+        let aux = row.entidad.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "")
+        dispatch(updateSearch(aux));
+        go('/verificar/reserva')
+    }
+
     const columns = [
         {
             name: 'Acciones',
@@ -90,8 +105,8 @@ const IndexReserva = () => {
 
                 <div className='d-flex flex-row justify-content-start gap-1'>
                     <button onClick={(e) => handleShow(e, row)} className="button_show"><i className="fa-solid fa-eye"></i><span>Ver</span></button>
-                    <Link to={`/reserva/edit/${row.id}`} className="button_edit"><i className="fa-solid fa-pen-to-square"></i><span>Editar</span></Link>
-                    <Link to={`/buscar-reserva/${row.entidad.toLowerCase().replace(/ /g, '~')}`} className="button_delete"><i className="fa-solid fa-magnifying-glass"></i><span>Verificar</span></Link>
+                    <Link to={`/reserva/editar/${row.id}`} className="button_edit"><i className="fa-solid fa-pen-to-square"></i><span>Editar</span></Link>
+                    <button onClick={(e) => handleVerificar(e, row)} className="button_delete"><i className="fa-solid fa-magnifying-glass"></i><span>Verificar</span></button>
                 </div >
             ),
             ignoreRowClick: true,
@@ -179,7 +194,7 @@ const IndexReserva = () => {
         selectAllRowsItem: true,
         selectAllRowsItemText: 'todos'
     };
-    if (isLoading) return <Loading />
+    if (isLoading) return <Spiner />
     else if (isError) return <div>Error: {error.message}</div>
 
     return (
@@ -204,7 +219,7 @@ const IndexReserva = () => {
                 <ShowSolicitud registro={reservaShow} modal={showreserva} close={closeReserva} />
                 <SelectSolicitudes registro={selectedRows} modal={selectpdf} close={closeSelectpdf} />
                 <div>
-                    <Link to="/reserva/create" className='btn button_green'>
+                    <Link to="/reserva/crear" className='btn button_green'>
                         <span>AÑADIR</span>
                         <i className="fa fa-plus" aria-hidden="true"></i>
                     </Link>

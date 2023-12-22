@@ -7,10 +7,11 @@ import bcrypt from "bcryptjs-react";
 import { show_alerta } from '../../components/MessageAlert';
 
 import Loading from '../../components/Loading';
+import Spiner from '../../components/Spiner';
 import Banner from '../../components/Banner';
 import { estilos } from '../../components/estilosdatatables';
 
-import { getAdecuaciones, archivarAdecuacion, caducarAdecuacion } from '../../api/adecuacionApi';
+import { getAdecuaciones, archivarAdecuacion } from '../../api/adecuacionApi';
 // modal 
 import { useModal } from '../../hooks/useModal'
 // modal components 
@@ -221,37 +222,6 @@ const IndexAdecuacion = () => {
     },
   });
 
-  const handleCaducar = (e, row) => {
-    e.preventDefault();
-    Swal.fire({
-      title: "Caducar Adecuacion?",
-      icon: "error",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "¡Sí, caducar!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        setLoading(true);
-        caducateAdecuacion.mutate(row);
-      }
-    });
-  }
-
-  const caducateAdecuacion = useMutation({
-    mutationFn: caducarAdecuacion,
-    onSuccess: (response) => {
-      queryClient.invalidateQueries('adecuaciones')
-      queryClient.invalidateQueries('adecuaciones_caducados')
-      show_alerta('Adecuacion Caducado', '<i class="fa-solid fa-check border_alert_green"></i>', 'alert_green')
-      setLoading(false);
-    },
-    onError: (error) => {
-      show_alerta('No conectado', '<i class="fa-solid fa-xmark border_alert_red"></i>', 'alert_red')
-      setLoading(false);
-    },
-  });
-
   const columns = [
     {
       name: 'Acciones',
@@ -286,7 +256,7 @@ const IndexAdecuacion = () => {
               </li>
               <li>
                 {row.miembros_fundador != 'sin asignar' && !row.alfanumerico
-                  ? <button onClick={(e) => handleRegistroFinal(e, row)} className="button_print_table">
+                  ? <button onClick={(e) => handleRegistroFinal(e, row)} className="button_edit_table">
                     <i className="fa-regular fa-registered"></i>
                     <span className='mx-2'>Etapa Final</span>
                   </button>
@@ -295,7 +265,7 @@ const IndexAdecuacion = () => {
               </li>
               <li>
                 {row.miembros_fundador && row.alfanumerico && row.registro_persona_adecuacion == null
-                  ? <button onClick={(e) => handlePersonaModal(e, row)} className="button_delete_table">
+                  ? <button onClick={(e) => handlePersonaModal(e, row)} className="button_edit_table">
                     <i className="fa-solid fa-file-pdf"></i>
                     <span className='mx-2'>Persona Colectiva
 
@@ -306,18 +276,9 @@ const IndexAdecuacion = () => {
               </li>
               <li>
                 {Math.round((now - (new Date(row.fecha_ingreso_tramite).getTime())) / (1000 * 60 * 60 * 24)) > 10
-                  ? <button onClick={(e) => handleArchivar(e, row)} className="button_show_table">
+                  ? <button onClick={(e) => handleArchivar(e, row)} className="button_delete_table">
                     <i className="fa-solid fa-box-archive"></i>
                     <span className='mx-2'>Archivar</span>
-                  </button>
-                  : ''
-                }
-              </li>
-              <li>
-                {Math.round((now - (new Date(row.fecha_ingreso_tramite).getTime())) / (1000 * 60 * 60 * 24)) > 365
-                  ? <button onClick={(e) => handleCaducar(e, row)} className="button_delete_table">
-                    <i className="fa-solid fa-x"></i>
-                    <span className='mx-2'>Caducar</span>
                   </button>
                   : ''
                 }
@@ -425,7 +386,7 @@ const IndexAdecuacion = () => {
     selectAllRowsItem: true,
     selectAllRowsItemText: 'todos'
   };
-  if (isLoading) return <Loading />
+  if (isLoading) return <Spiner />
   else if (isError) return <div>Error: {error.message}</div>
 
   return (

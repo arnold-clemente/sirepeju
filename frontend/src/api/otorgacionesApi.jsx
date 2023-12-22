@@ -8,6 +8,13 @@ export const getOtorgacion = async (otorgacionId) => {
     return response.data;
 }
 
+export const createOtorgacion = async (otorgacion) => {
+    const response = await axios.post(`/api/otorgacion/store`, otorgacion)
+        .then((response) => { return response.data })
+        .catch((error) => { return error.data });
+    return response;
+}
+
 export const createInforme = async (otorgacion) => {
     const res = await axios.post('/api/otorgacion/informe/store', otorgacion)
         .then((response) => { return response.data })
@@ -23,7 +30,7 @@ export const createSeguimiento = async (otorgacion) => {
 }
 
 export const createFundadores = async (fundadores) => {
-    const res = await axios.post('/api/fundadores/store', fundadores)
+    const res = await axios.post('/api/otorgacion/fundadores/store', fundadores)
         .then((response) => { return response.data })
         .catch((error) => { return error.data });
     return res;
@@ -37,7 +44,7 @@ export const createRegistroFinal = async (registro) => {
 }
 
 export const createRegisroPersonaColectiva = async (registro) => {
-    const res = await axios.post('/api/registro-persona-colectiva/store', registro, {
+    const res = await axios.post('/api/otorgacion/personalidad/store', registro, {
         headers: { 'Content-Type': 'multipart/form-data' }
     })
         .then((response) => { return response.data })
@@ -74,12 +81,19 @@ export const desarchivarOtorgacion = async (otorgacion) => {
     return response;
 }
 
+export const desarchivarModificacionOtorgacion = async (otorgacion) => {
+    const response = await axios.post(`/api/otorgacion/modificacion/desarchivar/${otorgacion.id}`)
+        .then((response) => { return response.data })
+        .catch((error) => { return error.data });
+    return response;
+}
+
 export const getCaducados = async () => {
     const response = await axios.get('/api/otorgacion/caducados')
     return response.data;
 }
 
-export const caducarOtorgacion= async (otorgacion) => {
+export const caducarOtorgacion = async (otorgacion) => {
     const response = await axios.post(`/api/otorgacion/caducar/${otorgacion.id}`)
         .then((response) => { return response.data })
         .catch((error) => { return error.data });
@@ -91,4 +105,16 @@ export const createRevocatoria = async (otorgacion) => {
         .then((response) => { return response.data })
         .catch((error) => { return error.data });
     return res;
+}
+
+export const createExtinguida = async (otorgacion) => {
+    const res = await axios.post('/api/otorgacion/extinguida/store', otorgacion)
+        .then((response) => { return response.data })
+        .catch((error) => { return error.data });
+    return res;
+}
+
+export const getExtinguidas = async () => {
+    const response = await axios.get('/api/otorgacion/extinguidas')
+    return response.data;
 }

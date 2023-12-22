@@ -15,7 +15,7 @@ export const links = [
                 texto: 'Administrativos'
             },
             {
-                path: '/user-gobernaciones',
+                path: '/gobernaciones',
                 icon: 'fa-solid fa-laptop-file',
                 texto: 'Gobernacion'
             },
@@ -36,24 +36,24 @@ export const links = [
                 texto: 'Solicitud de Reserva'
             },
             {
-                path: '/reserva-homonimia',
+                path: '/reserva/homonimias',
                 icon: 'fa-solid fa-ban',
                 texto: 'Reserva Homonimia'
             },
             {
-                path: '/registro-reserva',
+                path: '/reserva/reservados',
                 icon: 'fa-regular fa-square-check',
                 texto: 'Reservados'
             },
             {
-                path: '/registro-caducados',
+                path: '/reserva/caducados',
                 icon: 'fa-solid fa-hourglass',
                 texto: 'Caducados'
             },
         ],
     },
     {
-        path: '/buscar/reserva',
+        path: '/verificar/reserva',
         icon: 'fa-solid fa-magnifying-glass',
         texto: 'Verificación de Reserva'
     },
@@ -65,6 +65,16 @@ export const links = [
                 path: '/otorgaciones',
                 icon: 'fa-solid fa-file-shield',
                 texto: 'Proceso Otorgacion'
+            },
+            {
+                path: '/otorgacion/archivados',
+                icon: 'fa-solid fa-box-archive',
+                texto: 'Otorgacion Archivados'
+            },
+            {
+                path: '/otorgacion/caducados',
+                icon: 'fa-solid fa-hourglass',
+                texto: 'Otorgacion Caducados'
             },
             {
                 path: '/otorgacion/personalidades-juridicas',
@@ -82,14 +92,9 @@ export const links = [
                 texto: 'Otorgacion Revocados'
             },
             {
-                path: '/otorgacion/archivados',
-                icon: 'fa-solid fa-box-archive',
-                texto: 'Otorgacion Archivados'
-            },
-            {
-                path: '/otorgacion/caducados',
-                icon: 'fa-solid fa-hourglass',
-                texto: 'Otorgacion Caducados'
+                path: '/otorgacion/extinguidas',
+                icon: 'fa-solid fa-circle-check',
+                texto: 'Otorgacion Extinguidas'
             },
         ],
     },
@@ -101,6 +106,16 @@ export const links = [
                 path: '/adecuaciones',
                 icon: 'fa-solid fa-plus',
                 texto: 'Crear Adecuacion'
+            },
+            {
+                path: '/adecuacion/archivados',
+                icon: 'fa-solid fa-box-archive',
+                texto: 'Adecuacion Archivados'
+            },
+            {
+                path: '/adecuacion/caducados',
+                icon: 'fa-solid fa-hourglass',
+                texto: 'Adecuacion Caducados'
             },
             {
                 path: '/adecuacion/personalidades',
@@ -118,14 +133,9 @@ export const links = [
                 texto: 'Adecuacion Revocados'
             },
             {
-                path: '/adecuacion/archivados',
-                icon: 'fa-solid fa-box-archive',
-                texto: 'Adecuacion Archivados'
-            },
-            {
-                path: '/adecuacion/caducados',
-                icon: 'fa-solid fa-hourglass',
-                texto: 'Adecuacion Caducados'
+                path: '/adecuacion/extinguidas',
+                icon: 'fa-solid fa-circle-check',
+                texto: 'Adecuacion Extinguidas'
             },
         ],
     },

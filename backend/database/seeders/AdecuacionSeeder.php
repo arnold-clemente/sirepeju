@@ -30,7 +30,7 @@ class AdecuacionSeeder extends Seeder
             'seguimiento' => 'REALIZO SEGUIMIENTO EN FECHA 02-01-23',
             'cite_informe_preliminar' => 'QUINTO INFORME P/ENTREGA 22/03/2023',
             'miembros_fundador' => 'sin asignar',
-            'estado' => 7, 'administrativo_id' => 1
+            'estado' => 1, 'administrativo_id' => 1
         ]);
         Adecuacion::create([
             'personalidad_juridica' => 'FEDERACION SHIMPAKU',
@@ -47,7 +47,7 @@ class AdecuacionSeeder extends Seeder
             'seguimiento' => 'ENTREGARON SU SUBSANACION EN FECHA   02-01-24',
             'cite_informe_preliminar' => 'EN TRAMITE ',
             'miembros_fundador' => 'sin asignar',
-            'estado' => 7,
+            'estado' => 1,
             'administrativo_id' => 1
         ]);
         Adecuacion::create([
@@ -64,7 +64,7 @@ class AdecuacionSeeder extends Seeder
             'objeto' => 'SOMOS UN GRUPO DE PELEADORES CALLEJEROS', 'seguimiento' => 'REALIZO SEGUIMIENTO EN FECHA            02-01-24',
             'cite_informe_preliminar' => 'SUBSANA OBSERVACIONES HR 26879 DE 14/07/24',
             'miembros_fundador' => 'sin asignar',
-            'estado' => 7,
+            'estado' => 1,
             'administrativo_id' => 1
         ]);
         Adecuacion::create([
@@ -80,7 +80,7 @@ class AdecuacionSeeder extends Seeder
             'seguimiento' => 'ENTREGARON SU SUBSANACION EN FECHA   02-01-25',
             'cite_informe_preliminar' => 'NOTA REITERATORIA DE OBSERVACIONES CUARTO INFORME NOTIFICADO 22/07/2022. SUBSANA OBSERVACIONES HR  24800 DE 30/06/2024',
             'miembros_fundador' => 'sin asignar',
-            'estado' => 7,
+            'estado' => 1,
             'administrativo_id' => 1
         ]);
         Adecuacion::create([
@@ -89,7 +89,7 @@ class AdecuacionSeeder extends Seeder
             'representante' => 'MARLENE MAMANI QUIROGA',
             'ci_rep' => '12399324',
             'ext_ci_rep' => 'PA',
-            'naturaleza' => 'FUNDACION', 
+            'naturaleza' => 'FUNDACION',
             'persona_colectiva' => 'PERSONA NATURAL',
             'fecha_ingreso_tramite' => '2023-04-05',
             'codigo_adecuacion' => 'APJ - 080',
@@ -98,7 +98,7 @@ class AdecuacionSeeder extends Seeder
             'seguimiento' => 'REALIZO SEGUIMIENTO EN FECHA            02-01-25',
             'cite_informe_preliminar' => 'INFORME FINAL',
             'miembros_fundador' => 'sin asignar',
-            'estado' => 7,
+            'estado' => 1,
             'administrativo_id' => 1
         ]);
     }

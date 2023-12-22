@@ -15,7 +15,7 @@ const ShowAdm = ({ modal, close, registro }) => {
                         <span>Imprimir Reporte</span>
                     </button>
                 </div>
-                
+
 
                 <RepAdm registro={registro} modal={imprimir} close={closeImprimir} />
 
@@ -24,7 +24,7 @@ const ShowAdm = ({ modal, close, registro }) => {
                     <h2 className="fs-6"><b>Cargo:</b> &nbsp;{registro.cargo}</h2> <hr />
                     {registro.user
                         ? <div><h2 className="fs-6"><b>Correo Electronico:</b> &nbsp;{registro.user.email}</h2><hr />
-                            <h2 className="fs-6"><b>Rol:</b> &nbsp;{registro.user.rol}</h2>
+                            <h2 className="fs-6"><b>Rol:</b> &nbsp;{registro.user.rol}</h2> <hr />
                         </div>
                         : ''}
                 </div>

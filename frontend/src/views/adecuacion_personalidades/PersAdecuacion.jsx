@@ -4,6 +4,7 @@ import { useQuery } from 'react-query';
 import storage from '../../Storage/storage'
 
 import Loading from '../../components/Loading';
+import Spiner from '../../components/Spiner';
 import Banner from '../../components/Banner';
 import { estilos } from '../../components/estilosdatatables';
 
@@ -14,6 +15,7 @@ import ModalAdePersonalidadShow from './ModalAdePersonalidadShow';
 import SelectPersonalidadAdecuacion from './reporte/SelectPersonalidadAdecuacion';
 import ModalRevocar from './ModalRevocar';
 import ModalModificacionAde from './ModalModificacionAde';
+import ModalAdecuacionExtinguir from './ModalAdecuacionExtinguir';
 
 const PersAdecuacion = () => {
 
@@ -23,7 +25,7 @@ const PersAdecuacion = () => {
     // par el modal show
     const [modalAdecuacion, openAdecuacion, closeAdecuacion] = useModal(false);
     const [modificacion, openModificacion, closeModificacion] = useModal(false);
-    const [adecuacionShow, setadecuacionShow] = useState({id: 0});
+    const [adecuacionShow, setadecuacionShow] = useState({ id: 0 });
 
     //para el revocatoria
     const [revocatoriaModal, openRevocatoriaModal, closeRevocatoriaModal] = useModal(false);
@@ -33,6 +35,8 @@ const PersAdecuacion = () => {
         fecha_revocatoria: '',
         observacion: ''
     });
+    const [extintoModal, openExtintoModal, closeExtintoModal] = useModal(false);
+    const [extinto, setExtinto] = useState({ adecuacion_id: 1, nota_extincion: '', fecha_extenion: '', observacion: '' });
 
     const [update, setUpdate] = useState({
         fecha: '',
@@ -100,7 +104,7 @@ const PersAdecuacion = () => {
 
         return filtered
     }
-    
+
     const searchOnChange = async (e, row) => {
         e.persist();
         await setSearch(e.target.value);
@@ -148,8 +152,6 @@ const PersAdecuacion = () => {
             adecuacion_id: row.id,
             codigo_modificacion: '',
             personalidad_juridica: row.personalidad_juridica,
-            estatuto_organico: row.registro_persona_adecuacion.estatuto_organico,
-            reglamento_interno: row.registro_persona_adecuacion.reglamento_interno,
             domicilio_legal: row.domicilio_legal,
             miembros_fundador: row.miembros_fundador,
             seguimiento: row.seguimiento,
@@ -159,15 +161,60 @@ const PersAdecuacion = () => {
         openModificacion();
     }
 
+    const handleExtinguir = (e, row) => {
+        e.preventDefault();
+        const auxiliar = {
+            adecuacion_id: row.id,
+            nota_extincion: '',
+            fecha_extenion: '',
+            observacion: ''
+        };
+        setExtinto({ ...extinto, ...auxiliar })
+        openExtintoModal();
+    }
+
+    const handleInputExtinto = ({ target }) => {
+        setExtinto({
+            ...extinto,
+            [target.name]: target.value
+        });
+    };
+
 
     const columns = [
         {
             name: 'Acciones',
             cell: (row) => (
                 <div className='container-fluid d-flex flex-row gap-1'>
-                    <button onClick={(e) => handleShow(e, row)} className="button_show"><i className="fa-solid fa-eye"></i><span>Ver</span></button>
-                    <button onClick={(e) => handleModificar(e, row)} className="button_edit"><i className="fa-solid fa-pen-to-square"></i><span>Modificar</span></button>
-                    <button onClick={(e) => handleRevocar(e, row)} className="button_delete"><i className="fa-solid fa-eye"></i><span>Revocar</span></button>
+                    <button onClick={(e) => handleShow(e, row)} className="button_show">
+                        <i className="fa-solid fa-eye"></i>
+                        <span>Ver</span>
+                    </button>
+                    <div className='dropdown'>
+                        <button className="button_dropdown_table dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i className="fa-solid fa-gear"></i>
+                        </button>
+                        <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li>
+                                <button onClick={(e) => handleModificar(e, row)} className="button_edit_table">
+                                    <i className="fa-solid fa-pen-to-square"></i>
+                                    <span className='mx-1'>Modificar</span>
+                                </button>
+                            </li>
+                            <li>
+                                <button onClick={(e) => handleRevocar(e, row)} className="button_delete_table">
+                                    <i className="fa-regular fa-circle-xmark"></i>
+                                    <span className='mx-1'>Revocar</span>
+                                </button>
+                            </li>
+                            <li>
+                                <button onClick={(e) => handleExtinguir(e, row)} className="button_print_table">
+                                    <i className="fa-regular fa-circle-xmark"></i>
+                                    <span className='mx-1'>Extinguir</span>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             ),
             ignoreRowClick: true,
@@ -261,7 +308,7 @@ const PersAdecuacion = () => {
         selectAllRowsItem: true,
         selectAllRowsItemText: 'todos'
     };
-    if (isLoading) return <Loading />
+    if (isLoading) return <Spiner />
     else if (isError) return <div>Error: {error.message}</div>
     return (
         <>
@@ -272,6 +319,9 @@ const PersAdecuacion = () => {
             <SelectPersonalidadAdecuacion registro={selectedRows} modal={selectpdf} close={closeSelectpdf} />
             <ModalRevocar registrorModal={revocatoriaModal} closeRegistrorModal={closeRevocatoriaModal} openRegistrorModal={openRevocatoriaModal}
                 registro={revocatoria} handleInputChange={handleInputRevocatoria} />
+
+            <ModalAdecuacionExtinguir registrorModal={extintoModal} closeRegistrorModal={closeExtintoModal} openRegistrorModal={openExtintoModal}
+                registro={extinto} handleInputExtinto={handleInputExtinto} />
 
             {/* para le modal show adecuacion  */}
             <ModalModificacionAde registro={update} handleInputChange={handleInputModificacion} modal={modificacion} open={openModificacion} close={closeModificacion} />

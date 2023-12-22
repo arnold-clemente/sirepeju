@@ -29,7 +29,7 @@ const CreateGob = () => {
                 queryClient.invalidateQueries('gobernacions')
                 show_alerta('Creado con exito', '<i class="fa-solid fa-check border_alert_green"></i>', 'alert_green')
                 setLoading(false);
-                go('/user-gobernaciones')
+                go('/gobernaciones')
             } else {
                 show_alerta('Fallo de Validacion', '<i class="fa-solid fa-xmark border_alert_red"></i>', 'alert_red');
                 serError(response.errors);
@@ -50,7 +50,7 @@ const CreateGob = () => {
         ci: '',
         ext_ci: 'LP',
         email: '',
-        departamento_id: 4,
+        institucion_id: 4,
         user_id: storage.get('authUser').id
     });
 
@@ -74,7 +74,7 @@ const CreateGob = () => {
         });
     };
 
-    const { nombres, paterno, materno, cargo, ci, ext_ci, email, departamento_id, user_id } = formValues;
+    const { nombres, paterno, materno, cargo, ci, ext_ci, email, institucion_id, user_id } = formValues;
 
     return (
         <>
@@ -156,7 +156,7 @@ const CreateGob = () => {
                         <div className="form-group">
                             <label>Gobernacion Departamento </label>
                             <select className="form-control" id="exampleFormControlSelect1"
-                                name="departamento_id" value={departamento_id} onChange={handleInputChange}>
+                                name="institucion_id" value={institucion_id} onChange={handleInputChange}>
                                 <option value="1">BENI</option>
                                 <option value="2">CHUQUISACA</option>
                                 <option value="3">COCHABAMBA</option>
@@ -170,7 +170,7 @@ const CreateGob = () => {
                         </div>
                     </div>
                 </div>
-                <Link to='/user-gobernaciones' type="submit" className="btn btn-danger my-4">Cancelar</Link>
+                <Link to='/gobernaciones' type="submit" className="btn btn-danger my-4">Cancelar</Link>
                 <button type="submit" className="btn btn-primary my-4 mx-4">Enviar</button>
             </form>
         </>

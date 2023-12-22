@@ -3,9 +3,11 @@ import DataTable from "react-data-table-component";
 import Swal from 'sweetalert2';
 
 import { useQuery, useMutation, useQueryClient } from 'react-query';
-import { getRegistros, entregarRegistro, caducarRegistro } from '../../api/registroApi';
+// import { getRegistros, entregarRegistro, caducarRegistro } from '../../api/registroApi';
+import { getReservados, entregarReserva, caducarReserva } from '../../api/reservaApi';
 
 import Loading from '../../components/Loading';
+import Spiner from '../../components/Spiner';
 import Banner from '../../components/Banner';
 import { show_alerta } from '../../components/MessageAlert';
 import storage from '../../Storage/storage'
@@ -63,7 +65,7 @@ const IndexReg = () => {
 
     const { isLoading, data: registros, isError, error } = useQuery({
         queryKey: ['registros'],
-        queryFn: getRegistros,
+        queryFn: getReservados,
         select: reservas => reservas.sort((a, b) => b.id - a.id)
     })
 
@@ -76,6 +78,9 @@ const IndexReg = () => {
                 registro.sigla.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
                 registro.representante.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
                 registro.nro_certificado.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
+                registro.naturaleza.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
+                registro.correo.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
+                registro.persona_colectiva.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
                 registro.ci_rep.toLowerCase().includes(search.toLowerCase())
             ) {
                 return registro;
@@ -91,7 +96,7 @@ const IndexReg = () => {
     };
 
     const fechaReserva = useMutation({
-        mutationFn: entregarRegistro,
+        mutationFn: entregarReserva,
         onSuccess: (response) => {
             queryClient.invalidateQueries('registros')
             show_alerta('Fecha registrada', '<i class="fa-solid fa-check border_alert_green"></i>', 'alert_green')
@@ -104,8 +109,9 @@ const IndexReg = () => {
     });
 
     const caduarReserva = useMutation({
-        mutationFn: caducarRegistro,
+        mutationFn: caducarReserva,
         onSuccess: (response) => {
+            console.log(response)
             queryClient.invalidateQueries('registros')
             queryClient.invalidateQueries('registros_caducados')
             show_alerta('Registro caducado', '<i class="fa-solid fa-check border_alert_green"></i>', 'alert_green')
@@ -201,7 +207,7 @@ const IndexReg = () => {
                         <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1"> 
                             <li>
                                 {row.fecha_entrega
-                                    ? <button onClick={(e) => handleOtorgacion(e, row)} className="button_show_table">
+                                    ? <button onClick={(e) => handleOtorgacion(e, row)} className="button_edit_table">
                                         <i className="fa-solid fa-file-import"></i>
                                         <span className='mx-2'>Otorgacion</span>
                                     </button>
@@ -321,14 +327,14 @@ const IndexReg = () => {
         selectAllRowsItem: true,
         selectAllRowsItemText: 'todos'
     };
-    if (isLoading) return <Loading />
+    if (isLoading) return <Spiner />
     else if (isError) return <div>Error: {error.message}</div>
 
     return (
 
         <div>
             {loading === true ? <Loading /> : ''}
-            <Banner text="PERSONAS COLECTIVAS QUE CUENTAN CON RESERVA DE NOMBRE" />
+            <Banner text="REGISTRO DE ENTIDADES" />
             <ShowRegistro registro={registroShow} modal={showregistro} close={closeRegistro} />
             <ModalRegistro registro={otorgacion} modal={isModalOtorgacion} close={closeModalOtorgacion}
                 handleInputChange={handleInputChange} open={openModalOtorgacion} />

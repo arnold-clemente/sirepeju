@@ -16,7 +16,6 @@
 /backend/.vscode
 
 
-
 # Logs
 /frontend/logs
 /frontend/*.log
