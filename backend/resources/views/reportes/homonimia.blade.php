@@ -11,7 +11,7 @@
 <body>
     <style type="text/css">
         body {
-            margin: 0
+            margin: 0;
             font: 15pt "Arial";
             text-align: justify;
         }
