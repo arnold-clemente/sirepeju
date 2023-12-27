@@ -18,6 +18,30 @@ body {
   padding: 0;
   min-width: 320px;
 }
+mark {
+  background-color: rgb(170, 226, 243);
+  color: rgb(0, 0, 0);
+  font-size: 12px;
+
+}
+marker {
+  background-color: rgb(238, 240, 213);
+  color: rgb(0, 0, 0);
+  font-size: 12px;
+
+}
+
+p {
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+h2{
+  text-align: justify;
+  font-size: 11px;
+
+}
+
 
 #root {
   width: 100%;

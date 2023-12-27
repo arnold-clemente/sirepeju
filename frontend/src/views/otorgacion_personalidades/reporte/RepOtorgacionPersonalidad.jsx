@@ -36,10 +36,10 @@ const RepOtorgacionPersonalidad = ({ otorgacion, fundadores, personalidad, modal
         body: {
             width: "100%",
             height: "100%",
-            paddingTop: "2.5cm",
-            paddingBottom: "2.5cm",
-            paddingRight: "2.5cm",
-            paddingLeft: "3cm",
+            paddingTop: "2cm",
+            paddingBottom: "2cm",
+            paddingRight: "2cm",
+            paddingLeft: "2cm",
             
         },
         contenedor: {
@@ -103,7 +103,7 @@ const RepOtorgacionPersonalidad = ({ otorgacion, fundadores, personalidad, modal
             fontSize: '11px',
         },
         celdaColorida: { backgroundColor: '#44556f' }, // Puedes cambiar el color aquí
-        textoBlanco: { color: '#ffffff',fontSize: '12px', }, // Color blanco
+        textoBlanco: { color: '#ffffff',fontSize: '11px', }, // Color blanco
         
         boldText: {
             fontWeight: 'bold',
@@ -133,7 +133,7 @@ const RepOtorgacionPersonalidad = ({ otorgacion, fundadores, personalidad, modal
           tableCell: { 
             
             margin: "auto", 
-            marginTop: 5, 
+            marginTop: 8, 
             fontSize: 10,
             fontWeight: 'bold'
           },
@@ -175,9 +175,8 @@ const RepOtorgacionPersonalidad = ({ otorgacion, fundadores, personalidad, modal
                                 <Image style={styles.logo} src={logo} />
                         </View>
                             <View style={styles.contenedor}>
-                                <Text style={styles.title}>Otorgacion</Text>
-                                <Text style={styles.title}>Personalidad Juridica</Text>
-                                <Text style={styles.title}>{fecha_esp}</Text>
+                                <Text style={styles.title}>PERSONALIDAD JURÍDICA SIN FIN DE LUCRO QUE  DESARROLLA ACTIVIDADES EN MÁS DE UN DEPARTAMENTO</Text>
+                                {/* <Text style={styles.title}>{fecha_esp}</Text> */}
                             </View>
                              {/* la tabla desde este lugar */}
         
@@ -185,71 +184,81 @@ const RepOtorgacionPersonalidad = ({ otorgacion, fundadores, personalidad, modal
     {/* fila 1 */}
     <View style={styles.tableRow}> 
         <View style={{ ...styles.tableCol, ...styles.celdaColorida}}> 
-        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>Product</Text> 
+        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>CÓDIGO</Text> 
         </View>
         <View style={{ ...styles.tableCol, ...styles.celdaColorida}}> 
-        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>Product</Text> 
+        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>NOMBRE DE LA ENTIDAD</Text> 
         </View>
         <View style={{ ...styles.tableCol, ...styles.celdaColorida}}> 
-        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>Product</Text> 
+        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>RESOLUCIÓN MINISTERIAL</Text> 
         </View>
         <View style={{ ...styles.tableCol, ...styles.celdaColorida}}> 
-        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>Product</Text> 
+        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>FECHA DE RESOLUCIÓN MINISTERIAL</Text> 
         </View> 
         </View> 
         {/* fila 2 */}
         <View style={styles.tableRow}> 
         <View style={styles.tableCol}> 
-        <Text style={styles.tableCell}>Product</Text> 
+        <Text style={styles.tableCell}>{otorgacion.codigo_otorgacion}</Text> 
         </View> 
         <View style={styles.tableCol}> 
-        <Text style={styles.tableCell}>Type</Text> 
+        <Text style={styles.tableCell}>{otorgacion.personalidad_juridica}</Text> 
         </View> 
         <View style={styles.tableCol}> 
-        <Text style={styles.tableCell}>Period</Text> 
+        <Text style={styles.tableCell}>{personalidad.resolucion_ministerial}</Text> 
         </View> 
         <View style={styles.tableCol}> 
-        <Text style={styles.tableCell}>Price</Text> 
+        <Text style={styles.tableCell}>{personalidad.fecha_resolucion}</Text> 
         </View> 
         </View>
       </View>
-                 {/* final de la tabla */}             
-                            <View style={styles.lista}>
-                                <Text style={styles.tipo}>Número Registro: </Text>
-                                <Text style={styles.dato}>{otorgacion.codigo_otorgacion}</Text>
-                            </View>
-                            <View style={styles.lista}>
-                                <Text style={styles.tipo}>NOMBRE: </Text>
-                                <Text style={styles.dato}>{otorgacion.personalidad_juridica}</Text>
-                            </View>
-                            <View style={styles.lista}>
-                                <Text style={styles.tipo}>NATURALEZA: </Text>
-                                <Text style={styles.dato}>{otorgacion.naturaleza}</Text>
-                            </View>
-                            <View style={styles.lista}>
-                                <Text style={styles.tipo}>RESOLUCION: </Text>
-                                <Text style={styles.dato}>{personalidad.resolucion_ministerial}</Text>
-                            </View>
-                            <View style={styles.lista}>
-                                <Text style={styles.tipo}>FUNDADORES</Text>
-                            </View>  
-                            <View style={styles.table}>
-                                <Text style={styles.table_head}>NOMBRE</Text>
-                                <Text style={styles.table_head}>CEDULA</Text>
-                            </View>
-                            <View style={styles.table_body}>
-                                {fundadores.length > 0
+                 {/* final de la tabla */} 
+                 {/* la tabla desde este lugar */}
+        
+        <View style={styles.table}>
+    {/* fila 1 */}
+    <View style={styles.tableRow}> 
+        <View style={{ ...styles.tableCol, ...styles.celdaColorida}}> 
+        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>DOMICILIO LEGAL</Text> 
+        </View>
+        <View style={{ ...styles.tableCol, ...styles.celdaColorida}}> 
+        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>OBJETO</Text> 
+        </View>
+        <View style={{ ...styles.tableCol, ...styles.celdaColorida}}> 
+        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>MIEMBROS FUNDADORES/DIRECTORIO</Text> 
+        </View>
+        <View style={{ ...styles.tableCol, ...styles.celdaColorida}}> 
+        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>CÓDIGO ALFANÙMERICO</Text> 
+        </View> 
+        </View> 
+        {/* fila 2 */}
+        <View style={styles.tableRow}> 
+        <View style={styles.tableCol}> 
+        <Text style={styles.tableCell}>{otorgacion.domicilio_legal}</Text> 
+        </View> 
+        <View style={styles.tableCol}> 
+        <Text style={styles.tableCell}>{otorgacion.objeto}</Text> 
+        </View> 
+        <View style={styles.tableCol}> 
+        <Text style={styles.tableCell}>{fundadores.length > 0
                                     ? fundadores.map((row, index) => {
                                         return (
                                             <View style={styles.table_tr} key={row.id}>
                                                 <Text style={styles.table_item}>{row.nombre_completo}</Text>
-                                                <Text style={styles.table_item}>{row.ci}</Text>
+                                                <Text style={styles.table_item}>&nbsp;C.I.{row.ci}&nbsp;&nbsp;</Text>
                                             </View>
                                         )
                                     })
                                     : null
-                                }
-                            </View>  
+                                }</Text> 
+        </View> 
+        <View style={styles.tableCol}> 
+        <Text style={styles.tableCell}>{otorgacion.alfanumerico}</Text> 
+        </View> 
+        </View>
+      </View>
+                 {/* final de la tabla */}              
+                            
                             <View style={styles.content}>
         {/* Contenido de tu documento */}
         <Text style={styles.dato}>{"\n"}El contenido de este documento esta extraido del sistema SIREPEJU(Sistema de Registro de Personalidades Juroidícas).</Text>

@@ -163,25 +163,9 @@ const SelectOtorgacionPersonalidades = ({ registro, modal, close }) => {
                                 <Image style={styles.logo} src={logo} />
                         </View>
                            <View style={styles.contenedor}>
-                                <Text style={styles.title}>Otorgacion Personalidades</Text>
+                                <Text style={styles.title}>PERSONALIDADES JURÍDICAS SIN FINES DE LUCRO QUE DESARROLLAN ACTIVIDADES EN MÁS DE UN DEPARTAMENTO</Text>
                             </View>
-                            <View style={styles.table}>
-                                <Text style={styles.table_head}>Entidad</Text>
-                                <Text style={styles.table_head}>Sigla</Text>
-                            </View>
-                            <View style={styles.table_body}>
-                                {registro.length > 0
-                                    ? registro.map((row, index) => {
-                                        return (
-                                            <View style={styles.table_tr} key={row.id}>
-                                                <Text style={styles.table_item}>{row.personalidad_juridica}</Text>
-                                                <Text style={styles.table_item}>{row.sigla}</Text>
-                                            </View>
-                                        )
-                                    })
-                                    : null
-                                }
-                            </View>
+                           
                             <View>
                                 {/* <Image style={styles.logo} src={qr} /> */}
                             </View>
@@ -191,40 +175,47 @@ const SelectOtorgacionPersonalidades = ({ registro, modal, close }) => {
     {/* fila 1 */}
     <View style={styles.tableRow}> 
         <View style={{ ...styles.tableCol, ...styles.celdaColorida}}> 
-        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>Product</Text> 
+        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>NOMBRE</Text> 
         </View>
         <View style={{ ...styles.tableCol, ...styles.celdaColorida}}> 
-        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>Product</Text> 
+        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>NATURALEZA</Text> 
         </View>
         <View style={{ ...styles.tableCol, ...styles.celdaColorida}}> 
-        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>Product</Text> 
+        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>OBJETO</Text> 
         </View>
         <View style={{ ...styles.tableCol, ...styles.celdaColorida}}> 
-        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>Product</Text> 
+        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>RESOLUCION MINISTERIAL</Text> 
         </View> 
         </View> 
         {/* fila 2 */}
-        <View style={styles.tableRow}> 
-        <View style={styles.tableCol}> 
-        <Text style={styles.tableCell}>Product</Text> 
-        </View> 
-        <View style={styles.tableCol}> 
-        <Text style={styles.tableCell}>Type</Text> 
-        </View> 
-        <View style={styles.tableCol}> 
-        <Text style={styles.tableCell}>Period</Text> 
-        </View> 
-        <View style={styles.tableCol}> 
-        <Text style={styles.tableCell}>Price</Text> 
-        </View> 
+        {registro.length > 0
+                                    ? registro.map((row, index) => {
+                                        return (
+                <View style={styles.tableRow}> 
+                <View style={styles.tableCol}> 
+                <Text style={styles.tableCell}>{row.personalidad_juridica}</Text> 
+                </View> 
+                <View style={styles.tableCol}> 
+                <Text style={styles.tableCell}>{row.naturaleza}</Text> 
+                </View> 
+                <View style={styles.tableCol}> 
+                <Text style={styles.tableCell}>{row.objeto}</Text> 
+                </View> 
+                <View style={styles.tableCol}> 
+                <Text style={styles.tableCell}>aqui falta rewsolucion de cada unoi</Text> 
+                </View> 
         </View>
+          )
+        })
+        : null
+    }
       </View>
        {/* final de la tabla */}
       
 
       <View style={styles.content}>
         {/* Contenido de tu documento */}
-        <Text style={styles.dato}>{"\n"}El contenido de este documento esta extraido del sistema SIREPEJU(Sistema de Registro de Personalidades Juroidícas).</Text>
+        <Text style={styles.dato}>{"\n"}El contenido de este documento esta extraido del sistema SIREPEJU(Sistema de Registro de Personalidades Juridícas).</Text>
        
         <Text style={styles.dato}>{"\n"}{"\n"}{"\n"}Fecha y Hora de Impresión: {"\n"}{getCurrentDateTime()}</Text>
       </View>

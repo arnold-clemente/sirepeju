@@ -83,7 +83,7 @@ const ModalOtorgacionCaducado = ({ registro, modalRegistro, closeRegistro }) => 
     });
     return (
         <>
-            <ModalDiv isOpen={modalRegistro} closeModal={closeRegistro} title={'LISTA DE PERSONERIAS JURIDICAS CON RESOLUCION MINISTERIAL'}>
+            <ModalDiv isOpen={modalRegistro} closeModal={closeRegistro} title={'TRÁMITE DE OTORGACIÓN EN ESTADO CADUCADO '}>
                 {!cargando
                     ? (<div className="container-fluid">
                         <h2 className='text-center fs-4'>{otorgacion.personalidad_juridica} </h2>
@@ -105,7 +105,7 @@ const ModalOtorgacionCaducado = ({ registro, modalRegistro, closeRegistro }) => 
                                 ? <>
                                     <button className='btn btn-success' onClick={openModalpdf} >
                                         <i className="fa-solid fa-print"></i>
-                                        <span className='mx-1'>Imprimir</span>
+                                        <span className='mx-1'>Imprimir reporte</span>
                                     </button>
                                     <div className='absolute'>
                                         <RepCaducadoOtorgacion modal={modalpdf} close={closeModalpdf}
@@ -116,10 +116,10 @@ const ModalOtorgacionCaducado = ({ registro, modalRegistro, closeRegistro }) => 
                             }
                         </div>
 
-                        <h2 className="fs-6"><b>Codigo: {otorgacion.codigo_adecuacion}</b> &nbsp;&nbsp; <b>Naturaleza: {otorgacion.naturaleza}</b></h2> <hr />
-                        <h2 className="fs-6"><b>Institucion Sin Fin de Lucro:</b> &nbsp;&nbsp; <b>Sigla: {otorgacion.sigla}</b></h2> <hr />
-                        <h2 className="fs-6"><b>Domicilio Legal: {otorgacion.domicilio_legal}</b></h2> <hr />
-                        <h2 className="fs-6"><b>Objeto: <p className='fs-6'>{otorgacion.objeto}</p></b></h2><hr />
+                        <h2 className="fs-6"><b>Codigo:</b> {otorgacion.codigo_otorgacion}&nbsp;&nbsp; <b>Naturaleza: {otorgacion.naturaleza}</b></h2> <hr />
+                        <h2 className="fs-6"><b>Tipo de persona colectiva:</b>&ensp;{otorgacion.persona_colectiva}&emsp;&emsp; <b>Sigla: </b>{otorgacion.sigla}</h2> <hr />
+                        <h2 className="fs-6"><b>Domicilio Legal:</b>{otorgacion.domicilio_legal}</h2> <hr />
+                        <h2 className="fs-6"><b>Objeto:</b> <p><mark>{otorgacion.objeto}</mark></p></h2><hr />
 
 
                         {otorgacion.estado == 0
@@ -134,7 +134,7 @@ const ModalOtorgacionCaducado = ({ registro, modalRegistro, closeRegistro }) => 
 
                         {fundadores.length > 0
                             ? <div>
-                                <h2 className="fs-6"><b>Miembros Fundadores:</b>
+                                <h2 className="fs-6"><b><center>Miembros Fundadores:</center></b>
                                     <center>
                                         <div className='d-flex'>
                                             <table className='table'>
@@ -148,9 +148,8 @@ const ModalOtorgacionCaducado = ({ registro, modalRegistro, closeRegistro }) => 
                                                     {fundadores.sort((a, b) => b.id - a.id).map((fundador) => {
                                                         return (
                                                             <tr key={fundador.id}>
-                                                                <td>{fundador.id}</td>
-                                                                <td>{fundador.nombre_completo}</td>
-                                                                <td>{fundador.ci}</td>
+                                                                <td><marker>{fundador.nombre_completo}</marker></td>
+                                                                <td><marker>{fundador.ci}</marker></td>
                                                             </tr>
                                                         )
                                                     })}
