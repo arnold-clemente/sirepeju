@@ -1,5 +1,6 @@
 import React, { useCallback, useMemo, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux'
 import DataTable from "react-data-table-component";
 import { useDispatch } from 'react-redux'
 import { updateSearch } from '../../store/slices/searchSlice';
@@ -18,11 +19,12 @@ import ShowSolicitud from './ShowSolicitud';
 import SelectSolicitudes from './reporte/selectSolicitudes';
 
 const IndexReserva = () => {
-    
+
     const go = useNavigate();
     const dispatch = useDispatch();
     const [search, setSearch] = useState('');
     const [loading, setLoading] = useState(false);
+    const permisos = useSelector(state => state.userStore.permisos)
     const queryClient = useQueryClient();
     //para el modal
     const [showreserva, openReserva, closeReserva] = useModal(false);
@@ -105,8 +107,15 @@ const IndexReserva = () => {
 
                 <div className='d-flex flex-row justify-content-start gap-1'>
                     <button onClick={(e) => handleShow(e, row)} className="button_show"><i className="fa-solid fa-eye"></i><span>Ver</span></button>
-                    <Link to={`/reserva/editar/${row.id}`} className="button_edit"><i className="fa-solid fa-pen-to-square"></i><span>Editar</span></Link>
-                    <button onClick={(e) => handleVerificar(e, row)} className="button_delete"><i className="fa-solid fa-magnifying-glass"></i><span>Verificar</span></button>
+                    {permisos.includes('reserva.update')
+                        ? <Link to={`/reserva/editar/${row.id}`} className="button_edit"><i className="fa-solid fa-pen-to-square"></i><span>Editar</span></Link>
+                        : null
+                    }
+                    {permisos.includes('verificacion.entidades')
+                        ? <button onClick={(e) => handleVerificar(e, row)} className="button_delete"><i className="fa-solid fa-magnifying-glass"></i><span>Verificar</span></button>
+                        : null
+                    }
+
                 </div >
             ),
             ignoreRowClick: true,
@@ -119,49 +128,49 @@ const IndexReserva = () => {
             selector: row => row.id,
             sortable: true,
             center: true,
-            wrap: true,         
+            wrap: true,
             width: '150px',
         },
         {
             name: 'Nº Correlativo',
             selector: row => row.nro_certificado,
             sortable: true,
-            wrap: true,         
+            wrap: true,
             width: '150px',
         },
         {
             name: 'Tipo de Persona Colectiva',
             selector: row => row.persona_colectiva,
             sortable: true,
-            wrap: true,         
+            wrap: true,
             width: '200px',
         },
         {
             name: 'Naturaleza',
             selector: row => row.naturaleza,
             sortable: true,
-            wrap: true,         
+            wrap: true,
             width: '200px',
         },
         {
             name: 'Nombre de la Persona Colectiva',
             selector: row => row.entidad,
             sortable: true,
-            wrap: true,         
+            wrap: true,
             width: '300px',
         },
         {
             name: 'Sigla',
             selector: row => row.sigla,
             sortable: true,
-            wrap: true,         
+            wrap: true,
             width: '150px',
         },
         {
             name: 'Representante Legal',
             selector: row => row.representante,
             sortable: true,
-            wrap: true,         
+            wrap: true,
             width: '200px',
         },
 
@@ -169,21 +178,21 @@ const IndexReserva = () => {
             name: 'CI',
             selector: row => row.ci_rep + " " + row.ext_ci_rep,
             sortable: true,
-            wrap: true,         
+            wrap: true,
             width: '150px',
         },
         {
             name: 'Nº Celular',
             selector: row => row.telefono,
             sortable: true,
-            wrap: true,         
+            wrap: true,
             width: '150px',
         },
         {
             name: 'Correo Registrado',
             selector: row => row.correo,
             sortable: true,
-            wrap: true,         
+            wrap: true,
             width: '250px',
         }
     ];
@@ -219,10 +228,12 @@ const IndexReserva = () => {
                 <ShowSolicitud registro={reservaShow} modal={showreserva} close={closeReserva} />
                 <SelectSolicitudes registro={selectedRows} modal={selectpdf} close={closeSelectpdf} />
                 <div>
-                    <Link to="/reserva/crear" className='btn button_green'>
-                        <span>AÑADIR</span>
-                        <i className="fa fa-plus" aria-hidden="true"></i>
-                    </Link>
+                    {permisos.includes('reserva.store')
+                        ? <Link to="/reserva/crear" className='btn button_green'>
+                            <span>AÑADIR</span>
+                            <i className="fa fa-plus" aria-hidden="true"></i>
+                        </Link>
+                        : null}
                 </div>
             </div>
             <div className='table-responsive'>

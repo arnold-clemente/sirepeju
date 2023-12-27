@@ -10,7 +10,7 @@ Route::post('/auth/login', [AuthController::class, 'login'])
     ->name('auth.login');
 
 Route::middleware(['auth:sanctum'])
-    ->get('/auth/logout', [AuthController::class, 'logout'])
+    ->post('/auth/logout', [AuthController::class, 'logout'])
     ->name('auth.logout');
 
 Route::middleware(['auth:sanctum'])

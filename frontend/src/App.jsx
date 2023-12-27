@@ -11,6 +11,9 @@ import './css/buttons.css'
 import './css/loading.css'
 import './css/modal.css'
 import './css/profile.css'
+import './css/roles.css'
+import './css/errors.css'
+import './css/dashboard.css'
 
 function App() {
 

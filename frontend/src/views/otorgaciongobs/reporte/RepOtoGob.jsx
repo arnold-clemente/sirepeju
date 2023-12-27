@@ -4,7 +4,7 @@ import { PDFViewer, Document, Page } from '@react-pdf/renderer'
 import { Text, View, StyleSheet, Image } from '@react-pdf/renderer'
 import logo from '../../../images/logo.png'
 
-const RepOtoGob = ({ registro, modal, close }) => {
+const RepOtoGob = ({ registro, fundadores, modal, close }) => {
     let fecha_esp = ''
 
     if (registro.fecha_resolucion) {

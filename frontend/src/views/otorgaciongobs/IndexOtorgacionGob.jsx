@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import DataTable from "react-data-table-component";
 import { useQuery } from 'react-query';
 import { useQueryClient } from 'react-query';
+import { useSelector } from 'react-redux'
 
 import Loading from '../../components/Loading';
 import Spiner from '../../components/Spiner';
@@ -22,6 +23,7 @@ const IndexOtorgacionGob = () => {
   const queryClient = useQueryClient();
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(false);
+  const permisos = useSelector(state => state.userStore.permisos)
 
   // para el modal show Otorgacion
   const [modalOtorgacion, openOtorgacion, closeOtorgacion] = useModal(false);
@@ -129,25 +131,34 @@ const IndexOtorgacionGob = () => {
       cell: (row) => (
         <div className='container-fluid d-flex flex-row gap-1'>
           <button onClick={(e) => handleShow(e, row)} className="button_show"><i className="fa-solid fa-eye"></i><span>Ver</span></button>
-          <div className='dropdown'>
-            <button className="button_dropdown_table dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-              <i className="fa-solid fa-gear"></i>
-            </button>
-            <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-              <li>
-                <Link to={`/otorgaciones-gobernaciones/edit/${row.id}`} className="button_edit_table">
-                  <i className="fa-solid fa-pen-to-square"></i>
-                  <span>Editar</span>
-                </Link>
-              </li>
-              <li>
-                <button onClick={(e) => handleEliminar(e, row)} className="button_delete_table">
-                  <i className="fa-solid fa-x"></i>
-                  <span className='mx-2'>Eliminar</span>
-                </button>
-              </li>
-            </ul>
-          </div>
+          {permisos.includes('otorgacion.gobernacion.destroy') || permisos.includes('otorgacion.gobernacion.update')
+            ? <div className='dropdown'>
+              <button className="button_dropdown_table dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                <i className="fa-solid fa-gear"></i>
+              </button>
+              <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                {permisos.includes('otorgacion.gobernacion.update')
+                  ? <li>
+                    <Link to={`/otorgaciones-gobernaciones/edit/${row.id}`} className="button_edit_table">
+                      <i className="fa-solid fa-pen-to-square"></i>
+                      <span>Editar</span>
+                    </Link>
+                  </li>
+                  : null
+                }
+                {permisos.includes('otorgacion.gobernacion.destroy')
+                  ? <li>
+                    <button onClick={(e) => handleEliminar(e, row)} className="button_delete_table">
+                      <i className="fa-solid fa-x"></i>
+                      <span className='mx-2'>Eliminar</span>
+                    </button>
+                  </li>
+                  : null
+                }
+              </ul>
+            </div>
+            : null
+          }
 
         </div>
       ),
@@ -215,10 +226,13 @@ const IndexOtorgacionGob = () => {
           />
         </div>
         <div>
-          <Link to="/otorgaciones-gobernaciones/create" className='btn button_green'>
-            <span>AÑADIR</span>
-            <i className="fa fa-plus" aria-hidden="true"></i>
-          </Link>
+          {permisos.includes('otorgacion.gobernacion.store')
+            ? <Link to="/otorgaciones-gobernaciones/create" className='btn button_green'>
+              <span>AÑADIR</span>
+              <i className="fa fa-plus" aria-hidden="true"></i>
+            </Link>
+            : null
+          }
         </div>
       </div>
       <div className='table-responsive'>

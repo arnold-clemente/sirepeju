@@ -6,6 +6,7 @@ import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { getRegistrado, updateRegistrado } from '../../api/registradoApi';
 
 import Loading from '../../components/Loading';
+import Spiner from '../../components/Spiner';
 import { show_alerta } from '../../components/MessageAlert';
 import ValidationError from '../../components/ValidationError';
 import Banner from '../../components/Banner';
@@ -96,9 +97,9 @@ const EditRegistrados = () => {
     });
   };
 
-  if (isLoading) return <Loading />
+  if (isLoading) return <Spiner />
   else if (isError) return <div>Error: {error.message}</div>
-  if (registrado.id === 0) return <Loading />
+  if (registrado.id === 0) return <Spiner />
   else
     return (
       <>

@@ -18,6 +18,10 @@ Route::middleware(['auth:sanctum'])
     ->name('administrativo.store');
 
 Route::middleware(['auth:sanctum'])
+    ->get('/administrativo/edit/{administrativo}', [AdministrativoController::class, 'edit'])
+    ->name('administrativo.edit');
+
+Route::middleware(['auth:sanctum'])
     ->put('/administrativo/update/{administrativo}', [AdministrativoController::class, 'update'])
     ->name('administrativo.update');
 

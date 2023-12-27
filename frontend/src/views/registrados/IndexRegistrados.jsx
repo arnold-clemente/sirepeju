@@ -2,6 +2,7 @@ import React, { useCallback, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import DataTable from "react-data-table-component";
+import { useSelector } from 'react-redux'
 
 import { show_alerta } from '../../components/MessageAlert';
 import { estilos } from '../../components/estilosdatatables';
@@ -20,6 +21,7 @@ const IndexRegistrados = () => {
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(false);
   const queryClient = useQueryClient();
+  const permisos = useSelector(state => state.userStore.permisos)
   // para el modal true- false - paso 3
   const [showRegistrado, openRegistrado, closeRegistrado] = useModal(false);
   const [selectpdf, openSelectpdf, closeSelectpdf] = useModal(false);
@@ -123,25 +125,34 @@ const IndexRegistrados = () => {
         row.estado === 1 ?
           <div className='container-fluid d-flex flex-row'>
             <button onClick={(e) => handleShow(e, row)} className="button_show"><i className="fa-solid fa-eye"></i><span>Ver</span></button>
-            <div className='dropdown'>
-              <button className="button_dropdown_table dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                <i className="fa-solid fa-gear"></i>
-              </button>
-              <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                <li>
-                  <Link to={`/registrado/edit/${row.id}`} className="button_edit_table dropdown-item">
-                    <i className="fa-solid fa-pen-to-square"></i>
-                    <span className='mx-2'>Editar</span>
-                  </Link>
-                </li>
-                <li>
-                  <button onClick={(e) => handleDelete(e, row)} className="button_delete_table dropdown-item">
-                    <i className="fa-solid fa-x"></i>
-                    <span className='mx-2'>Eliminar</span>
-                  </button>
-                </li>
-              </ul>
-            </div>
+            {permisos.includes('registrado.update') || permisos.includes('registrado.destroy')
+              ? <div className='dropdown'>
+                <button className="button_dropdown_table dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                  <i className="fa-solid fa-gear"></i>
+                </button>
+                <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                  {permisos.includes('registrado.update')
+                    ? <li>
+                      <Link to={`/registrado/edit/${row.id}`} className="button_edit_table dropdown-item">
+                        <i className="fa-solid fa-pen-to-square"></i>
+                        <span className='mx-2'>Editar</span>
+                      </Link>
+                    </li>
+                    : null
+                  }
+                  {permisos.includes('registrado.destroy')
+                    ? <li>
+                      <button onClick={(e) => handleDelete(e, row)} className="button_delete_table dropdown-item">
+                        <i className="fa-solid fa-x"></i>
+                        <span className='mx-2'>Eliminar</span>
+                      </button>
+                    </li>
+                    : null
+                  }
+                </ul>
+              </div>
+              : null
+            }
 
           </div>
           : ''
@@ -220,13 +231,16 @@ const IndexRegistrados = () => {
           />
         </div>
         {/* modales  */}
-        <ShowRegistrado modal={showRegistrado} close={closeRegistrado} registro={registradoShow}/>
+        <ShowRegistrado modal={showRegistrado} close={closeRegistrado} registro={registradoShow} />
         <SelectRegistrados registro={selectedRows} modal={selectpdf} close={closeSelectpdf} />
         <div>
-          <Link to="/registrado/create" className='btn button_green'>
-            <span>AÑADIR</span>
-            <i className="fa fa-plus" aria-hidden="true"></i>
-          </Link>
+          {permisos.includes('registrado.store')
+            ? <Link to="/registrado/create" className='btn button_green'>
+              <span>AÑADIR</span>
+              <i className="fa fa-plus" aria-hidden="true"></i>
+            </Link>
+            : null
+          }
         </div>
       </div>
       <div className='table-responsive'>

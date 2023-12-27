@@ -57,21 +57,32 @@ class AuthController extends Controller
         if (!Auth::attempt($request->only('email', 'password'))) {
             return response()->json([
                 'status' => false,
-                'errors' => ['No autorizado']
-            ], 401);
+                'errors' => ['El correo y la contraseña no concuerdan']
+            ], 200);
         }
-        $user = User::where('email', $request->email)
+        $user = User::where('email', $request->email)->first();
+
+        $user_logueado = User::where('id', $user->id)
             ->select(
                 'id',
                 'name as nombre',
                 'email as correo',
+                'rol',
+                'profile_photo_path as imagen'
             )
             ->first();
+
+        $roles = $user->getRoleNames();
+        $permission = $user->getPermissionsViaRoles()->pluck('name');
+
         return response()->json([
             'status' => true,
             'message' => 'inicio de sesión con éxito',
             'data' => $user,
             'token' => $user->createToken('API TOKEN')->plainTextToken,
+            'user' => $user_logueado,
+            'roles' => $roles,
+            'permission' => $permission,
         ], 200);
     }
 

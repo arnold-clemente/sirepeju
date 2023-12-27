@@ -95,9 +95,6 @@ const IndexAdecuacionCaducados = () => {
 
   }
 
-
-
-
   const columns = [
     {
       name: 'Acciones',

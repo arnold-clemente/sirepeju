@@ -32,6 +32,7 @@ class GobernacionController extends Controller
                     institucions.departamento as departamento
                 ')
             ->whereIn('gobernacions.estado', [1])
+            ->whereNotIn('users.id', [1])
             ->get();
 
 
@@ -90,8 +91,8 @@ class GobernacionController extends Controller
             'name' => $request->nombres . " " . $request->paterno . " " . $request->materno,
             'email' => $request->email,
             'rol' => 'gobernacion',
-            'password' => Hash::make($request->password),
-        ]);
+            'password' => Hash::make($request->ci),
+        ])->assignRole('gobernacion');
 
         $gobernacion = Gobernacion::create([
             'nombres' => $request->nombres,

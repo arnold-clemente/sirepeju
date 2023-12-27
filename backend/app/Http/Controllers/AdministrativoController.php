@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
 
 class AdministrativoController extends Controller
 {
@@ -29,6 +30,7 @@ class AdministrativoController extends Controller
                     users.email as email
                 ')
             ->whereIn('administrativos.estado', [1])
+            ->whereNotIn('users.id', [1])
             ->get();
 
 
@@ -39,7 +41,7 @@ class AdministrativoController extends Controller
     {
         $adminitrativo_show = DB::table('administrativos')
             ->join('users', 'users.id', '=', 'administrativos.user_id')
-                ->selectRaw('
+            ->selectRaw('
                     administrativos.id as id, 
                     administrativos.nombres as nombres, 
                     administrativos.paterno as paterno,
@@ -56,6 +58,7 @@ class AdministrativoController extends Controller
 
         return response()->json($adminitrativo_show);
     }
+
 
     public function store(Request $request)
     {
@@ -83,8 +86,8 @@ class AdministrativoController extends Controller
             'name' => $request->nombres . " " . $request->paterno . " " . $request->materno,
             'email' => $request->email,
             'rol' => $request->usuario,
-            'password' => Hash::make($request->password),
-        ]);
+            'password' => Hash::make($request->ci),
+        ])->assignRole($request->usuario);
 
         $administrativo = Administrativo::create([
             'nombres' => $request->nombres,
@@ -103,6 +106,35 @@ class AdministrativoController extends Controller
             'administrativo' => $administrativo,
             'status' => true,
             'message' => 'Creado satisfactoriamente'
+        ]);
+    }
+
+    public function edit(Administrativo $administrativo)
+    {
+        $adminitrativo_show = DB::table('administrativos')
+            ->join('users', 'users.id', '=', 'administrativos.user_id')
+            ->selectRaw('
+                administrativos.id as id, 
+                administrativos.nombres as nombres, 
+                administrativos.paterno as paterno,
+                administrativos.materno as materno, 
+                administrativos.cargo as cargo, 
+                administrativos.ci as ci, 
+                administrativos.ext_ci as ext_ci, 
+                users.rol as usuario, 
+                administrativos.user_id as user_id, 
+                users.email as email
+            ')
+            ->where('administrativos.id', $administrativo->id)
+            ->first();
+
+        $roles = Role::whereNotIn('id', [1, 6])
+            ->where('state', 1)
+            ->get();
+
+        return response()->json([
+            'administrativo' => $adminitrativo_show,
+            'roles' => $roles,
         ]);
     }
 
@@ -137,11 +169,23 @@ class AdministrativoController extends Controller
         $administrativo->update = $request->auth_id;
         $administrativo->save();
 
+
         $user = User::find($request->user_id);
-        $user->email = $request->email;
-        $user->rol = $request->usuario;
-        $user->name = $request->nombres . " " . $request->paterno . " " . $request->materno;
-        $user->save();
+        if ($user->rol == $request->usuario) {
+            $user->email = $request->email;
+            $user->rol = $request->usuario;
+            $user->name = $request->nombres . " " . $request->paterno . " " . $request->materno;
+            $user->save();
+        } else {
+            $user->removeRole($user->rol);
+            $user->email = $request->email;
+            $user->rol = $request->usuario;
+            $user->name = $request->nombres . " " . $request->paterno . " " . $request->materno;
+            $user->assignRole($request->usuario);
+            $user->save();
+        }
+
+
 
         return response()->json([
             'status' => true,

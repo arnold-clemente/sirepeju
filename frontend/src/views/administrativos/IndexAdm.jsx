@@ -2,6 +2,7 @@ import React, { useCallback, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import DataTable from "react-data-table-component";
+import { useSelector } from 'react-redux'
 
 import { show_alerta } from '../../components/MessageAlert';
 import { estilos } from '../../components/estilosdatatables';
@@ -22,6 +23,7 @@ const IndexAdministrativos = () => {
     const [search, setSearch] = useState('');
     const [loading, setLoading] = useState(false);
     const queryClient = useQueryClient();
+    const permisos = useSelector(state => state.userStore.permisos)
     // para el modal true- false - paso 3
     const [showadministrativo, openAdministrativo, closeAdministrativo] = useModal(false);
     const [selectpdf, openSelectpdf, closeSelectpdf] = useModal(false);
@@ -31,22 +33,22 @@ const IndexAdministrativos = () => {
     const [toggleCleared, setToggleCleared] = useState(false);
 
     const handleRowSelected = useCallback(state => {
-		setSelectedRows(state.selectedRows);
-	}, []);
+        setSelectedRows(state.selectedRows);
+    }, []);
 
     const contextActions = useMemo(() => {
-		const handleDelete = () => {
-            openSelectpdf();    			
-		};
+        const handleDelete = () => {
+            openSelectpdf();
+        };
 
-		return (
-			<button onClick={handleDelete} className='button_select_pdf'>
+        return (
+            <button onClick={handleDelete} className='button_select_pdf'>
                 <i className="fa-solid fa-print"></i>
-				<span>Imprimir</span>
-			</button>
-		);           
-		
-	}, [selectedRows, toggleCleared]);
+                <span>Imprimir</span>
+            </button>
+        );
+
+    }, [selectedRows, toggleCleared]);
 
     const { isLoading, data: registros, isError, error } = useQuery({
         queryKey: ['administrativos'],
@@ -81,7 +83,7 @@ const IndexAdministrativos = () => {
     const handleShow = (e, row) => {
         e.preventDefault();
         openAdministrativo();
-        const prueba = row;
+        const prueba = row;        
         setadministrativoShow({ ...administrativoShow, ...prueba })
         console.log(administrativoShow)
     }
@@ -125,8 +127,8 @@ const IndexAdministrativos = () => {
         }).then((result) => {
             if (result.isConfirmed) {
                 setLoading(true);
-                const auxiliar = {auth_id: storage.get('authUser').id}
-                const enviar = {...row, ...auxiliar}
+                const auxiliar = { auth_id: storage.get('authUser').id }
+                const enviar = { ...row, ...auxiliar }
                 dropAdministrativo.mutate(row);
             }
         });
@@ -157,31 +159,44 @@ const IndexAdministrativos = () => {
                 row.estado === 1 ?
                     <div className='container-fluid d-flex flex-row'>
                         <button onClick={(e) => handleShow(e, row)} className="button_show"><i className="fa-solid fa-eye"></i><span>Ver</span></button>
-                        <div className='dropdown'>
-                            <button className="button_dropdown_table dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i className="fa-solid fa-gear"></i>
-                            </button>
-                            <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                <li>
-                                    <Link to={`/administrativo/editar/${row.id}`} className="button_edit_table dropdown-item">
-                                        <i className="fa-solid fa-pen-to-square"></i>
-                                        <span className='mx-2'>Editar</span>
-                                    </Link>
-                                </li>
-                                <li>
-                                    <button onClick={(e) => handlePassword(e, row)} className="button_show_table dropdown-item">
-                                        <i className="fa-solid fa-key"></i>
-                                        <span className='mx-2'>Reiniciar Contraseña</span>
-                                    </button>
-                                </li>
-                                <li>
-                                    <button onClick={(e) => handleDelete(e, row)} className="button_delete_table dropdown-item">
-                                        <i className="fa-solid fa-x"></i>
-                                        <span className='mx-2'>Eliminar</span>
-                                    </button>
-                                </li>
-                            </ul>
-                        </div>
+                        {permisos.includes('administrativo.update') || permisos.includes('administrativo.destroy') || permisos.includes('administrativo.password')
+                            ? <div className='dropdown'>
+                                <button className="button_dropdown_table dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i className="fa-solid fa-gear"></i>
+                                </button>
+                                <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    {permisos.includes('administrativo.update')
+                                        ? <li>
+                                            <Link to={`/administrativo/editar/${row.id}`} className="button_edit_table dropdown-item">
+                                                <i className="fa-solid fa-pen-to-square"></i>
+                                                <span className='mx-2'>Editar</span>
+                                            </Link>
+                                        </li>
+                                        : null
+                                    }
+                                    {permisos.includes('administrativo.password')
+                                        ? <li>
+                                            <button onClick={(e) => handlePassword(e, row)} className="button_show_table dropdown-item">
+                                                <i className="fa-solid fa-key"></i>
+                                                <span className='mx-2'>Reiniciar Contraseña</span>
+                                            </button>
+                                        </li>
+                                        : null
+                                    }
+                                    {permisos.includes('administrativo.destroy')
+                                        ? <li>
+                                            <button onClick={(e) => handleDelete(e, row)} className="button_delete_table dropdown-item">
+                                                <i className="fa-solid fa-x"></i>
+                                                <span className='mx-2'>Eliminar</span>
+                                            </button>
+                                        </li>
+                                        : null
+                                    }
+
+                                </ul>
+                            </div>
+                            : null
+                        }
 
                     </div>
                     : ''
@@ -195,28 +210,28 @@ const IndexAdministrativos = () => {
             name: 'Nombre ',
             selector: row => row.nombres + ' ' + row.paterno + ' ' + row.materno,
             sortable: true,
-            wrap: true,         
+            wrap: true,
             width: '300px',
         },
         {
             name: 'C.I.',
             selector: row => row.ci + ' ' + row.ext_ci,
             sortable: true,
-            wrap: true,         
+            wrap: true,
             width: '150px',
         },
         {
             name: 'Correo Institucional',
             selector: row => row.email,
             sortable: true,
-            wrap: true,         
+            wrap: true,
             width: '250px',
         },
         {
             name: 'Cargo',
             selector: row => row.cargo,
-            sortable: true,            
-            wrap: true,         
+            sortable: true,
+            wrap: true,
             width: '150px',
         },
 
@@ -249,13 +264,16 @@ const IndexAdministrativos = () => {
                     />
                 </div>
                 {/* modales  */}
-                <ShowAdm modal={showadministrativo} close={closeAdministrativo} registro={administrativoShow}/>
+                <ShowAdm modal={showadministrativo} close={closeAdministrativo} registro={administrativoShow} />
                 <SelectAdministrativos registro={selectedRows} modal={selectpdf} close={closeSelectpdf} />
                 <div>
-                    <Link to="/administrativo/crear" className='button_green'>
-                        <span>AÑADIR</span>
-                        <i className="fa fa-plus" aria-hidden="true"></i>
-                    </Link>
+                    {permisos.includes('administrativo.store')
+                        ? <Link to="/administrativo/crear" className='button_green'>
+                            <span>AÑADIR</span>
+                            <i className="fa fa-plus" aria-hidden="true"></i>
+                        </Link>
+                        : null
+                    }
                 </div>
             </div>
             <div className='table-responsive'>

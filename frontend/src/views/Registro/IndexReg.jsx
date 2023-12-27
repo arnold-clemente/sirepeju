@@ -1,6 +1,7 @@
 import React, { useCallback, useMemo, useState } from 'react'
 import DataTable from "react-data-table-component";
 import Swal from 'sweetalert2';
+import { useSelector } from 'react-redux'
 
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 // import { getRegistros, entregarRegistro, caducarRegistro } from '../../api/registroApi';
@@ -26,6 +27,7 @@ const IndexReg = () => {
     const [loading, setLoading] = useState(false);
     const queryClient = useQueryClient();
     const [isModalOtorgacion, openModalOtorgacion, closeModalOtorgacion] = useModal(false);
+    const permisos = useSelector(state => state.userStore.permisos)
     //para el modal
     const [showregistro, openRegistro, closeRegistro] = useModal(false);
     const [imprimir, openImprimir, closeImprimir] = useModal(false);
@@ -200,101 +202,104 @@ const IndexReg = () => {
                         <i className="fa-solid fa-print"></i>
                         <span>Imprimir</span>
                     </button>
-                    <div className='dropdown'>
-                        <button className="button_dropdown_table dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i className="fa-solid fa-gear"></i>
-                        </button>
-                        <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1"> 
-                            <li>
-                                {row.fecha_entrega
-                                    ? <button onClick={(e) => handleOtorgacion(e, row)} className="button_edit_table">
-                                        <i className="fa-solid fa-file-import"></i>
-                                        <span className='mx-2'>Otorgacion</span>
-                                    </button>
-                                    : ''
-                                }
-                            </li>
-                            <li>
-                                {!row.fecha_entrega
-                                    ? <button onClick={(e) => handleEntregar(e, row)} className="button_download_table">
-                                        <i className="fa-solid fa-check"></i>
-                                        <span className='mx-2'>Entregar</span>
-                                    </button>
-                                    : ''
-                                }
-                            </li>
-                            <li>
-                                {Math.round((now - (new Date(row.fecha_reg).getTime())) / (1000 * 60 * 60 * 24)) > 60
-                                    ? <button onClick={(e) => handleCaducar(e, row)} className="button_delete_table">
-                                        <i className="fa-solid fa-x"></i>
-                                        <span className='mx-2'>Caducar</span>
-                                    </button>
-                                    : ''
-                                }
-                            </li>
-                        </ul>
-                    </div>
+                    {permisos.includes('reserva.caducar') || permisos.includes('otorgacion.store')
+                        ? <div className='dropdown'>
+                            <button className="button_dropdown_table dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i className="fa-solid fa-gear"></i>
+                            </button>
+                            <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                <li>
+                                    {row.fecha_entrega && permisos.includes('otorgacion.store')
+                                        ? <button onClick={(e) => handleOtorgacion(e, row)} className="button_edit_table">
+                                            <i className="fa-solid fa-file-import"></i>
+                                            <span className='mx-2'>Otorgacion</span>
+                                        </button>
+                                        : ''
+                                    }
+                                </li>
+                                <li>
+                                    {!row.fecha_entrega
+                                        ? <button onClick={(e) => handleEntregar(e, row)} className="button_download_table">
+                                            <i className="fa-solid fa-check"></i>
+                                            <span className='mx-2'>Entregar</span>
+                                        </button>
+                                        : ''
+                                    }
+                                </li>
+                                <li>
+                                    {Math.round((now - (new Date(row.fecha_reg).getTime())) / (1000 * 60 * 60 * 24)) > 60 && permisos.includes('reserva.caducar')
+                                        ? <button onClick={(e) => handleCaducar(e, row)} className="button_delete_table">
+                                            <i className="fa-solid fa-x"></i>
+                                            <span className='mx-2'>Caducar</span>
+                                        </button>
+                                        : ''
+                                    }
+                                </li>
+                            </ul>
+                        </div>
+                        : null
+                    }
                 </div>
             ),
             ignoreRowClick: true,
             allowOverflow: true,
-            button: true,  
+            button: true,
             width: '120px',
         },
         {
             name: 'Tiempo',
             selector: row => Math.round((now - (new Date(row.fecha_reg).getTime())) / (1000 * 60 * 60 * 24)) + ' dias',
             sortable: true,
-            wrap: true,         
+            wrap: true,
             width: '150px',
         },
         {
             name: 'Hoja de Ruta',
             selector: row => row.id,
             sortable: true,
-            wrap: true,         
+            wrap: true,
             width: '150px',
         },
         {
             name: 'Nº Correlativo',
             selector: row => row.nro_certificado,
             sortable: true,
-            wrap: true,         
+            wrap: true,
             width: '150px',
         },
         {
             name: 'Tipo de Personas Colectiva ',
             selector: row => row.persona_colectiva,
             sortable: true,
-            wrap: true,         
+            wrap: true,
             width: '250px',
         },
         {
             name: 'Naturaleza',
             selector: row => row.naturaleza,
             sortable: true,
-            wrap: true,         
+            wrap: true,
             width: '250px',
         },
         {
             name: 'Nombre de la Persona Colectiva',
             selector: row => row.entidad,
             sortable: true,
-            wrap: true,         
+            wrap: true,
             width: '300px',
         },
         {
             name: 'Sigla',
             selector: row => row.sigla,
             sortable: true,
-            wrap: true,         
+            wrap: true,
             width: '150px',
         },
         {
             name: 'Representante Legal',
             selector: row => row.representante,
             sortable: true,
-            wrap: true,         
+            wrap: true,
             width: '250px',
         },
 
@@ -302,21 +307,21 @@ const IndexReg = () => {
             name: 'CI',
             selector: row => row.ci_rep + " " + row.ext_ci_rep,
             sortable: true,
-            wrap: true,         
+            wrap: true,
             width: '150px',
         },
         {
             name: 'Nº Celular',
             selector: row => row.telefono,
             sortable: true,
-            wrap: true,         
+            wrap: true,
             width: '150px',
         },
         {
             name: 'Correo Registrado',
             selector: row => row.correo,
             sortable: true,
-            wrap: true,         
+            wrap: true,
             width: '250px',
         },
     ];

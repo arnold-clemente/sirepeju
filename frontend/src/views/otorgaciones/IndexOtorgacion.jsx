@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 import DataTable from "react-data-table-component";
 import { useQuery, useQueryClient, useMutation } from 'react-query';
 import bcrypt from "bcryptjs-react";
+import { useSelector } from 'react-redux'
 
 import Loading from '../../components/Loading';
 import Spiner from '../../components/Spiner';
@@ -27,6 +28,7 @@ const IndexOtorgacion = () => {
     const [search, setSearch] = useState('');
     const [loading, setLoading] = useState(false);
     const queryClient = useQueryClient();
+    const permisos = useSelector(state => state.userStore.permisos)
 
     // para el modal show Otorgacion
     const [modalOtorgacion, openOtorgacion, closeOtorgacion] = useModal(false);
@@ -220,7 +222,7 @@ const IndexOtorgacion = () => {
             show_alerta('No conectado', '<i class="fa-solid fa-xmark border_alert_red"></i>', 'alert_red')
             setLoading(false);
         },
-    }); 
+    });
 
     const columns = [
         {
@@ -228,64 +230,69 @@ const IndexOtorgacion = () => {
             cell: (row) => (
                 <div className='container-fluid d-flex flex-row gap-1'>
                     <button onClick={(e) => handleShow(e, row)} className="button_show"><i className="fa-solid fa-eye"></i><span>Ver</span></button>
-                    <div className='dropdown'>
-                        <button className="button_dropdown_table dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i className="fa-solid fa-gear"></i>
-                        </button>
-                        <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                            <li>
-                                <button onClick={(e) => handleInforme(e, row)} className="button_download_table">
-                                    <i className="fa-solid fa-file-pen"></i>
-                                    <span className='mx-2'>Informe Preliminar</span>
-                                </button>
-                            </li>
-                            <li>
-                                <button onClick={(e) => handleSeguimiento(e, row)} className="button_show_table">
-                                    <i className="fa-solid fa-pen"></i>
-                                    <span className='mx-2'>Seguimiento</span>
-                                </button>
-                            </li>
-                            <li>
-                                {row.miembros_fundador == 'sin agregar'
-                                    ? <Link to={`/otorgaciones/${row.id}/fundadores`} className="button_edit_table">
-                                        <i className="fa-solid fa-users"></i>
-                                        <span className='mx-2'>fundadores</span>
-                                    </Link>
-                                    : ''
+                    {permisos.includes('otorgacion.personalidad') || permisos.includes('otorgacion.seguimiento') || permisos.includes('otorgacion.informe') || permisos.includes('otorgacion.archivar') || permisos.includes('otorgacion.registro')
+                        ? <div className='dropdown'>
+                            <button className="button_dropdown_table dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i className="fa-solid fa-gear"></i>
+                            </button>
+                            <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                {permisos.includes('otorgacion.informe') || permisos.includes('otorgacion.personalidad')
+                                    ? <li>
+                                        <button onClick={(e) => handleInforme(e, row)} className="button_download_table">
+                                            <i className="fa-solid fa-file-pen"></i>
+                                            <span className='mx-2'>Informe Preliminar</span>
+                                        </button>
+                                    </li>
+                                    : null}
+                                {permisos.includes('otorgacion.seguimiento') || permisos.includes('otorgacion.personalidad')
+                                    ? <li>
+                                        <button onClick={(e) => handleSeguimiento(e, row)} className="button_show_table">
+                                            <i className="fa-solid fa-pen"></i>
+                                            <span className='mx-2'>Seguimiento</span>
+                                        </button>
+                                    </li>
+                                    : null
                                 }
-                            </li>
-                            <li>
-                                {row.miembros_fundador != 'sin agregar' && !row.alfanumerico
-                                    ? <button onClick={(e) => handleRegistroFinal(e, row)} className="button_edit_table">
-                                        <i className="fa-regular fa-registered"></i>
-                                        <span className='mx-2'>Etapa Final</span>
-                                    </button>
-                                    : ''
-                                }
-                            </li>
-                            <li>
-                                {row.miembros_fundador && row.alfanumerico
-                                    ? <button onClick={(e) => handlePersonaModal(e, row)} className="button_edit_table">
-                                        <i className="fa-solid fa-file-pdf"></i>
-                                        <span className='mx-2'>Persona Colectiva
-
-                                        </span>
-                                    </button>
-                                    : ''
-                                }
-                            </li>
-                            <li>
-                                {Math.round((now - (new Date(row.fecha_ingreso_tramite).getTime())) / (1000 * 60 * 60 * 24)) > 20
-                                    ? <button onClick={(e) => handleArchivar(e, row)} className="button_delete_table">
-                                        <i className="fa-solid fa-box-archive"></i>
-                                        <span className='mx-2'>Archivar</span>
-                                    </button>
-                                    : ''
-                                }
-                            </li>
-                        </ul>
-                    </div>
-
+                                <li>
+                                    {row.miembros_fundador == 'sin agregar' && permisos.includes('otorgacion.personalidad')
+                                        ? <Link to={`/otorgaciones/${row.id}/fundadores`} className="button_edit_table">
+                                            <i className="fa-solid fa-users"></i>
+                                            <span className='mx-2'>fundadores</span>
+                                        </Link>
+                                        : ''
+                                    }
+                                </li>
+                                <li>
+                                    {row.miembros_fundador != 'sin agregar' && !row.alfanumerico && permisos.includes('otorgacion.registro')
+                                        ? <button onClick={(e) => handleRegistroFinal(e, row)} className="button_edit_table">
+                                            <i className="fa-regular fa-registered"></i>
+                                            <span className='mx-2'>Etapa Final</span>
+                                        </button>
+                                        : ''
+                                    }
+                                </li>
+                                <li>
+                                    {row.miembros_fundador && row.alfanumerico && permisos.includes('otorgacion.personalidad')
+                                        ? <button onClick={(e) => handlePersonaModal(e, row)} className="button_edit_table">
+                                            <i className="fa-solid fa-file-pdf"></i>
+                                            <span className='mx-2'>Persona Colectiva</span>
+                                        </button>
+                                        : ''
+                                    }
+                                </li>
+                                <li>
+                                    {Math.round((now - (new Date(row.fecha_ingreso_tramite).getTime())) / (1000 * 60 * 60 * 24)) > 20 && permisos.includes('otorgacion.archivar')
+                                        ? <button onClick={(e) => handleArchivar(e, row)} className="button_delete_table">
+                                            <i className="fa-solid fa-box-archive"></i>
+                                            <span className='mx-2'>Archivar</span>
+                                        </button>
+                                        : ''
+                                    }
+                                </li>
+                            </ul>
+                        </div>
+                        : null
+                    }
                 </div>
             ),
             ignoreRowClick: true,

@@ -2,6 +2,7 @@ import React, { useCallback, useMemo, useState } from 'react'
 import DataTable from "react-data-table-component";
 import { useQuery } from 'react-query';
 import storage from '../../Storage/storage'
+import { useSelector } from 'react-redux'
 
 import Loading from '../../components/Loading';
 import Spiner from '../../components/Spiner';
@@ -21,6 +22,7 @@ const PersAdecuacion = () => {
 
     const [search, setSearch] = useState('');
     const [loading, setLoading] = useState(false);
+    const permisos = useSelector(state => state.userStore.permisos)
 
     // par el modal show
     const [modalAdecuacion, openAdecuacion, closeAdecuacion] = useModal(false);
@@ -190,31 +192,43 @@ const PersAdecuacion = () => {
                         <i className="fa-solid fa-eye"></i>
                         <span>Ver</span>
                     </button>
-                    <div className='dropdown'>
-                        <button className="button_dropdown_table dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i className="fa-solid fa-gear"></i>
-                        </button>
-                        <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                            <li>
-                                <button onClick={(e) => handleModificar(e, row)} className="button_edit_table">
-                                    <i className="fa-solid fa-pen-to-square"></i>
-                                    <span className='mx-1'>Modificar</span>
-                                </button>
-                            </li>
-                            <li>
-                                <button onClick={(e) => handleRevocar(e, row)} className="button_delete_table">
-                                    <i className="fa-regular fa-circle-xmark"></i>
-                                    <span className='mx-1'>Revocar</span>
-                                </button>
-                            </li>
-                            <li>
-                                <button onClick={(e) => handleExtinguir(e, row)} className="button_print_table">
-                                    <i className="fa-regular fa-circle-xmark"></i>
-                                    <span className='mx-1'>Extinguir</span>
-                                </button>
-                            </li>
-                        </ul>
-                    </div>
+                    {permisos.includes('adecuacion.extinguir') || permisos.includes('adecuacion.modificar') || permisos.includes('adecuacion.revocar')
+                        ? <div className='dropdown'>
+                            <button className="button_dropdown_table dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i className="fa-solid fa-gear"></i>
+                            </button>
+                            <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                {permisos.includes('adecuacion.modificar')
+                                    ? <li>
+                                        <button onClick={(e) => handleModificar(e, row)} className="button_edit_table">
+                                            <i className="fa-solid fa-pen-to-square"></i>
+                                            <span className='mx-1'>Modificar</span>
+                                        </button>
+                                    </li>
+                                    : null
+                                }
+                                {permisos.includes('adecuacion.revocar')
+                                    ? <li>
+                                        <button onClick={(e) => handleRevocar(e, row)} className="button_delete_table">
+                                            <i className="fa-regular fa-circle-xmark"></i>
+                                            <span className='mx-1'>Revocar</span>
+                                        </button>
+                                    </li>
+                                    : null
+                                }
+                                {permisos.includes('adecuacion.extinguir')
+                                    ? <li>
+                                        <button onClick={(e) => handleExtinguir(e, row)} className="button_print_table">
+                                            <i className="fa-regular fa-circle-xmark"></i>
+                                            <span className='mx-1'>Extinguir</span>
+                                        </button>
+                                    </li>
+                                    : null
+                                }
+                            </ul>
+                        </div>
+                        : null
+                    }
                 </div>
             ),
             ignoreRowClick: true,

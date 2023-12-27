@@ -2,6 +2,7 @@ import React, { useCallback, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom';
 import DataTable from "react-data-table-component";
 import Swal from 'sweetalert2';
+import { useSelector } from 'react-redux'
 
 import Loading from '../../components/Loading';
 import Spiner from '../../components/Spiner';
@@ -19,6 +20,7 @@ import SelectGobernacion from './reporte/SelectGobernacion';
 
 const IndexGob = () => {
 
+  const permisos = useSelector(state => state.userStore.permisos)
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(false);
   const queryClient = useQueryClient();
@@ -158,31 +160,40 @@ const IndexGob = () => {
         row.estado === 1 ?
           <div className='container-fluid d-flex flex-row gap-1'>
             <button onClick={(e) => handleShow(e, row)} className="button_show"><i className="fa-solid fa-eye"></i><span>Ver</span></button>
-            <div className='dropdown'>
-              <button className="button_dropdown_table dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                <i className="fa-solid fa-gear"></i>
-              </button>
-              <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                <li>
-                  <Link to={`/gobernacion/editar/${row.id}`} className="button_edit_table dropdown-item">
-                    <i className="fa-solid fa-pen-to-square"></i>
-                    <span className='mx-2'>Editar</span>
-                  </Link>
-                </li>
-                <li>
-                  <button onClick={(e) => handlePassword(e, row)} className="button_show_table dropdown-item">
-                    <i className="fa-solid fa-key"></i>
-                    <span className='mx-2'>Reiniciar Contraseña</span>
-                  </button>
-                </li>
-                <li>
-                  <button onClick={(e) => handleDelete(e, row)} className="button_delete_table dropdown-item">
-                    <i className="fa-solid fa-x"></i>
-                    <span className='mx-2'>Eliminar</span>
-                  </button>
-                </li>
-              </ul>
-            </div>
+            {permisos.includes('gobernacion.update') || permisos.includes('gobernacion.destroy') || permisos.includes('gobernacion.password')
+              ? <div className='dropdown'>
+                <button className="button_dropdown_table dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                  <i className="fa-solid fa-gear"></i>
+                </button>
+                <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                  {permisos.includes('gobernacion.update')
+                    ? <li>
+                      <Link to={`/gobernacion/editar/${row.id}`} className="button_edit_table dropdown-item">
+                        <i className="fa-solid fa-pen-to-square"></i>
+                        <span className='mx-2'>Editar</span>
+                      </Link>
+                    </li>
+                    : null}
+                  {permisos.includes('gobernacion.password')
+                    ? <li>
+                      <button onClick={(e) => handlePassword(e, row)} className="button_show_table dropdown-item">
+                        <i className="fa-solid fa-key"></i>
+                        <span className='mx-2'>Reiniciar Contraseña</span>
+                      </button>
+                    </li>
+                    : null}
+                  {permisos.includes('gobernacion.destroy')
+                    ? <li>
+                      <button onClick={(e) => handleDelete(e, row)} className="button_delete_table dropdown-item">
+                        <i className="fa-solid fa-x"></i>
+                        <span className='mx-2'>Eliminar</span>
+                      </button>
+                    </li>
+                    : null}
+                </ul>
+              </div>
+              : null
+            }
 
           </div>
           : ''
@@ -261,10 +272,12 @@ const IndexGob = () => {
         </div>
 
         <div>
-          <Link to="/gobernacion/crear" className='button_green'>
-            <span>AÑADIR</span>
-            <i className="fa fa-plus" aria-hidden="true"></i>
-          </Link>
+          {permisos.includes('gobernacion.store')
+            ? <Link to="/gobernacion/crear" className='button_green'>
+              <span>AÑADIR</span>
+              <i className="fa fa-plus" aria-hidden="true"></i>
+            </Link>
+            : null}
         </div>
       </div>
       <div className='table-responsive'>

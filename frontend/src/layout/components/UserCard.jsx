@@ -7,6 +7,10 @@ import storage from '../../Storage/storage'
 import user from '../../images/user.png'
 import UserLinks from './UserLinks'
 import { url } from '../../conection/env'
+import { show_alerta } from '../../components/MessageAlert'
+
+import { useMutation } from 'react-query'
+import { logout } from '../../api/authApi'
 
 const UserCard = ({ sidebar, handleProfile }) => {
     const [profile, setprofile] = useState(false)
@@ -23,22 +27,38 @@ const UserCard = ({ sidebar, handleProfile }) => {
             setdropdown('dropdown')
         }
     }
-
     const go = useNavigate();
-    const logout = async () => {
-        storage.remove('authToken');
-        storage.remove('authUser');
-        await axios.get('/api/auth/logout', storage.get('authToken'));
-        go('/login')
+
+    const handlelogout = (e) => {
+        e.preventDefault();
+        cerrarSession.mutate(storage.get('authToken'));
     }
+
+    const cerrarSession = useMutation({
+        mutationFn: logout,
+        onSuccess: (response) => {
+            storage.remove('authToken');
+            storage.remove('authUser');
+            go('/login')
+            show_alerta('Session Cerrada', '<i class="fa-solid fa-check border_alert_green"></i>', 'alert_green')
+        },
+        onError: (error) => {
+            if (error.toJSON().message === 'Network Error') {
+                show_alerta('No conectado', '<i class="fa-solid fa-xmark border_alert_red"></i>', 'alert_red')
+            }
+            storage.remove('authToken');
+            storage.remove('authUser');
+            go('/login')
+        },
+    });
 
     return (
         <div>
             <button onClick={profileAdd} className={'sidebar_user ' + sidebar}>
                 <div className={'user_image ' + sidebar}>
                     {usuario.imagen
-                        ?<img src={url + '/storage/' +  usuario.imagen} alt="user" />
-                        :<img src={user} alt="user" />
+                        ? <img src={url + '/storage/' + usuario.imagen} alt="user" />
+                        : <img src={user} alt="user" />
                     }
                 </div>
                 <div className={'user_profile ' + sidebar}>
@@ -52,7 +72,7 @@ const UserCard = ({ sidebar, handleProfile }) => {
                 ? ''
                 : <div className={'user_links ' + sidebar + ' animate__animated animate__fadeIn'}>
                     <UserLinks handleProfile={handleProfile} icon='fa-solid fa-gear' text='Perfil' />
-                    <button onClick={logout} className='user_link button_border'>
+                    <button onClick={handlelogout} className='user_link button_border'>
                         <i className='fa-solid fa-power-off'></i>
                         <span>Cerrar Sesión</span>
                     </button>

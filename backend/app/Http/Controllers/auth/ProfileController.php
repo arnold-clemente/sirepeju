@@ -12,6 +12,7 @@ class ProfileController extends Controller
     public function user(Request $request)
     {
         $user_id = $request->id;
+        $user = User::find($user_id);
         $user_logueado = User::where('id', $user_id)
             ->select(
                 'id',
@@ -22,8 +23,13 @@ class ProfileController extends Controller
             )
             ->first();
 
+        $roles = $user->getRoleNames(); 
+        $permission = $user->getPermissionsViaRoles()->pluck('name');
+
         return response()->json([
             'user' => $user_logueado,
+            'roles' => $roles,
+            'permission' => $permission,
         ]);
     }
 

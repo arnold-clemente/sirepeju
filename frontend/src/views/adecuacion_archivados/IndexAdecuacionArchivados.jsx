@@ -2,6 +2,7 @@ import React, { useCallback, useMemo, useState } from 'react'
 import Swal from 'sweetalert2';
 import DataTable from "react-data-table-component";
 import { useQuery, useQueryClient, useMutation } from 'react-query';
+import { useSelector } from 'react-redux'
 
 import Loading from '../../components/Loading';
 import Spiner from '../../components/Spiner';
@@ -21,6 +22,7 @@ const IndexAdecuacionArchivados = () => {
     const [search, setSearch] = useState('');
     const [loading, setLoading] = useState(false);
     const queryClient = useQueryClient();
+    const permisos = useSelector(state => state.userStore.permisos)
 
     // para el modal show Adecuacion
     const [modalAdecuacion, openAdecuacion, closeAdecuacion] = useModal(false);
@@ -189,17 +191,19 @@ const IndexAdecuacionArchivados = () => {
                         <i className="fa-solid fa-eye"></i>
                         <span>Ver</span>
                     </button>
-                    {row.estado == 2
-                        ? <button onClick={(e) => handleDesarchivar(e, row)} className="button_edit">
-                            <i className="fa-solid fa-check"></i>
-                            <span>Desarchivar</span>
-                        </button>
-                        : <button onClick={(e) => handleDesarchivar(e, row)} className="button_print">
-                            <i className="fa-solid fa-check"></i>
-                            <span>Desarchivar</span>
-                        </button>
+                    {permisos.includes('adecuacion.desarchivar')
+                        ? row.estado == 2
+                            ? <button onClick={(e) => handleDesarchivar(e, row)} className="button_edit">
+                                <i className="fa-solid fa-check"></i>
+                                <span>Desarchivar</span>
+                            </button>
+                            : <button onClick={(e) => handleDesarchivar(e, row)} className="button_print">
+                                <i className="fa-solid fa-check"></i>
+                                <span>Desarchivar</span>
+                            </button>
+                        : null
                     }
-                    {Math.round((now - (new Date(row.fecha_ingreso_tramite).getTime())) / (1000 * 60 * 60 * 24)) > 200
+                    {Math.round((now - (new Date(row.fecha_ingreso_tramite).getTime())) / (1000 * 60 * 60 * 24)) > 200 && permisos.includes('adecuacion.caducar')
                         ? (<button onClick={(e) => handleCaducar(e, row)} className="button_delete">
                             <i className="fa-solid fa-x"></i>
                             <span>Caducar</span>

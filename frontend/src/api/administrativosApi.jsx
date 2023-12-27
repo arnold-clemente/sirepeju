@@ -9,6 +9,11 @@ export const getAdministrativo = async (adminId) => {
     return response.data;
 }
 
+export const getEditAdministrativo = async (adminId) => {
+    const response = await axios.get(`/api/administrativo/edit/${adminId}`)
+    return response.data;
+}
+
 export const createAdministrativo = async (administrativo) => {
     const res = await axios.post('/api/administrativo/store', administrativo)
         .then((response) => { return response.data })

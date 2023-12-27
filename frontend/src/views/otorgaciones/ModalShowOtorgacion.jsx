@@ -157,7 +157,6 @@ const ModalShowOtorgacion = ({ registro, modalRegistro, closeRegistro }) => {
                                                             </tr>
                                                         )
                                                     })}
-
                                                 </tbody>
                                             </table>
                                         </div>

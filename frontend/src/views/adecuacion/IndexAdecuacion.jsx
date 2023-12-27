@@ -5,6 +5,7 @@ import DataTable from "react-data-table-component";
 import { useQuery, useQueryClient, useMutation } from 'react-query';
 import bcrypt from "bcryptjs-react";
 import { show_alerta } from '../../components/MessageAlert';
+import { useSelector } from 'react-redux'
 
 import Loading from '../../components/Loading';
 import Spiner from '../../components/Spiner';
@@ -26,6 +27,7 @@ const IndexAdecuacion = () => {
   const queryClient = useQueryClient();
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(false);
+  const permisos = useSelector(state => state.userStore.permisos)
 
   // par el modal show
   const [modalAdecuacion, openAdecuacion, closeAdecuacion] = useModal(false);
@@ -228,63 +230,72 @@ const IndexAdecuacion = () => {
       cell: (row) => (
         <div className='container-fluid d-flex flex-row gap-1'>
           <button onClick={(e) => handleShow(e, row)} className="button_show"><i className="fa-solid fa-eye"></i><span>Ver</span></button>
-          <div className='dropdown'>
-            <button className="button_dropdown_table dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-              <i className="fa-solid fa-gear"></i>
-            </button>
-            <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-              <li>
-                <button onClick={(e) => handleInforme(e, row)} className="button_download_table">
-                  <i className="fa-solid fa-file-pen"></i>
-                  <span className='mx-2'>Informe Preliminar</span>
-                </button>
-              </li>
-              <li>
-                <button onClick={(e) => handleSeguimiento(e, row)} className="button_show_table">
-                  <i className="fa-solid fa-pen"></i>
-                  <span className='mx-2'>Seguimiento</span>
-                </button>
-              </li>
-              <li>
-                {row.miembros_fundador == 'sin asignar'
-                  ? <Link to={`/adecuacion/${row.id}/fundadores`} className="button_edit_table">
-                    <i className="fa-solid fa-users"></i>
-                    <span className='mx-2'>fundadores</span>
-                  </Link>
-                  : ''
+          {permisos.includes('adecuacion.personalidad') || permisos.includes('adecuacion.registro') || permisos.includes('adecuacion.seguimiento') || permisos.includes('adecuacion.informe')
+            ? <div className='dropdown'>
+              <button className="button_dropdown_table dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                <i className="fa-solid fa-gear"></i>
+              </button>
+              <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                {permisos.includes('adecuacion.informe') || permisos.includes('adecuacion.personalidad')
+                  ? <li>
+                    <button onClick={(e) => handleInforme(e, row)} className="button_download_table">
+                      <i className="fa-solid fa-file-pen"></i>
+                      <span className='mx-2'>Informe Preliminar</span>
+                    </button>
+                  </li>
+                  : null
                 }
-              </li>
-              <li>
-                {row.miembros_fundador != 'sin asignar' && !row.alfanumerico
-                  ? <button onClick={(e) => handleRegistroFinal(e, row)} className="button_edit_table">
-                    <i className="fa-regular fa-registered"></i>
-                    <span className='mx-2'>Etapa Final</span>
-                  </button>
-                  : ''
+                {permisos.includes('adecuacion.seguimiento') || permisos.includes('adecuacion.personalidad')
+                  ? <li>
+                    <button onClick={(e) => handleSeguimiento(e, row)} className="button_show_table">
+                      <i className="fa-solid fa-pen"></i>
+                      <span className='mx-2'>Seguimiento</span>
+                    </button>
+                  </li>
+                  : null
                 }
-              </li>
-              <li>
-                {row.miembros_fundador && row.alfanumerico && row.registro_persona_adecuacion == null
-                  ? <button onClick={(e) => handlePersonaModal(e, row)} className="button_edit_table">
-                    <i className="fa-solid fa-file-pdf"></i>
-                    <span className='mx-2'>Persona Colectiva
+                <li>
+                  {row.miembros_fundador == 'sin asignar' && permisos.includes('adecuacion.personalidad')
+                    ? <Link to={`/adecuacion/${row.id}/fundadores`} className="button_edit_table">
+                      <i className="fa-solid fa-users"></i>
+                      <span className='mx-2'>fundadores</span>
+                    </Link>
+                    : ''
+                  }
+                </li>
+                <li>
+                  {row.miembros_fundador != 'sin asignar' && !row.alfanumerico && permisos.includes('adecuacion.registro')
+                    ? <button onClick={(e) => handleRegistroFinal(e, row)} className="button_edit_table">
+                      <i className="fa-regular fa-registered"></i>
+                      <span className='mx-2'>Etapa Final</span>
+                    </button>
+                    : ''
+                  }
+                </li>
+                <li>
+                  {row.miembros_fundador && row.alfanumerico && row.registro_persona_adecuacion == null && permisos.includes('adecuacion.personalidad')
+                    ? <button onClick={(e) => handlePersonaModal(e, row)} className="button_edit_table">
+                      <i className="fa-solid fa-file-pdf"></i>
+                      <span className='mx-2'>Persona Colectiva
 
-                    </span>
-                  </button>
-                  : ''
-                }
-              </li>
-              <li>
-                {Math.round((now - (new Date(row.fecha_ingreso_tramite).getTime())) / (1000 * 60 * 60 * 24)) > 10
-                  ? <button onClick={(e) => handleArchivar(e, row)} className="button_delete_table">
-                    <i className="fa-solid fa-box-archive"></i>
-                    <span className='mx-2'>Archivar</span>
-                  </button>
-                  : ''
-                }
-              </li>
-            </ul>
-          </div>
+                      </span>
+                    </button>
+                    : ''
+                  }
+                </li>
+                <li>
+                  {Math.round((now - (new Date(row.fecha_ingreso_tramite).getTime())) / (1000 * 60 * 60 * 24)) > 10 && permisos.includes('adecuacion.archivar')
+                    ? <button onClick={(e) => handleArchivar(e, row)} className="button_delete_table">
+                      <i className="fa-solid fa-box-archive"></i>
+                      <span className='mx-2'>Archivar</span>
+                    </button>
+                    : ''
+                  }
+                </li>
+              </ul>
+            </div>
+            : null
+          }
 
         </div>
       ),
@@ -425,10 +436,13 @@ const IndexAdecuacion = () => {
           />
         </div>
         <div>
-          <Link to="/adecuacion/crear" className='btn button_green'>
-            <span>AÑADIR</span>
-            <i className="fa fa-plus" aria-hidden="true"></i>
-          </Link>
+          {permisos.includes('adecuacion.store')
+            ? <Link to="/adecuacion/crear" className='btn button_green'>
+              <span>AÑADIR</span>
+              <i className="fa fa-plus" aria-hidden="true"></i>
+            </Link>
+            : null
+          }
         </div>
       </div>
       <div className='table-responsive'>

@@ -2,12 +2,13 @@ import { useEffect, useState } from 'react'
 import { Navigate, Outlet } from 'react-router-dom'
 
 import { useDispatch, useSelector } from 'react-redux'
-import { updateUser } from '../store/slices/userSlice'
+import { updateUser, updateRol, updatePermisos } from '../store/slices/userSlice'
 import { useMutation } from 'react-query';
 import { getUser } from '../api/authApi'
 
 import { show_alerta } from '../components/MessageAlert'
 import storage from '../Storage/storage'
+import Loading from '../components/Loading';
 
 
 export const ProtectedRoutes = ({ children }) => {
@@ -28,6 +29,8 @@ export const ProtectedRoutes = ({ children }) => {
         mutationFn: getUser,
         onSuccess: (response) => {
             dispatch(updateUser(response.user));
+            dispatch(updateRol(response.roles));
+            dispatch(updatePermisos(response.permission));
         },
         onError: (error) => {
             show_alerta('No conectado', '<i class="fa-solid fa-xmark border_alert_red"></i>', 'alert_red')
@@ -38,11 +41,14 @@ export const ProtectedRoutes = ({ children }) => {
         return <Navigate to='/login' />
     }
     else {
-        if (usuario) {
-            return <Outlet />
-        } else {
-            return <Outlet />
-        }
+        return (
+            <>
+                {usuario.id == 0
+                    ? <Loading />
+                    : <Outlet />
+                }
+            </>
+        )
     }
 }
 

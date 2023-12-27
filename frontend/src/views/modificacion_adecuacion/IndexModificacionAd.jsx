@@ -5,6 +5,7 @@ import DataTable from "react-data-table-component";
 import { useQuery } from 'react-query';
 import { useQueryClient, useMutation } from 'react-query';
 import { archivarAdecuacion } from '../../api/adecuacionApi';
+import { useSelector } from 'react-redux'
 
 import Loading from '../../components/Loading';
 import Spiner from '../../components/Spiner';
@@ -28,7 +29,8 @@ const IndexModificacionAd = () => {
   const queryClient = useQueryClient();
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(false);
-  
+  const permisos = useSelector(state => state.userStore.permisos)
+
   const now = new Date().getTime();
 
   // para el modal show Adecuacion
@@ -211,45 +213,54 @@ const IndexModificacionAd = () => {
       cell: (row) => (
         <div className='container-fluid d-flex flex-row gap-1'>
           <button onClick={(e) => handleShow(e, row)} className="button_show"><i className="fa-solid fa-eye"></i><span>Ver</span></button>
-          <div className='dropdown'>
-            <button className="button_dropdown_table dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-              <i className="fa-solid fa-gear"></i>
-            </button>
-            <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-              <li>
-                <button onClick={(e) => handleInforme(e, row)} className="button_download_table">
-                  <i className="fa-solid fa-file-pen"></i>
-                  <span className='mx-2'>Informe Preliminar</span>
-                </button>
-              </li>
-              <li>
-                <button onClick={(e) => handleSeguimiento(e, row)} className="button_show_table">
-                  <i className="fa-solid fa-pen"></i>
-                  <span className='mx-2'>Seguimiento</span>
-                </button>
-              </li>
-              <li>
-                {row.miembros_fundador
-                  ? <button onClick={(e) => handleUpdate(e, row)} className="button_edit_table">
-                    <i className="fa-solid fa-pen-to-square"></i>
-                    <span className='mx-2'>Modificar
-                    </span>
-                  </button>
-                  : ''
+          {permisos.includes('adecuacion.modificar') || permisos.includes('adecuacion.archivar')
+            ? <div className='dropdown'>
+              <button className="button_dropdown_table dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                <i className="fa-solid fa-gear"></i>
+              </button>
+              <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                {permisos.includes('adecuacion.modificar')
+                  ? <li>
+                    <button onClick={(e) => handleInforme(e, row)} className="button_download_table">
+                      <i className="fa-solid fa-file-pen"></i>
+                      <span className='mx-2'>Informe Preliminar</span>
+                    </button>
+                  </li>
+                  : null
                 }
-              </li>
-              <li>
-                {Math.round((now - (new Date(row.fecha_modificacion).getTime())) / (1000 * 60 * 60 * 24)) > 10
-                  ? <button onClick={(e) => handleArchivar(e, row)} className="button_delete_table">
-                    <i className="fa-solid fa-box-archive"></i>
-                    <span className='mx-2'>Archivar</span>
-                  </button>
-                  : ''
+                {permisos.includes('adecuacion.modificar')
+                  ? <li>
+                    <button onClick={(e) => handleSeguimiento(e, row)} className="button_show_table">
+                      <i className="fa-solid fa-pen"></i>
+                      <span className='mx-2'>Seguimiento</span>
+                    </button>
+                  </li>
+                  : null
                 }
-              </li>
-            </ul>
-          </div>
+                <li>
+                  {row.miembros_fundador && permisos.includes('adecuacion.modificar')
+                    ? <button onClick={(e) => handleUpdate(e, row)} className="button_edit_table">
+                      <i className="fa-solid fa-pen-to-square"></i>
+                      <span className='mx-2'>Modificar
+                      </span>
+                    </button>
+                    : ''
+                  }
+                </li>
+                <li>
+                  {Math.round((now - (new Date(row.fecha_modificacion).getTime())) / (1000 * 60 * 60 * 24)) > 10 && permisos.includes('adecuacion.archivar')
+                    ? <button onClick={(e) => handleArchivar(e, row)} className="button_delete_table">
+                      <i className="fa-solid fa-box-archive"></i>
+                      <span className='mx-2'>Archivar</span>
+                    </button>
+                    : ''
+                  }
+                </li>
+              </ul>
+            </div>
 
+            : null
+          }
         </div>
       ),
       ignoreRowClick: true,

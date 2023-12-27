@@ -8,10 +8,11 @@ import { getEntidadesGlobal, createHomonimia, createRegistro } from '../../api/v
 
 import { estilos } from '../../components/estilosdatatables';
 import Loading from '../../components/Loading';
+import Spiner from '../../components/Spiner';
 import Banner from '../../components/Banner';
 import { show_alerta } from '../../components/MessageAlert';
 import storage from '../../Storage/storage'
-import { useModal } from '../../hooks/useModal'; 
+import { useModal } from '../../hooks/useModal';
 // modales 
 import ModalVerificacionShow from './ModalVerificacionShow';
 import SelectVerificacion from './reporte/SelectVerificacion';
@@ -21,6 +22,7 @@ const Buscar = () => {
     const [search, setSearch] = useState(useSelector(state => state.searchStore.busqueda));
     const [loading, setLoading] = useState(false);
     const queryClient = useQueryClient();
+    const permisos = useSelector(state => state.userStore.permisos)
     // par el modal true - false
     const [showregistro, openRegistro, closeRegistro] = useModal(false);
     const [selectpdf, openSelectpdf, closeSelectpdf] = useModal(false);
@@ -32,22 +34,22 @@ const Buscar = () => {
     const tipos = ['reserva', 'otorgacion', 'adecuacion', 'gobernacion'];
 
     const handleRowSelected = useCallback(state => {
-		setSelectedRows(state.selectedRows);
-	}, []);
+        setSelectedRows(state.selectedRows);
+    }, []);
 
     const contextActions = useMemo(() => {
-		const handleDelete = () => {            
-            openSelectpdf();	
-		};
+        const handleDelete = () => {
+            openSelectpdf();
+        };
 
-		return (
-			<button onClick={handleDelete} className='button_select_pdf'>
+        return (
+            <button onClick={handleDelete} className='button_select_pdf'>
                 <i className="fa-solid fa-print"></i>
                 <span>Imprimir</span>
             </button>
-		);           
-		
-	}, [selectedRows, toggleCleared]);
+        );
+
+    }, [selectedRows, toggleCleared]);
 
     const { isLoading, data: registros, isError, error } = useQuery({
         queryKey: ['entidades'],
@@ -160,8 +162,20 @@ const Buscar = () => {
                     <button onClick={(e) => handleShow(e, row)} className="button_show"><i className="fa-solid fa-eye"></i><span>Ver</span></button>
                     {row.tipo === 1 && row.estado == 1
                         ? <div className='d-flex justify-content-center gap-1'>
-                            <button onClick={(e) => handleReserva(e, row)} className="button_edit"><i className="fa-solid fa-square-check"></i><span>Reservar</span></button>
-                            <button onClick={(e) => handleHomonimia(e, row)} className="button_delete"><i className="fa-solid fa-ban"></i><span>Homonimia</span></button>
+                            {permisos.includes('reserva.reservar')
+                                ? <button onClick={(e) => handleReserva(e, row)} className="button_edit">
+                                    <i className="fa-solid fa-square-check"></i>
+                                    <span>Reservar</span>
+                                </button>
+                                : null
+                            }
+                            {permisos.includes('reserva.homonimo')
+                                ? <button onClick={(e) => handleHomonimia(e, row)} className="button_delete">
+                                    <i className="fa-solid fa-ban"></i>
+                                    <span>Homonimia</span>
+                                </button>
+                                : null
+                            }
                         </div>
                         : ''
                     }
@@ -215,12 +229,12 @@ const Buscar = () => {
         selectAllRowsItem: true,
         selectAllRowsItemText: 'todos'
     };
-    if (isLoading) return <Loading />
+    if (isLoading) return <Spiner />
     else if (isError) return <div>Error: {error.message}</div>
     return (
         <>
             <ModalVerificacionShow registro={registroShow} modal={showregistro} close={closeRegistro} />
-            <SelectVerificacion registro={selectedRows} modal={selectpdf} close={closeSelectpdf}/>
+            <SelectVerificacion registro={selectedRows} modal={selectpdf} close={closeSelectpdf} />
             <div>
                 {loading === true ? <Loading /> : ''}
                 <Banner text="VERIFICACIÓN DE PERSONA JURIDICA" />

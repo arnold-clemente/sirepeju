@@ -169,3 +169,21 @@
 .input_animado input:focus {
     content: attr(data-title);
 }
+
+.login_contenedor_cargando{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    color: #fff;
+    background-color: #412E34;
+    margin-top: 20px;
+    padding: 10px 0;
+    border-radius: 10px;
+}
+
+.login_contenedor_cargando i{
+    font-size: 25px;
+    margin-right: 5px;
+}
