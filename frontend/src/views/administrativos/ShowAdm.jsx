@@ -8,11 +8,9 @@ const ShowAdm = ({ modal, close, registro }) => {
     const [imprimir, openImprimir, closeImprimir] = useModal(false);
     return (
         <>
-<<<<<<< Updated upstream
             <ModalDiv isOpen={modal} closeModal={close} title={'LISTA DEL PERSONAL ADMINISTRATIVO UPJ - VA'}>
-=======
-            <ModalDiv isOpen={modal} closeModal={close} title={registro.nombres}>
->>>>>>> Stashed changes
+
+
                 <div className='container-fluid d-flex justify-content-end'>
                     <button onClick={openImprimir} className='button_print_show'>
                         <i className="fa-solid fa-print"></i>
