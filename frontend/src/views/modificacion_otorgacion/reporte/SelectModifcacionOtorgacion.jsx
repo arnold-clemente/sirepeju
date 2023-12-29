@@ -7,7 +7,7 @@ const SelectModifcacionOtorgacion = ({ registro, modal, close }) => {
     const styles = StyleSheet.create({
         main: {
             width: "100%",
-            height: "76vh",
+            height: "90vh",
             boxSizing: "border-box",
         },
         page:{
@@ -162,24 +162,7 @@ const SelectModifcacionOtorgacion = ({ registro, modal, close }) => {
                                 <Image style={styles.logo} src={logo} />
                         </View>
                             <View style={styles.contenedor}>
-                                <Text style={styles.title}>Otorgacion Modificacion</Text>
-                            </View>
-                            <View style={styles.table}>
-                                <Text style={styles.table_head}>Entidad</Text>
-                                <Text style={styles.table_head}>Sigla</Text>
-                            </View>
-                            <View style={styles.table_body}>
-                                {registro.length > 0
-                                    ? registro.map((row, index) => {
-                                        return (
-                                            <View style={styles.table_tr} key={row.id}>
-                                                <Text style={styles.table_item}>{row.personalidad_juridica}</Text>
-                                                <Text style={styles.table_item}>{row.sigla}</Text>
-                                            </View>
-                                        )
-                                    })
-                                    : null
-                                }
+                                <Text style={styles.title}>LISTA DE TRÁMITES EN MODIFICACIÓN</Text>
                             </View>
                             <View>
                                 {/* <Image style={styles.logo} src={qr} /> */}
@@ -190,40 +173,47 @@ const SelectModifcacionOtorgacion = ({ registro, modal, close }) => {
                         {/* fila 1 */}
                         <View style={styles.tableRow}> 
                             <View style={{ ...styles.tableCol, ...styles.celdaColorida}}> 
-                            <Text style={{...styles.tableCell, ...styles.textoBlanco}}>Product</Text> 
+                            <Text style={{...styles.tableCell, ...styles.textoBlanco}}>Código</Text> 
                             </View>
                             <View style={{ ...styles.tableCol, ...styles.celdaColorida}}> 
-                            <Text style={{...styles.tableCell, ...styles.textoBlanco}}>Product</Text> 
+                            <Text style={{...styles.tableCell, ...styles.textoBlanco}}>Nombre de personalidad jurídica</Text> 
                             </View>
                             <View style={{ ...styles.tableCol, ...styles.celdaColorida}}> 
-                            <Text style={{...styles.tableCell, ...styles.textoBlanco}}>Product</Text> 
+                            <Text style={{...styles.tableCell, ...styles.textoBlanco}}>Fecha de ingreso</Text> 
                             </View>
                             <View style={{ ...styles.tableCol, ...styles.celdaColorida}}> 
-                            <Text style={{...styles.tableCell, ...styles.textoBlanco}}>Product</Text> 
+                            <Text style={{...styles.tableCell, ...styles.textoBlanco}}>Estado</Text> 
                             </View> 
                             </View> 
                             {/* fila 2 */}
-                            <View style={styles.tableRow}> 
-                            <View style={styles.tableCol}> 
-                            <Text style={styles.tableCell}>Product</Text> 
-                            </View> 
-                            <View style={styles.tableCol}> 
-                            <Text style={styles.tableCell}>Type</Text> 
-                            </View> 
-                            <View style={styles.tableCol}> 
-                            <Text style={styles.tableCell}>Period</Text> 
-                            </View> 
-                            <View style={styles.tableCol}> 
-                            <Text style={styles.tableCell}>Price</Text> 
-                            </View> 
-                            </View>
+                            {registro.length > 0
+                                    ? registro.map((row, index) => {
+                                        return (
+                <View style={styles.tableRow}> 
+                <View style={styles.tableCol}> 
+                <Text style={styles.tableCell}>{row.codigo_otorgacion}</Text> 
+                </View> 
+                <View style={styles.tableCol}> 
+                <Text style={styles.tableCell}>{row.personalidad_juridica}</Text> 
+                </View> 
+                <View style={styles.tableCol}> 
+                <Text style={styles.tableCell}>fecha de ingreso</Text> 
+                </View> 
+                <View style={styles.tableCol}> 
+                <Text style={styles.tableCell}>En trámite</Text> 
+                </View> 
+        </View>
+          )
+        })
+        : null
+    }
                         </View>
                         {/* final de la tabla */}
                         
 
                         <View style={styles.content}>
                             {/* Contenido de tu documento */}
-                            <Text style={styles.dato}>{"\n"}El contenido de este documento esta extraido del sistema SIREPEJU(Sistema de Registro de Personalidades Juroidícas).</Text>
+                            <Text style={styles.dato}>{"\n"}El contenido de este documento esta extraido del sistema SIREPEJU(Sistema de Registro de Personalidades Juridícas).</Text>
                         
                             <Text style={styles.dato}>{"\n"}{"\n"}{"\n"}Fecha y Hora de Impresión: {"\n"}{getCurrentDateTime()}</Text>
                         </View>

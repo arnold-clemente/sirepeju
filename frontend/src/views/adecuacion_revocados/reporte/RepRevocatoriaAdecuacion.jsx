@@ -174,7 +174,7 @@ const RepRevocatoriaAdecuacion = ({ adecuacion, fundadores, personalidad, modal,
                             <Image style={styles.logo} src={logo} />
                             </View>
                             <View style={styles.contenedor}>
-                                <Text style={styles.title}>TRAMÍTE DE  ADECUACIÓN CADUCADA </Text>
+                                <Text style={styles.title}>TRAMÍTE DE  ADECUACIÓNNNNNN CADUCADA </Text>
                             </View>  
                              
                             {/* la tabla desde este lugar */}

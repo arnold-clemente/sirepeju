@@ -5,6 +5,10 @@ import { PDFViewer, Document, Page } from '@react-pdf/renderer'
 import { Text, View, StyleSheet, Image } from '@react-pdf/renderer'
 import logo from '../../../images/logovic.jpg'
 const RepPersonalidadAdecuacion = ({ adecuacion, fundadores, personalidad, modal, close }) => {
+    const customPageSize ={
+        width:600,
+        height:600
+    };
     let fecha_esp = ''
 
     if (adecuacion.fecha_ingreso_tramite) {
@@ -19,13 +23,13 @@ const RepPersonalidadAdecuacion = ({ adecuacion, fundadores, personalidad, modal
     const styles = StyleSheet.create({
         main: {
             width: "100%",
-            height: "76vh",
+            height: "90vh",
             boxSizing: "border-box",
         },
         page:{
-            flexDirection:'row',
+            flexDirection:'column',
             backgroundColor:'#E4E4E4',
-            margin:100
+            margin:100,
         },
         section:{
             margin:10,
@@ -172,7 +176,7 @@ const RepPersonalidadAdecuacion = ({ adecuacion, fundadores, personalidad, modal
                             <Image style={styles.logo} src={logo} />
                             </View>
                             <View style={styles.contenedor}>
-                                <Text style={styles.title}>ADECUACIÓN DE PERSONALIDAD JURÍDICA SIN FIN DE LUCRO QUE DESARROLLA ACTIVIDADES EN MAS DE UN DEPARTAMENTO</Text>
+                                <Text style={styles.title}>PERSONALIDADES JURÍDICAS SIN FINES DE LUCRO QUE DESARROLLA ACTIVIDADES EN MAS DE UN DEPARTAMENTO CON RESOLUCIÓN MINISTERIAL DE ADECUACIÓN</Text>
                             </View>  
                              
                             {/* la tabla desde este lugar */}
@@ -181,70 +185,60 @@ const RepPersonalidadAdecuacion = ({ adecuacion, fundadores, personalidad, modal
     {/* fila 1 */}
     <View style={styles.tableRow}> 
         <View style={{ ...styles.tableCol, ...styles.celdaColorida}}> 
-        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>Product</Text> 
+        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>NATURALEZA</Text> 
         </View>
         <View style={{ ...styles.tableCol, ...styles.celdaColorida}}> 
-        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>Product</Text> 
+        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>NOMBRE</Text> 
         </View>
         <View style={{ ...styles.tableCol, ...styles.celdaColorida}}> 
-        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>Product</Text> 
+        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>RESOLUCIÓN MINISTERIAL</Text> 
         </View>
         <View style={{ ...styles.tableCol, ...styles.celdaColorida}}> 
-        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>Product</Text> 
-        </View> 
+        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>FECHA DE RESOLUCIÓN MINISTERIAL</Text> 
+        </View>
         </View> 
         {/* fila 2 */}
         <View style={styles.tableRow}> 
         <View style={styles.tableCol}> 
-        <Text style={styles.tableCell}>Product</Text> 
+        <Text style={styles.tableCell}>{adecuacion.codigo_adecuacion}</Text> 
         </View> 
         <View style={styles.tableCol}> 
-        <Text style={styles.tableCell}>Type</Text> 
+        <Text style={styles.tableCell}>{adecuacion.personalidad_juridica}</Text> 
         </View> 
         <View style={styles.tableCol}> 
-        <Text style={styles.tableCell}>Period</Text> 
+        <Text style={styles.tableCell}>{personalidad.resolucion_ministerial}</Text> 
         </View> 
         <View style={styles.tableCol}> 
-        <Text style={styles.tableCell}>Price</Text> 
+        <Text style={styles.tableCell}>{personalidad.fecha_resolucion}</Text> 
         </View> 
         </View>
       </View>
        {/* final de la tabla */}
-                           
-                           
-                            <View style={styles.contenedor}>
-                                <Text style={styles.title}>Adecuacion</Text>
-                                <Text style={styles.title}>Proceso de Adecuacion</Text>
-                                <Text style={styles.title}>{fecha_esp}</Text>
-                            </View>
-                            <View style={styles.lista}>
-                                <Text style={styles.tipo}>Número Registro: </Text>
-                                <Text style={styles.dato}>{adecuacion.codigo_adecuacion}</Text>
-                            </View>
-                            <View style={styles.lista}>
-                                <Text style={styles.tipo}>NOMBRE: </Text>
-                                <Text style={styles.dato}>{adecuacion.personalidad_juridica}</Text>
-                            </View>
-                            <View style={styles.lista}>
-                                <Text style={styles.tipo}>NATURALEZA: </Text>
-                                <Text style={styles.dato}>{adecuacion.naturaleza}</Text>
-                            </View>
-                            <View style={styles.lista}>
-                                <Text style={styles.tipo}>RESOLUCION: </Text>
-                                <Text style={styles.dato}>{personalidad.resolucion_ministerial}</Text>
-                            </View>
-                            <View style={styles.lista}>
-                                <Text style={styles.tipo}>FUNDADORES</Text>
-                            </View>
-                            <View style={styles.table}>
-                                <Text style={styles.table_head}>NOMBRE</Text>
-                                <Text style={styles.table_head}>CEDULA</Text>
-                            </View>
-                            <View style={styles.table_body}>
-                                {fundadores.length > 0
+
+       <View style={styles.table}>
+    {/* fila 1 */}
+    <View style={styles.tableRow}> 
+        <View style={{ ...styles.tableCol, ...styles.celdaColorida}}> 
+        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>OBJETO</Text> 
+        </View>
+        <View style={{ ...styles.tableCol, ...styles.celdaColorida}}> 
+        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>MIEMBRO
+         FUNDADORES / DIRECTORIO</Text> 
+        </View>
+        </View> 
+        {/* fila 2 */}
+        <View style={styles.tableRow}> 
+        <View style={styles.tableCol}> 
+        <Text style={styles.tableCell}>{adecuacion.objeto}</Text> 
+        </View> 
+        
+        <View style={styles.tableCol}> 
+        <Text style={styles.tableCell}>
+        {fundadores.length > 0
                                     ? fundadores.map((row, index) => {
                                         return (
-                                            <View style={styles.table_tr} key={row.id}>
+                                            <View 
+                                             key={row.id}>
                                                 <Text style={styles.table_item}>{row.nombre_completo}</Text>
                                                 <Text style={styles.table_item}>{row.ci}</Text>
                                             </View>
@@ -252,10 +246,15 @@ const RepPersonalidadAdecuacion = ({ adecuacion, fundadores, personalidad, modal
                                     })
                                     : null
                                 }
-                            </View>
+        </Text>
+        </View> 
+        </View>
+      </View>
+       {/* final de la tabla */}
+            
                          {/* Contenido de tu documento */}
                                 <View style={styles.content}>
-                                <Text style={styles.dato}>{"\n"}El contenido de este documento esta extraido del sistema SIREPEJU(Sistema de Registro de Personalidades Juroidícas).</Text>
+                                <Text style={styles.dato}>{"\n"}El contenido de este documento esta extraido del sistema SIREPEJU(Sistema de Registro de Personalidades Juridícas).</Text>
                                 <Text style={styles.dato}>{"\n"}{"\n"}{"\n"}Fecha y Hora de Impresión: {"\n"}{getCurrentDateTime()}</Text>
                             </View>
                             <View style={styles.watermark}>

@@ -88,7 +88,7 @@ const ExtinguidaOtorgacionShow = ({ registro, modalRegistro, closeRegistro }) =>
     });
     return (
         <>
-            <ModalDiv isOpen={modalRegistro} closeModal={closeRegistro} title={'LISTA DE PERSONERIAS JURIDICAS CON RESOLUCION MINISTERIAL'}>
+            <ModalDiv isOpen={modalRegistro} closeModal={closeRegistro} title={'PERSONALIDADES JURÍDICAS EXTINGUIDAS'}>
                 {!cargando
                     ? (<div className="container-fluid">
                         <h2 className='text-center fs-4'>{otorgacion.personalidad_juridica} </h2>
@@ -98,7 +98,7 @@ const ExtinguidaOtorgacionShow = ({ registro, modalRegistro, closeRegistro }) =>
                                 ? <>
                                     <button className='btn btn-danger' onClick={openAlfanumerico} >
                                         <i className="fa-solid fa-print"></i>
-                                        <span className='mx-1'>Alfanumerico</span>
+                                        <span className='mx-1'>Imprimir Alfanúmerico</span>
                                     </button>
                                     <div className='absolute'>
                                         <Alfanumerico registro={otorgacion} modal={modalAlfanumerico} close={closeAlfanumerico} />
@@ -110,7 +110,7 @@ const ExtinguidaOtorgacionShow = ({ registro, modalRegistro, closeRegistro }) =>
                                 ? <>
                                     <button className='btn btn-success' onClick={openModalpdf} >
                                         <i className="fa-solid fa-print"></i>
-                                        <span className='mx-1'>Imprimir</span>
+                                        <span className='mx-1'>Imprimir reporte</span>
                                     </button>
                                     <div className='absolute'>
                                         <RepExtinguidaOtorgacion modal={modalpdf} close={closeModalpdf}
@@ -121,10 +121,10 @@ const ExtinguidaOtorgacionShow = ({ registro, modalRegistro, closeRegistro }) =>
                             }
                         </div>
 
-                        <h2 className="fs-6"><b>Codigo: {otorgacion.codigo_adecuacion}</b> &nbsp;&nbsp; <b>Naturaleza: {otorgacion.naturaleza}</b></h2> <hr />
-                        <h2 className="fs-6"><b>Institucion Sin Fin de Lucro:</b> &nbsp;&nbsp; <b>Sigla: {otorgacion.sigla}</b></h2> <hr />
-                        <h2 className="fs-6"><b>Domicilio Legal: {otorgacion.domicilio_legal}</b></h2> <hr />
-                        <h2 className="fs-6"><b>Objeto: <p className='fs-6'>{otorgacion.objeto}</p></b></h2><hr />
+                        <h2 className="fs-6"><b>Codigo:</b> {otorgacion.codigo_otorgacion}&emsp;&emsp;&emsp; <b>Naturaleza: </b>{otorgacion.naturaleza}</h2> <hr />
+                        <h2 className="fs-6"><b>Tipo de personalidad jurídica:</b>{otorgacion.persona_colectiva} &emsp;&emsp; <b>Sigla:</b> {otorgacion.sigla}</h2> <hr />
+                        <h2 className="fs-6"><b>Domicilio Legal: </b>{otorgacion.domicilio_legal}</h2> <hr />
+                        <h2 className="fs-6"><b>Objeto: <p><marker>{otorgacion.objeto}</marker></p></b></h2><hr />
 
 
                         {otorgacion.estado == 0
@@ -150,7 +150,7 @@ const ExtinguidaOtorgacionShow = ({ registro, modalRegistro, closeRegistro }) =>
                                         Informe Final
                                     </button>
                                     <button className='btn btn-success' onClick={openNota} >
-                                        Nota FInal
+                                        Nota interna Final
                                     </button>
                                 </div>
                                 <ViewPdf resource={personalidad.estatuto_organico} modal={modalEstatuto} close={closeEstatuto} />
@@ -163,7 +163,7 @@ const ExtinguidaOtorgacionShow = ({ registro, modalRegistro, closeRegistro }) =>
 
                         {fundadores.length > 0
                             ? <div>
-                                <h2 className="fs-6"><b>Miembros Fundadores:</b>
+                                <h2 className="fs-6"><b><center>Miembros Fundadores:</center></b>
                                     <center>
                                         <div className='d-flex'>
                                             <table className='table'>
@@ -177,9 +177,8 @@ const ExtinguidaOtorgacionShow = ({ registro, modalRegistro, closeRegistro }) =>
                                                     {fundadores.sort((a, b) => b.id - a.id).map((fundador) => {
                                                         return (
                                                             <tr key={fundador.id}>
-                                                                <td>{fundador.id}</td>
-                                                                <td>{fundador.nombre_completo}</td>
-                                                                <td>{fundador.ci}</td>
+                                                                <td><mark>{fundador.nombre_completo}</mark></td>
+                                                                <td><mark>{fundador.ci}</mark></td>
                                                             </tr>
                                                         )
                                                     })}

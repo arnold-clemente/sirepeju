@@ -89,7 +89,7 @@ const ShowAdecuacionExtinguida = ({ registro, modalRegistro, closeRegistro }) =>
     });
     return (
         <>
-            <ModalDiv isOpen={modalRegistro} closeModal={closeRegistro} title={'LISTA DE PERSONERIAS JURIDICAS CON RESOLUCION MINISTERIAL'}>
+            <ModalDiv isOpen={modalRegistro} closeModal={closeRegistro} title={'PERSONALIDAD JURÍDICAS EXTINGUIDAS'}>
                 {!cargando
                     ? (<div className="container-fluid">
                         <h2 className='text-center fs-4'>{adecuacion.personalidad_juridica} </h2>
@@ -99,7 +99,7 @@ const ShowAdecuacionExtinguida = ({ registro, modalRegistro, closeRegistro }) =>
                                 ? <>
                                     <button className='btn btn-danger' onClick={openAlfanumerico} >
                                         <i className="fa-solid fa-print"></i>
-                                        <span className='mx-1'>Alfanumerico</span>
+                                        <span className='mx-1'>AImprimir Alfanúmerico</span>
                                     </button>
                                     <div className='absolute'>
                                         <Alfanumerico registro={adecuacion} modal={modalAlfanumerico} close={closeAlfanumerico} />
@@ -111,7 +111,7 @@ const ShowAdecuacionExtinguida = ({ registro, modalRegistro, closeRegistro }) =>
                                 ? <>
                                     <button className='btn btn-success' onClick={openModalpdf} >
                                         <i className="fa-solid fa-print"></i>
-                                        <span className='mx-1'>Imprimir</span>
+                                        <span className='mx-1'>Imprimir reporte</span>
                                     </button>
                                     <div className='absolute'>
                                         <RepAdecuacionExtinguida modal={modalpdf} close={closeModalpdf}
@@ -122,10 +122,10 @@ const ShowAdecuacionExtinguida = ({ registro, modalRegistro, closeRegistro }) =>
                             }
                         </div>
 
-                        <h2 className="fs-6"><b>Codigo: {adecuacion.codigo_adecuacion}</b> &nbsp;&nbsp; <b>Naturaleza: {adecuacion.naturaleza}</b></h2> <hr />
-                        <h2 className="fs-6"><b>Institucion Sin Fin de Lucro:</b> &nbsp;&nbsp; <b>Sigla: {adecuacion.sigla}</b></h2> <hr />
-                        <h2 className="fs-6"><b>Domicilio Legal: {adecuacion.domicilio_legal}</b></h2> <hr />
-                        <h2 className="fs-6"><b>Objeto: <p className='fs-6'>{adecuacion.objeto}</p></b></h2><hr />
+                        <h2 className="fs-6"><b>Codigo: </b>{adecuacion.codigo_adecuacion}&emsp;&emsp;&emsp;<b>Naturaleza:</b>{adecuacion.naturaleza}</h2> <hr />
+                        <h2 className="fs-6"><b>Tipo de Persona Colectiva:</b>&nbsp;{adecuacion.persona_colectiva}&emsp;&emsp;&emsp;<b>Sigla:</b>{adecuacion.sigla}</h2> <hr />
+                        <h2 className="fs-6"><b>Domicilio Legal:</b>&nbsp;&nbsp;{adecuacion.domicilio_legal}</h2> <hr />
+                        <h2 className="fs-6"><b>Objeto: <p><mark>{adecuacion.objeto}</mark></p></b></h2><hr />
 
 
                         {adecuacion.estado == 0
@@ -164,13 +164,13 @@ const ShowAdecuacionExtinguida = ({ registro, modalRegistro, closeRegistro }) =>
 
                         {fundadores.length > 0
                             ? <div>
-                                <h2 className="fs-6"><b>Miembros Fundadores:</b>
+                                <h2 className="fs-6"><b><center>Miembros Fundadores:</center></b>
                                     <center>
                                         <div className='d-flex'>
                                             <table className='table'>
                                                 <thead>
                                                     <tr>
-                                                        <th className='col'>ID</th>
+                                                       
                                                         <th className='col'>Nombres</th>
                                                         <th className='col'>Cedula Indentidad</th>
                                                     </tr>
@@ -179,9 +179,9 @@ const ShowAdecuacionExtinguida = ({ registro, modalRegistro, closeRegistro }) =>
                                                     {fundadores.sort((a, b) => b.id - a.id).map((fundador) => {
                                                         return (
                                                             <tr key={fundador.id}>
-                                                                <td>{fundador.id}</td>
-                                                                <td>{fundador.nombre_completo}</td>
-                                                                <td>{fundador.ci}</td>
+                                                              
+                                                                <td><marker>{fundador.nombre_completo}</marker></td>
+                                                                <td><marker>{fundador.ci}</marker></td>
                                                             </tr>
                                                         )
                                                     })}

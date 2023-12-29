@@ -62,7 +62,7 @@ const ShowOtorgacionGob = ({ registro, modal, close }) => {
 
   return (
     <>
-      <ModalDiv isOpen={modal} closeModal={close} title={'Otorgacion Gobernacion'}>
+      <ModalDiv isOpen={modal} closeModal={close} title={'PERSONALIDADES JURÍDICAS OTORGADAS POR LOS GOBIERNOS AUTONÓMOS DEPARTAMENTALES'}>
         {cargando
           ? <Spiner />
           : <>
@@ -70,35 +70,36 @@ const ShowOtorgacionGob = ({ registro, modal, close }) => {
               <RepOtoGob registro={otorgacion} fundadores={fundadores} modal={imprimir} close={closeImprimir} />
               <button onClick={openImprimir} className='button_print_show'>
                 <i className="fa-solid fa-print"></i>
-                <span>Imprimir</span>
+                <span>Imprimir reporte</span>
               </button>
             </div>
             <div className='container-fluid'>
-              <h1 className='fs-2 text-center text-uppercase'>{otorgacion.nombre_persona_colectiva}</h1><div className='d-flex align-items-center'>
-                <h2 className='font-weight-bold fs-3'>Sigla:</h2>
-                <h2 className='px-2 fs-3'>{otorgacion.sigla}</h2>
+              <h2 className='fs-6 text-center text-uppercase'>{otorgacion.nombre_persona_colectiva}</h2><div className='d-flex align-items-center'>
+                <h2 className='text-center font-weight-bold fs-6'><b>Sigla:</b>&emsp;{otorgacion.sigla}</h2>&emsp;&emsp;&emsp;
+                <h2 className='text-center font-weight-bold fs-6'><b>Resolución Administrativa Departamental:</b>&emsp;aqui un número</h2>
+  
               </div>
             </div>
 
             {fundadores.length > 0
               ? <div>
-                <h2 className="fs-6"><b>Miembros Fundadores:</b>
+                <h2 className="fs-6"><b><center>Miembros Fundadores:</center></b>
                   <center>
                     <div className='d-flex'>
                       <table className='table'>
                         <thead>
                           <tr>
-                            <th className='col'>Nombres</th>
-                            <th className='col'>Cedula Indentidad</th>
+                            <th className='col'><mark>Nombres</mark></th>
+                            <th className='col'><mark>Cedula de Identidad</mark></th>
                           </tr>
                         </thead>
                         <tbody className="table-group-divider">
                           {fundadores.sort((a, b) => b.id - a.id).map((fundador) => {
                             return (
                               <tr key={fundador.id}>
-                                <td>{fundador.id}</td>
-                                <td>{fundador.nombre_completo}</td>
-                                <td>{fundador.ci}</td>
+                               
+                                <td><marker>{fundador.nombre_completo}</marker></td>
+                                <td><marker>{fundador.ci}</marker></td>
                               </tr>
                             )
                           })}
