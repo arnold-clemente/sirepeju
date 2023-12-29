@@ -187,3 +187,8 @@
     font-size: 25px;
     margin-right: 5px;
 }
+
+.visible_password{
+    color: rgb(2, 2, 107);
+    pointer-events: all;
+}

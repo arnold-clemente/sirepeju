@@ -26,6 +26,7 @@ const IndexReserva = () => {
     const [loading, setLoading] = useState(false);
     const permisos = useSelector(state => state.userStore.permisos)
     const queryClient = useQueryClient();
+
     //para el modal
     const [showreserva, openReserva, closeReserva] = useModal(false);
     const [selectpdf, openSelectpdf, closeSelectpdf] = useModal(false);
@@ -56,7 +57,7 @@ const IndexReserva = () => {
     const { isLoading, data: registros, isError, error } = useQuery({
         queryKey: ['reservas'],
         queryFn: getReservas,
-        select: reservas => reservas.sort((a, b) => b.id - a.id)
+        select: reservas => reservas.sort((a, b) => b.id - a.id),
     })
 
     const filteredRegistros = () => {
@@ -203,6 +204,7 @@ const IndexReserva = () => {
         selectAllRowsItem: true,
         selectAllRowsItemText: 'todos'
     };
+
     if (isLoading) return <Spiner />
     else if (isError) return <div>Error: {error.message}</div>
 

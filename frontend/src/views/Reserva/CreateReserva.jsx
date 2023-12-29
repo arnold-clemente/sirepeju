@@ -25,7 +25,7 @@ const CreateReserva = () => {
     const addReserva = useMutation({
         mutationFn: createReserva,
         onSuccess: (response) => {
-            console.log(response)
+            console.log(response.toJSON())
             if (response.status === true) {
                 queryClient.invalidateQueries('reservas')
                 show_alerta('Creado con exito', '<i class="fa-solid fa-check border_alert_green"></i>', 'alert_green')
@@ -38,9 +38,13 @@ const CreateReserva = () => {
             }
         },
         onError: (error) => {
-            console.log(error)
-            show_alerta('No conectado', '<i class="fa-solid fa-xmark border_alert_red"></i>', 'alert_red')
             setLoading(false);
+            // if(error){
+
+            // }
+            console.log(error.toJSON())
+            show_alerta('No conectado', '<i class="fa-solid fa-xmark border_alert_red"></i>', 'alert_red')
+            
         },
     });
 

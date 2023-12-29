@@ -1,1 +1,1 @@
-export const url = 'http://sirepeju.test'
+export const url = 'http://sirepeju.test';
