@@ -33,7 +33,7 @@ class VerificacionController extends Controller
                 'naturaleza',
                 'tipo'
             )
-            ->whereIn('estado', [1, 2, 4, 6, 7, 8])
+            ->whereIn('estado', [1, 2, 3, 4, 5, 6, 7, 8])
             ->orderBy('id', 'desc')
             ->get();
 
@@ -47,7 +47,7 @@ class VerificacionController extends Controller
                 'naturaleza',
                 'tipo'
             )
-            ->whereIn('estado', [1, 2, 4, 6, 7, 8])
+            ->whereIn('estado', [1, 2, 3, 4, 5, 6, 7, 8])
             ->orderBy('id', 'desc')
             ->get();
 

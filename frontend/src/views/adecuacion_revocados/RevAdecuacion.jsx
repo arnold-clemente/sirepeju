@@ -10,7 +10,7 @@ import { estilos } from '../../components/estilosdatatables';
 import { getRevocatorias } from '../../api/adecuacionApi';
 // modal 
 import { useModal } from '../../hooks/useModal'
-import ModalAdePersonalidadShow from '../adecuacion_personalidades/ModalAdePersonalidadShow';
+import ModalAdecuacionRevocadosShow from './ModalAdecuacionRevocadosShow';
 import SelectRevocadosAdecuacion from './reporte/SelectRevocadosAdecuacion';
 
 const RevAdecuacion = () => {
@@ -212,7 +212,7 @@ const RevAdecuacion = () => {
     <>
       {loading === true ? <Loading /> : ''}
       {/* para le modal show adecuacion  */}
-      <ModalAdePersonalidadShow registro={adecuacionShow} modalRegistro={modalAdecuacion} closeRegistro={closeAdecuacion} />
+      <ModalAdecuacionRevocadosShow registro={adecuacionShow} modalRegistro={modalAdecuacion} closeRegistro={closeAdecuacion} />
       <SelectRevocadosAdecuacion registro={selectedRows} modal={selectpdf} close={closeSelectpdf} />
       <Banner text="REVOCATORIAS ADECUACIONES" />
       <div className='container-fluid d-flex flex-row md:flex-columns my-4'>
