@@ -3,6 +3,9 @@
 use App\Http\Controllers\VerificacionController;
 use Illuminate\Support\Facades\Route;
 
+// ruta de dashboard
+require('api/dashboard.php');
+
 // rutas para administrativo y gobernacion 
 require('api/roles.php');
 

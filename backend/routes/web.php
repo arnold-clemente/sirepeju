@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\reportes\ReservaNombreController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PamelaVista;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,8 +19,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/reporte/homonimia/{reserva_nombre}', [ReservaNombreController::class, 'homonimia'])
-    ->name('reporte.homonimia');
+// Route::get('/reporte/homonimia/{reserva_nombre}', [ReservaNombreController::class, 'homonimia'])
+//     ->name('reporte.homonimia');
 
-Route::get('/reporte/reserva/{registro}', [ReservaNombreController::class, 'reserva'])
-    ->name('reporte.reserva');
+// Route::get('/reporte/reserva/{registro}', [ReservaNombreController::class, 'reserva'])
+//     ->name('reporte.reserva');
+
+
+Route::get('/homonimia', [PamelaVista::class, 'homonimia']);
+
+Route::get('/reserva', [PamelaVista::class, 'reserva']);

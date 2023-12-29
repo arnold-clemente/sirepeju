@@ -18,6 +18,8 @@ const Login = () => {
     const dispatch = useDispatch();
     const [cargando, setCargando] = useState(false);
     const [error, setError] = useState('');
+    const [visible, setVisible] = useState('password')
+    const [icon, setIcon] = useState('fa-solid fa-eye')
 
     const [formValues, handleInputChange] = useForm({
         email: 'admin@admin.com',
@@ -62,6 +64,22 @@ const Login = () => {
 
         },
     });
+
+    const handleVisible = () => {
+        if (visible == 'password') {
+            setVisible('text');
+            setIcon('fa-solid fa-eye-slash');
+        }
+        if (visible == 'text') {
+            setVisible('password');
+            setIcon('fa-solid fa-eye');
+        }
+
+        setTimeout(() => {
+            setVisible('password');
+            setIcon('fa-solid fa-eye');
+        }, 2000)
+    }
 
     return (
         <div>
@@ -110,7 +128,7 @@ const Login = () => {
                             <div className='input_animado'>
                                 {cargando
                                     ? <input
-                                        type="password"
+                                        type={visible}
                                         placeholder="Password"
                                         name="password"
                                         autoComplete="off"
@@ -119,7 +137,7 @@ const Login = () => {
                                         disabled
                                     />
                                     : <input
-                                        type="password"
+                                        type={visible}
                                         placeholder="Password"
                                         name="password"
                                         autoComplete="off"
@@ -129,6 +147,7 @@ const Login = () => {
 
                                 }
                             </div>
+                            <i onClick={handleVisible} className={icon + ' visible_password'}></i>
                         </div>
                         {cargando
                             ? <div className='login_contenedor_cargando'>

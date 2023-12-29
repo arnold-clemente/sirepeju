@@ -145,7 +145,7 @@ const WebRoutes = () => {
                     <Route element={<ProtectedPermmision midleware={'reservas.homonimias'} />} >
                         <Route path='/reserva/homonimias' element={<HomReserva />} />
                     </Route>
-                    <Route element={<ProtectedPermmision midleware={'reservas.reservado'} />} >
+                    <Route element={<ProtectedPermmision midleware={'reservas.reservados'} />} >
                         <Route path='/reserva/reservados' element={<IndexReg />} />
                     </Route>
                     <Route element={<ProtectedPermmision midleware={'reservas.caducados'} />} >

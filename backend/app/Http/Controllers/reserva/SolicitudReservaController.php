@@ -33,6 +33,7 @@ class SolicitudReservaController extends Controller
                 'correo',
                 'estado'
             )
+            ->orderBy('id', 'desc')
             ->where('estado', 1)
             ->get();
         return response()->json($reserva);
