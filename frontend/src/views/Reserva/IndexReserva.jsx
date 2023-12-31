@@ -117,6 +117,7 @@ const IndexReserva = () => {
                         : null
                     }
 
+ 
                 </div >
             ),
             ignoreRowClick: true,

@@ -28,9 +28,7 @@ const RepGob = ({ registro, modal, close }) => {
                                 <Text style={styles.title}>DATOS REGISTRADOS DEL PERSONAL RESPONSABLE POR DEPARTAMENTO</Text>
                             </View>
                             
-                                <Text style={styles.title}>Institución: {registro.departamento
-                                ? registro.departamento.institucion
-                                : null} </Text>
+                                <Text style={styles.title}>Institución: {registro.institucion} </Text>
                            {/* la tabla desde este lugar */}
 
                             <View style={styles.table}>
@@ -69,7 +67,7 @@ const RepGob = ({ registro, modal, close }) => {
 
                             <View style={styles.content}>
                                 {/* Contenido de tu documento */}
-                                <Text style={styles.dato}>{"\n"}El contenido de este documento esta extraido del sistema SIREPEJU(Sistema de Registro de Personalidades Juroidícas).</Text>
+                                <Text style={styles.dato}>{"\n"}El contenido de este documento esta extraido del sistema SIREPEJU(Sistema de Registro de Personalidades Juridícas).</Text>
 
                                 <Text style={styles.dato}>{"\n"}{"\n"}{"\n"}Fecha y Hora de Impresión: {"\n"}{getCurrentDateTime()}</Text>
                             </View>

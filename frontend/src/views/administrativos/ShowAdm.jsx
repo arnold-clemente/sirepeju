@@ -28,9 +28,9 @@ const ShowAdm = ({ modal, close, registro }) => {
                         ? <div><h2 className="fs-6"><b>Correo Electronico:</b> &nbsp;{registro.user.email}</h2><hr />
                             <h2 className="fs-6"><b>Rol:</b> &nbsp;{registro.user.rol}</h2> <hr />
                         </div>
-                        : ''}
+                        : ''}  
                 </div>
-                <hr />
+               
                 <div className='d-flex'>
                     <button className="btn btn-secondary" onClick={close}>cerrar</button>
                 </div>

@@ -11,19 +11,17 @@ const ShowGob = ({ modal, close, registro }) => {
             <ModalDiv isOpen={modal} closeModal={close} title={'Datos del responsable Departamental'}>
                 <RepGob registro={registro} modal={imprimir} close={closeImprimir} />
                 <div className="container-fluid">
-                    <h2><center>{registro.institucion}
-                    </center>
-                    </h2>
+                    <h5><center>{registro.institucion}</center></h5>
                     <div className='container-fluid d-flex justify-content-end'>
                         <button onClick={openImprimir} className='button_print_show'>
                             <i className="fa-solid fa-print"></i>
                             <span>Imprimir reporte </span>
                         </button>
                     </div>
-                    <h2 className="fs-6"><b>Responsable departamental:</b>&nbsp;&nbsp;{registro.nombres + ' ' + registro.paterno + ' ' + registro.materno} </h2><hr />
-                    <h2 className="fs-6"><b>Cargo departamental: </b>{registro.cargo}</h2> <hr />
+                    <h2 className="fs-6"><b>Responsable Departamental:</b>&nbsp;&nbsp;{registro.nombres + ' ' + registro.paterno + ' ' + registro.materno} </h2><hr />
+                    <h2 className="fs-6"><b>Cargo Departamental: </b>{registro.cargo}</h2> <hr />
 
-                    <h2 className="fs-6"><b>Cedula de Indentidad: </b>{registro.ci + ' ' + registro.ext_ci}</h2> <hr />
+                    <h2 className="fs-6"><b>Cédula de Indentidad: </b>{registro.ci + ' ' + registro.ext_ci}</h2> <hr />
                     <h2 className="fs-6"><b>Correo Institucional: </b> {registro.email} &nbsp;&nbsp;</h2>
                 </div>
                 <hr />
