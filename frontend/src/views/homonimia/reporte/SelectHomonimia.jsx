@@ -9,7 +9,7 @@ const SelectHomonimia = ({ registro, modal, close }) => {
     const styles = StyleSheet.create({
         main: {
             width: "100%",
-            height: "76vh",
+            height: "90vh",
             boxSizing: "border-box",
         },
         page:{
@@ -207,7 +207,7 @@ const SelectHomonimia = ({ registro, modal, close }) => {
       </View>
       <View style={styles.content}>
                             {/* Contenido de tu documento */}
-                            <Text style={styles.dato}>{"\n"}El contenido de este documento esta extraido del sistema SIREPEJU (Sistema de Registro de Personalidades Juroidícas).</Text>
+                            <Text style={styles.dato}>{"\n"}El contenido de este documento esta extraido del sistema SIREPEJU (Sistema de Registro de Personalidades Juridícas).</Text>
                         
                             <Text style={styles.dato}>{"\n"}{"\n"}{"\n"}Fecha y Hora de Impresión: {"\n"}{getCurrentDateTime()}</Text>
                         </View>

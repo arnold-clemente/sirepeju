@@ -127,10 +127,16 @@ const IndexRoles = () => {
             width: '120px',
         },
         {
-            name: 'Nombre de Rol',
+            name: 'Rol Asignado',
             selector: row => row.name,
             sortable: true,
-            width: '250px',
+            width: '120px',
+        },
+        {
+            name: 'Nombre del personal',
+            selector: row => row.nombres,
+            sortable: true,
+            width: '180px',
         },
         {
             name: 'Fecha Creado',

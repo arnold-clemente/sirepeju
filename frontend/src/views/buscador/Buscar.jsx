@@ -208,7 +208,7 @@ const Buscar = () => {
             width: '150px',
         },
         {
-            name: 'Mienbros | Representante',
+            name: 'Miembros | Representante',
             selector: row => row.representante,
             sortable: true,
             wrap: true,

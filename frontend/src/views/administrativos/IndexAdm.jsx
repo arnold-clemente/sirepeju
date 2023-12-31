@@ -207,7 +207,7 @@ const IndexAdministrativos = () => {
             grow: 4,
         },
         {
-            name: 'Nombre ',
+            name: 'Nombre de Administrativo',
             selector: row => row.nombres + ' ' + row.paterno + ' ' + row.materno,
             sortable: true,
             wrap: true,

@@ -9,10 +9,8 @@ const ModalVerificacionShow = ({ registro, modal, close }) => {
                 <hr />
                 <div className="modal-dialog modal-lg">
                     <h2 className="fs-6"><b>Sigla:</b> &nbsp;&nbsp;{registro.sigla} </h2> <hr />
-                    <h2 className="fs-6"><b>Representante Legal:</b></h2> <hr />
-                    <nav className="navbar bg-body-tertiary">
-                        {registro.representante}&nbsp;<b> CI:</b>{registro.ci_rep}
-                    </nav> <hr />
+                    <h2 className="fs-6"><b>Representante Legal:</b>&nbsp;&nbsp;{registro.representante}&nbsp;&nbsp;<b> CI:</b>{registro.ci}</h2> <hr />
+                    
                     <h2 className="fs-6"><b>Persona Colectiva:</b> &nbsp;&nbsp;{registro.persona_colectiva} </h2>
                 </div>
 
