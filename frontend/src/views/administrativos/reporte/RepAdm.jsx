@@ -5,6 +5,7 @@ import { Text, View, StyleSheet, Image } from '@react-pdf/renderer'
 import logo from '../../../images/logovic.jpg'
 
 const RepAdm = ({ registro, modal, close }) => {
+   // console.log(registro);
     const styles = StyleSheet.create({
         main: {
             width: "100%",
@@ -14,16 +15,17 @@ const RepAdm = ({ registro, modal, close }) => {
         page:{
             flexDirection:'row',
             backgroundColor:'#E4E4E4',
-            margin:8
+           // margin: "8px"
         },
         section:{
             margin: "10px",
-            padding:10,
+            padding:"10px",
             flexGrow:1,
         },
         body: {
-            width: "100%",
-            height: "100%",
+            width: "90%",
+            height: "90vh",
+           padding:"20px",
         },
         contenedor: {
             width: '100%',
@@ -107,7 +109,6 @@ const RepAdm = ({ registro, modal, close }) => {
             flexDirection: "row" 
           }, 
           tableCol: { 
-            
             width: "25%", 
             borderStyle: "solid", 
             borderWidth: 1, 
@@ -160,12 +161,7 @@ const RepAdm = ({ registro, modal, close }) => {
                         </View>
                             <View style={styles.contenedor}>
                                 <Text style={styles.title}>LISTA DE ADMINISTRATIVOS</Text>
-                            </View>
-
-                            {/* <View style={styles.lista}>
-                                <Text style={styles.tipo}>Nombre:</Text>
-                                <Text style={styles.dato}>{registro.nombres + ' ' +  registro.paterno + ' ' + registro.materno}</Text>
-                            </View>                        */}
+                            </View>                       
                       
         {/* la tabla desde este lugar */}
         
@@ -173,16 +169,16 @@ const RepAdm = ({ registro, modal, close }) => {
     {/* fila 1 */}
     <View style={styles.tableRow}> 
         <View style={{ ...styles.tableCol, ...styles.celdaColorida}}> 
-        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>Product</Text> 
+        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>Nombre Completo</Text> 
         </View>
         <View style={{ ...styles.tableCol, ...styles.celdaColorida}}> 
-        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>Product</Text> 
+        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>C.I.</Text> 
         </View>
         <View style={{ ...styles.tableCol, ...styles.celdaColorida}}> 
-        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>Product</Text> 
+        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>Correo</Text> 
         </View>
         <View style={{ ...styles.tableCol, ...styles.celdaColorida}}> 
-        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>Product</Text> 
+        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>Cargo</Text> 
         </View> 
         </View> 
         {/* fila 2 */}
