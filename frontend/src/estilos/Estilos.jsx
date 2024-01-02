@@ -20,10 +20,10 @@ const styles = {
     body: {
         width: "100%",
         height: "100%",
-        paddingTop: "2.5cm",
-        paddingBottom: "2.5cm",
-        paddingRight: "2.5cm",
-        paddingLeft: "3cm",
+        paddingTop: "25px",
+        paddingBottom: "25px",
+        paddingRight: "25px",
+        paddingLeft: "30px",
 
     },
     contenedor: {
@@ -51,7 +51,7 @@ const styles = {
     },
 
     fecha: {
-        fontSize: '14px',
+        fontSize: '8px',
         fontWeight: 700,
         paddingBottom: '20px'
     },
@@ -68,7 +68,7 @@ const styles = {
     },
     title: {
         textAlign: 'center',
-        fontSize: '16px',
+        fontSize: '15px',
         marginBottom: '20px'
     },
     lista: {
@@ -84,10 +84,10 @@ const styles = {
         paddingRight: '5px',
     },
     dato: {
-        fontSize: '11px',
+        fontSize: '8px',
     },
     celdaColorida: { backgroundColor: '#44556f' }, // Puedes cambiar el color aquí
-    textoBlanco: { color: '#ffffff', fontSize: '12px', }, // Color blanco
+    textoBlanco: { color: '#ffffff', fontSize: '11px', }, // Color blanco
 
     boldText: {
         fontWeight: 'bold',
@@ -100,14 +100,14 @@ const styles = {
         borderStyle: "solid",
         borderWidth: 1,
         borderRightWidth: 0,
-        borderBottomWidth: 0
+        borderBottomWidth: 0,
+        //borderRadius: "10px"
     },
     tableRow: {
         margin: "auto",
         flexDirection: "row"
     },
     tableCol: {
-
         width: "25%",
         borderStyle: "solid",
         borderWidth: 1,
@@ -115,11 +115,11 @@ const styles = {
         borderTopWidth: 0
     },
     tableCell: {
-
         margin: "auto",
         marginTop: 5,
-        fontSize: 10,
-        fontWeight: 'bold'
+        fontSize: '11px',
+        fontWeight: 'bold',
+        textTransform: 'uppercase'
     },
     content: {
         flexGrow: 1,

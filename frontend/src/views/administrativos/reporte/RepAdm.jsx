@@ -57,7 +57,7 @@ const RepAdm = ({ registro, modal, close }) => {
                                         <Text style={styles.tableCell}>{registro.ci + ' ' + registro.ext_ci}</Text>
                                     </View>
                                     <View style={styles.tableCol}>
-                                        <Text style={styles.tableCell}>{registro.name}</Text>
+                                        <Text style={styles.tableCell}>{registro.usuario}</Text>
                                     </View>
                                 </View>
                                 {/* final de la tabla */}

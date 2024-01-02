@@ -21,14 +21,51 @@ const ShowAdm = ({ modal, close, registro }) => {
 
                 <RepAdm registro={registro} modal={imprimir} close={closeImprimir} />
 
-                <div className="modal-dialog modal-lg">
-                    <h2 className="fs-6"><b>Nombre Completo:</b> &nbsp;&nbsp;{registro.nombres + ' ' + registro.paterno + ' ' + registro.materno} </h2>&nbsp;&nbsp;<b>CI:</b> {registro.ci + ' ' + registro.ext_ci}<hr />
-                    <h2 className="fs-6"><b>Cargo:</b> &nbsp;{registro.cargo}</h2> <hr />
-                    {registro.user
-                        ? <div><h2 className="fs-6"><b>Correo Electronico:</b> &nbsp;{registro.user.email}</h2><hr />
-                            <h2 className="fs-6"><b>Rol:</b> &nbsp;{registro.user.rol}</h2> <hr />
+                <div className="modal-dialog">
+                    <div className="card m-2">
+                        <div className="card-header">
+                             <h5 className='fw-bold'>Datos del Administrativo</h5>
                         </div>
-                        : ''}  
+                        <div className="card-body">
+                           <div className="row">
+                            <div className="col-md-4 fw-bold my-1">
+                              Nombre Completo :
+                            </div>
+                            <div className="col-md-8 my-1">
+                            {registro.nombres + ' ' + registro.paterno + ' ' + registro.materno}
+                            </div>
+
+                            <div className="col-md-4 fw-bold my-1">
+                              C.I. :
+                            </div>
+                            <div className="col-md-8 my-1">
+                            {registro.ci + ' ' + registro.ext_ci}
+                            </div>
+
+                            <div className="col-md-4 fw-bold my-1">
+                              Cargo :
+                            </div>
+                            <div className="col-md-8 my-1">
+                            {registro.cargo}
+                            </div>
+
+                            <div className="col-md-4 fw-bold my-1">
+                              Correo Electrónico :
+                            </div>
+                            <div className="col-md-8 my-1">
+                            {registro.email}
+                            </div>
+
+                            <div className="col-md-4 fw-bold my-1">
+                              Rol :
+                            </div>
+                            <div className="col-md-8 my-1 text-uppercase">
+                            {registro.usuario}
+                            </div>
+
+                           </div>
+                        </div>
+                    </div> 
                 </div>
                
                 <div className='d-flex'>

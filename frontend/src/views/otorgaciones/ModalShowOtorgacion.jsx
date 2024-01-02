@@ -88,7 +88,7 @@ const ModalShowOtorgacion = ({ registro, modalRegistro, closeRegistro }) => {
             <ModalDiv isOpen={modalRegistro} closeModal={closeRegistro} title={'LISTA DE TRÁMITES EN PROCESO DE OTORGACIÓN'}>
                 {!cargando
                     ? (<div className="container-fluid">
-                        <h2 className='text-center fs-4'>{otorgacion.personalidad_juridica} </h2>
+                        {/*<h2 className='text-center fs-4'>{otorgacion.personalidad_juridica} </h2>*/}
                         {/* para el modal de pdf de alfanumerico  */}
                         <div className='container-fluid d-flex justify-content-end gap-1'>
                             {otorgacion.alfanumerico
@@ -117,12 +117,34 @@ const ModalShowOtorgacion = ({ registro, modalRegistro, closeRegistro }) => {
                                 : null
                             }
                         </div>
+                        <div className="card m-2">
+                            <div className="card-header">
+                                <h5 className='fw-bold'>{otorgacion.personalidad_juridica}</h5>
+                            </div>
+                            <div className="card-body">
+                                <div className="row border-bottom p-1">
+                                    <div className="col-md-3 fw-bold ">Código:</div>
+                                    <div className="col-md-3 ">{otorgacion.codigo_otorgacion}</div>
+                                    <div className="col-md-3 fw-bold ">Naturaleza:</div>
+                                    <div className="col-md-3 ">{otorgacion.naturaleza}</div>
+                                </div>
+                                <div className="row border-bottom p-1">
+                                    <div className="col-md-3 fw-bold ">Tipo de Persona Colectiva:</div>
+                                    <div className="col-md-3 ">{otorgacion.persona_colectiva}</div>
+                                    <div className="col-md-3 fw-bold ">Sigla:</div>
+                                    <div className="col-md-3 ">{otorgacion.sigla}</div>
+                                </div>
+                                <div className="row border-bottom p-1">
+                                    <div className="col-md-3 fw-bold ">Domicilio Legal</div>
+                                    <div className="col-md-9 ">{otorgacion.domicilio_legal}</div>
+                                </div>
+                                <div className="row">
+                                    <div className="col-md-1 fw-bold ">Objeto</div>
+                                    <div className="col-md-11">{otorgacion.objeto}</div>
+                                </div>
 
-                        <h2 className="fs-6"><b>Codigo:</b> {otorgacion.codigo_otorgacion} &emsp;&emsp;&emsp;<b>Naturaleza:</b> {otorgacion.naturaleza}</h2> <hr />
-                        <h2 className="fs-6"><b>Tipo de Persona Colectiva:</b>&ensp;{otorgacion.persona_colectiva} &emsp;&emsp; <b>Sigla:</b> {otorgacion.sigla}</h2> <hr />
-                        <h2 className="fs-6"><b>Domicilio Legal:</b> {otorgacion.domicilio_legal}</h2> <hr />
-                        <h2 className="fs-6"><b>Objeto: <p class="text-justify"><mark>{otorgacion.objeto}</mark></p></b></h2><hr />
-
+                            </div>
+                        </div>
 
                         {otorgacion.estado == 0
                             ? (<div className='container-fluid '>
@@ -135,33 +157,24 @@ const ModalShowOtorgacion = ({ registro, modalRegistro, closeRegistro }) => {
                         }
 
                         {fundadores.length > 0
-                            ? <div>
-                                <h2 className="fs-6"><b><center>Miembros fundadores</center></b>
-                                    <center>
-                                        <div className='d-flex'>
-                                            <table className='table'>
-                                                <thead>
-                                                    <tr>
-                                                   
-                                                        <th className='col'>Nombre completo</th>
-                                                        <th className='col'>Cedúla de Identidad</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody className="table-group-divider">
-                                                    {fundadores.sort((a, b) => b.id - a.id).map((fundador) => {
-                                                        return (
-                                                            <tr key={fundador.id}>
-                                                               
-                                                                <td><marker>{fundador.nombre_completo}</marker></td>
-                                                                <td><marker>{fundador.ci}</marker></td>
-                                                            </tr>
-                                                        )
-                                                    })}
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </center>
-                                </h2>
+                            ? <div className='card mx-2'>
+                                <div className="card-header">
+                                    <h5 className='fw-bold'>Miembros Fundadores</h5>
+                                </div>
+                                <div className='card-body'>
+                                    {fundadores.sort((a, b) => b.id - a.id).map((fundador) => {
+                                        return (
+                                            <div className="row">
+                                                <div className="col-md-2 fw-bold ">Nombre:</div>
+                                                <div className="col-md-4 ">{fundador.nombre_completo}</div>
+                                                <div className="col-md-3 fw-bold ">C.I.:</div>
+                                                <div className="col-md-3 ">{fundador.ci}</div>
+                                            </div>
+
+                                        )
+                                    })}
+
+                                </div>
                             </div>
                             : null
                         }
