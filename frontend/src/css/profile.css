@@ -4,7 +4,7 @@
     top: 0;
     left: 0;
     z-index: 110;
-    width: calc(100% - 300px);
+    width: calc(100%);
     height: 100vh;
     border: none;
     background-color: transparent;
@@ -12,6 +12,23 @@
 
 .profile_close.profile {
     position: fixed;
+    display: block;
+}
+
+.profile_main{
+    display: none;
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    background-color: transparent;
+    z-index: 120;
+    border: none;
+    top: 0;
+    left: 0;
+    transition: all 0.5s ease-in-out;
+}
+
+.profile_main.profile{
     display: block;
 }
 

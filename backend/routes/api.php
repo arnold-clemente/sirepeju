@@ -19,7 +19,7 @@ require('api/users.php');
 require('api/reserva.php');
 
 // ruta de verificacion
-Route::middleware(['auth:sanctum'])
+Route::middleware(['auth:sanctum', 'can:verificacion.entidades'])
     ->get('/entidades', [VerificacionController::class, 'verificacion'])
     ->name('verficacion.entidades');
 

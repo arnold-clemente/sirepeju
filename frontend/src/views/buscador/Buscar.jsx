@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useCallback, useMemo, useState, lazy } from 'react'
 import DataTable from "react-data-table-component";
 import Swal from 'sweetalert2';
 import { useSelector } from 'react-redux';
@@ -13,9 +13,16 @@ import Banner from '../../components/Banner';
 import { show_alerta } from '../../components/MessageAlert';
 import storage from '../../Storage/storage'
 import { useModal } from '../../hooks/useModal';
+import { estados, color_estados } from './Estados';
+
 // modales 
-import ModalVerificacionShow from './ModalVerificacionShow';
 import SelectVerificacion from './reporte/SelectVerificacion';
+
+const VerificacionReserva = lazy(() => import('./VerificacionReserva'));
+const VerificaionOtorgacion = lazy(() => import('./VerificacionOtorgacion'));
+const VerificacionAdecuacion = lazy(() => import('./VerificacionAdecuacion'));
+const VerificacionGobernacion = lazy(() => import('./VerificacionGobernacion'));
+const ModalVerificacionShow = lazy(() => import('./ModalVerificacionShow'));
 
 const Buscar = () => {
 
@@ -28,6 +35,20 @@ const Buscar = () => {
     const [selectpdf, openSelectpdf, closeSelectpdf] = useModal(false);
     // declarar un hook 
     const [registroShow, setregistroShow] = useState({});
+
+    //consulta personalizada
+    const [consulta, setConsulta] = useState({
+        reserva_id: 0,
+        otorgacion_id: 0,
+        adecuacion_id: 0,
+        gobernacion_id: 0,
+    });
+    //modales personalizados
+    const [reserva, openReserva, closeReserva] = useModal(false);
+    const [otorgacion, openOtorgacion, closeOtorgacion] = useModal(false);
+    const [adecuacion, openAdecuacion, closeAdecuacion] = useModal(false);
+    const [gobernacion, openGobernacion, closeGobernacion] = useModal(false);
+
     const [selectedRows, setSelectedRows] = useState([]);
     const [toggleCleared, setToggleCleared] = useState(false);
 
@@ -53,8 +74,9 @@ const Buscar = () => {
 
     const { isLoading, data: registros, isError, error } = useQuery({
         queryKey: ['entidades'],
-        queryFn: getEntidadesGlobal
-    })
+        queryFn: getEntidadesGlobal,
+    });
+
     const filteredRegistros = () => {
         if (search.length == 0)
             return registros;
@@ -148,10 +170,28 @@ const Buscar = () => {
 
     const handleShow = (e, row) => {
         e.preventDefault();
-        openRegistro();
-        const prueba = row;
-        setregistroShow({ ...registroShow, ...prueba })
-        console.log(registroShow)
+        switch (row.tipo) {
+            case 1:
+                setConsulta({ ...consulta, ...row });
+                openReserva();
+                break;
+            case 2:
+                setConsulta({ ...consulta, ...row });
+                openOtorgacion();
+                break;
+            case 3:
+                setConsulta({ ...consulta, ...row });
+                openAdecuacion();
+                break;
+            case 4:
+                setConsulta({ ...consulta, ...row });
+                openGobernacion();
+                break;
+            default:
+                setregistroShow({ ...registroShow, ...row });
+                openRegistro();
+                break;
+        }
     }
 
     const columns = [
@@ -188,10 +228,16 @@ const Buscar = () => {
         },
         {
             name: 'Tipo Tramite',
-            selector: row => tipos[row.tipo - 1],
-            sortable: true,
+            cell: (row) => (
+                <div className={'d-flex justify-content-center'}>
+                    <span className={color_estados[row.tipo] + ' color_estado_white'}>{estados[row.tipo][row.estado]}</span>
+                </div>
+            ),
+            ignoreRowClick: true,
+            allowOverflow: true,
+            button: true,
             wrap: true,
-            width: '120px',
+            width: '100px',
         },
         {
             name: 'Entidad',
@@ -233,6 +279,10 @@ const Buscar = () => {
     else if (isError) return <div>Error: {error.message}</div>
     return (
         <>
+            <VerificacionReserva registro={consulta} modal={reserva} close={closeReserva} />
+            <VerificaionOtorgacion registro={consulta} modal={otorgacion} close={closeOtorgacion} />
+            <VerificacionAdecuacion registro={consulta} modal={adecuacion} close={closeAdecuacion} />
+            <VerificacionGobernacion registro={consulta} modal={gobernacion} close={closeGobernacion} />
             <ModalVerificacionShow registro={registroShow} modal={showregistro} close={closeRegistro} />
             <SelectVerificacion registro={selectedRows} modal={selectpdf} close={closeSelectpdf} />
             <div>

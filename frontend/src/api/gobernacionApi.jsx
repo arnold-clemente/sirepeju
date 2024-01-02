@@ -38,7 +38,7 @@ export const getGobernacion = async (gobernacionId) => {
 }
 
 export const createGobernacion = async (gobernacion) => {
-    const res = await axios.post('/api/gobernacion/store', gobernacion)
+    const response = await axios.post('/api/gobernacion/store', gobernacion)
         .then((response) => { return response.data })
         .catch((error) => {
             switch (error.toJSON().status) {

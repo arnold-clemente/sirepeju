@@ -19,7 +19,7 @@ export const getModificacionesAdecuacion = async () => {
 }
 
 export const createModificacion = async (adecuacion) => {
-    const res = await axios.post('/api/modificacion-adecuacion-create', adecuacion)
+    const response = await axios.post('/api/modificacion-adecuacion-create', adecuacion)
         .then((response) => { return response.data })
         .catch((error) => {
             switch (error.toJSON().status) {
@@ -37,7 +37,7 @@ export const createModificacion = async (adecuacion) => {
 }
 
 export const updateAdecuacionModificacion = async (adecuacion) => {
-    const res = await axios.post(`/api/modificacion-adecuacion-update`, adecuacion, {
+    const response = await axios.post(`/api/modificacion-adecuacion-update`, adecuacion, {
         headers: { 'Content-Type': 'multipart/form-data' }
     })
         .then((response) => { return response.data })
@@ -58,7 +58,7 @@ export const updateAdecuacionModificacion = async (adecuacion) => {
 
 // para seguimietno 
 export const createSeguimientoMod = async (adecuacion) => {
-    const res = await axios.post('/api/adecuacion/seguimiento/modificacion', adecuacion)
+    const response = await axios.post('/api/adecuacion/seguimiento/modificacion', adecuacion)
         .then((response) => { return response.data })
         .catch((error) => {
             switch (error.toJSON().status) {
@@ -76,7 +76,7 @@ export const createSeguimientoMod = async (adecuacion) => {
 }
 // para el informe
 export const createInformeMod = async (adecuacion) => {
-    const res = await axios.post('/api/adecuacion/informe/modificacion', adecuacion)
+    const response = await axios.post('/api/adecuacion/informe/modificacion', adecuacion)
         .then((response) => { return response.data })
         .catch((error) => {
             switch (error.toJSON().status) {
@@ -114,7 +114,7 @@ export const getFundadoresAdecuacion = async (adecuacion_id) => {
 }
 
 export const createFundadorAde = async (fundador) => {
-    const res = await axios.post('/api/modificacion-adecuacion-fundador-store', fundador)
+    const response = await axios.post('/api/modificacion-adecuacion-fundador-store', fundador)
         .then((response) => { return response.data })
         .catch((error) => {
             switch (error.toJSON().status) {

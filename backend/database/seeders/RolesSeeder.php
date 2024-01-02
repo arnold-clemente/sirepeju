@@ -66,7 +66,7 @@ class RolesSeeder extends Seeder
         // $permission = Permission::create(['type' => 3, 'name' => 'otorgacion.fundadores.store', 'description' => 'crear fundador'])->syncRoles([$role1, $role5]);
         // $permission = Permission::create(['type' => 3, 'name' => 'otorgacion.fundadores.update', 'description' => 'actualizar fundador'])->syncRoles([$role1, $role5]);
         // $permission = Permission::create(['type' => 3, 'name' => 'otorgacion.fundadores.destroy', 'description' => 'eliminar fundador'])->syncRoles([$role1, $role5]);
-        $permission = Permission::create(['type' => 3, 'name' => 'otorgacion.registro', 'description' => 'registro final'])->syncRoles([$role1, $role5]);
+        // $permission = Permission::create(['type' => 3, 'name' => 'otorgacion.registro', 'description' => 'registro final'])->syncRoles([$role1, $role5]);
 
         $permission = Permission::create(['type' => 6, 'name' => 'otorgaciones.personalidades', 'description' => 'vista personalidades'])->syncRoles([$role1, $role2, $role3, $role4, $role5]);
         $permission = Permission::create(['type' => 3, 'name' => 'otorgacion.personalidad', 'description' => 'personalidad juridica'])->syncRoles([$role1, $role5]);
@@ -101,7 +101,7 @@ class RolesSeeder extends Seeder
         // $permission = Permission::create(['type' => 4, 'name' => 'adecuacion.fundadores.store', 'description' => 'crear fundador'])->syncRoles([$role1, $role5]);
         // $permission = Permission::create(['type' => 4, 'name' => 'adecuacion.fundadores.update', 'description' => 'actualizar fundador'])->syncRoles([$role1, $role5]);
         // $permission = Permission::create(['type' => 4, 'name' => 'adecuacion.fundadores.destroy', 'description' => 'eliminar fundador'])->syncRoles([$role1, $role5]);
-        $permission = Permission::create(['type' => 4, 'name' => 'adecuacion.registro', 'description' => 'registro final'])->syncRoles([$role1, $role5]);;
+        // $permission = Permission::create(['type' => 4, 'name' => 'adecuacion.registro', 'description' => 'registro final'])->syncRoles([$role1, $role5]);;
 
         $permission = Permission::create(['type' => 6, 'name' => 'adecuaciones.personalidades', 'description' => 'vista personalidades'])->syncRoles([$role1, $role2, $role3, $role4, $role5]);
         $permission = Permission::create(['type' => 4, 'name' => 'adecuacion.personalidad', 'description' => 'personalidad juridica'])->syncRoles([$role1, $role5]);

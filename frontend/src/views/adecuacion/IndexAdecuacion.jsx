@@ -230,7 +230,7 @@ const IndexAdecuacion = () => {
       cell: (row) => (
         <div className='container-fluid d-flex flex-row gap-1'>
           <button onClick={(e) => handleShow(e, row)} className="button_show"><i className="fa-solid fa-eye"></i><span>Ver</span></button>
-          {permisos.includes('adecuacion.personalidad') || permisos.includes('adecuacion.registro') || permisos.includes('adecuacion.seguimiento') || permisos.includes('adecuacion.informe')
+          {permisos.includes('adecuacion.personalidad') || permisos.includes('adecuacion.seguimiento') || permisos.includes('adecuacion.informe')
             ? <div className='dropdown'>
               <button className="button_dropdown_table dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                 <i className="fa-solid fa-gear"></i>
@@ -264,7 +264,7 @@ const IndexAdecuacion = () => {
                   }
                 </li>
                 <li>
-                  {row.miembros_fundador != 'sin asignar' && !row.alfanumerico && permisos.includes('adecuacion.registro')
+                  {row.miembros_fundador != 'sin asignar' && !row.alfanumerico && permisos.includes('adecuacion.personalidad')
                     ? <button onClick={(e) => handleRegistroFinal(e, row)} className="button_edit_table">
                       <i className="fa-regular fa-registered"></i>
                       <span className='mx-2'>Etapa Final</span>

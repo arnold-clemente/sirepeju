@@ -110,7 +110,7 @@ const AdministrativoDashboard = () => {
         if (meses.includes(gobernacion.mes)) {
             gobernacion_meses.splice(gobernacion.mes - 1, 1, gobernacion.cantidad)
         }
-    })  
+    })
 
     const getDashboard = useMutation({
         mutationFn: getAdministrativoDashboard,
@@ -211,102 +211,102 @@ const AdministrativoDashboard = () => {
 
     return (
         <>
+            <div className='container-fuild row justify-content-center'>
+                <div className="form-group col-md-6 py-2">
+                    <div className="form-group">
+                        <label>Seleccionar Año</label>
+                        <select className="form-control" id="exampleFormControlSelect1"
+                            value={consulta} onChange={handleInputChange}>
+                                <option className='d-none' value={''}>SELECCIONAR AÑO</option>
+                            {years.map((year, index) => {
+                                return (
+                                    <option key={index} value={year}>{year}</option>
+                                )
+                            })}
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+            <div className='sirepeju_dashboard my-2'>
+                <div className='dashboard_panel'>
+                    {/* reservas  */}
+                    <div className={'color_1 panel_result'}>
+                        <div className='panel_contenedor'>
+                            <div className='panel_letra'>
+                                <h1>{total_reserva}</h1>
+                                <h3>Reservas Totales</h3>
+                                <p>Gestión {consulta}</p>
+                            </div>
+                            <div className='panel_icon'>
+                                <i className='fa-solid fa-file-circle-question'></i>
+                            </div>
+                        </div>
+                        {/* <button className='button_panel'>
+                                    <span className='mx-2'>Ver Detalles</span>
+                                    <i className="fa-solid fa-arrow-right"></i>
+                                </button> */}
+                    </div>
+                    {/* otorgaciones  */}
+                    <div className={'color_4 panel_result'}>
+                        <div className='panel_contenedor'>
+                            <div className='panel_letra'>
+                                <h1>{total_otorgacion}</h1>
+                                <h3>Otorgaciones Totales</h3>
+                                <p>Gestión {consulta}</p>
+                            </div>
+                            <div className='panel_icon'>
+                                <i className='fa-solid fa-file-shield'></i>
+                            </div>
+                        </div>
+                        {/* <button className='button_panel'>
+                                    <span className='mx-2'>Ver Detalles</span>
+                                    <i className="fa-solid fa-arrow-right"></i>
+                                </button> */}
+                    </div>
+                    {/* adecuaciones  */}
+                    <div className={'color_3 panel_result'}>
+                        <div className='panel_contenedor'>
+                            <div className='panel_letra'>
+                                <h1>{total_adecuacion}</h1>
+                                <h3>Adecuaciones Totales</h3>
+                                <p>Gestión {consulta}</p>
+                            </div>
+                            <div className='panel_icon'>
+                                <i className='fa-solid fa-rectangle-ad'></i>
+                            </div>
+                        </div>
+                        {/* <button className='button_panel'>
+                                    <span className='mx-2'>Ver Detalles</span>
+                                    <i className="fa-solid fa-arrow-right"></i>
+                                </button> */}
+                    </div>
+                    {/* gobernaciones  */}
+                    <div className={'color_7 panel_result'}>
+                        <div className='panel_contenedor'>
+                            <div className='panel_letra'>
+                                <h1>{total_gobernacion}</h1>
+                                <h3>Gobenaciones Totales</h3>
+                                <p>Gestión {consulta}</p>
+                            </div>
+                            <div className='panel_icon'>
+                                <i className='fa-solid fa-file-arrow-up'></i>
+                            </div>
+                        </div>
+                        {/* <button className='button_panel'>
+                                    <span className='mx-2'>Ver Detalles</span>
+                                    <i className="fa-solid fa-arrow-right"></i>
+                                </button> */}
+                    </div>
+                </div>
+            </div>
             {loading == false
                 ? <Spiner />
-                : <>
-                    <div className='container-fuild row justify-content-center'>
-                        <div className="form-group col-md-6 py-2">
-                            <div className="form-group">
-                                <label>Seleccionar Año</label>
-                                <select className="form-control" id="exampleFormControlSelect1"
-                                    value={consulta} onChange={handleInputChange}>
-                                    {years.map((year, index) => {
-                                        return (
-                                            <option key={index} value={year}>{year}</option>
-                                        )
-                                    })}
-                                </select>
-                            </div>
-                        </div>
-
+                : <><div className='container-fluid row'>
+                    <div className='col-12'>
+                        <Line data={midata} options={misoptions} />
                     </div>
-                    <div className='sirepeju_dashboard my-2'>
-                        <div className='dashboard_panel'>
-                            {/* reservas  */}
-                            <div className={'color_1 panel_result'}>
-                                <div className='panel_contenedor'>
-                                    <div className='panel_letra'>
-                                        <h1>{total_reserva}</h1>
-                                        <h3>Reservas Totales</h3>
-                                        <p>Gestión {consulta}</p>
-                                    </div>
-                                    <div className='panel_icon'>
-                                        <i className='fa-solid fa-file-circle-question'></i>
-                                    </div>
-                                </div>
-                                {/* <button className='button_panel'>
-                                    <span className='mx-2'>Ver Detalles</span>
-                                    <i className="fa-solid fa-arrow-right"></i>
-                                </button> */}
-                            </div>
-                            {/* otorgaciones  */}
-                            <div className={'color_4 panel_result'}>
-                                <div className='panel_contenedor'>
-                                    <div className='panel_letra'>
-                                        <h1>{total_otorgacion}</h1>
-                                        <h3>Otorgaciones Totales</h3>
-                                        <p>Gestión {consulta}</p>
-                                    </div>
-                                    <div className='panel_icon'>
-                                        <i className='fa-solid fa-file-shield'></i>
-                                    </div>
-                                </div>
-                                {/* <button className='button_panel'>
-                                    <span className='mx-2'>Ver Detalles</span>
-                                    <i className="fa-solid fa-arrow-right"></i>
-                                </button> */}
-                            </div>
-                            {/* adecuaciones  */}
-                            <div className={'color_3 panel_result'}>
-                                <div className='panel_contenedor'>
-                                    <div className='panel_letra'>
-                                        <h1>{total_adecuacion}</h1>
-                                        <h3>Adecuaciones Totales</h3>
-                                        <p>Gestión {consulta}</p>
-                                    </div>
-                                    <div className='panel_icon'>
-                                        <i className='fa-solid fa-rectangle-ad'></i>
-                                    </div>
-                                </div>
-                                {/* <button className='button_panel'>
-                                    <span className='mx-2'>Ver Detalles</span>
-                                    <i className="fa-solid fa-arrow-right"></i>
-                                </button> */}
-                            </div>
-                            {/* gobernaciones  */}
-                            <div className={'color_7 panel_result'}>
-                                <div className='panel_contenedor'>
-                                    <div className='panel_letra'>
-                                        <h1>{total_gobernacion}</h1>
-                                        <h3>Gobenaciones Totales</h3>
-                                        <p>Gestión {consulta}</p>
-                                    </div>
-                                    <div className='panel_icon'>
-                                        <i className='fa-solid fa-file-arrow-up'></i>
-                                    </div>
-                                </div>
-                                {/* <button className='button_panel'>
-                                    <span className='mx-2'>Ver Detalles</span>
-                                    <i className="fa-solid fa-arrow-right"></i>
-                                </button> */}
-                            </div>
-                        </div>
-                    </div>
-                    <div className='container-fluid row'>
-                        <div className='col-12'>
-                            <Line data={midata} options={misoptions} />
-                        </div>
-                    </div>
+                </div>
                     <div className='container-fluid row align-items-center'>
                         <div className='col-md-12'>
                             <Bar data={mypie} />
@@ -317,7 +317,6 @@ const AdministrativoDashboard = () => {
                     </div>
                 </>
             }
-
         </>
     )
 }

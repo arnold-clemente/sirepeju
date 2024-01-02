@@ -56,3 +56,79 @@
     color: rgb(221, 82, 17);
     border-color: rgb(221, 82, 17);
 }
+
+.estado_eliminado{
+    background-color: red;
+}
+
+.estado_tramite{
+    background-color: #066826e1;
+}
+
+.estado_archivado{
+    background-color: rgb(221, 70, 0);
+}
+
+.estado_caducado{
+    background-color: rgb(221, 7, 0);
+}
+
+.estado_homonimia{
+    background-color: rgb(151, 78, 9);
+}
+
+.estado_reservado{
+    background-color: blue;
+}
+
+.estado_personalidad{
+    background-color: rgb(0, 144, 180);
+}
+
+.estado_revocado{
+    background-color: yellow;
+}
+
+.estado_extinguido{
+    background-color: rgb(97, 216, 0);
+}
+
+.estado_modificacion{
+    background-color: rgb(184, 216, 0);
+}
+
+.estado_default{
+    background-color: rgb(75, 75, 75);
+}
+
+.color_reserva{
+    color: rgb(0, 144, 180);
+}
+.color_otorgacion{
+    color: rgb(2, 126, 2);
+}
+.color_adecuacion{
+    color: rgb(2, 126, 2);
+}
+.color_gobernacion{
+    color: rgb(0, 18, 180);
+}
+.color_registros{
+    color: rgb(204, 101, 5);
+}
+
+.color_estado_white{
+    text-align: center;
+    font-weight: bold;
+}
+
+.white_modal{
+    color: #fff;
+    text-align: center;
+    font-weight: bold;
+}
+
+.estados_rounded{
+    border-radius: 10px;
+    padding: 5px 10px;
+}

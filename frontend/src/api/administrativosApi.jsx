@@ -56,7 +56,7 @@ export const getEditAdministrativo = async (adminId) => {
 }
 
 export const createAdministrativo = async (administrativo) => {
-    const res = await axios.post('/api/administrativo/store', administrativo)
+    const response = await axios.post('/api/administrativo/store', administrativo)
         .then((response) => { return response.data })
         .catch((error) => {
             switch (error.toJSON().status) {

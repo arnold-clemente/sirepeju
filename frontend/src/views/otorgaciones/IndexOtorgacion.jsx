@@ -230,7 +230,7 @@ const IndexOtorgacion = () => {
             cell: (row) => (
                 <div className='container-fluid d-flex flex-row gap-1'>
                     <button onClick={(e) => handleShow(e, row)} className="button_show"><i className="fa-solid fa-eye"></i><span>Ver</span></button>
-                    {permisos.includes('otorgacion.personalidad') || permisos.includes('otorgacion.seguimiento') || permisos.includes('otorgacion.informe') || permisos.includes('otorgacion.archivar') || permisos.includes('otorgacion.registro')
+                    {permisos.includes('otorgacion.personalidad') || permisos.includes('otorgacion.seguimiento') || permisos.includes('otorgacion.informe') || permisos.includes('otorgacion.archivar')
                         ? <div className='dropdown'>
                             <button className="button_dropdown_table dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i className="fa-solid fa-gear"></i>
@@ -263,7 +263,7 @@ const IndexOtorgacion = () => {
                                     }
                                 </li>
                                 <li>
-                                    {row.miembros_fundador != 'sin agregar' && !row.alfanumerico && permisos.includes('otorgacion.registro')
+                                    {row.miembros_fundador != 'sin agregar' && !row.alfanumerico && permisos.includes('otorgacion.personalidad')
                                         ? <button onClick={(e) => handleRegistroFinal(e, row)} className="button_edit_table">
                                             <i className="fa-regular fa-registered"></i>
                                             <span className='mx-2'>Etapa Final</span>

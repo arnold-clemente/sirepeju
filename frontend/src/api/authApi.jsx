@@ -56,7 +56,7 @@ export const getUser = async (user) => {
 }
 
 export const updateProfile = async (user) => {
-    const res = await axios.post('/api/auth/update', user)
+    const response = await axios.post('/api/auth/update', user)
         .then((response) => { return response.data })
         .catch((error) => {
             switch (error.toJSON().status) {

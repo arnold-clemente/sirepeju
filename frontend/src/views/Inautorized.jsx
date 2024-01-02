@@ -1,10 +1,19 @@
 import React from 'react'
-import lineas from '../images/lineas_segundo.png'
+import lineas from '../images/lineas_rojas.png'
 import logo from '../images/logo.png'
-import not_found from '../images/not_found.png'
+import unauthorized from '../images/unauthorized.png'
 import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const Inautorized = () => {
+
+    const go = useNavigate();
+
+    const handleUnauthorized = () => {
+        go('/');
+        window.location.reload(false);
+    }
+
     return (
         <>
             <div className='error_404'>
@@ -16,21 +25,17 @@ const Inautorized = () => {
                         <img src={logo} alt="logo" />
                     </div>
                     <div className='container-fluid row justify-content-center align-items-center'>
-                        <div className='col-md-6'>
+                        <div className='col-md-6 d-flex justify-content-center'>
                             <div className='not_found'>
-                                <img src={not_found} alt="not_found" />
+                                <img src={unauthorized} alt="unauthorized" />
                             </div>
-                        </div>
-                        <div className='col-md-6 error_404_letra'>
-                           <h2>ERROR</h2>
-                           <h1>404</h1>
                         </div>
                     </div>
 
                     <div className='my-4'>
-                        <Link to='/' className='error_404_button'>
+                        <button onClick={handleUnauthorized} className='error_401_button'>
                             <span>VOLVER</span>
-                        </Link>
+                        </button>
                     </div>
                 </div>
                 <div className='error_404_linea_image'>

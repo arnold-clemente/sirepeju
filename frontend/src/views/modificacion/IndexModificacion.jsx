@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useCallback, useMemo, useState, lazy } from 'react'
 import { Link } from 'react-router-dom';
 import DataTable from "react-data-table-component";
 import { useQuery } from 'react-query';
@@ -12,8 +12,11 @@ import { getModificaciones } from '../../api/modificacionApi';
 // modal 
 import { useModal } from '../../hooks/useModal'
 // modal components 
-import ModalShowMod from './ModalShowMod';
 import SelectModificaciones from './reporte/SelectModificaciones';
+
+const ShowModificacionOtorgacion = lazy(() => import('./ShowModificacionOtorgacion'));
+const ShowModificacionAdecuacion = lazy(() => import('./ShowModificacionAdecuacion'));
+const ModalShowMod = lazy(() => import('./ModalShowMod'));
 
 const IndexModificacion = () => {
 
@@ -22,6 +25,7 @@ const IndexModificacion = () => {
 
     // para el modal show Otorgacion
     const [modalOtorgacion, openOtorgacion, closeOtorgacion] = useModal(false);
+    const [modalAdecuacion, openAdecuacion, closeAdecuacion] = useModal(false);
     const [otorgacionShow, setotorgacionShow] = useState({
         id: 0,
         codigo_modificacion: 'APN - 000',
@@ -91,22 +95,62 @@ const IndexModificacion = () => {
 
     const handleShow = (e, row) => {
         e.preventDefault();
-        openOtorgacion();
-        const auxiliar = {
-            id: row.id,
-            estatuto_organico: row.estatuto_organico,
-            reglamento_interno: row.reglamento_interno,
-            codigo_modificacion: row.codigo_modificacion,
-            tipo: row.tipo,
-            personalidad_juridica: row.personalidad_juridica,
-            miembros_fundador: row.miembros_fundador,
-            domicilio_legal: row.domicilio_legal,
-            seguimiento: row.seguimiento,
-            cite_informe_preliminar: row.cite_informe_preliminar,
-            otorgacion_id: row.otorgacion_id,
-            adecuacion_id: row.adecuacion_id,
+        switch (row.tipo) {
+            case 'adecuacion':
+                const auxiliar_adecuacion = {
+                    id: row.id,
+                    estatuto_organico: row.estatuto_organico,
+                    reglamento_interno: row.reglamento_interno,
+                    codigo_modificacion: row.codigo_modificacion,
+                    tipo: row.tipo,
+                    personalidad_juridica: row.personalidad_juridica,
+                    miembros_fundador: row.miembros_fundador,
+                    domicilio_legal: row.domicilio_legal,
+                    seguimiento: row.seguimiento,
+                    cite_informe_preliminar: row.cite_informe_preliminar,
+                    otorgacion_id: 0,
+                    adecuacion_id: row.adecuacion_id,
+                }
+                setotorgacionShow({ ...otorgacionShow, ...auxiliar_adecuacion });
+                openAdecuacion();
+                break;
+            case 'otorgacion':
+                const auxiliar_otorgacion = {
+                    id: row.id,
+                    estatuto_organico: row.estatuto_organico,
+                    reglamento_interno: row.reglamento_interno,
+                    codigo_modificacion: row.codigo_modificacion,
+                    tipo: row.tipo,
+                    personalidad_juridica: row.personalidad_juridica,
+                    miembros_fundador: row.miembros_fundador,
+                    domicilio_legal: row.domicilio_legal,
+                    seguimiento: row.seguimiento,
+                    cite_informe_preliminar: row.cite_informe_preliminar,
+                    otorgacion_id: row.otorgacion_id,
+                    adecuacion_id: 0,
+                }
+                setotorgacionShow({ ...otorgacionShow, ...auxiliar_otorgacion });
+                openOtorgacion();
+                break;
+            default:
+                const auxiliar_default = {
+                    id: row.id,
+                    estatuto_organico: row.estatuto_organico,
+                    reglamento_interno: row.reglamento_interno,
+                    codigo_modificacion: row.codigo_modificacion,
+                    tipo: row.tipo,
+                    personalidad_juridica: row.personalidad_juridica,
+                    miembros_fundador: row.miembros_fundador,
+                    domicilio_legal: row.domicilio_legal,
+                    seguimiento: row.seguimiento,
+                    cite_informe_preliminar: row.cite_informe_preliminar,
+                    otorgacion_id: row.otorgacion_id,
+                    adecuacion_id: row.adecuacion_id,
+                }
+                setotorgacionShow({ ...otorgacionShow, ...auxiliar_default });
+                openOtorgacion();
+                break;
         }
-        setotorgacionShow({ ...otorgacionShow, ...auxiliar })
     }
 
     const handleImprimir = (e, row) => {
@@ -191,6 +235,8 @@ const IndexModificacion = () => {
         <div>
             {loading === true ? <Loading /> : ''}
             <ModalShowMod showRegistro={otorgacionShow} modalRegistro={modalOtorgacion} closeRegistro={closeOtorgacion} />
+            <ShowModificacionOtorgacion modificacion={otorgacionShow} modal={modalOtorgacion} close={closeOtorgacion} />
+            <ShowModificacionAdecuacion modificacion={otorgacionShow} modal={modalAdecuacion} close={closeAdecuacion} />
             <SelectModificaciones registro={selectedRows} modal={selectpdf} close={closeSelectpdf} />
 
             <Banner text="MODIFICACIONES" />
