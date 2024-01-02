@@ -1,6 +1,7 @@
 import React from 'react'
 import Modal from '../../../components/ModalPdf'
 import { PDFViewer, Document, Page } from '@react-pdf/renderer'
+import QRCode from 'qrcode.react';
 import { Text, View, StyleSheet, Image } from '@react-pdf/renderer'
 import logo from '../../../images/logovic.jpg'
 
@@ -150,6 +151,17 @@ const RepSolicitud = ({ registro, modal, close }) => {
             fontSize: 60,
             color: 'gray', // Color de la marca de agua
           },
+          rectangulo: 
+          {
+            justifyContent: 'center', 
+            alignItems: 'center',
+             width: 200, 
+            height: 100, 
+            backgroundColor: 'lightblue', 
+            border: '2px solid navy', 
+            borderRadius: 10 
+          },
+          
     });
     const getCurrentDateTime = () => {
         const currentDateTime = new Date();
@@ -161,12 +173,13 @@ const RepSolicitud = ({ registro, modal, close }) => {
                 <PDFViewer style={styles.main}>
                     <Document>
                         <Page size="letter" style={styles.body}>
+                        
                         <View style={styles.contenedor_logo}>
                             <Image style={styles.logo} src={logo} />
                             </View>
-                            <View style={styles.contenedor}>
-                                <Text style={styles.title}>REPORTE DE RESERVA DE NOMBRE DE LA PERSONA COLECTIVA </Text>
-                            </View>        
+                      
+                        <View style={style.rectangulo}> 
+                        </View>    
         {/* la tabla desde este lugar */}
         
         <View style={styles.table}>

@@ -1,5 +1,6 @@
 import AppRouter from './routes/AppRouter'
-
+//generador de qr
+import QRCode from 'react-qr-code'
 // estilos 
 import './css/alert2.css'
 import './css/login.css'
@@ -20,6 +21,7 @@ function App() {
   return (
     <>
       <div className="app_container">
+       
         <AppRouter />
       </div>
     </>

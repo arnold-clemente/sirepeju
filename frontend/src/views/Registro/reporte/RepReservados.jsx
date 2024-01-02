@@ -3,6 +3,8 @@ import Modal from '../../../components/ModalPdf'
 import { PDFViewer, Document, Page } from '@react-pdf/renderer'
 import { Text, View, StyleSheet, Image } from '@react-pdf/renderer'
 import logo from '../../../images/logovic.jpg'
+//generador de qr
+import QRCode from 'react-qr-code'
 
 const RepReservados = ({ registro, modal, close }) => {
     let fecha_esp = ''
@@ -80,10 +82,15 @@ const RepReservados = ({ registro, modal, close }) => {
 
     return (
         <>
+               
             <Modal isOpen={modal} closeModal={close}>
+            <QRCode value='pamela_paola' size={90}/>
                 <PDFViewer style={styles.main}>
+              
                     <Document>
+                    
                         <Page size="letter" style={styles.body}>
+                        
                             <View style={styles.contenedor_logo}>
                                 <Image style={styles.logo} src={logo} />
                             </View>
@@ -94,7 +101,7 @@ const RepReservados = ({ registro, modal, close }) => {
                                 <Text style={styles.title}>{registro.entidad}</Text>
                             </View>
                             <View style={styles.lista}>
-                                <Text style={styles.tipo}>Sigla:</Text>
+                                <Text style={styles.tipo}>Siglapara:</Text>
                                 <Text style={styles.dato}>{registro.sigla}</Text>
                             </View>
                         </Page>
