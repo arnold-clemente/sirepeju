@@ -1,280 +1,327 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Modal from '../../../components/ModalPdf'
 import { PDFViewer, Document, Page } from '@react-pdf/renderer'
-import QRCode from 'qrcode.react';
-import { Text, View, StyleSheet, Image } from '@react-pdf/renderer'
+import QRCode from "react-qr-code";
+import { Text, View, StyleSheet, Image, Svg } from '@react-pdf/renderer'
 import logo from '../../../images/logovic.jpg'
 
 const RepSolicitud = ({ registro, modal, close }) => {
 
-   
+  const qrUrl = useRef({})
+  const [imageqr, setImageqr] = useState('')
 
-    // estilos del pdf 
-    const styles = StyleSheet.create({
-        main: {
-            width: "100%",
-            height: "90vh",
-            boxSizing: "border-box",
-        },
-        page:{
-            flexDirection:'row',
-            backgroundColor:'#E4E4E4',
-            margin:100
-        },
-        section:{
-            margin:10,
-            padding:10,
-            flexGrow:1,
-        },
-        body: {
-            width: "100%",
-            height: "100%",
-            paddingTop: "2.5cm",
-            paddingBottom: "2.5cm",
-            paddingRight: "2.5cm",
-            paddingLeft: "3cm",
-            
-        },
-        contenedor: {
-            width: '100%',
-            marginBottom: '1cm'
-        },
-        contenedor_logo: {
-            width: '100%',
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'center',
-        },
-        contenedor_fecha: {
-            width: '100%',
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'flex-end',
-        },
-        contenedor_remitente:{
-            width: '100%',
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'flex-end', 
-            
-        },
-        
-        fecha: {
-            fontSize: '14px',
-            fontWeight: 700,
-            paddingBottom: '20px'
-        },
-        remitente: {
-            fontSize: '12px',
-            textAlign: 'justify',
-            fontWeight: 'BoldSpan',
-            
-            paddingRight: '5px',
-        },
-        logo: {
-            width: '500px',
-            marginBottom: '2px',
-        },
-        title: {
-            textAlign: 'center',
-            fontSize: '16px',
-            marginBottom: '20px'
-        },
-        lista: {
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'flex-start',
-            marginBottom: '10px',
-        },
-        tipo: {
-            fontSize: '14px',
-            fontWeight: 700,
-            paddingRight: '5px',
-        },
-        dato: {
-            fontSize: '11px',
-        },
-        celdaColorida: { backgroundColor: '#44556f' }, // Puedes cambiar el color aquí
-        textoBlanco: { color: '#ffffff',fontSize: '12px', }, // Color blanco
-        
-        boldText: {
-            fontWeight: 'bold',
-            fontSize: '12px',
-            justifyContent: 'center',
-          },
-          table: { 
-            display: "table", 
-            width: "auto", 
-            borderStyle: "solid", 
-            borderWidth: 1, 
-            borderRightWidth: 0, 
-            borderBottomWidth: 0 
-          }, 
-          tableRow: { 
-            margin: "auto", 
-            flexDirection: "row" 
-          }, 
-          tableCol: { 
-            
-            width: "25%", 
-            borderStyle: "solid", 
-            borderWidth: 1, 
-            borderLeftWidth: 0, 
-            borderTopWidth: 0 
-          }, 
-          tableCell: { 
-            
-            margin: "auto", 
-            marginTop: 5, 
-            fontSize: 10,
-            fontWeight: 'bold'
-          },
-          content: {
-            flexGrow: 1,
-          },
-          footer: {
-            textAlign: 'center',
-            fontSize: 10,
-            marginTop: 10,
-          },
-          line: {
-            borderBottom: '1px solid black',
-            width: '100%',
-          },
-          watermark: {
-            position: 'absolute',
-            top:500,
-            left:180,
-            opacity: 0.3, // Ajusta la opacidad según tus preferencias
-            transform: 'rotate(-30deg)', // Rotación de la marca de agua
-            fontSize: 60,
-            color: 'gray', // Color de la marca de agua
-          },
-          rectangulo: 
-          {
-            justifyContent: 'center', 
-            alignItems: 'center',
-             width: 200, 
-            height: 100, 
-            backgroundColor: 'lightblue', 
-            border: '2px solid navy', 
-            borderRadius: 10 
-          },
-          
-    });
-    const getCurrentDateTime = () => {
-        const currentDateTime = new Date();
-        return currentDateTime.toLocaleString();
-      };
-    return (
-        <>
-            <Modal isOpen={modal} closeModal={close}>
-                <PDFViewer style={styles.main}>
-                    <Document>
-                        <Page size="letter" style={styles.body}>
-                        
-                        <View style={styles.contenedor_logo}>
-                            <Image style={styles.logo} src={logo} />
-                            </View>
-                      
-                        <View style={style.rectangulo}> 
-                        </View>    
-        {/* la tabla desde este lugar */}
-        
-        <View style={styles.table}>
-    {/* fila 1 */}
-    <View style={styles.tableRow}> 
-        <View style={{ ...styles.tableCol, ...styles.celdaColorida}}> 
-        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>NÚMERO CORRELATIVO</Text> 
-        </View>
-        <View style={{ ...styles.tableCol, ...styles.celdaColorida}}> 
-        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>NOMBRE</Text> 
-        </View>
-        <View style={{ ...styles.tableCol, ...styles.celdaColorida}}> 
-        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>SIGLA</Text> 
-        </View>
-        <View style={{ ...styles.tableCol, ...styles.celdaColorida}}> 
-        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>NATURALEZA</Text> 
-        </View> 
-        </View> 
-        {/* fila 2 */}
-        <View style={styles.tableRow}> 
-        <View style={styles.tableCol}> 
-        <Text style={styles.tableCell}>{registro.nro_certificado}</Text> 
-        </View> 
-        <View style={styles.tableCol}> 
-        <Text style={styles.tableCell}> {registro.entidad}</Text> 
-        </View> 
-        <View style={styles.tableCol}> 
-        <Text style={styles.tableCell}>{registro.sigla}</Text> 
-        </View> 
-        <View style={styles.tableCol}> 
-        <Text style={styles.tableCell}>{registro.naturaleza}</Text> 
-        </View> 
-        </View>
-      </View>
-       {/* final de la tabla */}
-      {/* la tabla desde este lugar */}
-        
-      <View style={styles.table}>
-    {/* fila 1 */}
-    <View style={styles.tableRow}> 
-        <View style={{ ...styles.tableCol, ...styles.celdaColorida}}> 
-        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>SOLICITANTE</Text> 
-        </View>
-        <View style={{ ...styles.tableCol, ...styles.celdaColorida}}> 
-        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>CI</Text> 
-        </View>
-        <View style={{ ...styles.tableCol, ...styles.celdaColorida}}> 
-        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>CELULAR</Text> 
-        </View>
-        <View style={{ ...styles.tableCol, ...styles.celdaColorida}}> 
-        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>CORREO</Text> 
-        </View> 
-        </View> 
-        {/* fila 2 */}
-        <View style={styles.tableRow}> 
-        <View style={styles.tableCol}> 
-        <Text style={styles.tableCell}>{registro.representante}</Text> 
-        </View> 
-        <View style={styles.tableCol}> 
-        <Text style={styles.tableCell}> {registro.ci_rep}</Text> 
-        </View> 
-        <View style={styles.tableCol}> 
-        <Text style={styles.tableCell}>{registro.telefono}</Text> 
-        </View> 
-        <View style={styles.tableCol}> 
-        <Text style={styles.tableCell}>{registro.correo}</Text> 
-        </View> 
-        </View>
-      </View>
-       {/* final de la tabla */}
-      
+  useEffect(() => {
+    if (qrUrl.current) {
+      generarQr();
+    }
+  }, [qrUrl.current]);
 
-      <View style={styles.content}>
-        {/* Contenido de tu documento */}
-        <Text style={styles.dato}>{"\n"}El contenido de este documento esta extraido del sistema SIREPEJU(Sistema de Registro de Personalidades Juroidícas).</Text>
-       
-        <Text style={styles.dato}>{"\n"}{"\n"}{"\n"}Fecha y Hora de Impresión: {"\n"}{getCurrentDateTime()}</Text>
-      </View>
-      <View style={styles.watermark}>
-        <Text>SIREPEJU</Text>
-      </View>
-      <View style={styles.footer}>
-          {/* Línea en el pie de página */}
-          <View style={styles.line}></View>
-          <Text>Casa Grande del Pueblo,calle Ayacucho - esq.Potosí,Tel:(591-2)2184178 {"\n"}La Paz -Bolivia {"\n"}{"\n"}Pagína{1}</Text>
-        </View>   
+  console.log()
+  // estilos del pdf 
+  const styles = StyleSheet.create({
+    main: {
+      width: "100%",
+      height: "90vh",
+      boxSizing: "border-box",
+    },
+    page: {
+      flexDirection: 'row',
+      backgroundColor: '#E4E4E4',
+      margin: 100
+    },
+    section: {
+      margin: 10,
+      padding: 10,
+      flexGrow: 1,
+    },
+    body: {
+      width: "100%",
+      height: "100%",
+      paddingTop: "2.5cm",
+      paddingBottom: "2.5cm",
+      paddingRight: "2.5cm",
+      paddingLeft: "3cm",
+
+    },
+    contenedor: {
+      width: '100%',
+      marginBottom: '1cm'
+    },
+    contenedor_logo: {
+      width: '100%',
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'center',
+    },
+    contenedor_fecha: {
+      width: '100%',
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'flex-end',
+    },
+    contenedor_remitente: {
+      width: '100%',
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'flex-end',
+
+    },
+
+    fecha: {
+      fontSize: '14px',
+      fontWeight: 700,
+      paddingBottom: '20px'
+    },
+    remitente: {
+      fontSize: '12px',
+      textAlign: 'justify',
+      fontWeight: 'BoldSpan',
+
+      paddingRight: '5px',
+    },
+    logo: {
+      width: '500px',
+      marginBottom: '2px',
+    },
+    title: {
+      textAlign: 'center',
+      fontSize: '16px',
+      marginBottom: '20px'
+    },
+    lista: {
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'flex-start',
+      marginBottom: '10px',
+    },
+    tipo: {
+      fontSize: '14px',
+      fontWeight: 700,
+      paddingRight: '5px',
+    },
+    dato: {
+      fontSize: '11px',
+    },
+    celdaColorida: { backgroundColor: '#44556f' }, // Puedes cambiar el color aquí
+    textoBlanco: { color: '#ffffff', fontSize: '12px', }, // Color blanco
+
+    boldText: {
+      fontWeight: 'bold',
+      fontSize: '12px',
+      justifyContent: 'center',
+    },
+    table: {
+      display: "table",
+      width: "auto",
+      borderStyle: "solid",
+      borderWidth: 1,
+      borderRightWidth: 0,
+      borderBottomWidth: 0
+    },
+    tableRow: {
+      margin: "auto",
+      flexDirection: "row"
+    },
+    tableCol: {
+
+      width: "25%",
+      borderStyle: "solid",
+      borderWidth: 1,
+      borderLeftWidth: 0,
+      borderTopWidth: 0
+    },
+    tableCell: {
+
+      margin: "auto",
+      marginTop: 5,
+      fontSize: 10,
+      fontWeight: 'bold'
+    },
+    content: {
+      flexGrow: 1,
+    },
+    footer: {
+      textAlign: 'center',
+      fontSize: 10,
+      marginTop: 10,
+    },
+    line: {
+      borderBottom: '1px solid black',
+      width: '100%',
+    },
+    watermark: {
+      position: 'absolute',
+      top: 500,
+      left: 180,
+      opacity: 0.3, // Ajusta la opacidad según tus preferencias
+      transform: 'rotate(-30deg)', // Rotación de la marca de agua
+      fontSize: 60,
+      color: 'gray', // Color de la marca de agua
+    },
+    rectangulo:
+    {
+      justifyContent: 'center',
+      alignItems: 'center',
+      width: 200,
+      height: 100,
+      backgroundColor: 'lightblue',
+      border: '2px solid navy',
+      borderRadius: 10
+    },
+
+  });
+  const getCurrentDateTime = () => {
+    const currentDateTime = new Date();
+    return currentDateTime.toLocaleString();
+  };
+
+  const generarQr = () => {
+    const serializer = new XMLSerializer();
+    const svgStr = serializer.serializeToString(qrUrl.current);
+    const img_src = 'data:image/png+xml;base64,' + window.btoa(svgStr);
+    // const img_src = 'data:image/svg+xml;base64,' + window.btoa(svgStr);
+    // img_src.toDataURL('image/jpg', 0.3);
+    setImageqr(img_src);
+    // svg.parentNode.removeChild(svg);
+  };
 
 
 
-                        </Page>
-                    </Document>
-                </PDFViewer>
-            </Modal>
-        </>
-    )
+  const qrCodeCanvas = document.getElementById('prueba_image');
+  // const qrCodeDataUri = qrCodeCanvas.toDataURL('image/jpg', 0.3);
+
+
+  // const prueba = document.getElementById('prueba_image')
+  // console.log(prueba)
+
+  return (
+    <>
+      {/* {imageqr != ''
+        ? <img src={imageqr} id='prueba_image' />
+        : null
+      } */}
+      <div className='d-none' >
+        <QRCode
+          size={256}
+          style={{ height: "auto", maxWidth: "100%", width: "100%" }}
+          ref={qrUrl}
+          value='hola'
+          viewBox={`0 0 256 256`}
+          id='qr_canvas'
+        />
+      </div>
+      <Modal isOpen={modal} closeModal={close}>
+        <PDFViewer style={styles.main}>
+          <Document>
+            <Page size="letter" style={styles.body}>
+
+              <View style={styles.contenedor_logo}>
+                {/* {imageqr != ''
+                  ? <Image style={styles.logo} src={imageqr} />
+                  : null
+                } */}
+
+                <Image style={styles.logo} src={logo} />
+              </View>
+
+              <View style={styles.rectangulo}>
+              </View>
+              {/* la tabla desde este lugar */}
+
+              <View style={styles.table}>
+                {/* fila 1 */}
+                <View style={styles.tableRow}>
+                  <View style={{ ...styles.tableCol, ...styles.celdaColorida }}>
+                    <Text style={{ ...styles.tableCell, ...styles.textoBlanco }}>NÚMERO CORRELATIVO</Text>
+                  </View>
+                  <View style={{ ...styles.tableCol, ...styles.celdaColorida }}>
+                    <Text style={{ ...styles.tableCell, ...styles.textoBlanco }}>NOMBRE</Text>
+                  </View>
+                  <View style={{ ...styles.tableCol, ...styles.celdaColorida }}>
+                    <Text style={{ ...styles.tableCell, ...styles.textoBlanco }}>SIGLA</Text>
+                  </View>
+                  <View style={{ ...styles.tableCol, ...styles.celdaColorida }}>
+                    <Text style={{ ...styles.tableCell, ...styles.textoBlanco }}>NATURALEZA</Text>
+                  </View>
+                </View>
+                {/* fila 2 */}
+                <View style={styles.tableRow}>
+                  <View style={styles.tableCol}>
+                    <Text style={styles.tableCell}>{registro.nro_certificado}</Text>
+                  </View>
+                  <View style={styles.tableCol}>
+                    <Text style={styles.tableCell}> {registro.entidad}</Text>
+                  </View>
+                  <View style={styles.tableCol}>
+                    <Text style={styles.tableCell}>{registro.sigla}</Text>
+                  </View>
+                  <View style={styles.tableCol}>
+                    <Text style={styles.tableCell}>{registro.naturaleza}</Text>
+                  </View>
+                </View>
+              </View>
+              {/* final de la tabla */}
+              {/* la tabla desde este lugar */}
+
+              <View style={styles.table}>
+                {/* fila 1 */}
+                <View style={styles.tableRow}>
+                  <View style={{ ...styles.tableCol, ...styles.celdaColorida }}>
+                    <Text style={{ ...styles.tableCell, ...styles.textoBlanco }}>SOLICITANTE</Text>
+                  </View>
+                  <View style={{ ...styles.tableCol, ...styles.celdaColorida }}>
+                    <Text style={{ ...styles.tableCell, ...styles.textoBlanco }}>CI</Text>
+                  </View>
+                  <View style={{ ...styles.tableCol, ...styles.celdaColorida }}>
+                    <Text style={{ ...styles.tableCell, ...styles.textoBlanco }}>CELULAR</Text>
+                  </View>
+                  <View style={{ ...styles.tableCol, ...styles.celdaColorida }}>
+                    <Text style={{ ...styles.tableCell, ...styles.textoBlanco }}>CORREO</Text>
+                  </View>
+                </View>
+                {/* fila 2 */}
+                <View style={styles.tableRow}>
+                  <View style={styles.tableCol}>
+                    <Text style={styles.tableCell}>{registro.representante}</Text>
+                  </View>
+                  <View style={styles.tableCol}>
+                    <Text style={styles.tableCell}> {registro.ci_rep}</Text>
+                  </View>
+                  <View style={styles.tableCol}>
+                    <Text style={styles.tableCell}>{registro.telefono}</Text>
+                  </View>
+                  <View style={styles.tableCol}>
+                    <Text style={styles.tableCell}>{registro.correo}</Text>
+                  </View>
+                </View>
+              </View>
+              {/* final de la tabla */}
+
+
+              <View style={styles.content}>
+                {/* Contenido de tu documento */}
+                <Text style={styles.dato}>{"\n"}El contenido de este documento esta extraido del sistema SIREPEJU(Sistema de Registro de Personalidades Juroidícas).</Text>
+
+                <Text style={styles.dato}>{"\n"}{"\n"}{"\n"}Fecha y Hora de Impresión: {"\n"}{getCurrentDateTime()}</Text>
+              </View>
+              <View style={styles.watermark}>
+                <Text>SIREPEJU</Text>
+              </View>
+              <View style={styles.footer}>
+                {/* Línea en el pie de página */}
+                <View style={styles.line}></View>
+                <Text>Casa Grande del Pueblo,calle Ayacucho - esq.Potosí,Tel:(591-2)2184178 {"\n"}La Paz -Bolivia {"\n"}{"\n"}Pagína{1}</Text>
+              </View>
+
+
+
+            </Page>
+          </Document>
+        </PDFViewer>
+      </Modal>
+    </>
+  )
 }
 
 export default RepSolicitud
