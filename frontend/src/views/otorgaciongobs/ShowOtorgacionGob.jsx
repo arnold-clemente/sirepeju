@@ -51,6 +51,7 @@ const ShowOtorgacionGob = ({ registro, modal, close }) => {
       const otorgacionResp = response.otorgacion;
       const fundadoresResp = response.fundadores;
       setOtorgacion({ ...otorgacion, ...otorgacionResp });
+      //console.log(otorgacion);
       setFundadores(fundadoresResp);
       setCargando(false);
     },
@@ -74,23 +75,40 @@ const ShowOtorgacionGob = ({ registro, modal, close }) => {
               </button>
             </div>
             <div className='container-fluid'>
-              <h2 className='fs-6 text-center text-uppercase'>{otorgacion.nombre_persona_colectiva}</h2><div className='d-flex align-items-center'>
-                <h2 className='text-center font-weight-bold fs-6'><b>Sigla:</b>&emsp;{otorgacion.sigla}</h2>&emsp;&emsp;&emsp;
-                <h2 className='text-center font-weight-bold fs-6'><b>Resolución Administrativa Departamental:</b>&emsp;aqui un número</h2>
-  
+              <div className="card m-2">
+                <div className="card-header text-white" >
+                  <h5 className='fw-bold text-center'>{otorgacion.nombre_persona_colectiva}</h5>
+                </div>
+                <div className="card-body">
+                  <div className="row">
+                    <div className="col-md-5 fw-bold">
+                    Sigla:
+                    </div>
+                    <div className="col-md-7">
+                    {otorgacion.sigla}
+                    </div>
+                    <div className="col-md-5 fw-bold">
+                    Resolución Administrativa Departamental:
+                    </div>
+                    <div className="col-md-7">
+                   Aqui un número
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
 
             {fundadores.length > 0
               ? <div>
-                <h2 className="fs-6"><b><center>Miembros Fundadores:</center></b>
-                  <center>
-                    <div className='d-flex'>
+                    <div className='card mx-3'>
                       <table className='table'>
                         <thead>
                           <tr>
+                            <th colSpan={2} className='bg-primary text-white text-center'>Miembros Fundadores</th>
+                          </tr>
+                          <tr>
                             <th className='col'><mark>Nombres</mark></th>
-                            <th className='col'><mark>Cedula de Identidad</mark></th>
+                            <th className='col'><mark>Cédula de Identidad</mark></th>
                           </tr>
                         </thead>
                         <tbody className="table-group-divider">
@@ -107,8 +125,6 @@ const ShowOtorgacionGob = ({ registro, modal, close }) => {
                         </tbody>
                       </table>
                     </div>
-                  </center>
-                </h2>
               </div>
               : null
             }

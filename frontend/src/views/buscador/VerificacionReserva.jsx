@@ -56,17 +56,27 @@ const VerificacionReserva = ({ registro, modal, close }) => {
                 {cargando
                     ? <Spiner />
                     : <>
-                        <div className='d-flex justify-content-center'>
-                            <span className={color_reserva[reserva.estado] + ' white_modal estados_rounded'}>{estadoReserva[reserva.estado]}</span>
+                        <div className="card m-2">
+                            <div className="card-header bg-success">
+                                <h5 className='fw-bold text-center text-white'> {estadoReserva[reserva.estado]}</h5>
+                            </div>
+                            <div className="card-body">
+                                <div className="row">
+                                    <div className="col-md-4 fw-bold my-1">Entidad:</div>
+                                    <div className="col-md-8 my-1">{reserva.entidad}</div>
+                                    <div className="col-md-4 fw-bold my-1">Sigla:</div>
+                                    <div className="col-md-8 my-1">{reserva.sigla}</div>
+                                    <div className="col-md-4 fw-bold my-1">Representante Legal:</div>
+                                    <div className="col-md-8 my-1">{reserva.representante}</div>
+                                    <div className="col-md-4 fw-bold my-1">Nº Correlativo:</div>
+                                    <div className="col-md-8 my-1">{reserva.nro_certificado}</div>
+                                    <div className="col-md-4 fw-bold my-1">Naturaleza:</div>
+                                    <div className="col-md-8 my-1">{reserva.naturaleza}</div>
+                                </div>
+                            </div>
                         </div>
-                        <div className="container-fluid">
-                            <h2 className="fs-6"><b>Entidad:</b>&nbsp;&nbsp;{reserva.entidad}</h2> <hr />
-                            <h2 className="fs-6"><b>Sigla:</b>&nbsp;&nbsp;{reserva.sigla}</h2> <hr />
-                            <h2 className="fs-6"><b>Representante legal:</b>&nbsp;&nbsp; {reserva.representante}<b>&nbsp;&nbsp;&nbsp;CI:</b>9999</h2> <hr />
-                            <h2 className="fs-6"><b>Nº Correlativo:</b> &nbsp;&nbsp;{reserva.nro_certificado}</h2><hr />
-                            <h2 className="fs-6"><b>Naturaleza:</b> &nbsp;&nbsp;{reserva.naturaleza}</h2>
-                        </div>
-                        <hr />
+
+
                         <div className='d-flex'>
                             <button className="btn btn-secondary" title="cerrar" onClick={close}>cerrar</button>
                         </div>

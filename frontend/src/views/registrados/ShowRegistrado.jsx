@@ -17,9 +17,28 @@ const ShowRegistrado = ({ registro, modal, close }) => {
                     </button>
                 </div>
                 <RepRegistrado registro={registro} modal={imprimir} close={closeImprimir} />
-                <div className="modal-dialog modal-lg">
-                    <h2 className="fs-6"><b>Entidad:</b>&nbsp;&nbsp;{registro.personalidad_juridica}</h2> <hr />
-                    <h2 className="fs-6"><b>Sigla:</b>&nbsp;&nbsp;{registro.sigla}<hr /></h2> <hr />
+                <div className="modal-dialog">
+                    <div className="card m-2">
+                        <div className="card-header">
+                            <h5 className='fw-bold'>Datos de la Entidad</h5>
+                        </div>
+                        <div className="card-body">
+                            <div className="row">
+                                <div className="col-md-4 my-1 fw-bold">
+                                    Entidad
+                                </div>
+                                <div className="col-md-8 my-1">
+                                    {registro.personalidad_juridica}
+                                </div>
+                                <div className="col-md-4 my-1 fw-bold">
+                                    Sigla
+                                </div>
+                                <div className="col-md-8 my-1">
+                                    {registro.sigla}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <hr />
                 <div className='d-flex'>

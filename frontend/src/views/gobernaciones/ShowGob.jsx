@@ -8,21 +8,33 @@ const ShowGob = ({ modal, close, registro }) => {
 
     return (
         <>
-            <ModalDiv isOpen={modal} closeModal={close} title={'Datos del responsable Departamental'}>
+            <ModalDiv isOpen={modal} closeModal={close} title={'Datos del Responsable Departamental'}>
                 <RepGob registro={registro} modal={imprimir} close={closeImprimir} />
                 <div className="container-fluid">
-                    <h5><center>{registro.institucion}</center></h5>
+                    <h5><center></center></h5>
                     <div className='container-fluid d-flex justify-content-end'>
                         <button onClick={openImprimir} className='button_print_show'>
                             <i className="fa-solid fa-print"></i>
                             <span>Imprimir reporte </span>
                         </button>
                     </div>
-                    <h2 className="fs-6"><b>Responsable Departamental:</b>&nbsp;&nbsp;{registro.nombres + ' ' + registro.paterno + ' ' + registro.materno} </h2><hr />
-                    <h2 className="fs-6"><b>Cargo Departamental: </b>{registro.cargo}</h2> <hr />
-
-                    <h2 className="fs-6"><b>Cédula de Indentidad: </b>{registro.ci + ' ' + registro.ext_ci}</h2> <hr />
-                    <h2 className="fs-6"><b>Correo Institucional: </b> {registro.email} &nbsp;&nbsp;</h2>
+                    <div className="card m-2">
+                        <div className="card-header">
+                            <h5 className="fw-bold text-center">{registro.institucion}</h5>
+                        </div>
+                        <div className="card-body">
+                             <div className="row">
+                                <div className="col-md-4 my-1 fw-bold">Responsable Departamental:</div>
+                                <div className="col-md-8 my-1 ">{registro.nombres + ' ' + registro.paterno + ' ' + registro.materno}</div>
+                                <div className="col-md-4 my-1 fw-bold">Cargo Departamental:</div>
+                                <div className="col-md-8 my-1">{registro.cargo}</div>
+                                <div className="col-md-4 my-1 fw-bold">Cédula de Identidad:</div>
+                                <div className="col-md-8 my-1">{registro.ci + ' ' + registro.ext_ci}</div>
+                                <div className="col-md-4 my-1 fw-bold">Correo Institucional:</div>
+                                <div className="col-md-8 my-1">{registro.email}</div>
+                             </div>
+                        </div>
+                    </div>
                 </div>
                 <hr />
                 <div className='d-flex'>
