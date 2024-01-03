@@ -2,7 +2,7 @@ import React from 'react'
 import Modal from '../../../components/ModalPdf'
 import { PDFViewer, Document, Page } from '@react-pdf/renderer'
 import { Text, View, StyleSheet, Image } from '@react-pdf/renderer'
-import logo from '../../../images/logovic.jpg'
+import logo from '../../../images/qr.png'
 //generador de qr
 import QRCode from 'react-qr-code'
 
@@ -77,7 +77,7 @@ const RepReservados = ({ registro, modal, close }) => {
             fontSize: 16,
           },
           parrafo: {
-            textAlign: 'center',
+            
             fontSize: '14px',
             marginBottom: '30px',
             marginTop:'10px',
@@ -92,16 +92,16 @@ const RepReservados = ({ registro, modal, close }) => {
             
         },
         letra: {
-            textAlign: 'center',
+            textAlign: 'justify',
             fontSize: '9px',
             marginBottom: '30px',
             marginTop:'10px',
-            textAlign: 'justify',            
+                      
         },
         correlativo: {
             textAlign: 'rigth',
             fontSize: '9px', 
-            textAlign: 'justify',            
+                     
         },
         fecha_impre:
         {
@@ -109,7 +109,12 @@ const RepReservados = ({ registro, modal, close }) => {
             fontSize: '9px',
             marginBottom: '30px',
             marginTop:'10px',
-            textAlign: 'justify',            
+                      
+        },
+        logo: {
+            width: '60px',
+            marginBottom: '2px',
+            marginTop:'10px',
         },
 
     });
@@ -119,7 +124,7 @@ const RepReservados = ({ registro, modal, close }) => {
         <>
                
             <Modal isOpen={modal} closeModal={close}>
-            <QRCode value='pamela_paola' size={90}/>
+            {/* <QRCode value='pamela_paola' size={90}/> */}
                 <PDFViewer style={styles.main}>
               
                     <Document>
@@ -152,10 +157,14 @@ const RepReservados = ({ registro, modal, close }) => {
                             el artìculo 9 del decreto supremo N°1597, vigente a travès del Decreto Supremo N°4635 de 08
                             de diciembre de 2021.</Text>
                             </View>
-                            <View><Text styles={styles.correlativo}>{`La Paz, ${formattedDate}`}</Text>
+                            <View>
+                            <View style={styles.contenedor_logo}>
+                                <Image style={styles.logo} src={logo} />
+                            </View>
                             <Text style={styles.correlativo}>Número Correlativo{registro.nro_certificado}</Text>
                             <Text style={styles.correlativo}>AHRG/rif</Text>
                             </View>
+                            
                             
                         </Page>
                     </Document>

@@ -41,7 +41,7 @@ const AdecuacionAlfanumerico = ({ registro, modal, close }) => {
         },
         tipo: {
             fontSize: '12px',
-            fontWeight: 700,
+           
             marginBottom: '8px',
             fontWeight: 'bold',
             textDecoration: 'underline',

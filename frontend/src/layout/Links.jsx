@@ -45,19 +45,19 @@ export const links = [
             {
                 path: '/reserva/homonimias',
                 icon: 'fa-solid fa-ban',
-                texto: 'Reserva Homonimia',
+                texto: 'Observados',
                 permission: 'reservas.homonimias',
             },
             {
                 path: '/reserva/reservados',
                 icon: 'fa-regular fa-square-check',
-                texto: 'Reservados',
+                texto: 'Reserva y Verificación de nombre',
                 permission: 'reservas.reservados',
             },
             {
                 path: '/reserva/caducados',
                 icon: 'fa-solid fa-hourglass',
-                texto: 'Caducados Pame',
+                texto: 'Dados de Baja',
                 permission: 'reservas.caducados',
             },
         ],

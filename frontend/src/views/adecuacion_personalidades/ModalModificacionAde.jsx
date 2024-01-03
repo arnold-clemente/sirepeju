@@ -87,7 +87,7 @@ const ModalModificacionAde = ({ registro, handleInputChange, modal, open, close 
       return (
         <>
           {loading === true ? <Loading /> : ''}
-          <ModalDiv isOpen={modal} closeModal={close} title={'MODIFICACIÓN OTORGACION'}>
+          <ModalDiv isOpen={modal} closeModal={close} title={'MODIFICACIÓN ADECUACIÓN'}>
             <form onSubmit={handleGuardar} className='container-fluid' >
               <div className='row mt-1'>
                 <div className='col-sm-5 px-0'>
@@ -108,7 +108,7 @@ const ModalModificacionAde = ({ registro, handleInputChange, modal, open, close 
                 <div className='col-sm-7 px-0'>
                   <div className="input-group mb-3">
                     <div className="input-group-prepend">
-                      <span className="input-group-text" id="basic-addon1">APN - </span>
+                      <span className="input-group-text" id="basic-addon1">MPJ - </span>
                     </div>
                     <input type="text" className='form-control' placeholder='Codigo de modificación'
                       name='codigo_modificacion' value={codigo_modificacion} onChange={handleInputChange} />
