@@ -28,39 +28,22 @@ const RepReservados = ({ registro, modal, close }) => {
         body: {
             width: "100%",
             height: "100%",
-            paddingTop: "2.5cm",
-            paddingBottom: "2.5cm",
-            paddingRight: "2.5cm",
-            paddingLeft: "3cm",
+            paddingTop: "2cm",
+            paddingBottom: "2cm",
+            paddingRight: "2cm",
+            paddingLeft: "2cm",
         },
-        contenedor: {
-            width: '100%',
-            marginBottom: '1cm'
-        },
-        contenedor_logo: {
-            width: '100%',
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'center',
-        },
-        contenedor_fecha: {
-            width: '100%',
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'flex-end',
-        },
-        fecha: {
-            fontSize: '14px',
-            fontWeight: 700,
-            paddingBottom: '20px'
-        },
-        logo: {
-            width: '200px',
-            marginBottom: '20px',
-        },
+       
+        
+       
         title: {
+            
             textAlign: 'center',
-            fontSize: '16px',
+            fontSize: '20px',
+            marginBottom: '30px',
+            marginTop:'70px',
+            fontStyle: 'italic', 
+            fontWeight: 700,
         },
         lista: {
             display: 'flex',
@@ -75,11 +58,63 @@ const RepReservados = ({ registro, modal, close }) => {
             paddingRight: '5px',
         },
         dato: {
-            fontSize: '12px',
+            fontSize: '14px',
+        },
+        rectangle: {
+            width: 500,
+            height: 30,
+            backgroundColor: '#F5F5F5',
+            border: '1px solid #0000000',
+            justifyContent: 'center',
+            alignItems: 'center',
+          },
+          text: {
+            color: 'blue',
+            fontSize: 11,
+          },
+          customFont: {
+            fontFamily: 'Arial, sans-serif', // Puedes cambiar "Arial" al tipo de letra que desees
+            fontSize: 16,
+          },
+          parrafo: {
+            textAlign: 'center',
+            fontSize: '14px',
+            marginBottom: '30px',
+            marginTop:'10px',
+            textAlign: 'justify',
+            
+        },
+        certificado: {
+            textAlign: 'center',
+            fontSize: '18px',
+            marginBottom: '20px',
+            
+            
+        },
+        letra: {
+            textAlign: 'center',
+            fontSize: '9px',
+            marginBottom: '30px',
+            marginTop:'10px',
+            textAlign: 'justify',            
+        },
+        correlativo: {
+            textAlign: 'rigth',
+            fontSize: '9px', 
+            textAlign: 'justify',            
+        },
+        fecha_impre:
+        {
+            textAlign: 'center',
+            fontSize: '9px',
+            marginBottom: '30px',
+            marginTop:'10px',
+            textAlign: 'justify',            
         },
 
     });
-
+    const currentDate = new Date();
+    const formattedDate = currentDate.toLocaleString();
     return (
         <>
                
@@ -91,19 +126,37 @@ const RepReservados = ({ registro, modal, close }) => {
                     
                         <Page size="letter" style={styles.body}>
                         
-                            <View style={styles.contenedor_logo}>
-                                <Image style={styles.logo} src={logo} />
-                            </View>
-                            <View style={styles.contenedor_fecha}>
-                                <Text style={styles.fecha}>{fecha_esp}</Text>
-                            </View>
+                            
+                            
                             <View style={styles.contenedor}>
-                                <Text style={styles.title}>{registro.entidad}</Text>
+                                <Text style={styles.title}>MINISTERIO DE LA PRESIDENCIA {"\n"}VICEMINISTERIO DE AUTONOMÍAS</Text>
                             </View>
+                           
+                           <Text style={styles.parrafo}>El Viceministerio de Autonomìas del Ministerio de la Presidencia con las atribuciones conferidas
+            por el Artìculo 25 de Decreto Supremo Nº 4857 de 06 de enero de 2023 Otorga el Presente,</Text>
+                            <View style={styles.contenedor}>
+                                <Text style={styles.certificado}>CERTIFICADO DE RESERVA DE NOMBRE{"\n"} a favor de la </Text>
+                            </View>
+                            <View style={styles.section}>
+                            <View style={styles.rectangle}>
+                            <Text style={styles.dato}>{registro.entidad}</Text>
+                            </View>
+                        </View>
+                        <Text style={styles.parrafo}>Al haberse verificado la inexistecia de la duplicidad de nombre en la Base de Datos del Viceministerio de Autonomìas y las remitidas por las entidades competentes, otorgàndole prelaciòn respecto a solicitudes posteriores, excepto de terceros que aleguen o justifiquen mejor derecho.</Text>
                             <View style={styles.lista}>
-                                <Text style={styles.tipo}>Siglapara:</Text>
-                                <Text style={styles.dato}>{registro.sigla}</Text>
+                                <Text style={styles.letra}>Consiguientemente, el (la){registro.entidad} ENTIDAD SIN FINES DE
+                                LUCRO tiene el plazo de SESENTA (60) dìas habiles para iniciar
+                            el tràmite de otorgación de personalidad jurídica,computables desde la fecha de emision
+                            del presente certificado, caso contrario, este documento carecerá de validez legal
+                            procedìendose a la eliminación de la reserva de nombre del sistema, conforme lo dispuesto por
+                            el artìculo 9 del decreto supremo N°1597, vigente a travès del Decreto Supremo N°4635 de 08
+                            de diciembre de 2021.</Text>
                             </View>
+                            <View><Text styles={styles.correlativo}>{`La Paz, ${formattedDate}`}</Text>
+                            <Text style={styles.correlativo}>Número Correlativo{registro.nro_certificado}</Text>
+                            <Text style={styles.correlativo}>AHRG/rif</Text>
+                            </View>
+                            
                         </Page>
                     </Document>
                 </PDFViewer>

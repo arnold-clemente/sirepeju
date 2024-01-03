@@ -151,16 +151,7 @@ const RepSolicitud = ({ registro, modal, close }) => {
             fontSize: 60,
             color: 'gray', // Color de la marca de agua
           },
-          rectangulo: 
-          {
-            justifyContent: 'center', 
-            alignItems: 'center',
-             width: 200, 
-            height: 100, 
-            backgroundColor: 'lightblue', 
-            border: '2px solid navy', 
-            borderRadius: 10 
-          },
+          
           
     });
     const getCurrentDateTime = () => {
@@ -178,8 +169,7 @@ const RepSolicitud = ({ registro, modal, close }) => {
                             <Image style={styles.logo} src={logo} />
                             </View>
                       
-                        <View style={style.rectangulo}> 
-                        </View>    
+                         
         {/* la tabla desde este lugar */}
         
         <View style={styles.table}>
