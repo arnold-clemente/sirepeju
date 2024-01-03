@@ -3,6 +3,7 @@
 use App\Http\Controllers\reportes\ReservaNombreController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PamelaVista;
+use Illuminate\Support\Facades\Artisan;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,3 +30,7 @@ Route::get('/', function () {
 Route::get('/homonimia', [PamelaVista::class, 'homonimia']);
 
 Route::get('/reserva', [PamelaVista::class, 'reserva']);
+
+Route::get('/link', function (){
+    Artisan::call('storage:link');
+ });

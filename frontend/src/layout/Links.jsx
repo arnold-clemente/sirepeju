@@ -57,7 +57,7 @@ export const links = [
             {
                 path: '/reserva/caducados',
                 icon: 'fa-solid fa-hourglass',
-                texto: 'Caducados',
+                texto: 'Caducados Pame',
                 permission: 'reservas.caducados',
             },
         ],

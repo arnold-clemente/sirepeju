@@ -9,18 +9,17 @@ const ShowAdm = ({ modal, close, registro }) => {
     return (
         <>
             <ModalDiv isOpen={modal} closeModal={close} title={'LISTA DEL PERSONAL ADMINISTRATIVO UPJ - VA'}>
-
-
                 <div className='container-fluid d-flex justify-content-end'>
                     <button onClick={openImprimir} className='button_print_show'>
                         <i className="fa-solid fa-print"></i>
                         <span>Imprimir Reporte</span>
                     </button>
                 </div>
-
-
                 <RepAdm registro={registro} modal={imprimir} close={closeImprimir} />
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6322fd86b51c0d06240effe9199d176cb52a6142
                 <div className="modal-dialog">
                     <div className="card m-2">
                         <div className="card-header">
@@ -62,12 +61,14 @@ const ShowAdm = ({ modal, close, registro }) => {
                             <div className="col-md-8 my-1 text-uppercase">
                             {registro.usuario}
                             </div>
-
                            </div>
                         </div>
+<<<<<<< HEAD
                     </div> 
+=======
+                    </div>               
+>>>>>>> 6322fd86b51c0d06240effe9199d176cb52a6142
                 </div>
-
                 <div className='d-flex'>
                     <button className="btn btn-secondary" onClick={close}>cerrar</button>
                 </div>
