@@ -81,17 +81,40 @@ const VerificacionOtorgacion = ({ registro, modal, close }) => {
                 {cargando
                     ? <Spiner />
                     : <>
-                        <div className='d-flex justify-content-center'>
-                            <span className={color_otorgacion[otorgacion.estado] + ' white_modal estados_rounded'}>{estadoOtorgacion[otorgacion.estado]}</span>
+                        <div className="card m-2">
+                            <div className="card-header bg-success text-center text-white fw-bold">
+                                {estadoOtorgacion[otorgacion.estado]}
+                            </div>
+                            <div className="card-body">
+                                <div className="row border-bottom">
+                                    <div className="col-md-12">
+                                        <h5 className='fw-bold text-center'>{otorgacion.personalidad_juridica}</h5>
+                                    </div>
+                                </div>
+                                <div className="row border-bottom">
+                                    <div className="col-md-3 my-1 fw-bold">Código:</div>
+                                    <div className='col-md-3 my-1'>{otorgacion.codigo_otorgacion}</div>
+                                    <div className="col-md-3 my-1 fw-bold">Naturaleza:</div>
+                                    <div className="col-md-3 my-1">{otorgacion.naturaleza}</div>
+                                </div>
+                                <div className="row border-bottom">
+                                    <div className="col-md-3 my-1 fw-bold">Tipo de Persona Colectiva:</div>
+                                    <div className='col-md-3 my-1'>{otorgacion.codigo_otorgacion}</div>
+                                    <div className="col-md-3 my-1 fw-bold">Sigla:</div>
+                                    <div className="col-md-3 my-1">{otorgacion.sigla}</div>
+                                </div>
+                                <div className="row border-bottom">
+                                    <div className="col-md-3 my-1 fw-bold">Domicilio Legal:</div>
+                                    <div className='col-md-9 my-1'>{otorgacion.domicilio_legal}</div>
+                                </div>
+                                <div className="row">
+                                    <div className="col-md-2 my-1 fw-bold">Objeto:</div>
+                                    <div className='col-md-10 my-1'>{otorgacion.objeto}</div>
+                                </div>
+                            </div>
                         </div>
-                        <div className="container-fluid">
-                            <h2 className='text-center fs-4'>{otorgacion.personalidad_juridica} </h2>
-                            <h2 className="fs-6"><b>Codigo: </b>{otorgacion.codigo_otorgacion} &emsp;&emsp;&emsp; <b>Naturaleza:</b> {otorgacion.naturaleza}</h2> <hr />
-                            <h2 className="fs-6"><b>Tipo de persona colectiva:</b>&nbsp;&nbsp;{otorgacion.persona_colectiva} &emsp;&emsp;&emsp;<b>Sigla:</b>&nbsp;&nbsp; {otorgacion.sigla}</h2> <hr />
-                            <h2 className="fs-6"><b>Domicilio Legal: </b>{otorgacion.domicilio_legal}</h2> <hr />
-                            <h2><b>Objeto:</b> <p><>{otorgacion.objeto}</></p></h2><hr />
-
-
+                        
+                        <div className="card mx-2">
                             {otorgacion.estado == 0
                                 ? (<div className='container-fluid '>
                                     <div className='row'>
@@ -128,14 +151,17 @@ const VerificacionOtorgacion = ({ registro, modal, close }) => {
 
                             {fundadores.length > 0
                                 ? <div>
-                                    <h2 className="fs-6"><b>Miembros Fundadores:</b>
-                                        <center>
                                             <div className='d-flex'>
                                                 <table className='table'>
                                                     <thead>
                                                         <tr>
+                                                            <th colSpan={2} className='bg-primary text-white text-center'>
+                                                             Miembros Fundadores
+                                                            </th>
+                                                        </tr>
+                                                        <tr>
                                                             <th className='col'>Nombres</th>
-                                                            <th className='col'>Cedula Indentidad</th>
+                                                            <th className='col'>Cédula Identidad</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody className="table-group-divider">
@@ -151,8 +177,7 @@ const VerificacionOtorgacion = ({ registro, modal, close }) => {
                                                     </tbody>
                                                 </table>
                                             </div>
-                                        </center>
-                                    </h2>
+                                    
                                 </div>
                                 : null
                             }

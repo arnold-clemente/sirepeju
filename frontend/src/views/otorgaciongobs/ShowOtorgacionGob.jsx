@@ -76,7 +76,7 @@ const ShowOtorgacionGob = ({ registro, modal, close }) => {
             </div>
             <div className='container-fluid'>
               <div className="card m-2">
-                <div className="card-header text-white" >
+                <div className="card-header text-white bg-primary" >
                   <h5 className='fw-bold text-center'>{otorgacion.nombre_persona_colectiva}</h5>
                 </div>
                 <div className="card-body">

@@ -63,27 +63,35 @@ const VerificacionGobernacion = ({ registro, modal, close }) => {
                 {cargando
                     ? <Spiner />
                     : <>
-                         <div className='d-flex justify-content-center'>
-                            <span className={color_default[otorgacion.estado] + ' white_modal estados_rounded'}>{estadoOtorgacionGobernacion[otorgacion.estado]}</span>
+                    <div className="card m-2">
+                        <div className="card-header bg-primary">
+                            <h5 className="fw-bold text-center text-white">{estadoOtorgacionGobernacion[otorgacion.estado]}</h5>
                         </div>
-                        <div className='container-fluid'>
-                            <h2 className='fs-6 text-center text-uppercase'>{otorgacion.nombre_persona_colectiva}</h2><div className='d-flex align-items-center'>
-                                <h2 className='text-center font-weight-bold fs-6'><b>Sigla:</b>&emsp;{otorgacion.sigla}</h2>&emsp;&emsp;&emsp;
-                                <h2 className='text-center font-weight-bold fs-6'><b>Resolución Administrativa Departamental:</b>&emsp;aqui un número</h2>
-
+                        <div className="card-body">
+                            <div className="row border-bottom">
+                                <h5 className='fw-bold text-center'>{otorgacion.nombre_persona_colectiva}</h5>
+                            </div>
+                            <div className="row">
+                                <div className="col-md-2 fw-bold">Sigla:</div>
+                                <div className="col-md-2">{otorgacion.sigla}</div>
+                                <div className="col-md-4 fw-bold">Resolución Administrativa Departamental:</div>
+                                <div className="col-md-4">aqui un numero</div>
                             </div>
                         </div>
-
+                    </div>
                         {fundadores.length > 0
                             ? <div>
-                                <h2 className="fs-6"><b><center>Miembros Fundadores:</center></b>
-                                    <center>
-                                        <div className='d-flex'>
+                                        <div className='card mx-2'>
                                             <table className='table'>
                                                 <thead>
                                                     <tr>
-                                                        <th className='col'><mark>Nombres</mark></th>
-                                                        <th className='col'><mark>Cedula de Identidad</mark></th>
+                                                        <td colSpan={2} className='bg-success'>
+                                                            <h5 className='fw-bold text-white text-center' >Miembros Fundadores</h5>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th className='col'>Nombres</th>
+                                                        <th className='col'>Cédula de Identidad</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody className="table-group-divider">
@@ -100,8 +108,6 @@ const VerificacionGobernacion = ({ registro, modal, close }) => {
                                                 </tbody>
                                             </table>
                                         </div>
-                                    </center>
-                                </h2>
                             </div>
                             : null
                         }
