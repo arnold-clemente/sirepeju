@@ -1,25 +1,45 @@
 import React, { useEffect, useRef, useState } from 'react'
 import Modal from '../../../components/ModalPdf'
 import { PDFViewer, Document, Page } from '@react-pdf/renderer'
-import QRCode from "react-qr-code";
+import { Font } from '@react-pdf/renderer'
+// import QRCode from "react-qr-code";
+import { QRCode } from 'react-qrcode-logo';
 import { Text, View, StyleSheet, Image, Svg } from '@react-pdf/renderer'
 import logo from '../../../images/logovic.jpg'
+import qr_logo from '../../../images/qr_logo.png'
+
+import { fuentes } from '../../../estilos/Fonts';
 
 const RepSolicitud = ({ registro, modal, close }) => {
-
+  Font.register(fuentes);
   const qrUrl = useRef({})
   const [imageqr, setImageqr] = useState('')
 
-  // useEffect(() => {
-  //   if (qrUrl.current) {
-  //     generarQr();
-  //   }
-  // }, [qrUrl.current]);
+  useEffect(() => {
+    if (qrUrl.current) {
+      generarQr();
+    }
+  }, [qrUrl.current]);
 
 
 
   // estilos del pdf 
   const styles = StyleSheet.create({
+    // empiezo  prueba 
+    contenedor_logo_qr: {
+      width: '150px',
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'flex-start',
+    },
+    prueba: {
+      fontFamily: 'Oswald',
+      fontSize: '14px',
+      fontWeight: 'bold',
+      paddingRight: '5px',
+    },
+
+    // fin prueba 
     main: {
       width: "100%",
       height: "90vh",
@@ -54,6 +74,7 @@ const RepSolicitud = ({ registro, modal, close }) => {
       flexDirection: 'row',
       justifyContent: 'center',
     },
+
     contenedor_fecha: {
       width: '100%',
       display: 'flex',
@@ -168,20 +189,61 @@ const RepSolicitud = ({ registro, modal, close }) => {
     return currentDateTime.toLocaleString();
   };
 
-  // const generarQr = () => {
-  //   const serializer = new XMLSerializer();
-  //   const svgStr = serializer.serializeToString(qrUrl.current);
-  //   const img_src = 'data:image/svg+xml;base64,' + window.btoa(svgStr);
-  //   setImageqr(img_src);
-  // };
+  const generarQr = () => {
+    const serializer = new XMLSerializer();
+    // console.log(qrUrl.current.canvas.current)
+    const svgStr = serializer.serializeToString(qrUrl.current.canvas.current);
+    const prueba = qrUrl.current.canvas.current;
+    // prueba.toDataURL("image/jpeg");
+    // const img_src = 'data:image/canvas;base64,' + window.btoa(svgStr);
+    // const img_src = 'data:image/svg+xml;base64,' + window.btoa(svgStr);
+    setImageqr(prueba.toDataURL("image/jpeg"));
+  };
+
+
 
 
   // const qrCodeCanvas = document.getElementById('prueba_image');
+  // console.log(qrCodeCanvas)
   // const qrCodeDataUri = qrCodeCanvas.toDataURL('image/jpg', 0.3);
 
 
   return (
     <>
+      <div className='d-none'>
+        {/* esto configura el qr  */}
+        <QRCode value="https://github.com/gcoro/react-qrcode-logo"
+          logoImage={qr_logo}
+          logoWidth={120}
+          logoHeight={120}
+          logoPadding={1}
+          fgColor="#01273D"
+          removeQrCodeBehindLogo={false}
+          size={500}
+          // bgColor="#000"
+          logoOpacity={1}
+          qrStyle={'dots'}
+          logoPaddingStyle={'circle'}
+          eyeColor={[
+            {
+              outer: '#0277BD',
+              inner: '#0273B6'
+            },
+            {
+              outer: '#0277BD',
+              inner: '#0275B9'
+            },
+            {
+              outer: '#000B11',
+              inner: '#000203'
+            },
+
+          ]}
+          ref={qrUrl}
+          id='prueba_image'
+
+        />
+      </div>
       <Modal isOpen={modal} closeModal={close}>
         <PDFViewer style={styles.main}>
           <Document>
@@ -190,6 +252,11 @@ const RepSolicitud = ({ registro, modal, close }) => {
               <View style={styles.contenedor_logo}>
                 <Image style={styles.logo} src={logo} />
               </View>
+
+              <View style={styles.contenedor_logo}>
+                <Text style={styles.prueba}>PERSONALIDAD JURIDICA</Text>
+              </View>
+
 
 
               {/* la tabla desde este lugar */}
@@ -260,6 +327,12 @@ const RepSolicitud = ({ registro, modal, close }) => {
                     <Text style={styles.tableCell}>{registro.correo}</Text>
                   </View>
                 </View>
+              </View>
+              <View style={styles.contenedor_logo_qr}>
+                {imageqr != ''
+                  ? <Image style={styles.logo} src={imageqr} />
+                  : null
+                }
               </View>
               {/* final de la tabla */}
 
