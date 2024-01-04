@@ -91,8 +91,8 @@ const VerificacionGobernacion = ({ registro, modal, close }) => {
                                                         return (
                                                             <tr key={fundador.id}>
 
-                                                                <td><marker>{fundador.nombre_completo}</marker></td>
-                                                                <td><marker>{fundador.ci}</marker></td>
+                                                                <td><>{fundador.nombre_completo}</></td>
+                                                                <td><>{fundador.ci}</></td>
                                                             </tr>
                                                         )
                                                     })}

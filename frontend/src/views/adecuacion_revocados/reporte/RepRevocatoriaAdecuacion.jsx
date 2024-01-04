@@ -19,7 +19,7 @@ const RepRevocatoriaAdecuacion = ({ adecuacion, fundadores, personalidad, modal,
     const styles = StyleSheet.create({
         main: {
             width: "100%",
-            height: "76vh",
+            height: "90vh",
             boxSizing: "border-box",
         },
         page:{
@@ -43,7 +43,7 @@ const RepRevocatoriaAdecuacion = ({ adecuacion, fundadores, personalidad, modal,
         },
         contenedor: {
             width: '100%',
-            marginBottom: 'cm'
+            marginBottom: '1cm'
         },
         contenedor_logo: {
             width: '100%',

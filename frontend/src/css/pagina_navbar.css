@@ -1,0 +1,32 @@
+.layout_page {
+    width: 100%;
+}
+
+.pagina_nabvar {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.pagina_nabvar_menu {
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    background-color: #363F57;
+
+}
+
+
+/* probando */
+.trabajo_page {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    height: 50vh;
+
+}
+
+.trabajo_page img {
+    width: 320px;
+
+}

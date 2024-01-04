@@ -56,7 +56,7 @@ const EditReserva = () => {
                 queryClient.invalidateQueries('reservas')
                 show_alerta('Actualizado con exito', '<i class="fa-solid fa-check border_alert_green"></i>', 'alert_green')
                 setLoading(false);
-                go('/reservas')
+                go('/admin/reservas')
             } else {
                 show_alerta('Fallo de Validacion', '<i class="fa-solid fa-xmark border_alert_red"></i>', 'alert_red');
                 serErrorval(response.errors);
@@ -211,7 +211,7 @@ const EditReserva = () => {
                         ? <ValidationError text={errorval.obs} />
                         : ''}
                 </div>    
-                <Link to='/reservas' type="submit" className="btn btn-danger my-4">Cancelar</Link>
+                <Link to='/admin/reservas' type="submit" className="btn btn-danger my-4">Cancelar</Link>
                 <button type="submit" className="btn btn-primary my-4 mx-4">Actualizar</button>
             </form>
         </>

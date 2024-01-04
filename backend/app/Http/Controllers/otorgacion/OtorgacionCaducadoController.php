@@ -40,8 +40,9 @@ class OtorgacionCaducadoController extends Controller
     }
 
 
-    public function caducar(Otorgacion $otorgacion)
+    public function caducar(Request $request)
     {
+        $otorgacion = Otorgacion::find($request->id);
         $date = Carbon::now();
         $fecha = $date->format('Y-m-d');
         $user_auth = auth()->user();

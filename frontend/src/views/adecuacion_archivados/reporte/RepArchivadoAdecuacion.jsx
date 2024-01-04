@@ -44,7 +44,7 @@ const RepArchivadoAdecuacion = ({ adecuacion, fundadores, personalidad, modal, c
         },
         contenedor: {
             width: '100%',
-            marginBottom: 'cm'
+            marginBottom: '1cm'
         },
         contenedor_logo: {
             width: '100%',

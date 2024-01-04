@@ -29,7 +29,7 @@ const CreateGob = () => {
                 queryClient.invalidateQueries('gobernacions')
                 show_alerta('Creado con exito', '<i class="fa-solid fa-check border_alert_green"></i>', 'alert_green')
                 setLoading(false);
-                go('/gobernaciones')
+                go('/admin/gobernaciones')
             } else {
                 show_alerta('Fallo de Validacion', '<i class="fa-solid fa-xmark border_alert_red"></i>', 'alert_red');
                 serError(response.errors);
@@ -170,7 +170,7 @@ const CreateGob = () => {
                         </div>
                     </div>
                 </div>
-                <Link to='/gobernaciones' type="submit" className="btn btn-danger my-4">Cancelar</Link>
+                <Link to='/admin/gobernaciones' type="submit" className="btn btn-danger my-4">Cancelar</Link>
                 <button type="submit" className="btn btn-primary my-4 mx-4">Enviar</button>
             </form>
         </>

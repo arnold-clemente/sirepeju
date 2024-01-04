@@ -4,7 +4,7 @@ import { PDFViewer, Document, Page } from '@react-pdf/renderer'
 import { Text, View, StyleSheet, Image } from '@react-pdf/renderer'
 import logo from '../../../images/logovic.jpg'
 const SelectAdecuacionExtinguidas = ({ registro, modal, close }) => {
-   
+
 
     const styles = StyleSheet.create({
         main: {
@@ -33,7 +33,7 @@ const SelectAdecuacionExtinguidas = ({ registro, modal, close }) => {
         },
         contenedor: {
             width: '100%',
-            marginBottom: 'cm'
+            marginBottom: '1cm'
         },
         contenedor_logo: {
             width: '100%',
@@ -152,7 +152,7 @@ const SelectAdecuacionExtinguidas = ({ registro, modal, close }) => {
     const getCurrentDateTime = () => {
         const currentDateTime = new Date();
         return currentDateTime.toLocaleString();
-      };
+    };
     return (
         <>
             <Modal isOpen={modal} closeModal={close}>
@@ -160,66 +160,66 @@ const SelectAdecuacionExtinguidas = ({ registro, modal, close }) => {
                 <PDFViewer style={styles.main}>
                     <Document>
                         <Page size="letter" style={styles.body}>
-                        <View style={styles.contenedor_logo}>
-              <Image style={styles.logo} src={logo} />
-              </View>
-              <View style={styles.contenedor}>
-                <Text style={styles.title}>TRÁMITES CON PERSONALIDAD JURÍDICA EXTINGUIDA </Text>
-              </View>
-              <View style={styles.table}>
-    {/* fila 1 */}
-    <View style={styles.tableRow}> 
-        <View style={{ ...styles.tableCol, ...styles.celdaColorida}}> 
-        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>CÓDIGO</Text> 
-        </View>
-        <View style={{ ...styles.tableCol, ...styles.celdaColorida}}> 
-        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>NOMBRE DE PERSONA COLECTIVA</Text> 
-        </View>
-        <View style={{ ...styles.tableCol, ...styles.celdaColorida}}> 
-        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>SIGLA</Text> 
-        </View>
-        <View style={{ ...styles.tableCol, ...styles.celdaColorida}}> 
-        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>TIPO DE PERSONA COLECTIVA</Text> 
-        </View> 
-        </View> 
-        {/* fila 2 */}
-        {registro.length > 0
+                            <View style={styles.contenedor_logo}>
+                                <Image style={styles.logo} src={logo} />
+                            </View>
+                            <View style={styles.contenedor}>
+                                <Text style={styles.title}>TRÁMITES CON PERSONALIDAD JURÍDICA EXTINGUIDA </Text>
+                            </View>
+                            <View style={styles.table}>
+                                {/* fila 1 */}
+                                <View style={styles.tableRow}>
+                                    <View style={{ ...styles.tableCol, ...styles.celdaColorida }}>
+                                        <Text style={{ ...styles.tableCell, ...styles.textoBlanco }}>CÓDIGO</Text>
+                                    </View>
+                                    <View style={{ ...styles.tableCol, ...styles.celdaColorida }}>
+                                        <Text style={{ ...styles.tableCell, ...styles.textoBlanco }}>NOMBRE DE PERSONA COLECTIVA</Text>
+                                    </View>
+                                    <View style={{ ...styles.tableCol, ...styles.celdaColorida }}>
+                                        <Text style={{ ...styles.tableCell, ...styles.textoBlanco }}>SIGLA</Text>
+                                    </View>
+                                    <View style={{ ...styles.tableCol, ...styles.celdaColorida }}>
+                                        <Text style={{ ...styles.tableCell, ...styles.textoBlanco }}>TIPO DE PERSONA COLECTIVA</Text>
+                                    </View>
+                                </View>
+                                {/* fila 2 */}
+                                {registro.length > 0
                                     ? registro.map((row, index) => {
                                         return (
-                <View style={styles.tableRow}> 
-                <View style={styles.tableCol}> 
-                <Text style={styles.tableCell}>{row.codigo_adecuacion}</Text> 
-                </View> 
-                <View style={styles.tableCol}> 
-                <Text style={styles.tableCell}>{row.personalidad_juridica}</Text> 
-                </View> 
-                <View style={styles.tableCol}> 
-                <Text style={styles.tableCell}>{row.sigla}</Text> 
-                </View> 
-                <View style={styles.tableCol}> 
-                <Text style={styles.tableCell}>{row.persona_colectiva}</Text> 
-                </View> 
-        </View>
-          )
-        })
-        : null
-    }
-      </View>
-       {/* final de la tabla */}
-       <View style={styles.content}>
-        {/* Contenido de tu documento */}
-        <Text style={styles.dato}>{"\n"}El contenido de este documento esta extraido del sistema SIREPEJU(Sistema de Registro de Personalidades Juridícas).</Text>
-       
-        <Text style={styles.dato}>{"\n"}{"\n"}{"\n"}Fecha y Hora de Impresión: {"\n"}{getCurrentDateTime()}</Text>
-      </View>
-      <View style={styles.watermark}>
-        <Text>SIREPEJU</Text>
-      </View>
-      <View style={styles.footer}>
-          {/* Línea en el pie de página */}
-          <View style={styles.line}></View>
-          <Text>Casa Grande del Pueblo,calle Ayacucho - esq.Potosí,Tel:(591-2)2184178 {"\n"}La Paz -Bolivia {"\n"}{"\n"}Pagína{1}</Text>
-        </View>
+                                            <View style={styles.tableRow} key={row.id}>
+                                                <View style={styles.tableCol}>
+                                                    <Text style={styles.tableCell}>{row.codigo_adecuacion}</Text>
+                                                </View>
+                                                <View style={styles.tableCol}>
+                                                    <Text style={styles.tableCell}>{row.personalidad_juridica}</Text>
+                                                </View>
+                                                <View style={styles.tableCol}>
+                                                    <Text style={styles.tableCell}>{row.sigla}</Text>
+                                                </View>
+                                                <View style={styles.tableCol}>
+                                                    <Text style={styles.tableCell}>{row.persona_colectiva}</Text>
+                                                </View>
+                                            </View>
+                                        )
+                                    })
+                                    : null
+                                }
+                            </View>
+                            {/* final de la tabla */}
+                            <View style={styles.content}>
+                                {/* Contenido de tu documento */}
+                                <Text style={styles.dato}>{"\n"}El contenido de este documento esta extraido del sistema SIREPEJU(Sistema de Registro de Personalidades Juridícas).</Text>
+
+                                <Text style={styles.dato}>{"\n"}{"\n"}{"\n"}Fecha y Hora de Impresión: {"\n"}{getCurrentDateTime()}</Text>
+                            </View>
+                            <View style={styles.watermark}>
+                                <Text>SIREPEJU</Text>
+                            </View>
+                            <View style={styles.footer}>
+                                {/* Línea en el pie de página */}
+                                <View style={styles.line}></View>
+                                <Text>Casa Grande del Pueblo,calle Ayacucho - esq.Potosí,Tel:(591-2)2184178 {"\n"}La Paz -Bolivia {"\n"}{"\n"}Pagína{1}</Text>
+                            </View>
                             <View>
                                 {/* <Image style={styles.logo} src={qr} /> */}
                             </View>

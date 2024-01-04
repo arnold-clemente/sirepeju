@@ -4,7 +4,7 @@ import ModalDiv from '../../components/ModalDiv'; //contendoresto hay importar s
 // para el modal 
 import { useModal } from '../../hooks/useModal'
 import Alfanumerico from '../adecuacion/reporte/AdecuacionAlfanumerico';
-import RepPersonalidadAdecuacion from './reporte/ReppersonalidadAdecuacion';
+import RepPersonalidadAdecuacion from './reporte/RepPersonalidadAdecuacion';
 
 import { useMutation } from 'react-query';
 import { getAdecuacion } from '../../api/adecuacionApi';
@@ -181,8 +181,8 @@ const ModalAdePersonalidadShow = ({ registro, modalRegistro, closeRegistro }) =>
                                                         return (
                                                             <tr key={fundador.id}>
                                                                
-                                                                <td><marker>{fundador.nombre_completo}</marker></td>
-                                                                <td><marker>{fundador.ci}</marker></td>
+                                                                <td><>{fundador.nombre_completo}</></td>
+                                                                <td><>{fundador.ci}</></td>
                                                             </tr>
                                                         )
                                                     })}

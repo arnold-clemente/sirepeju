@@ -43,7 +43,7 @@ const RepCaducadoAdecuacion = ({ adecuacion, fundadores, personalidad, modal, cl
         },
         contenedor: {
             width: '100%',
-            marginBottom: 'cm'
+            marginBottom: '1cm'
         },
         contenedor_logo: {
             width: '100%',

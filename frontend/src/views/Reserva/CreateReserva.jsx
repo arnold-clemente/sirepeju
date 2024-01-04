@@ -25,12 +25,11 @@ const CreateReserva = () => {
     const addReserva = useMutation({
         mutationFn: createReserva,
         onSuccess: (response) => {
-            console.log(response.toJSON())
             if (response.status === true) {
                 queryClient.invalidateQueries('reservas')
                 show_alerta('Creado con exito', '<i class="fa-solid fa-check border_alert_green"></i>', 'alert_green')
                 setLoading(false);
-                go('/reservas')
+                go('/admin/reservas')
             } else {
                 show_alerta('Fallo de Validacion', '<i class="fa-solid fa-xmark border_alert_red"></i>', 'alert_red');
                 serError(response.errors);
@@ -39,10 +38,6 @@ const CreateReserva = () => {
         },
         onError: (error) => {
             setLoading(false);
-            // if(error){
-
-            // }
-            console.log(error.toJSON())
             show_alerta('No conectado', '<i class="fa-solid fa-xmark border_alert_red"></i>', 'alert_red')
             
         },
@@ -198,7 +193,7 @@ const CreateReserva = () => {
                         ? <ValidationError text={error.obs} />
                         : ''}
                 </div>
-                <Link to='/reservas' type="submit" className="btn btn-danger my-4">Cancelar</Link>
+                <Link to='/admin/reservas' type="submit" className="btn btn-danger my-4">Cancelar</Link>
                 <button type="submit" className="btn btn-primary my-4 mx-4">Enviar</button>
             </form>
         </>

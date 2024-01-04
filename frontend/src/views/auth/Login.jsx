@@ -48,7 +48,7 @@ const Login = () => {
                 window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.token;
                 show_alerta('Bienvenido a Sirepeju', '<i class="fa-solid fa-check border_alert_green"></i>', 'alert_green')
                 setCargando(false);
-                go('/')
+                go('/admin')
             } else {
                 setCargando(false);
                 setError(response.errors)

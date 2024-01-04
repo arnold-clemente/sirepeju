@@ -40,7 +40,7 @@ const EditRegistrados = () => {
     }
   })
   if (!registro) {
-    return <Navigate to='/registrados' />
+    return <Navigate to='/admin/registrados' />
   }
 
   const [errorval, serErrorval] = useState({});
@@ -56,7 +56,7 @@ const EditRegistrados = () => {
         queryClient.invalidateQueries('registrados')
         show_alerta('Actualizado con exito', '<i class="fa-solid fa-check border_alert_green"></i>', 'alert_green')
         setLoading(false);
-        go('/registrados')
+        go('/admin/registrados')
       } else {
         show_alerta('Fallo de Validacion', '<i class="fa-solid fa-xmark border_alert_red"></i>', 'alert_red');
         serErrorval(response.errors);
@@ -162,7 +162,7 @@ const EditRegistrados = () => {
                 : ''}
             </div>
           </div>
-          <Link to='/registrados' type="submit" className="btn btn-danger my-4">Cancelar</Link>
+          <Link to='/admin/registrados' type="submit" className="btn btn-danger my-4">Cancelar</Link>
           <button type="submit" className="btn btn-primary my-4 mx-4">Actualizar</button>
         </form>
       </>

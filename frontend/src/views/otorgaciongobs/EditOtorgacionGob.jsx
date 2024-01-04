@@ -52,7 +52,7 @@ const EditOtorgacionGob = () => {
         queryClient.invalidateQueries('otorgaciones_gobs');
         show_alerta('Actualizado con exito', '<i class="fa-solid fa-check border_alert_green"></i>', 'alert_green')
         setLoading(false);
-        go('/otorgaciones-gobernaciones')
+        go('/admin/otorgaciones-gobernaciones')
       } else {
         show_alerta('Fallo de Validacion', '<i class="fa-solid fa-xmark border_alert_red"></i>', 'alert_red');
         setErrorval(response.errors);
@@ -333,7 +333,7 @@ const EditOtorgacionGob = () => {
               </div>
               <div className='container-fluid mt-4'>
                 <div className='d-flex justify-content-between align-items-center'>
-                  <Link to='/otorgaciones-gobernaciones' type="submit" className="btn btn-danger">Cancelar</Link>
+                  <Link to='/admin/otorgaciones-gobernaciones' type="submit" className="btn btn-danger">Cancelar</Link>
                   <button type='submit' className='btn btn-success'>Guardar</button>
                 </div>
               </div>
@@ -388,7 +388,7 @@ const EditOtorgacionGob = () => {
             </table>
             <div className='container-fluid mt-4'>
               <div className='d-flex justify-content-between align-items-center'>
-                <Link to='/otorgaciones-gobernaciones' type="submit" className="btn btn-danger">Cancelar</Link>
+                <Link to='/admin/otorgaciones-gobernaciones' type="submit" className="btn btn-danger">Cancelar</Link>
               </div>
             </div>
             {/* modal para editar fundadores  */}

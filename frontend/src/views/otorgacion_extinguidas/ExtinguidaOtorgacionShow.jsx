@@ -124,7 +124,7 @@ const ExtinguidaOtorgacionShow = ({ registro, modalRegistro, closeRegistro }) =>
                         <h2 className="fs-6"><b>Codigo:</b> {otorgacion.codigo_otorgacion}&emsp;&emsp;&emsp; <b>Naturaleza: </b>{otorgacion.naturaleza}</h2> <hr />
                         <h2 className="fs-6"><b>Tipo de personalidad jurídica:</b>{otorgacion.persona_colectiva} &emsp;&emsp; <b>Sigla:</b> {otorgacion.sigla}</h2> <hr />
                         <h2 className="fs-6"><b>Domicilio Legal: </b>{otorgacion.domicilio_legal}</h2> <hr />
-                        <h2 className="fs-6"><b>Objeto: <p><marker>{otorgacion.objeto}</marker></p></b></h2><hr />
+                        <h2 className="fs-6"><b>Objeto: <p><>{otorgacion.objeto}</></p></b></h2><hr />
 
 
                         {otorgacion.estado == 0

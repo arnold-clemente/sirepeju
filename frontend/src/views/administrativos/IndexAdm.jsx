@@ -167,7 +167,7 @@ const IndexAdministrativos = () => {
                                 <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                     {permisos.includes('administrativo.update')
                                         ? <li>
-                                            <Link to={`/administrativo/editar/${row.id}`} className="button_edit_table dropdown-item">
+                                            <Link to={`/admin/administrativo/editar/${row.id}`} className="button_edit_table dropdown-item">
                                                 <i className="fa-solid fa-pen-to-square"></i>
                                                 <span className='mx-2'>Editar</span>
                                             </Link>
@@ -268,7 +268,7 @@ const IndexAdministrativos = () => {
                 <SelectAdministrativos registro={selectedRows} modal={selectpdf} close={closeSelectpdf} />
                 <div>
                     {permisos.includes('administrativo.store')
-                        ? <Link to="/administrativo/crear" className='button_green'>
+                        ? <Link to="/admin/administrativo/crear" className='button_green'>
                             <span>AÑADIR</span>
                             <i className="fa fa-plus" aria-hidden="true"></i>
                         </Link>

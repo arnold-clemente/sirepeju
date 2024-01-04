@@ -256,7 +256,7 @@ const IndexAdecuacion = () => {
                 }
                 <li>
                   {row.miembros_fundador == 'sin asignar' && permisos.includes('adecuacion.personalidad')
-                    ? <Link to={`/adecuacion/${row.id}/fundadores`} className="button_edit_table">
+                    ? <Link to={`/admin/adecuacion/${row.id}/fundadores`} className="button_edit_table">
                       <i className="fa-solid fa-users"></i>
                       <span className='mx-2'>fundadores</span>
                     </Link>
@@ -437,7 +437,7 @@ const IndexAdecuacion = () => {
         </div>
         <div>
           {permisos.includes('adecuacion.store')
-            ? <Link to="/adecuacion/crear" className='btn button_green'>
+            ? <Link to="/admin/adecuacion/crear" className='btn button_green'>
               <span>AÑADIR</span>
               <i className="fa fa-plus" aria-hidden="true"></i>
             </Link>

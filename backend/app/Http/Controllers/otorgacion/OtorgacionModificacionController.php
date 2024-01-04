@@ -103,23 +103,17 @@ class OtorgacionModificacionController extends Controller
 
     public function update(Request $request)
     {
-        $estatuto_organico = $request->file('estatuto_organico');
-        $reglamento_interno = $request->file('reglamento_interno');
-        $personalidad_juridica = $request->personalidad_juridica;
-        $domicilio_legal = $request->domicilio_legal;
-        $otorgacion_id = $request->otorgacion_id;
-        $user_auth = auth()->user();
 
-        if ($request->hasFile('estatuto_organico')) {
-            if ($request->hasFile('reglamento_interno')) {
-                $rules = array(
-                    'estatuto_organico' => 'required|file|max:5000|mimes:pdf,docx,doc',
-                    'reglamento_interno' => 'required|file|max:5000|mimes:pdf,docx,doc',
-                    'personalidad_juridica' => 'required|string|max:255',
-                    'domicilio_legal' => 'required|string|max:255',
-                    'otorgacion_id' => 'required',
-                );
-            } else {
+        if ($request->hasFile('estatuto_organico') && $request->hasFile('reglamento_interno')) {
+            $rules = array(
+                'estatuto_organico' => 'required|file|max:5000|mimes:pdf,docx,doc',
+                'reglamento_interno' => 'required|file|max:5000|mimes:pdf,docx,doc',
+                'personalidad_juridica' => 'required|string|max:255',
+                'domicilio_legal' => 'required|string|max:255',
+                'otorgacion_id' => 'required',
+            );
+        } else {
+            if ($request->hasFile('estatuto_organico')) {
                 $rules = array(
                     'estatuto_organico' => 'required|file|max:5000|mimes:pdf,docx,doc',
                     'personalidad_juridica' => 'required|string|max:255',
@@ -127,13 +121,28 @@ class OtorgacionModificacionController extends Controller
                     'otorgacion_id' => 'required',
                 );
             }
-        } else {
-            $rules = array(
-                'personalidad_juridica' => 'required|string|max:255',
-                'domicilio_legal' => 'required|string|max:255',
-                'otorgacion_id' => 'required',
-            );
+            if ($request->hasFile('reglamento_interno')) {
+                $rules = array(
+                    'reglamento_interno' => 'required|file|max:5000|mimes:pdf,docx,doc',
+                    'personalidad_juridica' => 'required|string|max:255',
+                    'domicilio_legal' => 'required|string|max:255',
+                    'otorgacion_id' => 'required',
+                );
+            } else {
+                $rules = array(
+                    'personalidad_juridica' => 'required|string|max:255',
+                    'domicilio_legal' => 'required|string|max:255',
+                    'otorgacion_id' => 'required',
+                );
+            }
         }
+
+        $estatuto_organico = $request->file('estatuto_organico');
+        $reglamento_interno = $request->file('reglamento_interno');
+        $personalidad_juridica = $request->personalidad_juridica;
+        $domicilio_legal = $request->domicilio_legal;
+        $otorgacion_id = $request->otorgacion_id;
+        $user_auth = auth()->user();
 
         $validator = Validator::make(
             array(
@@ -171,7 +180,7 @@ class OtorgacionModificacionController extends Controller
 
         if ($request->hasFile('reglamento_interno')) {
             $modificacion->reglamento_interno = $personalidad->reglamento_interno;
-            $personalidad->reglamento_interno = $estatuto_organico->store('otorgacion_reglamento_interno', 'public');
+            $personalidad->reglamento_interno = $reglamento_interno->store('otorgacion_reglamento_interno', 'public');
 
         }else{
             $modificacion->reglamento_interno = 'No Modificado';

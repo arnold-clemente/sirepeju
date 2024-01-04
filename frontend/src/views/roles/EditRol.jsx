@@ -72,7 +72,7 @@ const EditRol = () => {
     }
 
     if (rolId == 0) {
-        return <Navigate to='/roles' />
+        return <Navigate to='/admin/roles' />
     }
 
     const handleInputChange = ({ target }) => {
@@ -138,7 +138,7 @@ const EditRol = () => {
                 queryClient.invalidateQueries('roles')
                 show_alerta('Actualizado con exito', '<i class="fa-solid fa-check border_alert_green"></i>', 'alert_green')
                 setLoading(false);
-                go('/roles')
+                go('/admin/roles')
             } else {
                 show_alerta('Fallo de Validacion', '<i class="fa-solid fa-xmark border_alert_red"></i>', 'alert_red');
                 serErrorval(response.errors);
@@ -233,7 +233,7 @@ const EditRol = () => {
                         </div>
                     }
                     <div className='d-flex justify-content-between'>
-                        <Link to='/roles' className="btn btn-danger my-4">Cancelar</Link>
+                        <Link to='/admin/roles' className="btn btn-danger my-4">Cancelar</Link>
                         <button type="submit" className="btn btn-primary my-4 mx-4">Actualizar</button>
                     </div>
                 </form>

@@ -74,7 +74,7 @@ const FundOtorgacion = () => {
                 queryClient.invalidateQueries('otorgaciones')
                 show_alerta('Creado con exito', '<i class="fa-solid fa-check border_alert_green"></i>', 'alert_green')
                 setLoading(false);
-                go('/otorgaciones')
+                go('/admin/otorgaciones')
             } else {
                 show_alerta('Fallo de Validacion', '<i class="fa-solid fa-xmark border_alert_red"></i>', 'alert_red');
                 serError(response.errors);

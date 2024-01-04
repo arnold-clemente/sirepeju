@@ -133,7 +133,7 @@ const IndexRegistrados = () => {
                 <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                   {permisos.includes('registrado.update')
                     ? <li>
-                      <Link to={`/registrado/edit/${row.id}`} className="button_edit_table dropdown-item">
+                      <Link to={`/admin/registrado/edit/${row.id}`} className="button_edit_table dropdown-item">
                         <i className="fa-solid fa-pen-to-square"></i>
                         <span className='mx-2'>Editar</span>
                       </Link>
@@ -235,7 +235,7 @@ const IndexRegistrados = () => {
         <SelectRegistrados registro={selectedRows} modal={selectpdf} close={closeSelectpdf} />
         <div>
           {permisos.includes('registrado.store')
-            ? <Link to="/registrado/create" className='btn button_green'>
+            ? <Link to="/admin/registrado/create" className='btn button_green'>
               <span>AÑADIR</span>
               <i className="fa fa-plus" aria-hidden="true"></i>
             </Link>

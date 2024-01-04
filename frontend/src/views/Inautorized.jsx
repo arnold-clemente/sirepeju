@@ -10,7 +10,7 @@ const Inautorized = () => {
     const go = useNavigate();
 
     const handleUnauthorized = () => {
-        go('/');
+        go('/admin');
         window.location.reload(false);
     }
 

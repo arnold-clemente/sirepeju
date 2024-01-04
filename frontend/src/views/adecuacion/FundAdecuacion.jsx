@@ -73,7 +73,7 @@ const FundAdecuacion = () => {
                 queryClient.invalidateQueries('adecuaciones')
                 show_alerta('Creado con exito', '<i class="fa-solid fa-check border_alert_green"></i>', 'alert_green')
                 setLoading(false);
-                go('/adecuaciones')
+                go('/admin/adecuaciones')
             } else {
                 show_alerta('Fallo de Validacion', '<i class="fa-solid fa-xmark border_alert_red"></i>', 'alert_red');
                 serError(response.errors);
@@ -158,7 +158,7 @@ const FundAdecuacion = () => {
                 {arrayFundadores.length > 0
                     ? <div className='container-fluid mt-4'>
                         <div className='d-flex justify-content-between'>
-                            <Link to='/adecuaciones' type="submit" className="btn btn-danger">Cancelar</Link>
+                            <Link to='/admin/adecuaciones' type="submit" className="btn btn-danger">Cancelar</Link>
                             <button onClick={createdFundadores} className='btn btn-success'>Guardar</button>
                         </div>
                     </div>

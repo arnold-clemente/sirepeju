@@ -69,6 +69,7 @@ class RolesController extends Controller
 
         $role = Role::create([
             'name' => $request->name,
+            'guard_name' => 'web',
         ]);
 
         $role->permissions()->sync($request->permisos);
@@ -116,6 +117,7 @@ class RolesController extends Controller
         }
 
         $role->name = $request->name;
+        $role->guard_name = 'web';
         $role->save();
 
         $role->permissions()->sync($request->permisos);

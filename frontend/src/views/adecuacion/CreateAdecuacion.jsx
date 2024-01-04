@@ -31,7 +31,7 @@ const CreateAdecuacion = () => {
                 queryClient.invalidateQueries('adecuaciones')
                 show_alerta('Creado con exito', '<i class="fa-solid fa-check border_alert_green"></i>', 'alert_green')
                 setLoading(false);
-                go('/adecuaciones')
+                go('/admin/adecuaciones')
             } else {
                 show_alerta('Fallo de Validacion', '<i class="fa-solid fa-xmark border_alert_red"></i>', 'alert_red');
                 serErrorval(response.errors);
@@ -218,7 +218,7 @@ const CreateAdecuacion = () => {
                     </div>
                 </div>
 
-                <Link to='/adecuaciones' type="submit" className="btn btn-danger my-4">Cancelar</Link>
+                <Link to='/admin/adecuaciones' type="submit" className="btn btn-danger my-4">Cancelar</Link>
                 <button type="submit" className="btn btn-primary my-4 mx-4">Guardar</button>
             </form>
         </>

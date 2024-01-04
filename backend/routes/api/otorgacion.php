@@ -73,8 +73,8 @@ Route::middleware(['auth:sanctum', 'can:otorgacion.desarchivar'])
     ->name('otorgacion.desarchivar');
 
 // caducar otorgacion 
-Route::middleware(['auth:sanctum', 'otorgacion.caducar'])
-    ->post('/otorgacion/caducar/{otorgacion}', [OtorgacionCaducadoController::class, 'caducar'])
+Route::middleware(['auth:sanctum', 'can:otorgacion.caducar'])
+    ->post('/otorgacion/caducar', [OtorgacionCaducadoController::class, 'caducar'])
     ->name('otorgacion.caducar');
 
 // otorgacion caducados 

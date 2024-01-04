@@ -1,6 +1,5 @@
 import AppRouter from './routes/AppRouter'
-//generador de qr
-import QRCode from 'react-qr-code'
+
 // estilos 
 import './css/alert2.css'
 import './css/login.css'
@@ -15,6 +14,10 @@ import './css/profile.css'
 import './css/roles.css'
 import './css/errors.css'
 import './css/dashboard.css'
+
+// pagina web 
+import './css/pagina_navbar.css'
+
 
 function App() {
 

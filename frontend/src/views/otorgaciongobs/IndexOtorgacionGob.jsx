@@ -139,7 +139,7 @@ const IndexOtorgacionGob = () => {
               <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                 {permisos.includes('otorgacion.gobernacion.update')
                   ? <li>
-                    <Link to={`/otorgaciones-gobernaciones/edit/${row.id}`} className="button_edit_table">
+                    <Link to={`/admin/otorgaciones-gobernaciones/edit/${row.id}`} className="button_edit_table">
                       <i className="fa-solid fa-pen-to-square"></i>
                       <span>Editar</span>
                     </Link>
@@ -227,7 +227,7 @@ const IndexOtorgacionGob = () => {
         </div>
         <div>
           {permisos.includes('otorgacion.gobernacion.store')
-            ? <Link to="/otorgaciones-gobernaciones/create" className='btn button_green'>
+            ? <Link to="/admin/otorgaciones-gobernaciones/create" className='btn button_green'>
               <span>AÑADIR</span>
               <i className="fa fa-plus" aria-hidden="true"></i>
             </Link>

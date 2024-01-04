@@ -245,7 +245,7 @@ const WebRoutes = () => {
                     {/* //rutas de errores */}
                     <Route path='/no-autorizado' element={<Inautorized />} />
                     <Route path='/404' element={<NotFound />} />
-                    <Route path="*" element={<Navigate replace to="/404" />} />
+                    <Route path="/*" element={<Navigate replace to="/admin/404" />} />
                 </Routes>
             </div>
         </div>

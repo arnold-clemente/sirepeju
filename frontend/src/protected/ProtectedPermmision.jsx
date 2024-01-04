@@ -9,7 +9,7 @@ const ProtectedPermmision = ({ midleware, children }) => {
     if (permisos.includes(midleware))
         return <Outlet />
     else
-        return <Navigate to='/no-autorizado' />
+        return <Navigate to='/admin/no-autorizado' />
 }
 
 export default ProtectedPermmision

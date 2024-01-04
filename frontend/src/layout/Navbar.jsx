@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import propTypes from 'prop-types'
 import logo_escudo from '../images/logo_escudo.png'
 import logo_letra from '../images/logo_letra.png'
@@ -13,10 +14,10 @@ const Navbar = ({ sidebarHandle, sidebar, handleProfile }) => {
 
   return (
     <div className='navbar_contain'>
-      <div className={'nabvar_logo ' + sidebar}>
+      <Link to='/' className={'nabvar_logo ' + sidebar}>
         <img className='logo_escudo' src={logo_escudo} alt="logo" />
         <img className={'logo_letra ' + sidebar} src={logo_letra} alt="logo" />
-      </div>
+      </Link>
       <div className={'nabvar_content ' + sidebar}>
         <button onClick={sidebarHandle} className={'menu_sidebar ' + sidebar}>
           <i className="fa-solid fa-bars"></i>

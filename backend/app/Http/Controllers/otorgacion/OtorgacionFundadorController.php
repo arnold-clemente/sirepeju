@@ -130,6 +130,11 @@ class OtorgacionFundadorController extends Controller
             ]);
         }
 
+        $otorgacion_fundador->nombre_completo = $request->nombre_completo;
+        $otorgacion_fundador->ci = $request->ci;
+        $otorgacion_fundador->update = $user_auth->id;
+        $otorgacion_fundador->save();
+
         $fundadores = OtorgacionFundador::where('estado', 1)
             ->where('otorgacion_id', $request->otorgacion_id)
             ->get();
@@ -147,11 +152,6 @@ class OtorgacionFundadorController extends Controller
         $otorgacion = Otorgacion::find($request->otorgacion_id);
         $otorgacion->miembros_fundador = $nombre;
         $otorgacion->save();
-
-        $otorgacion_fundador->nombre_completo = $request->nombre_completo;
-        $otorgacion_fundador->ci = $request->ci;
-        $otorgacion_fundador->update = $user_auth->id;
-        $otorgacion_fundador->save();
 
 
         return response([

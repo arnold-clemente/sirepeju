@@ -187,7 +187,7 @@ const SelectProcesoAdecuacion = ({ registro, modal, close }) => {
         {registro.length > 0
                                     ? registro.map((row, index) => {
                                         return (
-                <View style={styles.tableRow}> 
+                <View style={styles.tableRow} key={row.id}> 
                 <View style={styles.tableCol}> 
                 <Text style={styles.tableCell}>{row.codigo_adecuacion}</Text> 
                 </View> 

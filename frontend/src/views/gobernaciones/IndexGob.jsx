@@ -168,7 +168,7 @@ const IndexGob = () => {
                 <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                   {permisos.includes('gobernacion.update')
                     ? <li>
-                      <Link to={`/gobernacion/editar/${row.id}`} className="button_edit_table dropdown-item">
+                      <Link to={`/admin/gobernacion/editar/${row.id}`} className="button_edit_table dropdown-item">
                         <i className="fa-solid fa-pen-to-square"></i>
                         <span className='mx-2'>Editar</span>
                       </Link>
@@ -273,7 +273,7 @@ const IndexGob = () => {
 
         <div>
           {permisos.includes('gobernacion.store')
-            ? <Link to="/gobernacion/crear" className='button_green'>
+            ? <Link to="/admin/gobernacion/crear" className='button_green'>
               <span>AÑADIR</span>
               <i className="fa fa-plus" aria-hidden="true"></i>
             </Link>

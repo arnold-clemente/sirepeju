@@ -20,7 +20,7 @@ const RepOtorgacionPersonalidad = ({ otorgacion, fundadores, personalidad, modal
     const styles = StyleSheet.create({
         main: {
             width: "100%",
-            height: "76vh",
+            height: "90vh",
             boxSizing: "border-box",
         },
         page:{

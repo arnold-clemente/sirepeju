@@ -255,7 +255,7 @@ const IndexOtorgacion = () => {
                                 }
                                 <li>
                                     {row.miembros_fundador == 'sin agregar' && permisos.includes('otorgacion.personalidad')
-                                        ? <Link to={`/otorgaciones/${row.id}/fundadores`} className="button_edit_table">
+                                        ? <Link to={`/admin/otorgaciones/${row.id}/fundadores`} className="button_edit_table">
                                             <i className="fa-solid fa-users"></i>
                                             <span className='mx-2'>fundadores</span>
                                         </Link>

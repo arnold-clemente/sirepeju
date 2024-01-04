@@ -13,15 +13,15 @@ const SelectVerificacion = ({ registro, modal, close }) => {
             height: "90vh",
             boxSizing: "border-box",
         },
-        page:{
-            flexDirection:'row',
-            backgroundColor:'#E4E4E4',
-            margin:100
+        page: {
+            flexDirection: 'row',
+            backgroundColor: '#E4E4E4',
+            margin: 100
         },
-        section:{
-            margin:10,
-            padding:10,
-            flexGrow:1,
+        section: {
+            margin: 10,
+            padding: 10,
+            flexGrow: 1,
         },
         body: {
             width: "100%",
@@ -30,11 +30,11 @@ const SelectVerificacion = ({ registro, modal, close }) => {
             paddingBottom: "25px",
             paddingRight: "25px",
             paddingLeft: "35px",
-            
+
         },
         contenedor: {
             width: '100%',
-            
+
         },
         contenedor_logo: {
             width: '100%',
@@ -48,14 +48,14 @@ const SelectVerificacion = ({ registro, modal, close }) => {
             flexDirection: 'row',
             justifyContent: 'flex-end',
         },
-        contenedor_remitente:{
+        contenedor_remitente: {
             width: '100%',
             display: 'flex',
             flexDirection: 'row',
-            justifyContent: 'flex-end', 
-            
+            justifyContent: 'flex-end',
+
         },
-        
+
         fecha: {
             fontSize: '8px',
             fontWeight: 700,
@@ -65,7 +65,7 @@ const SelectVerificacion = ({ registro, modal, close }) => {
             fontSize: '12px',
             textAlign: 'justify',
             fontWeight: 'BoldSpan',
-            
+
             paddingRight: '5px',
         },
         logo: {
@@ -93,61 +93,61 @@ const SelectVerificacion = ({ registro, modal, close }) => {
             fontSize: '8px',
         },
         celdaColorida: { backgroundColor: '#44556f' }, // Puedes cambiar el color aquí
-        textoBlanco: { color: '#ffffff',fontSize: '12px', }, // Color blanco
-        
+        textoBlanco: { color: '#ffffff', fontSize: '12px', }, // Color blanco
+
         boldText: {
             fontWeight: 'bold',
             fontSize: '12px',
             justifyContent: 'center',
-          },
-          table: { 
-            display: "table", 
-            width: "auto", 
-            borderStyle: "solid", 
-            borderWidth: 1, 
-            borderRightWidth: 0, 
-            borderBottomWidth: 0 
-          }, 
-          tableRow: { 
-            margin: "auto", 
-            flexDirection: "row" 
-          }, 
-          tableCol: { 
-            
-            width: "25%", 
-            borderStyle: "solid", 
-            borderWidth: 1, 
-            borderLeftWidth: 0, 
-            borderTopWidth: 0 
-          }, 
-          tableCell: { 
-            
-            margin: "auto", 
-            marginTop: 5, 
+        },
+        table: {
+            display: "table",
+            width: "auto",
+            borderStyle: "solid",
+            borderWidth: 1,
+            borderRightWidth: 0,
+            borderBottomWidth: 0
+        },
+        tableRow: {
+            margin: "auto",
+            flexDirection: "row"
+        },
+        tableCol: {
+
+            width: "25%",
+            borderStyle: "solid",
+            borderWidth: 1,
+            borderLeftWidth: 0,
+            borderTopWidth: 0
+        },
+        tableCell: {
+
+            margin: "auto",
+            marginTop: 5,
             fontSize: 10,
             fontWeight: 'bold'
-          },
-          content: {
+        },
+        content: {
             flexGrow: 1,
-          },
-          footer: {
+        },
+        footer: {
             textAlign: 'center',
             fontSize: 10,
             marginTop: 10,
-          },
-          line: {
+        },
+        line: {
             borderBottom: '1px solid black',
             width: '100%',
-          },
-          watermark: {
+        },
+        watermark: {
             position: 'absolute',
-            top:500,
-            left:180,
+            top: 500,
+            left: 180,
             opacity: 0.3, // Ajusta la opacidad según tus preferencias
             transform: 'rotate(-30deg)', // Rotación de la marca de agua
             fontSize: 60,
             color: 'gray', // Color de la marca de agua
-          },
+        },
 
 
     });
@@ -158,53 +158,53 @@ const SelectVerificacion = ({ registro, modal, close }) => {
                 <PDFViewer style={styles.main}>
                     <Document>
                         <Page size="letter" style={styles.body}>
-                        <View style={styles.contenedor_logo}>
+                            <View style={styles.contenedor_logo}>
                                 <Image style={styles.logo} src={logo} />
                             </View>
                             <View style={styles.contenedor}>
                                 <Text style={styles.title}>VERIFICACIÓN DE NOMBRE </Text>
                             </View>
-                            {/* la tabla desde este lugar */} 
-        <View style={styles.table}>
-    {/* fila 1 */}
-    <View style={styles.tableRow}> 
-        <View style={{ ...styles.tableCol, ...styles.celdaColorida}}> 
-        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>NATURALEZA</Text> 
-        </View>
-        <View style={{ ...styles.tableCol, ...styles.celdaColorida}}> 
-        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>NOMBRE</Text> 
-        </View>
-        <View style={{ ...styles.tableCol, ...styles.celdaColorida}}> 
-        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>SIGLA</Text> 
-        </View>
-        <View style={{ ...styles.tableCol, ...styles.celdaColorida}}> 
-        <Text style={{...styles.tableCell, ...styles.textoBlanco}}>UBICACIÓN</Text> 
-        </View> 
-        </View> 
-        {/* fila 2 */}
-        {registro.length > 0
+                            {/* la tabla desde este lugar */}
+                            <View style={styles.table}>
+                                {/* fila 1 */}
+                                <View style={styles.tableRow}>
+                                    <View style={{ ...styles.tableCol, ...styles.celdaColorida }}>
+                                        <Text style={{ ...styles.tableCell, ...styles.textoBlanco }}>NATURALEZA</Text>
+                                    </View>
+                                    <View style={{ ...styles.tableCol, ...styles.celdaColorida }}>
+                                        <Text style={{ ...styles.tableCell, ...styles.textoBlanco }}>NOMBRE</Text>
+                                    </View>
+                                    <View style={{ ...styles.tableCol, ...styles.celdaColorida }}>
+                                        <Text style={{ ...styles.tableCell, ...styles.textoBlanco }}>SIGLA</Text>
+                                    </View>
+                                    <View style={{ ...styles.tableCol, ...styles.celdaColorida }}>
+                                        <Text style={{ ...styles.tableCell, ...styles.textoBlanco }}>UBICACIÓN</Text>
+                                    </View>
+                                </View>
+                                {/* fila 2 */}
+                                {registro.length > 0
                                     ? registro.map((row, index) => {
                                         return (
-                <View style={styles.tableRow}> 
-                <View style={styles.tableCol}> 
-                <Text style={styles.tableCell}>{row.naturaleza}</Text> 
-                </View> 
-                <View style={styles.tableCol}> 
-                <Text style={styles.tableCell}>{row.entidad}</Text> 
-                </View> 
-                <View style={styles.tableCol}> 
-                <Text style={styles.tableCell}>{row.sigla}</Text> 
-                </View> 
-                <View style={styles.tableCol}> 
-                <Text style={styles.tableCell}>REGISTRADO EN S.I.R.E.P.E.J.U.</Text> 
-                </View> 
-        </View>
-          )
-        })
-        : null
-    }  
-      
-       {/* final de la tabla */}
+                                            <View style={styles.tableRow} key={index}>
+                                                <View style={styles.tableCol}>
+                                                    <Text style={styles.tableCell}>{row.naturaleza}</Text>
+                                                </View>
+                                                <View style={styles.tableCol}>
+                                                    <Text style={styles.tableCell}>{row.entidad}</Text>
+                                                </View>
+                                                <View style={styles.tableCol}>
+                                                    <Text style={styles.tableCell}>{row.sigla}</Text>
+                                                </View>
+                                                <View style={styles.tableCol}>
+                                                    <Text style={styles.tableCell}>REGISTRADO EN S.I.R.E.P.E.J.U.</Text>
+                                                </View>
+                                            </View>
+                                        )
+                                    })
+                                    : null
+                                }
+
+                                {/* final de la tabla */}
                             </View>
                             <View>
                                 {/* <Image style={styles.logo} src={qr} /> */}

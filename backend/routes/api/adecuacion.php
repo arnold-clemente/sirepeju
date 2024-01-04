@@ -107,6 +107,23 @@ Route::middleware(['auth:sanctum', 'can:adecuaciones.extinguidas'])
     ->get('/adecuacion/extinguidas', [AdecuacionExtinguidoController::class, 'getextinguidas'])
     ->name('adecuacion.extinguidas');
 
+// adecuacion fundadores
+Route::middleware(['auth:sanctum', 'can:adecuacion.modificar'])
+    ->get('/modificacion-adecuacion-fundadores/{adecuacion}', [AdecuacionFundadorController::class, 'index'])
+    ->name('modificacion.adecuacion.fundador.index');
+
+Route::middleware(['auth:sanctum', 'can:adecuacion.modificar'])
+    ->post('/modificacion-adecuacion-fundador-store', [AdecuacionFundadorController::class, 'create'])
+    ->name('modificacion.adecuacion.fundador.store');
+
+Route::middleware(['auth:sanctum', 'can:adecuacion.modificar'])
+    ->put('/modificacion-adecuacion-fundador-update/{adecuacion_fundador}', [AdecuacionFundadorController::class, 'update'])
+    ->name('modificacion.adecuacion.fundador.update');
+
+Route::middleware(['auth:sanctum', 'can:adecuacion.modificar'])
+    ->delete('/modificacion-adecuacion-fundador-destroy/{adecuacion_fundador}', [AdecuacionFundadorController::class, 'destroy'])
+    ->name('modificacion.adecuacion.fundador.destroy');
+
 // adecuacion modificaciones 
 Route::middleware(['auth:sanctum', 'can:adecuaciones.modificaciones'])
     ->get('/modificaciones-adecuacion', [AdecuacionModificacionController::class, 'index'])

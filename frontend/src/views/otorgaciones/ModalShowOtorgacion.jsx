@@ -164,7 +164,7 @@ const ModalShowOtorgacion = ({ registro, modalRegistro, closeRegistro }) => {
                                 <div className='card-body'>
                                     {fundadores.sort((a, b) => b.id - a.id).map((fundador) => {
                                         return (
-                                            <div className="row">
+                                            <div className="row" key={fundador.id}>
                                                 <div className="col-md-2 fw-bold ">Nombre:</div>
                                                 <div className="col-md-4 ">{fundador.nombre_completo}</div>
                                                 <div className="col-md-3 fw-bold ">C.I.:</div>

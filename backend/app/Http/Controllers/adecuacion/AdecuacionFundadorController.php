@@ -129,6 +129,11 @@ class AdecuacionFundadorController extends Controller
             ]);
         }
 
+        $adecuacion_fundador->nombre_completo = $request->nombre_completo;
+        $adecuacion_fundador->ci = $request->ci;
+        $adecuacion_fundador->update = $user_auth->id;
+        $adecuacion_fundador->save();
+
         $fundadores = AdecuacionFundador::where('estado', 1)
             ->where('adecuacion_id', $request->adecuacion_id)
             ->get();
@@ -147,14 +152,11 @@ class AdecuacionFundadorController extends Controller
         $adecuacion->miembros_fundador = $nombre;
         $adecuacion->save();
 
-        $adecuacion_fundador->nombre_completo = $request->nombre_completo;
-        $adecuacion_fundador->ci = $request->ci;
-        $adecuacion_fundador->update = $user_auth->id;
-        $adecuacion_fundador->save();
+        
 
 
         return response([
-            'fundador' => $adecuacion,
+            'fundador' => $nombre,
             'status' => true,
             'message' => 'Actualizado satisfactoriamente'
         ]);

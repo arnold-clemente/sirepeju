@@ -44,7 +44,7 @@ const CreateOtorgacionGob = () => {
         queryClient.invalidateQueries('otorgaciones_gobs')
         show_alerta('Creado con exito', '<i class="fa-solid fa-check border_alert_green"></i>', 'alert_green')
         setLoading(false);
-        go('/otorgaciones-gobernaciones')
+        go('/admin/otorgaciones-gobernaciones')
       } else {
         show_alerta('Fallo de Validacion', '<i class="fa-solid fa-xmark border_alert_red"></i>', 'alert_red');
         serError(response.errors);
@@ -263,7 +263,7 @@ const CreateOtorgacionGob = () => {
         </table>
         <div className='container-fluid mt-4'>
           <div className='d-flex justify-content-between align-items-center'>
-            <Link to='/otorgaciones-gobernaciones' type="submit" className="btn btn-danger">Cancelar</Link>
+            <Link to='/admin/otorgaciones-gobernaciones' type="submit" className="btn btn-danger">Cancelar</Link>
             {arrayFundadores.length > 0
               ? <button onClick={handleAdd} className='btn btn-success'>Guardar</button>
               : ''

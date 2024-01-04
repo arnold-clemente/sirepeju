@@ -31,7 +31,7 @@ const NotFound = () => {
                     </div>
 
                     <div className='my-4'>
-                        <Link to='/' className='error_404_button'>
+                        <Link to='/admin' className='error_404_button'>
                             <span>VOLVER</span>
                         </Link>
                     </div>

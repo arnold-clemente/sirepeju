@@ -98,7 +98,7 @@ const IndexReserva = () => {
         e.preventDefault();
         let aux = row.entidad.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "")
         dispatch(updateSearch(aux));
-        go('/verificar/reserva')
+        go('/admin/verificar/reserva')
     }
 
     const columns = [
@@ -109,7 +109,7 @@ const IndexReserva = () => {
                 <div className='d-flex flex-row justify-content-start gap-1'>
                     <button onClick={(e) => handleShow(e, row)} className="button_show"><i className="fa-solid fa-eye"></i><span>Ver</span></button>
                     {permisos.includes('reserva.update')
-                        ? <Link to={`/reserva/editar/${row.id}`} className="button_edit"><i className="fa-solid fa-pen-to-square"></i><span>Editar</span></Link>
+                        ? <Link to={`/admin/reserva/editar/${row.id}`} className="button_edit"><i className="fa-solid fa-pen-to-square"></i><span>Editar</span></Link>
                         : null
                     }
                     {permisos.includes('verificacion.entidades')
@@ -232,7 +232,7 @@ const IndexReserva = () => {
                 <SelectSolicitudes registro={selectedRows} modal={selectpdf} close={closeSelectpdf} />
                 <div>
                     {permisos.includes('reserva.store')
-                        ? <Link to="/reserva/crear" className='btn button_green'>
+                        ? <Link to="/admin/reserva/crear" className='btn button_green'>
                             <span>AÑADIR</span>
                             <i className="fa fa-plus" aria-hidden="true"></i>
                         </Link>

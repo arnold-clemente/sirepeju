@@ -104,7 +104,7 @@ const IndexRoles = () => {
                         : null
                     }
                     {permisos.includes('rol.update')
-                        ? <Link to={`/rol/editar/${row.id}`} className="button_edit">
+                        ? <Link to={`/admin/rol/editar/${row.id}`} className="button_edit">
                             <i className="fa-solid fa-edit"></i>
                             <span>Editar</span>
                         </Link>
@@ -182,7 +182,7 @@ const IndexRoles = () => {
                 </div>
                 <div>
                     {permisos.includes('rol.store')
-                        ? <Link to="/rol/crear" className='btn button_green'>
+                        ? <Link to="/admin/rol/crear" className='btn button_green'>
                             <span>AÑADIR</span>
                             <i className="fa fa-plus" aria-hidden="true"></i>
                         </Link>
