@@ -4,7 +4,6 @@ import { PDFViewer, Document, Page } from '@react-pdf/renderer'
 import { Text, View, StyleSheet, Image } from '@react-pdf/renderer'
 import logo from '../../../images/qr.png'
 //generador de qr
-import QRCode from 'react-qr-code'
 
 const RepReservados = ({ registro, modal, close }) => {
     let fecha_esp = ''
