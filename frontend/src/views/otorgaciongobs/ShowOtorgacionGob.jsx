@@ -81,17 +81,47 @@ const ShowOtorgacionGob = ({ registro, modal, close }) => {
                 </div>
                 <div className="card-body">
                   <div className="row">
+                  <div className="col-md-5 fw-bold">
+                    Departamento:
+                    </div>
+                    <div className="col-md-7">
+                    {otorgacion.institucion}
+                    </div>
+                  <div className="col-md-5 fw-bold">
+                    Naturaleza:
+                    </div>
+                    <div className="col-md-7">
+                    {otorgacion.naturaleza}
+                    </div>
                     <div className="col-md-5 fw-bold">
                     Sigla:
                     </div>
                     <div className="col-md-7">
                     {otorgacion.sigla}
                     </div>
-                    <div className="col-md-5 fw-bold">
-                    Resolución Administrativa Departamental:
+                  <div className="col-md-5 fw-bold">
+                    Resolución Administrativa:
                     </div>
                     <div className="col-md-7">
-                   Aqui un número
+                    {otorgacion.resolucion}
+                    </div>
+                    <div className="col-md-5 fw-bold">
+                    Fecha de Res.Adm.:
+                    </div>
+                    <div className="col-md-7">
+                   {otorgacion.fecha_resolucion}
+                    </div>
+                    <div className="col-md-5 fw-bold">
+                    Domicilio Legal:
+                    </div>
+                    <div className="col-md-7">
+                   {otorgacion.domicilio_legal}
+                    </div>
+                    <div className="col-md-5 fw-bold">
+                    Objeto:
+                    </div>
+                    <div className="col-md-7"><mark>{otorgacion.objeto}</mark>
+                   
                     </div>
                   </div>
                 </div>
@@ -104,11 +134,11 @@ const ShowOtorgacionGob = ({ registro, modal, close }) => {
                       <table className='table'>
                         <thead>
                           <tr>
-                            <th colSpan={2} className='bg-primary text-white text-center'>Miembros Fundadores</th>
+                            <th colSpan={2} className='bg-primary text-white text-center'>MIEMBROS FUNDADORES</th>
                           </tr>
                           <tr>
-                            <th className='col'><mark>Nombres</mark></th>
-                            <th className='col'><mark>Cédula de Identidad</mark></th>
+                            <th className='col'>Nombre completo</th>
+                            <th className='col'>Cedula de identidad</th>
                           </tr>
                         </thead>
                         <tbody className="table-group-divider">
@@ -130,7 +160,10 @@ const ShowOtorgacionGob = ({ registro, modal, close }) => {
             }
           </>
         }
-
+ <hr />
+                <div className='d-flex'>
+                    <button className="btn btn-secondary" title="cerrar" onClick={close}>cerrar</button>
+                </div>
       </ModalDiv>
     </>
   )

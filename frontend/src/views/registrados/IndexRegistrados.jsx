@@ -169,7 +169,7 @@ const IndexRegistrados = () => {
       width: '150px',
     },
     {
-      name: 'Fecha de Ingreso',
+      name: 'Fecha de registro',
       selector: row => row.fecha,
       sortable: true,
       width: '150px',
@@ -196,7 +196,7 @@ const IndexRegistrados = () => {
       width: '150px',
     },
     {
-      name: 'Observacion',
+      name: 'Tipo de registro',
       selector: row => row.observacion,
       width: '250px',
     },

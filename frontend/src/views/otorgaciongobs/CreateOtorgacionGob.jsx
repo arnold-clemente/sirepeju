@@ -141,11 +141,11 @@ const CreateOtorgacionGob = () => {
   return (
     <>
       {loading === true ? <Loading /> : ''}
-      <Banner text="CREACIÓN DE NUEVA OTORGACION" />
+      <Banner text="REGISTRO DE PERSONA COLECTIVA EMITIDA POR GOBIERNOS AUTÓNOMOS DEPARTAMENTALES" />
       <div>
         <div className="form-group py-2">
           <label>Nombre Persona Colectiva</label>
-          <input type="text" className="form-control" placeholder="Escriba Nombre de la Entidad"
+          <input type="text" className="form-control" placeholder="Escriba nombre de la institución"
             name="nombre_persona_colectiva" value={nombre_persona_colectiva} onChange={handleInputChange} />
           {error.nombre_persona_colectiva
             ? <ValidationError text={error.nombre_persona_colectiva} />
@@ -154,7 +154,7 @@ const CreateOtorgacionGob = () => {
         <div className="row">
           <div className="form-group col-md-6 py-2">
             <label>Sigla</label>
-            <input type="text" className="form-control" placeholder="Escriba la sigla de la Entidad"
+            <input type="text" className="form-control" placeholder="sigla de la institución"
               name="sigla" value={sigla} onChange={handleInputChange} />
             {error.sigla
               ? <ValidationError text={error.sigla} />
@@ -164,7 +164,7 @@ const CreateOtorgacionGob = () => {
             <label>Naturaleza</label>
             <select className="form-control" id="exampleFormControlSelect1"
               name="naturaleza" value={naturaleza} onChange={handleInputChange}>
-              <option value="FUNDACION">FUNDACION</option>
+              <option value="FUNDACION">FUNDACIÓN</option>
               <option value="ENTIDAD SIN FINES DE LUCRO">ENTIDAD SIN FINES DE LUCRO</option>
               <option value="ONG">ONG</option>
               <option value="ORGANIZACIÓN SOCIAL">ORGANIZACIÓN SOCIAL</option>
@@ -173,8 +173,8 @@ const CreateOtorgacionGob = () => {
         </div>
         <div className="row">
           <div className="form-group col-md-6 py-2">
-            <label>Resolucion</label>
-            <input type="text" className="form-control" placeholder="Escriba codigo de resolucion"
+            <label>Resolución administrativa</label>
+            <input type="text" className="form-control" placeholder="número de resolución"
               name="resolucion" value={resolucion} onChange={handleInputChange} />
             {error.resolucion
               ? <ValidationError text={error.resolucion} />
@@ -190,7 +190,7 @@ const CreateOtorgacionGob = () => {
           </div>
         </div>
         <div className="form-group py-2">
-          <label>Domicilio Legal</label>
+          <label>Domicilio legal</label>
           <input type="text" className="form-control" placeholder="Escriba el domicilio"
             name="domicilio_legal" value={domicilio_legal} onChange={handleInputChange} />
           {error.domicilio_legal
@@ -198,8 +198,8 @@ const CreateOtorgacionGob = () => {
             : ''}
         </div>
         <div className="form-group py-2">
-          <label>Objeto</label>
-          <textarea rows='4' className="form-control" placeholder="Escriba el objeto"
+          <label>Objeto o Sector</label>
+          <textarea rows='4' className="form-control" placeholder="Escriba el objeto o sector a la que la entidad se dedica"
             name="objeto" value={objeto} onChange={handleInputChange} >
           </textarea>
           {error.objeto
@@ -218,13 +218,13 @@ const CreateOtorgacionGob = () => {
       <div className='container-fluid mt-2'>
         <form onSubmit={create} className='row'>
           <div className='col-md-6 px-0'>
-            <label>Nombre Fundador</label>
+            <label>Miembro fundador</label>
             <input className='form-control' placeholder='Ingrese el nombre completo'
               onChange={handleInputChangeaFund} name='nombre' value={nombre} />
             <span className='fs-6 text-danger'>{errorval.nombre}</span>
           </div>
           <div className='col-md-4 px-0'>
-            <label>Cedula de identidad</label>
+            <label>Cedula de Identidad</label>
             <input className='form-control' placeholder='Cedula de identidad'
               onChange={handleInputChangeaFund} name='ci' value={ci} />
             <span className='fs-6 text-danger'>{errorval.ci}</span>
@@ -237,10 +237,10 @@ const CreateOtorgacionGob = () => {
         <table className="table mt-4">
           <thead>
             <tr>
-              <th scope="col">Accion</th>
-              <th scope="col">#</th>
-              <th scope="col">Nombre Completo</th>
-              <th scope="col">Cedula Indentidad</th>
+              <th scope="col">Acción</th>
+              <th scope="col">N°</th>
+              <th scope="col">Nombre completo</th>
+              <th scope="col">Cedula indentidad</th>
             </tr>
           </thead>
           <tbody className="table-group-divider">
