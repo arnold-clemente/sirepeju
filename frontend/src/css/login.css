@@ -9,20 +9,20 @@
 }
 
 .login_form {
-    width: 280px;
-    background-color: #D3D2CE;
+    width: 300px;
+    background-color: #056690;
     border-radius: 30px;
 }
 
 .login_form form {
-    background-color: #D3D2CE;
+    background-color: #e6e5e2;
     padding: 10px 20px;
     border-radius: 30px;
 }
 
 .login_form button {
     width: 100%;
-    background-color: #412E34;
+    background-color: #014561;
     margin-top: 20px;
     padding: 10px 0;
     border-radius: 10px;
@@ -35,17 +35,17 @@
 
 .login_form button:hover {
     background-color: #fff;
-    color: #412E34;
+    color: #014561;
 }
 
 /* para el log princiopla  */
 .logo_login {
-    width: 280px;
+    width: 400px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin: 10px 10px 50px 10px;
+    margin: 10px 10px 60px 10px;
 }
 
 .form_logo {
@@ -55,7 +55,7 @@
     align-items: center;
     justify-content: center;
     text-align: center;
-    background-color: #412E34;
+    background-color: #014561;
     border-radius: 30px 30px 0px 0px;
 }
 
@@ -70,7 +70,7 @@
     padding: 15px;
     font-size: 40px;
     color: #fff;
-    background-color: #694956;
+    background-color: #014561;
 }
 
 .form_logo h5 {
@@ -95,7 +95,7 @@
 .login_text p {
     font-size: 12px;
     text-transform: uppercase;
-    color: #412E34;
+    color: #014561;
     font-weight: 600;
 }
 
@@ -116,7 +116,7 @@
     height: 40px;
     text-align: center;
     /* background-color: #412E34; */
-    color: #412E34;
+    color: #014561;
     font-size: 20px;
 }
 
@@ -159,7 +159,7 @@
 }
 
 .input_animado input::placeholder {
-    color: #412E34;
+    color: #014561;
     font-weight: 400;
     font-size: 16px;
     /* border-color: blue; */
@@ -177,7 +177,7 @@
     justify-content: center;
     gap: 2px;
     color: #fff;
-    background-color: #412E34;
+    background-color: #014561;
     margin-top: 20px;
     padding: 10px 0;
     border-radius: 10px;
@@ -189,6 +189,6 @@
 }
 
 .visible_password{
-    color: rgb(2, 2, 107);
+    color: #014561;
     pointer-events: all;
 }

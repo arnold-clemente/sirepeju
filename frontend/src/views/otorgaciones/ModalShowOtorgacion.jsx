@@ -85,7 +85,7 @@ const ModalShowOtorgacion = ({ registro, modalRegistro, closeRegistro }) => {
     });
     return (
         <>
-            <ModalDiv isOpen={modalRegistro} closeModal={closeRegistro} title={'LISTA DE TRÁMITES EN PROCESO DE OTORGACIÓN'}>
+            <ModalDiv isOpen={modalRegistro} closeModal={closeRegistro} title={' PROCESO DE OTORGACIÓN'}>
                 {!cargando
                     ? (<div className="container-fluid">
                         {/*<h2 className='text-center fs-4'>{otorgacion.personalidad_juridica} </h2>*/}
@@ -119,28 +119,56 @@ const ModalShowOtorgacion = ({ registro, modalRegistro, closeRegistro }) => {
                         </div>
                         <div className="card m-2">
                             <div className="card-header">
-                                <h5 className='fw-bold'>{otorgacion.personalidad_juridica}</h5>
+                                <h6 className='fw-bold'><center>{otorgacion.personalidad_juridica}{otorgacion.sigla}</center></h6>
                             </div>
                             <div className="card-body">
                                 <div className="row border-bottom p-1">
-                                    <div className="col-md-3 fw-bold ">Código:</div>
-                                    <div className="col-md-3 ">{otorgacion.codigo_otorgacion}</div>
-                                    <div className="col-md-3 fw-bold ">Naturaleza:</div>
-                                    <div className="col-md-3 ">{otorgacion.naturaleza}</div>
+                                    <div className="col-md-4 fw-bold ">Código:</div>
+                                    <div className="col-md-8 ">{otorgacion.codigo_otorgacion}</div>
+                                    <div className="col-md-4 fw-bold ">Naturaleza:</div>
+                                    <div className="col-md-8 ">{otorgacion.naturaleza}</div>
                                 </div>
                                 <div className="row border-bottom p-1">
-                                    <div className="col-md-3 fw-bold ">Tipo de Persona Colectiva:</div>
-                                    <div className="col-md-3 ">{otorgacion.persona_colectiva}</div>
-                                    <div className="col-md-3 fw-bold ">Sigla:</div>
-                                    <div className="col-md-3 ">{otorgacion.sigla}</div>
+                                    <div className="col-md-4 fw-bold ">Domicilio legal:</div>
+                                    <div className="col-md-8 ">{otorgacion.persona_colectiva}</div>
+                                    <div className="col-md-4 fw-bold ">Sigla:</div>
+                                    <div className="col-md-8 ">{otorgacion.sigla}</div>
                                 </div>
                                 <div className="row border-bottom p-1">
-                                    <div className="col-md-3 fw-bold ">Domicilio Legal</div>
-                                    <div className="col-md-9 ">{otorgacion.domicilio_legal}</div>
+                                    <div className="col-md-4 fw-bold ">Domicilio legal</div>
+                                    <div className="col-md-8 ">{otorgacion.domicilio_legal}</div>
                                 </div>
                                 <div className="row">
-                                    <div className="col-md-1 fw-bold ">Objeto</div>
-                                    <div className="col-md-11">{otorgacion.objeto}</div>
+                                    <div className="col-md-4 fw-bold ">Objeto</div>
+                                    <div className="col-md-8">{otorgacion.objeto}</div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div className="card m-2">
+                            <div className="card-header">
+                                <h6 className='fw-bold'>{otorgacion.personalidad_juridica}</h6>
+                            </div>
+                            <div className="card-body">
+                                <div className="row border-bottom p-1">
+                                    <div className="col-md-4 fw-bold ">Código:</div>
+                                    <div className="col-md-8 ">{otorgacion.codigo_otorgacion}</div>
+                                    <div className="col-md-4 fw-bold ">Naturaleza:</div>
+                                    <div className="col-md-8 ">{otorgacion.naturaleza}</div>
+                                </div>
+                                <div className="row border-bottom p-1">
+                                    <div className="col-md-4 fw-bold ">Tipo de Persona Colectiva:</div>
+                                    <div className="col-md-8 ">{otorgacion.persona_colectiva}</div>
+                                    <div className="col-md-4 fw-bold ">Sigla:</div>
+                                    <div className="col-md-8 ">{otorgacion.sigla}</div>
+                                </div>
+                                <div className="row border-bottom p-1">
+                                    <div className="col-md-4 fw-bold ">Domicilio legal</div>
+                                    <div className="col-md-8 ">{otorgacion.domicilio_legal}</div>
+                                </div>
+                                <div className="row">
+                                    <div className="col-md-4 fw-bold ">Objeto</div>
+                                    <div className="col-md-8">{otorgacion.objeto}</div>
                                 </div>
 
                             </div>
@@ -181,9 +209,10 @@ const ModalShowOtorgacion = ({ registro, modalRegistro, closeRegistro }) => {
 
 
                     </div>)
+                    
                     : <div className='spiner_content'><span className='loader_spiner'></span></div>
                 }
-
+                   
             </ModalDiv >
         </>
     )

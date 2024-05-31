@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-
+import logo from '../../images/logovic.jpg';
 import { useMutation } from 'react-query';
 import { getAdministrativoDashboard } from '../../api/dashboardApi'
 
@@ -46,6 +46,7 @@ const AdministrativoDashboard = () => {
     // ]);
 
     // ejemplo de char 
+    
     const meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
 
     const [consulta, setConsulta] = useState(new Date().getFullYear());
@@ -132,7 +133,8 @@ const AdministrativoDashboard = () => {
     const midata = {
         labels: meses,
         datasets: [ // Cada una de las líneas del gráfico
-            {
+            
+        {
                 label: 'Reserva',
                 data: reserva_meses,
                 tension: 0.5,
@@ -186,7 +188,7 @@ const AdministrativoDashboard = () => {
         labels: ['Reservas', 'Otorgaciones', 'Adecuaciones', 'Gobernaciones'],
         datasets: [
             {
-                label: 'Totales de Gestión',
+                label: 'TRAMITES REALIZADOS POR AÑO',
                 data: [total_reserva, total_otorgacion, total_adecuacion, total_gobernacion],
                 backgroundColor: [
                     '#6dcbda9c',
@@ -200,7 +202,7 @@ const AdministrativoDashboard = () => {
                     '#FFC107',
                     '#d95903',
                 ],
-                borderWidth: 1,
+                borderWidth: 2,
             },
         ],
     }
@@ -211,10 +213,11 @@ const AdministrativoDashboard = () => {
 
     return (
         <>
+        
             <div className='container-fuild row justify-content-center'>
                 <div className="form-group col-md-6 py-2">
                     <div className="form-group">
-                        <label>Seleccionar Año</label>
+                        <label>REALIZAR LA CONSULTA POR GESTIÓN</label>
                         <select className="form-control" id="exampleFormControlSelect1"
                             value={consulta} onChange={handleInputChange}>
                                 <option className='d-none' value={''}>SELECCIONAR AÑO</option>
@@ -235,7 +238,7 @@ const AdministrativoDashboard = () => {
                         <div className='panel_contenedor'>
                             <div className='panel_letra'>
                                 <h1>{total_reserva}</h1>
-                                <h3>Reservas Totales</h3>
+                                <h3>Reserva de nombre</h3>
                                 <p>Gestión {consulta}</p>
                             </div>
                             <div className='panel_icon'>
@@ -252,7 +255,7 @@ const AdministrativoDashboard = () => {
                         <div className='panel_contenedor'>
                             <div className='panel_letra'>
                                 <h1>{total_otorgacion}</h1>
-                                <h3>Otorgaciones Totales</h3>
+                                <h3>Trámites de otorgación</h3>
                                 <p>Gestión {consulta}</p>
                             </div>
                             <div className='panel_icon'>
@@ -269,7 +272,7 @@ const AdministrativoDashboard = () => {
                         <div className='panel_contenedor'>
                             <div className='panel_letra'>
                                 <h1>{total_adecuacion}</h1>
-                                <h3>Adecuaciones Totales</h3>
+                                <h3>Trámites de adecuación</h3>
                                 <p>Gestión {consulta}</p>
                             </div>
                             <div className='panel_icon'>
@@ -286,7 +289,7 @@ const AdministrativoDashboard = () => {
                         <div className='panel_contenedor'>
                             <div className='panel_letra'>
                                 <h1>{total_gobernacion}</h1>
-                                <h3>Gobenaciones Totales</h3>
+                                <h3>Entidades emitidas por Gobenaciones </h3>
                                 <p>Gestión {consulta}</p>
                             </div>
                             <div className='panel_icon'>
@@ -303,7 +306,7 @@ const AdministrativoDashboard = () => {
             {loading == false
                 ? <Spiner />
                 : <><div className='container-fluid row'>
-                    <div className='col-12'>
+                    <div className='col-120'>
                         <Line data={midata} options={misoptions} />
                     </div>
                 </div>

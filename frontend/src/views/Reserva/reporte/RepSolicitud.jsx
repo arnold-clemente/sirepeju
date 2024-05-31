@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import Modal from '../../../components/ModalPdf'
+
 import { PDFViewer, Document, Page } from '@react-pdf/renderer'
 import { Font } from '@react-pdf/renderer'
 // import QRCode from "react-qr-code";
@@ -23,11 +24,10 @@ const RepSolicitud = ({ registro, modal, close }) => {
 
 
 
-  // estilos del pdf 
   const styles = StyleSheet.create({
     // empiezo  prueba 
     contenedor_logo_qr: {
-      width: '150px',
+      width: '100px',
       display: 'flex',
       flexDirection: 'row',
       justifyContent: 'flex-start',
@@ -37,6 +37,7 @@ const RepSolicitud = ({ registro, modal, close }) => {
       fontSize: '14px',
       fontWeight: 'bold',
       paddingRight: '5px',
+      marginBottom: '10px'
     },
 
     // fin prueba 
@@ -48,11 +49,11 @@ const RepSolicitud = ({ registro, modal, close }) => {
     page: {
       flexDirection: 'row',
       backgroundColor: '#E4E4E4',
-      margin: 100
+      margin: 5
     },
     section: {
-      margin: 10,
-      padding: 10,
+      margin: 100,
+      padding: 100,
       flexGrow: 1,
     },
     body: {
@@ -107,8 +108,8 @@ const RepSolicitud = ({ registro, modal, close }) => {
     },
     title: {
       textAlign: 'center',
-      fontSize: '16px',
-      marginBottom: '20px'
+      fontSize: '12px',
+      marginBottom: '5px'
     },
     lista: {
       display: 'flex',
@@ -123,43 +124,43 @@ const RepSolicitud = ({ registro, modal, close }) => {
       paddingRight: '5px',
     },
     dato: {
-      fontSize: '11px',
+      fontSize: '9px',
     },
     celdaColorida: { backgroundColor: '#44556f' }, // Puedes cambiar el color aquí
-    textoBlanco: { color: '#ffffff', fontSize: '12px', }, // Color blanco
+    textoBlanco: { color: '#ffffff', fontSize: '11px', }, // Color blanco
 
     boldText: {
       fontWeight: 'bold',
-      fontSize: '12px',
+      fontSize: '9px',
       justifyContent: 'center',
     },
-    table: {
-      display: "table",
-      width: "auto",
-      borderStyle: "solid",
-      borderWidth: 1,
-      borderRightWidth: 0,
-      borderBottomWidth: 0
+     table: {
+        display: "table",
+        width: "auto",
+        borderStyle: "solid",
+        borderWidth: 1,
+        borderRightWidth: 0,
+        borderBottomWidth: 0,
+        //borderRadius: "10px"
     },
     tableRow: {
       margin: "auto",
       flexDirection: "row"
-    },
-    tableCol: {
-
+  },
+  tableCol: {
       width: "25%",
       borderStyle: "solid",
       borderWidth: 1,
       borderLeftWidth: 0,
       borderTopWidth: 0
-    },
-    tableCell: {
-
+  },
+  tableCell: {
       margin: "auto",
       marginTop: 5,
-      fontSize: 10,
-      fontWeight: 'bold'
-    },
+      fontSize: '9px',
+      fontWeight: 'bold',
+      textTransform: 'uppercase'
+  },
     content: {
       flexGrow: 1,
     },
@@ -254,7 +255,7 @@ const RepSolicitud = ({ registro, modal, close }) => {
               </View>
 
               <View style={styles.contenedor_logo}>
-                <Text style={styles.prueba}>PERSONALIDAD JURIDICA</Text>
+                <Text style={styles.prueba}> RESERVA DE NOMBRE</Text>
               </View>
 
 
@@ -328,14 +329,28 @@ const RepSolicitud = ({ registro, modal, close }) => {
                   </View>
                 </View>
               </View>
-              <View style={styles.contenedor_logo_qr}>
+              
+              {/* final de la tabla */}
+              <View style={styles.content}>
+        {/* Contenido de tu documento */}
+        <Text style={styles.dato}>{"\n"}El contenido de este documento esta extraido del sistema SIREPEJU(Sistema de Registro de Personalidades Juridícas).{"\n"}</Text>
+        {/* QR*/}
+        <View style={styles.contenedor_logo_qr}>
                 {imageqr != ''
                   ? <Image style={styles.logo} src={imageqr} />
                   : null
                 }
               </View>
-              {/* final de la tabla */}
-
+        <Text style={styles.dato}>Fecha y Hora de Impresión: {"\n"}{getCurrentDateTime()}</Text>
+      </View>
+      <View style={styles.watermark}>
+        <Text>SIREPEJU</Text>
+      </View>
+      <View style={styles.footer}>
+          {/* Línea en el pie de página */}
+          <View style={styles.line}></View>
+          <Text>Casa Grande del Pueblo,calle Ayacucho - esq.Potosí,Tel:(591-2)2184178 {"\n"}La Paz -Bolivia {"\n"}{"\n"}Pagína{1}</Text>
+        </View>
             </Page>
 
           </Document>

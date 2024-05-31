@@ -308,24 +308,18 @@ const IndexOtorgacion = () => {
             width: '150px',
         },
         {
-            name: 'Codigo OPJ',
+            name: 'Codigo-OPJ',
             selector: row => row.codigo_otorgacion,
             sortable: true,
             width: '150px',
         },
         {
-            name: 'Fecha de Ingreso',
+            name: 'Fecha de ingreso',
             selector: row => row.fecha_ingreso_tramite,
             sortable: true,
             width: '150px',
         },
-        {
-            name: 'Tipo de Persona Colectiva',
-            selector: row => row.persona_colectiva,
-            sortable: true,
-            wrap: true,
-            width: '200px',
-        },
+        
         {
             name: 'Naturaleza',
             selector: row => row.naturaleza,
@@ -346,6 +340,13 @@ const IndexOtorgacion = () => {
             sortable: true,
             wrap: true,
             width: '150px',
+        },
+        {
+            name: 'Tipo de Persona Colectiva',
+            selector: row => row.persona_colectiva,
+            sortable: true,
+            wrap: true,
+            width: '200px',
         },
         {
             name: 'Objeto',
@@ -372,12 +373,20 @@ const IndexOtorgacion = () => {
             width: '150px',
         },
         {
-            name: 'Mienbros Fundadores',
+            name: 'CI_rep_legal',
+            selector: row => row.ci_rep,
+            sortable: true,
+            wrap: true,
+            width: '150px',
+        },
+        {
+            name: 'Miembros Fundadores',
             selector: row => row.miembros_fundador,
             sortable: true,
             wrap: true,
             width: '300px',
         },
+        
         {
             name: 'Cedula',
             selector: row => row.ci_rep + " " + row.ext_ci_rep,

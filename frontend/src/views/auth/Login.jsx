@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { useForm } from '../../hooks/useForm';
 import { useNavigate } from 'react-router-dom';
 
-import logo from '../../images/logo.png';
+import logo from '../../images/logovic.jpg';
 import { show_alerta } from '../../components/MessageAlert';
 import storage from '../../Storage/storage';
 
@@ -46,7 +46,7 @@ const Login = () => {
                 storage.set('authToken', response.token)
                 storage.set('authUser', response.data);
                 window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.token;
-                show_alerta('Bienvenido a Sirepeju', '<i class="fa-solid fa-check border_alert_green"></i>', 'alert_green')
+                show_alerta('Bienvenido aL Sistema de Registro de Personalidades Jurídicas (SIREPEJU).', '<i class="fa-solid fa-check border_alert_green"></i>', 'alert_green')
                 setCargando(false);
                 go('/admin')
             } else {
@@ -161,7 +161,7 @@ const Login = () => {
                     </form>
                 </div>
                 <div className="login_text">
-                    <p>@ TODOS LOS DERECHOS RESERVADOS </p>
+                    <p>@ TODOS LOS DERECHOS RESERVADOS VICEMINISTERIO_AUTÓNOMIAS </p>
                 </div>
             </div>
         </div>

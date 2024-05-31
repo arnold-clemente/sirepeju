@@ -6,7 +6,7 @@ import { Font } from '@react-pdf/renderer'
 // import QRCode from "react-qr-code";
 import { QRCode } from 'react-qrcode-logo';
 import { Text, View, StyleSheet, Image, Svg } from '@react-pdf/renderer'
-import logo from '../../../images/logovic.jpg'
+
 import qr_logo from '../../../images/qr_logo.png'
 
 import { fuentes } from '../../../estilos/Fonts';
@@ -16,16 +16,6 @@ import { fuentes } from '../../../estilos/Fonts';
 const RepReservados = ({ registro, modal, close }) => {
     
     
-    let fecha_esp = ''
-
-    if (registro.fecha_reg) {
-        const date = new Date(registro.fecha_reg);
-        var dia = date.getDate();
-        var mes = date.getMonth();
-        var yyy = date.getFullYear();
-        const meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Setiembre", "Octubre", "Noviembre", "Diciembre"];
-        fecha_esp = dia + ' de ' + meses[mes] + ' del ' + yyy;
-    }
     Font.register(fuentes);
     const qrUrl = useRef({})
     const [imageqr, setImageqr] = useState('')
@@ -116,7 +106,7 @@ const RepReservados = ({ registro, modal, close }) => {
         parrafo: {
 
             fontSize: '15px',
-            marginBottom: '15px',
+            marginBottom: '10px',
             marginTop: '15px',
             textAlign: 'justify',
             
@@ -131,8 +121,8 @@ const RepReservados = ({ registro, modal, close }) => {
         },
         letra: {
             textAlign: 'justify',
-            fontSize: '11px',
-            marginBottom:'100px',
+            fontSize: '10px',
+            marginBottom:'7px',
             marginTop: '15px',
 
         },
@@ -145,7 +135,7 @@ const RepReservados = ({ registro, modal, close }) => {
         
         fecha:
         {
-            textAlign: 'center',
+            
             fontSize: '12px',
             marginBottom: '2px',
             marginTop: '25px',
@@ -159,14 +149,22 @@ const RepReservados = ({ registro, modal, close }) => {
            
             
         },
-
+        date: {
+            fontSize: 15,
+            textAlign: 'right',
+            marginBottom:'70px',
+          },
+        
     });
-    const currentDate = new Date();
-    const formattedDate = currentDate.toLocaleString();
-    const getCurrentDateTime = () => {
-        const currentDateTime = new Date();
-        return currentDateTime.toLocaleString();
-      };
+
+      // Obtener la fecha actual y formatearla
+const currentDate = new Date();
+const formattedDate = currentDate.toLocaleDateString('es-ES', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+
     
       const generarQr = () => {
         const serializer = new XMLSerializer();
@@ -251,10 +249,9 @@ const RepReservados = ({ registro, modal, close }) => {
                                     del presente certificado, caso contrario, este documento carecerá de validez legal
                                     procedíendose a la eliminación de la reserva de nombre del sistema, conforme lo dispuesto por
                                     el artìculo 9 del Decreto Supremo N° 1597, vigente a través del Decreto Supremo N°4635 de 08
-                                    de diciembre de 2021.</Text>
-                                    <Text style={styles.fecha}> {fecha_esp}</Text>                       
+                                    de diciembre de 2021.</Text>                     
                             </View>
-                            
+                            <Text style={styles.date}>{formattedDate}</Text>
                             <View>
                              <View style={styles.contenedor_logo_qr}>
                             {imageqr != ''
@@ -264,6 +261,7 @@ const RepReservados = ({ registro, modal, close }) => {
                             </View>
                                 <Text style={styles.correlativo}>Número correlativo: {registro.nro_certificado}</Text>
                                 <Text style={styles.correlativo}>AHRG/rif</Text>
+                               
                             </View>
                            
 

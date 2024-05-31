@@ -141,13 +141,6 @@ const IndexReserva = () => {
             width: '150px',
         },
         {
-            name: 'Tipo de Persona Colectiva',
-            selector: row => row.persona_colectiva,
-            sortable: true,
-            wrap: true,
-            width: '200px',
-        },
-        {
             name: 'Naturaleza',
             selector: row => row.naturaleza,
             sortable: true,
@@ -168,6 +161,14 @@ const IndexReserva = () => {
             wrap: true,
             width: '150px',
         },
+        {
+            name: 'Tipo de Persona Colectiva',
+            selector: row => row.persona_colectiva,
+            sortable: true,
+            wrap: true,
+            width: '200px',
+        },
+        
         {
             name: 'Representante Legal',
             selector: row => row.representante,

@@ -83,7 +83,7 @@ const RepProcesoOtorgacion = ({ otorgacion, fundadores, personalidad, modal, clo
           },
           contenedor: {
             width: '100%',
-            marginBottom: '1cm'
+            marginBottom: '10px'
           },
           contenedor_logo: {
             width: '100%',
