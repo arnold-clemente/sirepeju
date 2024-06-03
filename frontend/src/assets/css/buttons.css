@@ -1,0 +1,486 @@
+.button_green {
+    border: none;
+    width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background-color: rgb(32, 184, 32);
+    color: white;
+    padding: 5px;
+    border-radius: 10px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 14px;
+    transition: all 0.3s ease-in-out;
+}
+
+.button_green:hover {
+    background-color: rgb(4, 95, 4);
+    color: white;
+    font-size: 600;
+}
+
+.button_green i {
+    width: 20px;
+}
+
+/* para el crud  */
+.button_show {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    justify-content: center;
+    font-size: 15px;
+    padding: 7px;
+    background-color: #FF7A00;
+    color: #fff;
+    transition: all 0.3s ease-in-out;
+}
+
+.button_show:hover {
+    background-color: #fff;
+    color: #FF7A00;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+.button_show span {
+    display: none;
+    position: absolute;
+    margin-top: 40px;
+    font-size: 10px;
+    font-weight: 700;
+    color: #1c1e1f;
+    transition: all 0.3s ease-in-out;
+}
+
+.button_show:hover span {
+    display: block;
+}
+
+.button_edit {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    text-align: center;
+    justify-content: center;
+    font-size: 15px;
+    padding: 7px;
+    background-color: #0A9DBD;
+    color: #fff;
+    border: none;
+    transition: all 0.3s ease-in-out;
+}
+
+.button_edit:hover {
+    background-color: #fff;
+    color: #0A9DBD;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+.button_edit span {
+    display: none;
+    position: absolute;
+    margin-top: 40px;
+    font-size: 10px;
+    font-weight: 700;
+    color: #1c1e1f;
+    transition: all 0.3s ease-in-out;
+}
+
+.button_edit:hover span {
+    display: block;
+}
+
+.button_delete {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    padding: 7px;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    justify-content: center;
+    text-align: center;
+    font-size: 15px;
+    background-color: #FF0000;
+    color: #fff;
+    border: none;
+    transition: all 0.3s ease-in-out;
+}
+
+.button_delete:hover {
+    background-color: #fff;
+    color: #FF0000;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+.button_delete span {
+    display: none;
+    position: absolute;
+    margin-top: 40px;
+    font-size: 10px;
+    font-weight: 700;
+    color: #1c1e1f;
+    transition: all 0.3s ease-in-out;
+}
+
+.button_delete:hover span {
+    display: block;
+}
+
+
+.button_download {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    padding: 7px;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 15px;
+    border: none;
+    background-color: #5F037B;
+    color: #fff;
+    transition: all 0.3s ease-in-out;
+}
+
+
+.button_download:hover {
+    background-color: #fff;
+    color: #5F037B;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+.button_download span {
+    display: none;
+    position: absolute;
+    margin-top: 40px;
+    font-size: 10px;
+    font-weight: 700;
+    color: #1c1e1f;
+    transition: all 0.3s ease-in-out;
+}
+
+.button_download:hover span {
+    display: block;
+}
+
+.button_print {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    font-size: 15px;
+    justify-content: center;
+    text-decoration: none;
+    border: none;
+    padding: 7px;
+    background-color: #13752b;
+    color: #fff;
+    transition: all 0.3s ease-in-out;
+}
+
+.button_print:hover {
+    background-color: #fff;
+    color: #13752b;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+.button_print span {
+    display: none;
+    position: absolute;
+    margin-top: 40px;
+    font-size: 10px;
+    font-weight: 700;
+    color: #1c1e1f;
+    transition: all 0.3s ease-in-out;
+}
+
+.button_print:hover span {
+    display: block;
+}
+
+.button_crud_anadir {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.contain_button {
+    display: flex;
+    width: 100px;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    background-color: #69B41E;
+    color: #fff;
+    border: none;
+    font-size: 14px;
+    text-decoration: none;
+    justify-content: center;
+    border-radius: 10px;
+    transition: all 0.3s ease-in-out;
+}
+
+.contain_button:hover {
+    background-color: #fff;
+    color: #69B41E;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+
+.button_verificar {
+    width: 50px;
+    height: 30px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    border: none;
+    font-size: 12px;
+    background-color: #FF0000;
+    text-decoration: none;
+    color: #fff;
+    transition: all 0.3s ease-in-out;
+}
+
+.button_verificar:hover {
+    background-color: #fff;
+    color: #FF0000;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+.button_print_show {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 10px;
+    border: none;
+    background-color: #13752b;
+    color: #fff;
+    gap: 5px;
+    border-radius: 10px;
+    transition: all 0.5s ease-in-out;
+}
+
+.button_print_show:hover {
+    color: #13752b;
+    background-color: #fff;
+}
+
+
+.button_reservar {
+    width: 50px;
+    height: 30px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    font-size: 12px;
+    justify-content: center;
+    text-decoration: none;
+    border: none;
+    background-color: #0A9DBD;
+    color: #fff;
+    transition: all 0.3s ease-in-out;
+}
+
+.button_reservar:hover {
+    background-color: #fff;
+    color: #0A9DBD;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+/* botones de varias opciones datatable */
+
+.button_dropdown_table {
+    width: 40px;
+    height: 30px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    font-size: 12px;
+    justify-content: center;
+    text-decoration: none;
+    border: none;
+    background-color: #0A9DBD;
+    color: #fff;
+    margin: 0px 1px;
+    transition: all 0.3s ease-in-out;
+}
+
+.button_dropdown_table:hover {
+    background-color: #fff;
+    color: #0A9DBD;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+/* para el show  */
+.button_show_table {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    height: 25px;
+    padding: 5px 10px;
+    text-align: left;
+    font-size: 13px;
+    border: none;
+    text-decoration: none;
+    background-color: #FF7A00;
+    color: #fff;
+    transition: all 0.3s ease-in-out;
+}
+
+.button_show_table:hover {
+    background-color: #fff;
+    color: #FF7A00;
+}
+
+.button_edit_table {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    height: 25px;
+    padding: 5px 10px;
+    text-align: left;
+    font-size: 13px;
+    border: none;
+    text-decoration: none;
+    background-color: #0A9DBD;
+    color: #fff;
+    transition: all 0.3s ease-in-out;
+}
+
+.button_edit_table:hover {
+    background-color: #fff;
+    color: #0A9DBD;
+}
+
+.button_delete_table {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    height: 25px;
+    padding: 5px 10px;
+    text-align: left;
+    font-size: 13px;
+    border: none;
+    text-decoration: none;
+    background-color: #FF0000;
+    color: #fff;
+    transition: all 0.3s ease-in-out;
+}
+
+.button_delete_table:hover {
+    background-color: #fff;
+    color: #FF0000;
+}
+
+.button_download_table {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    height: 25px;
+    padding: 5px 10px;
+    text-align: left;
+    font-size: 13px;
+    border: none;
+    text-decoration: none;
+    background-color: #5F037B;
+    color: #fff;
+    transition: all 0.3s ease-in-out;
+}
+
+
+.button_download_table:hover {
+    background-color: #fff;
+    color: #5F037B;
+}
+
+.button_print_table {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    height: 25px;
+    padding: 5px 10px;
+    text-align: left;
+    font-size: 13px;
+    border: none;
+    text-decoration: none;
+    background-color: #13752b;
+    color: #fff;
+    transition: all 0.3s ease-in-out;
+}
+
+.button_print_table:hover {
+    background-color: #fff;
+    color: #13752b;
+}
+
+.button_opcion_1 {
+    background-color: #000A34;
+    color: #fff;
+    border: none;
+    padding: 5px;
+    text-transform: uppercase;
+    font-weight: bold;
+    transition: all 0.5s ease-in-out;    
+}
+.button_opcion_1:hover {
+    background-color: #fff;
+    color: #000A34;
+    border: solid 1px #000A34;
+}
+.button_opcion_2 {
+    background-color: #FF0000;
+    color: #fff;
+    border: none;
+    padding: 5px;
+    text-transform: uppercase;
+    font-weight: bold;
+    transition: all 0.5s ease-in-out;
+}
+.button_opcion_2:hover {
+    background-color: #fff;
+    color: #FF0000;
+    border: solid 1px #FF0000;
+}
+
+
+.button_select_pdf {
+    height: 30px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    gap: 5px;
+    border: none;
+    font-size: 12px;
+    background-color: #FF0000;
+    text-decoration: none;
+    color: #fff;
+    transition: all 0.3s ease-in-out;
+    padding: 5px;
+}
+
+.button_select_pdf:hover {
+    background-color: #fff;
+    color: #FF0000;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}

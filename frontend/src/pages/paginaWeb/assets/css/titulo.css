@@ -1,0 +1,24 @@
+.titulo_main{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0;
+}
+.titulo_content{
+    width: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    background-image: linear-gradient(90deg, #112674, #112674);
+    background-repeat: no-repeat;
+    background-size: 100% 5px;
+    background-position: center bottom;
+}
+.titulo_main h1{
+    background-color: #112674;
+    color: #fff;
+    padding: 10px;
+    margin: 0;
+    font-size: 16px;
+}

@@ -1,0 +1,43 @@
+
+reserva de nombre  -> 1 tipo
+1 -> solicitado 
+2 -> homonimia 
+3 -> reservado 
+4 -> caducado
+5 -> otorgacion
+
+otorgacion -> 2
+1 -> tramite 
+2 -> archivado 
+3 -> caducado 
+4 -> personalidad 
+5 -> revocado 
+6 -> extinguido 
+7 -> modficacion 
+8 -> archivado modificacion
+
+
+adecuacion -> 3
+1 -> tramite 
+2 -> archivado 
+3 -> caducado 
+4 -> personalidad 
+5 -> revocado 
+6 -> extinguido 
+7 -> modficacion 
+8 -> archivado modificacion
+
+
+gobernacion 4 
+1 -> activo 
+0 -> eliminado
+
+registro -> 5
+0 eliminado  
+1 activo
+
+
+
+
+
+

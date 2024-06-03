@@ -1,0 +1,62 @@
+.normativa_h1{
+    width: 100%;
+    margin-top: 30px;
+    padding: 30px 20px;
+    font-size: 25px;
+    font-weight: bold;
+    text-align: center;
+}
+.normativas{
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.card_normativa{
+    width: 300px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    border: solid 1px #0000004b;
+    border-radius: 20px;
+}
+
+.card_normativa_image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card_normativa_image img{
+    width: 80px;
+}
+
+.card_normativa_text{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card_normativa_text h3{
+    font-size: 14px;
+    text-transform: uppercase;
+    text-align: justify;
+}
+
+.card_normativa_text button{
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100px;
+    border: none;
+    background-color: #4a70fa;
+    color: #fff;
+    border-radius: 5px;
+    padding: 2px;
+}

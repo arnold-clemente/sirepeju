@@ -1,0 +1,84 @@
+.Modal {
+    position: absolute;
+    top: 40px;
+    bottom: 40px;
+    background-color: #fff;
+    width: 50%;
+  }
+  
+  .Overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: gray;
+    
+  }  
+.buscados_modal_main{
+    /* width: 80%; */
+    display: flex;
+    flex-direction: column;
+}
+.buscados_modal_header{
+    /* width: 320px; */
+    background-color: #112674;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.buscados_modal_header_title{
+    padding: 10px;
+}
+
+.buscados_modal_header_title h1{
+    font-size: 16px;
+    text-transform: uppercase;
+    font-weight: bold;
+    text-align: center;
+}
+
+.buscados_modal_header_button{
+    border: none;
+    color: #fff;
+    padding: 5px;
+    background-color: transparent;
+}
+
+.buscados_modal_body{
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+.buscados_modal_body_image{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.buscados_modal_body_image img{
+    width: 150px;    
+}
+
+@media(max-width: 1024px){
+    .Modal {
+        width: 70%;
+      }
+}
+
+@media(max-width: 700px){
+    .Modal {
+        width: 90%;
+      }
+}
+
+@media(max-width: 500px){
+    .Modal {
+        width: 100%;
+      }
+      .buscados_modal_body_image{
+        display: none;
+      }
+}

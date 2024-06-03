@@ -1,0 +1,134 @@
+.alert_container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.alert_container i {
+    width: 30px;
+    font-size: 16px;
+    margin-right: 5px;
+    padding: 5px;
+    border-radius: 50%;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #a3c0ade1;
+    background-color: #fff;
+}
+
+.alert_container span {
+    font-size: 16px;
+}
+
+.alert_red {
+    color: #b91111;
+}
+
+.alert_green {
+    color: #066826e1;
+}
+
+.alert_blue {
+    color: rgb(29, 29, 199);
+}
+
+.alert_orange {
+    color: rgb(221, 82, 17);
+}
+
+.alert_container i.border_alert_red {
+    color: #b91111;
+    border-color: #b91111;
+}
+
+.alert_container i.border_alert_green {
+    color: #066826e1;
+    border-color: #066826e1;
+}
+
+.alert_container i.border_alert_blue {
+    color: rgb(29, 29, 199);
+    border-color: rgb(29, 29, 199);
+}
+
+.alert_container i.border_alert_orange {
+    color: rgb(221, 82, 17);
+    border-color: rgb(221, 82, 17);
+}
+
+.estado_eliminado{
+    background-color: red;
+}
+
+.estado_tramite{
+    background-color: #066826e1;
+}
+
+.estado_archivado{
+    background-color: rgb(221, 70, 0);
+}
+
+.estado_caducado{
+    background-color: rgb(221, 7, 0);
+}
+
+.estado_homonimia{
+    background-color: rgb(151, 78, 9);
+}
+
+.estado_reservado{
+    background-color: blue;
+}
+
+.estado_personalidad{
+    background-color: rgb(0, 144, 180);
+}
+
+.estado_revocado{
+    background-color: yellow;
+}
+
+.estado_extinguido{
+    background-color: rgb(97, 216, 0);
+}
+
+.estado_modificacion{
+    background-color: rgb(184, 216, 0);
+}
+
+.estado_default{
+    background-color: rgb(75, 75, 75);
+}
+
+.color_reserva{
+    color: rgb(0, 144, 180);
+}
+.color_otorgacion{
+    color: rgb(2, 126, 2);
+}
+.color_adecuacion{
+    color: rgb(2, 126, 2);
+}
+.color_gobernacion{
+    color: rgb(0, 18, 180);
+}
+.color_registros{
+    color: rgb(204, 101, 5);
+}
+
+.color_estado_white{
+    text-align: center;
+    font-weight: bold;
+}
+
+.white_modal{
+    color: #fff;
+    text-align: center;
+    font-weight: bold;
+}
+
+.estados_rounded{
+    border-radius: 10px;
+    padding: 5px 10px;
+}
