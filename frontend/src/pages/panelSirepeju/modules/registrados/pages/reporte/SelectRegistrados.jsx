@@ -1,12 +1,44 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Modal from 'components/ModalPdf'
 import { PDFViewer, Document, Page } from '@react-pdf/renderer'
-import { Text, View, StyleSheet, Image } from '@react-pdf/renderer'
+import { Font } from '@react-pdf/renderer'
+// import QRCode from "react-qr-code";
+import { QRCode } from 'react-qrcode-logo';
+import { Text, View, StyleSheet, Image, Svg } from '@react-pdf/renderer'
 import logo from 'assets/images/logovic.jpg'
+import qr_logo from 'assets/images/qr_logo.png'
+
+import { fuentes } from 'assets/estilos/Fonts'
 
 const SelectRegistrados = ({ registro, modal, close }) => {
+  Font.register(fuentes);
+  const qrUrl = useRef({})
+  const [imageqr, setImageqr] = useState('')
+
+  useEffect(() => {
+    if (qrUrl.current) {
+      generarQr();
+    }
+  }, [qrUrl.current]);
+
 
   const styles = StyleSheet.create({
+     // empiezo  prueba 
+     contenedor_logo_qr: {
+      width: '80px',
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'flex-start',
+    },
+    prueba: {
+      fontFamily: 'Oswald',
+      fontSize: '14px',
+      fontWeight: 'bold',
+      paddingRight: '5px',
+      textAlign: 'center',
+    },
+
+    // fin prueba 
     main: {
       width: "100%",
       height: "90vh",
@@ -33,7 +65,7 @@ const SelectRegistrados = ({ registro, modal, close }) => {
     },
     contenedor: {
       width: '100%',
-
+      marginBottom: '1cm'
     },
     contenedor_logo: {
       width: '100%',
@@ -41,6 +73,7 @@ const SelectRegistrados = ({ registro, modal, close }) => {
       flexDirection: 'row',
       justifyContent: 'center',
     },
+
     contenedor_fecha: {
       width: '100%',
       display: 'flex',
@@ -81,18 +114,19 @@ const SelectRegistrados = ({ registro, modal, close }) => {
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'flex-start',
-      marginBottom: '6px',
+      marginBottom: '10px',
     },
     tipo: {
       fontSize: '14px',
       fontWeight: 700,
-      paddingRight: '2px',
+      paddingRight: '5px',
     },
     dato: {
       fontSize: '11px',
+      marginBottom: '10px',
     },
     celdaColorida: { backgroundColor: '#44556f' }, // Puedes cambiar el color aquí
-    textoBlanco: { color: '#ffffff', fontSize: '12px', }, // Color blanco
+    textoBlanco: { color: '#ffffff', fontSize: '10px', }, // Color blanco
 
     boldText: {
       fontWeight: 'bold',
@@ -123,7 +157,7 @@ const SelectRegistrados = ({ registro, modal, close }) => {
 
       margin: "auto",
       marginTop: 5,
-      fontSize: 10,
+      fontSize: 8,
       fontWeight: 'bold'
     },
     content: {
@@ -146,24 +180,73 @@ const SelectRegistrados = ({ registro, modal, close }) => {
       transform: 'rotate(-30deg)', // Rotación de la marca de agua
       fontSize: 60,
       color: 'gray', // Color de la marca de agua
-    }
+    },
+
+
   });
   const getCurrentDateTime = () => {
     const currentDateTime = new Date();
     return currentDateTime.toLocaleString();
   };
+
+  const generarQr = () => {
+    const serializer = new XMLSerializer();
+    // console.log(qrUrl.current.canvas.current)
+    const svgStr = serializer.serializeToString(qrUrl.current.canvas.current);
+    const prueba = qrUrl.current.canvas.current;
+    // prueba.toDataURL("image/jpeg");
+    // const img_src = 'data:image/canvas;base64,' + window.btoa(svgStr);
+    // const img_src = 'data:image/svg+xml;base64,' + window.btoa(svgStr);
+    setImageqr(prueba.toDataURL("image/jpeg"));
+  };
+
+
   return (
     <>
+     <div className='d-none'>
+        {/* esto configura el qr  */}
+        <QRCode value="https://va.presidencia.gob.bo/index.php/institucion/personalidades-juridicas"
+          logoImage={qr_logo}
+          logoWidth={120}
+          logoHeight={120}
+          logoPadding={1}
+          fgColor="#01273D"
+          removeQrCodeBehindLogo={false}
+          size={500}
+          // bgColor="#000"
+          logoOpacity={1}
+          qrStyle={'dots'}
+          logoPaddingStyle={'circle'}
+          eyeColor={[
+            {
+              outer: '#0277BD',
+              inner: '#0273B6'
+            },
+            {
+              outer: '#0277BD',
+              inner: '#0275B9'
+            },
+            {
+              outer: '#000B11',
+              inner: '#000203'
+            },
+
+          ]}
+          ref={qrUrl}
+          id='prueba_image'
+
+        />
+      </div>
       <Modal isOpen={modal} closeModal={close}>
 
         <PDFViewer style={styles.main}>
           <Document>
             <Page size="letter" style={styles.body}>
-              <View style={styles.contenedor_logo}>
+            <View style={styles.contenedor_logo}>
                 <Image style={styles.logo} src={logo} />
               </View>
               <View style={styles.contenedor}>
-                <Text style={styles.title}>REGISTRO A LA LEY N° 351 - REGISTRO DE VERIFICACIÓN Y COMPATIBILIDAD - REGISTRO DE PERSONALIDADES JURÍDICAS </Text>
+                <Text style={styles.prueba}>LISTA DE REGISTROS DE ADECUACIÓN</Text>
               </View>
 
               {/* la tabla desde este lugar */}
@@ -172,16 +255,16 @@ const SelectRegistrados = ({ registro, modal, close }) => {
                 {/* fila 1 */}
                 <View style={styles.tableRow}>
                   <View style={{ ...styles.tableCol, ...styles.celdaColorida }}>
-                    <Text style={{ ...styles.tableCell, ...styles.textoBlanco }}>TIPO DE REGISTRO</Text>
+                    <Text style={{ ...styles.tableCell, ...styles.textoBlanco }}>N° REGISTRO</Text>
                   </View>
                   <View style={{ ...styles.tableCol, ...styles.celdaColorida }}>
-                    <Text style={{ ...styles.tableCell, ...styles.textoBlanco }}>NOMBRE</Text>
+                    <Text style={{ ...styles.tableCell, ...styles.textoBlanco }}>PERSONA COLECTIVA</Text>
                   </View>
                   <View style={{ ...styles.tableCol, ...styles.celdaColorida }}>
-                    <Text style={{ ...styles.tableCell, ...styles.textoBlanco }}>FECHA DE REGISTRO</Text>
+                    <Text style={{ ...styles.tableCell, ...styles.textoBlanco }}>FECHA </Text>
                   </View>
                   <View style={{ ...styles.tableCol, ...styles.celdaColorida }}>
-                    <Text style={{ ...styles.tableCell, ...styles.textoBlanco }}>TIPO DE TRÁMITE</Text>
+                    <Text style={{ ...styles.tableCell, ...styles.textoBlanco }}>TIPO DE REGISTRO DE ADECUACIÓN</Text>
                   </View>
                 </View>
                 {/* fila 2 */}
@@ -208,13 +291,22 @@ const SelectRegistrados = ({ registro, modal, close }) => {
                 }
               </View>
               {/* final de la tabla */}
+              {/* final de la tabla */}
 
 
-              <View style={styles.content}>
+              
+                {/* Contenido de tu documento */}
+                
+                <View style={styles.content}>
                 {/* Contenido de tu documento */}
                 <Text style={styles.dato}>{"\n"}El contenido de este documento esta extraido del sistema SIREPEJU(Sistema de Registro de Personalidades Juridícas).</Text>
-
-                <Text style={styles.dato}>{"\n"}{"\n"}{"\n"}Fecha y Hora de Impresión: {"\n"}{getCurrentDateTime()}</Text>
+                <View style={styles.contenedor_logo_qr}>
+                {imageqr != ''
+                  ? <Image style={styles.logo} src={imageqr} />
+                  : null
+                }
+              </View>
+                <Text style={styles.dato}>{"\n"}Fecha y Hora de Impresión: {"\n"}{getCurrentDateTime()}</Text>
               </View>
               <View style={styles.watermark}>
                 <Text>SIREPEJU</Text>
@@ -222,8 +314,9 @@ const SelectRegistrados = ({ registro, modal, close }) => {
               <View style={styles.footer}>
                 {/* Línea en el pie de página */}
                 <View style={styles.line}></View>
-                <Text>Casa Grande del Pueblo,calle Ayacucho - esq.Potosí,Tel:(591-2)2184178 {"\n"}La Paz -Bolivia {"\n"}{"\n"}Pagína{1}</Text>
+                <Text>Casa Grande del Pueblo,calle Ayacucho - esq.Potosí,Tel:(591-2)2184178 {"\n"}La Paz -Bolivia {"\n"}{"\n"}</Text>
               </View>
+
 
             </Page>
           </Document>

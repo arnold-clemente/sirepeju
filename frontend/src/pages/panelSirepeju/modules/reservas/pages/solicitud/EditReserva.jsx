@@ -28,7 +28,7 @@ const EditReserva = () => {
         obs: '',
         representante: '',
         ci_rep: '',
-        ext_ci_rep: 'LP',
+        ext_ci_rep: '',
         telefono: '',
         correo: '',
         user_id: storage.get('authUser').id
@@ -102,11 +102,11 @@ const EditReserva = () => {
     return (
         <>
             {loading === true ? <Loading /> : ''}
-            <Banner text="ACTUALIZAR RESERVA DE OTORGACION" />
+            <Banner text="ACTUALIZAR SOLICITUD DE RESERVA DE NOMBRE" />
             <form onSubmit={handleUpdate}>
                 <div className="form-group py-2">
                     <label>Entidad</label>
-                    <input type="text" className="form-control" placeholder="Escriba Nombre de la Entidad"
+                    <input type="text" className="form-control" placeholder="Escriba nombre de la entidad"
                         name="entidad" value={entidad} onChange={handleInputChange} />
                     {errorval.entidad
                         ? <ValidationError text={errorval.entidad} />
@@ -114,7 +114,7 @@ const EditReserva = () => {
                 </div>
                 <div className="form-group py-2">
                     <label>Sigla</label>
-                    <input type="text" className="form-control" placeholder="Escriba la sigla de la Entidad"
+                    <input type="text" className="form-control" placeholder="Escriba la sigla de la entidad"
                         name="sigla" value={sigla} onChange={handleInputChange} />
                     {errorval.sigla
                         ? <ValidationError text={errorval.sigla} />
@@ -122,7 +122,7 @@ const EditReserva = () => {
                 </div>
                 <div className="row">
                     <div className="form-group col-md-6 py-2">
-                        <label>Hoja de Ruta</label>
+                        <label>Hoja de ruta</label>
                         <input type="text" className="form-control" placeholder="Escriba el nuemro de  hoja de ruta"
                             name="hr" value={hr} onChange={handleInputChange} />
                         {errorval.hr
@@ -131,7 +131,7 @@ const EditReserva = () => {
                     </div>
                     <div className="form-group col-md-6 py-2">
                         <div className="form-group">
-                            <label>Persona Colectiva</label>
+                            <label>Persona colectiva</label>
                             <select className="form-control" id="exampleFormControlSelect1"
                                 name="persona_colectiva" value={persona_colectiva} onChange={handleInputChange}>
                                 <option value="PERSONA NATURAL">PERSONA NATURAL</option>
@@ -144,14 +144,14 @@ const EditReserva = () => {
                     <label>Naturaleza</label>
                     <select className="form-control" id="exampleFormControlSelect1"
                         name="naturaleza" value={naturaleza} onChange={handleInputChange}>
-                        <option value="FUNDACION">FUNDACION</option>
+                        <option value="FUNDACION">FUNDACIÓN</option>
                         <option value="ENTIDAD SIN FINES DE LUCRO">ENTIDAD SIN FINES DE LUCRO</option>
                         <option value="ONG">ONG</option>
                         <option value="ORGANIZACIÓN SOCIA">ORGANIZACIÓN SOCIAL</option>
                     </select>
                 </div>
                 <div className="form-group py-2">
-                    <label>Representante</label>
+                    <label>Solicitante</label>
                     <input type="text" className="form-control" placeholder="Escriba el nombre completo del representante"
                         name="representante" value={representante} onChange={handleInputChange} />
                     {errorval.representante
@@ -160,7 +160,7 @@ const EditReserva = () => {
                 </div>
                 <div className="row">
                     <div className="form-group col-md-6 py-2">
-                        <label>Cedula</label>
+                        <label>C.I. solicitante</label>
                         <input type="text" className="form-control" placeholder="Escriba el numero de CI"
                             name="ci_rep" value={ci_rep} onChange={handleInputChange} />
                         {errorval.ci_rep
@@ -187,7 +187,7 @@ const EditReserva = () => {
                 </div>
                 <div className="row">
                     <div className="form-group col-md-6 py-2">
-                        <label>Telefono</label>
+                        <label>Celular del solicitante</label>
                         <input type="text" className="form-control" placeholder="Escriba el numero de Telefono"
                             name="telefono" value={telefono} onChange={handleInputChange} />
                         {errorval.telefono
@@ -195,7 +195,7 @@ const EditReserva = () => {
                             : ''}
                     </div>
                     <div className="form-group col-md-6 py-2">
-                        <label>Correo</label>
+                        <label>Correo de referencia</label>
                         <input type="text" className="form-control" placeholder="Escriba el correo de contacto"
                             name="correo" value={correo} onChange={handleInputChange} />
                         {errorval.correo
@@ -204,7 +204,7 @@ const EditReserva = () => {
                     </div>
                 </div>
                 <div className="form-group py-2">
-                    <label>Observaión</label>
+                    <label>Observacin de la solicitud</label>
                     <input type="text" className="form-control" placeholder="Escriba alguna observacion"
                         name="obs" value={obs} onChange={handleInputChange} />
                     {errorval.obs

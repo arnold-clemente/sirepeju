@@ -150,11 +150,11 @@ const HomReserva = () => {
             width: '120px',
         },
         {
-            name: 'Nº Hoja Ruta',
-            selector: row => row.hr,
+            name: 'hr',
+            selector: row => row.id,
             sortable: true,
             wrap: true,
-            width: '150px',
+            width: '100px',
         },
         {
             name: 'Nº Correlativo',
@@ -164,14 +164,6 @@ const HomReserva = () => {
             width: '150px',
         },
         {
-            name: 'Tipo de Persona Colectiva',
-            selector: row => row.persona_colectiva,
-            sortable: true,
-            wrap: true,
-            width: '200px',
-        },
-
-        {
             name: 'Naturaleza',
             selector: row => row.naturaleza,
             sortable: true,
@@ -179,7 +171,7 @@ const HomReserva = () => {
             width: '250px',
         },
         {
-            name: 'Nombre de la Persona Colectiva Colectiva',
+            name: 'Nombre de la Persona Colectiva',
             selector: row => row.entidad,
             sortable: true,
             wrap: true,
@@ -193,12 +185,21 @@ const HomReserva = () => {
             width: '150px',
         },
         {
-            name: 'Representante Legal',
+            name: 'Tipo de Personas Colectiva ',
+            selector: row => row.persona_colectiva,
+            sortable: true,
+            wrap: true,
+            width: '250px',
+        },
+        
+        {
+            name: 'Solicitante',
             selector: row => row.representante,
             sortable: true,
             wrap: true,
             width: '250px',
         },
+
         {
             name: 'CI',
             selector: row => row.ci_rep + " " + row.ext_ci_rep,
@@ -218,10 +219,10 @@ const HomReserva = () => {
             selector: row => row.correo,
             sortable: true,
             wrap: true,
-            width: '300px',
-        }
-    ];
+            width: '250px',
+        },
 
+    ];
     const paginationOptions = {
         rowsPerPageText: 'Filas por Página',
         rangeSeparatorText: 'de',
@@ -235,7 +236,7 @@ const HomReserva = () => {
 
         <div>
             {loading === true ? <Loading /> : ''}
-            <Banner text="RESERVAS HOMONIMIAS" />
+            <Banner text=" LISTA DE SOLICITUD DE RESERVA DE NOMBRE OBSERVADAS" />
 
             <div className='container-fluid d-flex flex-row md:flex-columns my-4'>
                 <div className='input_search'>
@@ -256,7 +257,7 @@ const HomReserva = () => {
             </div>
             <div className='table-responsive'>
                 <DataTable
-                    title={'TABLA DE HOMONIMIAS'}
+                    title={'TABLA SOLICITUDES DE RESERVA DE NOMBRE OBSERVADAS'}
                     columns={columns}
                     data={filteredRegistros()}
                     paginationComponentOptions={paginationOptions}

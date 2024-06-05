@@ -48,8 +48,8 @@ const CreatedRegistrados = () => {
     codigo: '',
     personalidad_juridica: '',
     sigla: '',
-    naturaleza: 'FUNDACION',
-    observacion: 'sin observacion',
+    naturaleza: 'FUNDACIÓN',
+    observacion: 'REGISTRO',
     estado: 1,
     user_id: storage.get('authUser').id
   });
@@ -81,7 +81,7 @@ const CreatedRegistrados = () => {
       <Banner text="CREACIÓN DE NUEVO REGISTRO ADECUACIÓN" />
       <form onSubmit={handleAdd}>
         <div className="form-group py-2">
-          <label>Personalidad Juridica</label>
+          <label>Nombre de la persona colectiva</label>
           <input type="text" className="form-control" placeholder="Escriba Nombre de la Entidad"
             name="personalidad_juridica" value={personalidad_juridica} onChange={handleInputChange} />
           {error.personalidad_juridica
@@ -101,7 +101,7 @@ const CreatedRegistrados = () => {
           <label>Naturaleza</label>
           <select className="form-control" id="exampleFormControlSelect1"
             name="naturaleza" value={naturaleza} onChange={handleInputChange}>
-            <option value="FUNDACION">FUNDACION</option>
+            <option value="FUNDACION">FUNDACIÓN</option>
             <option value="ENTIDAD SIN FINES DE LUCRO">ENTIDAD SIN FINES DE LUCRO</option>
             <option value="ONG">ONG</option>
             <option value="ORGANIZACIÓN SOCIA">ORGANIZACIÓN SOCIAL</option>
@@ -110,7 +110,7 @@ const CreatedRegistrados = () => {
 
         <div className='row'>
           <div className="col-md-6">
-            <label className="form-label">Fecha:</label>
+            <label className="form-label">Fecha de registro:</label>
             <input type="date" className="form-control" placeholder="fecha" aria-label="First name"
               name="fecha" value={fecha} onChange={handleInputChange} />
             {error.fecha
@@ -118,16 +118,16 @@ const CreatedRegistrados = () => {
               : ''}
           </div>
           <div className="col-md-6">
-            <label className="form-label">Codigo</label>
-            <input type="text" className="form-control" placeholder="Escriba codigo 123" aria-label="Codigo"
+            <label className="form-label">Num_Registro</label>
+            <input type="text" className="form-control" placeholder="Escriba número de registro" aria-label="Codigo"
               name="codigo" value={codigo} onChange={handleInputChange} />
             {error.codigo
               ? <ValidationError text={error.codigo} />
               : ''}
           </div>
-          <div className="col-md-12">
-            <label className="form-label">Observacion</label>
-            <textarea rows={5} className="form-control" placeholder="Escriba una Observacion" aria-label="Last name" name="observacion" value={observacion} onChange={handleInputChange} />
+          <div className="form-group py-2">
+            <label className="form-label">Tipo de registro de adecuación</label>
+            <textarea rows={5} className="form-control" placeholder="Describa tipo de registro" aria-label="Last name" name="observacion" value={observacion} onChange={handleInputChange} />
             {error.observacion
               ? <ValidationError text={error.observacion} />
               : ''}

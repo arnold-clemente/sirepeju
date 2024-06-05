@@ -47,8 +47,8 @@ const CreateReserva = () => {
         hr: '',
         entidad: '',
         sigla: '',
-        persona_colectiva: 'PERSONA NATURAL',
-        naturaleza: 'FUNDACION',
+        persona_colectiva: '',
+        naturaleza: '',
         obs: '',
         representante: '',
         ci_rep: '',
@@ -88,7 +88,7 @@ const CreateReserva = () => {
             <form onSubmit={handleAdd}>
                 <div className="form-group py-2">
                     <label>Entidad</label>
-                    <input type="text" className="form-control" placeholder="Escriba Nombre de la Entidad"
+                    <input type="text" className="form-control" placeholder="Escriba Nombre de la entidad"
                         name="entidad" value={entidad} onChange={handleInputChange} />
                     {error.entidad
                         ? <ValidationError text={error.entidad} />
@@ -96,7 +96,7 @@ const CreateReserva = () => {
                 </div>
                 <div className="form-group py-2">
                     <label>Sigla</label>
-                    <input type="text" className="form-control" placeholder="Escriba la sigla de la Entidad"
+                    <input type="text" className="form-control" placeholder="Escriba la sigla de la entidad"
                         name="sigla" value={sigla} onChange={handleInputChange} />
                     {error.sigla
                         ? <ValidationError text={error.sigla} />
@@ -126,15 +126,15 @@ const CreateReserva = () => {
                     <label>Naturaleza</label>
                     <select className="form-control" id="exampleFormControlSelect1"
                         name="naturaleza" value={naturaleza} onChange={handleInputChange}>
-                        <option value="FUNDACION">FUNDACION</option>
+                        <option value="FUNDACION">FUNDACIÓN</option>
                         <option value="ENTIDAD SIN FINES DE LUCRO">ENTIDAD SIN FINES DE LUCRO</option>
                         <option value="ONG">ONG</option>
                         <option value="ORGANIZACIÓN SOCIAL">ORGANIZACIÓN SOCIAL</option>
                     </select>
                 </div>
                 <div className="form-group py-2">
-                    <label>Representante</label>
-                    <input type="text" className="form-control" placeholder="Escriba el nombre completo del representante"
+                    <label>Solicitante</label>
+                    <input type="text" className="form-control" placeholder="Escriba el nombre completo del solicitante"
                         name="representante" value={representante} onChange={handleInputChange} />
                     {error.representante
                         ? <ValidationError text={error.representante} />
@@ -142,7 +142,7 @@ const CreateReserva = () => {
                 </div>
                 <div className="row">
                     <div className="form-group col-md-6 py-2">
-                        <label>Cedula</label>
+                        <label>C.I. solicitante</label>
                         <input type="text" className="form-control" placeholder="Escriba el numero de CI"
                             name="ci_rep" value={ci_rep} onChange={handleInputChange} />
                         {error.ci_rep
@@ -169,15 +169,15 @@ const CreateReserva = () => {
                 </div>
                 <div className="row">
                     <div className="form-group col-md-6 py-2">
-                        <label>Telefono</label>
-                        <input type="text" className="form-control" placeholder="Escriba el numero de Telefono"
+                        <label>Celular del solicitante</label>
+                        <input type="text" className="form-control" placeholder="Escriba el numero de celular"
                             name="telefono" value={telefono} onChange={handleInputChange} />
                         {error.telefono
                             ? <ValidationError text={error.telefono} />
                             : ''}
                     </div>
                     <div className="form-group col-md-6 py-2">
-                        <label>Correo</label>
+                        <label>Correo de referencia</label>
                         <input type="email" className="form-control" placeholder="Escriba el correo de contacto"
                             name="correo" value={correo} onChange={handleInputChange} />
                         {error.correo
@@ -186,7 +186,7 @@ const CreateReserva = () => {
                     </div>
                 </div>
                 <div className="form-group py-2">
-                    <label>Observaión</label>
+                    <label>Observación</label>
                     <input type="text" className="form-control" placeholder="Escriba alguna observacion"
                         name="obs" value={obs} onChange={handleInputChange} />
                     {error.obs

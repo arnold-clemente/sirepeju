@@ -101,7 +101,7 @@ const EditGob = () => {
                 <Banner text="ACTUALIZACIÓN DE USUARIO GOBERNACIÓN" />
                 <form onSubmit={handleUpdate}>
                     <div className="form-group py-2">
-                        <label>Nombres</label>
+                        <label>Nombre de resonsable departamental</label>
                         <input type="text" className="form-control" placeholder="Escriba Nombre Completo"
                             name="nombres" value={nombres} onChange={handleInputChange} />
                         {errorval.nombres
@@ -110,7 +110,7 @@ const EditGob = () => {
                     </div>
                     <div className="row">
                         <div className="form-group col-md-6 py-2">
-                            <label>Apellido Paterno</label>
+                            <label>Apellido paterno</label>
                             <input type="text" className="form-control" placeholder="Escriba apellido paterno"
                                 name="paterno" value={paterno} onChange={handleInputChange} />
                             {errorval.paterno
@@ -118,7 +118,7 @@ const EditGob = () => {
                                 : ''}
                         </div>
                         <div className="form-group col-md-6 py-2">
-                            <label>Apellido Materno</label>
+                            <label>Apellido materno</label>
                             <input type="text" className="form-control" placeholder="Escriba apellido materno"
                                 name="materno" value={materno} onChange={handleInputChange} />
                             {errorval.materno
@@ -128,7 +128,7 @@ const EditGob = () => {
                     </div>
                     <div className="row">
                         <div className="form-group col-md-6 py-2">
-                            <label>Cedula de Identidad</label>
+                            <label>Cedula de identidad</label>
                             <input type="text" className="form-control" placeholder="Escriba la cedula de identidad"
                                 name="ci" value={ci} onChange={handleInputChange} />
                             {errorval.ci
@@ -154,7 +154,7 @@ const EditGob = () => {
                         </div>
                     </div>
                     <div className="form-group py-2">
-                        <label>Correo Electronico</label>
+                        <label>Correo electrónico</label>
                         <input type="email" className="form-control" placeholder="correo electronico de referencia"
                             name="email" value={email} onChange={handleInputChange} />
                         {errorval.email
@@ -173,7 +173,7 @@ const EditGob = () => {
                         </div>
                         <div className="form-group col-md-6 py-2">
                             <div className="form-group">
-                                <label>Gobernacion Departamento </label>
+                                <label>Seleccione departamento  </label>
                                 <select className="form-control" id="exampleFormControlSelect1"
                                     name="institucion_id" value={institucion_id} onChange={handleInputChange}>
                                     <option value="1">BENI</option>

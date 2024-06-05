@@ -266,11 +266,11 @@ const EditOtorgacionGob = () => {
         {/* *************************+ actualizar registro **************************  */}
         {vista === 'otorgacion'
           ? <>
-            <Banner text="ACTUALIZAR REGISTRO DE OTORGACION" />
+            <Banner text="EDITAR DATOS DEL REGISTRO DE OTORGACIÓN POR LOS GOBIERNOS AUTÓNOMOS" />
             <form onSubmit={handleSaved}>
               <div className="form-group py-2">
-                <label>Nombre Persona Colectiva</label>
-                <input type="text" className="form-control" placeholder="Escriba Nombre de la Entidad"
+                <label>Nombre persona colectiva</label>
+                <input type="text" className="form-control" placeholder="Escriba nombre de la Institución"
                   name="nombre_persona_colectiva" value={nombre_persona_colectiva} onChange={handleInputChange} />
                 {errorval.nombre_persona_colectiva
                   ? <ValidationError text={errorval.nombre_persona_colectiva} />
@@ -289,7 +289,7 @@ const EditOtorgacionGob = () => {
                   <label>Naturaleza</label>
                   <select className="form-control" id="exampleFormControlSelect1"
                     name="naturaleza" value={naturaleza} onChange={handleInputChange}>
-                    <option value="FUNDACION">FUNDACION</option>
+                    <option value="FUNDACION">FUNDACIÓN</option>
                     <option value="ENTIDAD SIN FINES DE LUCRO">ENTIDAD SIN FINES DE LUCRO</option>
                     <option value="ONG">ONG</option>
                     <option value="ORGANIZACIÓN SOCIAL">ORGANIZACIÓN SOCIAL</option>
@@ -298,15 +298,15 @@ const EditOtorgacionGob = () => {
               </div>
               <div className="row">
                 <div className="form-group col-md-6 py-2">
-                  <label>Resolucion</label>
-                  <input type="text" className="form-control" placeholder="Escriba codigo de resolucion"
+                  <label>Resolución</label>
+                  <input type="text" className="form-control" placeholder="número de resolución"
                     name="resolucion" value={resolucion} onChange={handleInputChange} />
                   {errorval.resolucion
                     ? <ValidationError text={errorval.resolucion} />
                     : ''}
                 </div>
                 <div className="form-group col-md-6 py-2">
-                  <label>Fecha de Resolución</label>
+                  <label>Fecha de resolución</label>
                   <input type="date" className="form-control" placeholder="Escriba fecha"
                     name="fecha_resolucion" value={fecha_resolucion} onChange={handleInputChange} />
                   {errorval.fecha_resolucion
@@ -315,16 +315,16 @@ const EditOtorgacionGob = () => {
                 </div>
               </div>
               <div className="form-group py-2">
-                <label>Domicilio Legal</label>
-                <input type="text" className="form-control" placeholder="Escriba el domicilio"
+                <label>Domicilio legal</label>
+                <input type="text" className="form-control" placeholder="domicilio legal de la institución"
                   name="domicilio_legal" value={domicilio_legal} onChange={handleInputChange} />
                 {errorval.domicilio_legal
                   ? <ValidationError text={errorval.domicilio_legal} />
                   : ''}
               </div>
               <div className="form-group py-2">
-                <label>Objeto</label>
-                <textarea rows='4' className="form-control" placeholder="Escriba el objeto"
+                <label>Objeto o Sector </label>
+                <textarea rows='4' className="form-control" placeholder="Escriba el objeto o sector a la que la entidad se dedica"
                   name="objeto" value={objeto} onChange={handleInputChange} >
                 </textarea>
                 {errorval.objeto
@@ -334,7 +334,7 @@ const EditOtorgacionGob = () => {
               <div className='container-fluid mt-4'>
                 <div className='d-flex justify-content-between align-items-center'>
                   <Link to='/admin/otorgaciones-gobernaciones' type="submit" className="btn btn-danger">Cancelar</Link>
-                  <button type='submit' className='btn btn-success'>Guardar</button>
+                  <button type='submit' className='btn btn-success'>Actualizar</button>
                 </div>
               </div>
             </form>
@@ -355,10 +355,10 @@ const EditOtorgacionGob = () => {
             <table className="table mt-2">
               <thead>
                 <tr>
-                  <th scope="col">Accion</th>
-                  <th scope="col">#</th>
-                  <th scope="col">Nombre Completo</th>
-                  <th scope="col">Cedula Indentidad</th>
+                  <th scope="col">Acción</th>
+                  <th scope="col">N°</th>
+                  <th scope="col">Nombre completo</th>
+                  <th scope="col">Cedula indentidad</th>
                 </tr>
               </thead>
               <tbody className="table-group-divider">
@@ -396,7 +396,7 @@ const EditOtorgacionGob = () => {
               <div className='container-fluid'>
                 <div className='row'>
                   <div className="form-group col-12 py-2">
-                    <label>Nombre Completo</label>
+                    <label>Nombre completo</label>
                     <input type="text" className="form-control" placeholder="Escriba el nombre completo"
                       name="nombre_completo" value={nombre_completo} onChange={handleInputFund} />
                     {errorfun.nombre_completo
@@ -404,7 +404,7 @@ const EditOtorgacionGob = () => {
                       : ''}
                   </div>
                   <div className="form-group col-12 py-2">
-                    <label>Cedula de Identidad</label>
+                    <label>Cedula de identidad</label>
                     <input type="text" className="form-control" placeholder="Ej. 9223453"
                       name="ci" value={ci} onChange={handleInputFund} />
                     {errorfun.ci

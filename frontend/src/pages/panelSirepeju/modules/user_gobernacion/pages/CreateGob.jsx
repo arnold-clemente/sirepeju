@@ -48,7 +48,7 @@ const CreateGob = () => {
         materno: '',
         cargo: '',
         ci: '',
-        ext_ci: 'LP',
+        ext_ci: '',
         email: '',
         institucion_id: 4,
         user_id: storage.get('authUser').id
@@ -79,11 +79,11 @@ const CreateGob = () => {
     return (
         <>
             {loading === true ? <Loading /> : ''}
-            <Banner text="CREACIÓN DE NUEVO USUARIO GOBERNACIÓN" />
+            <Banner text="REGISTRO DE RESPONSABLE DEPARTAMENTAL" />
             <form onSubmit={handleAdd}>
                 <div className="form-group py-2">
-                    <label>Nombres</label>
-                    <input type="text" className="form-control" placeholder="Escriba Nombre Completo"
+                    <label>Nombre de resonsable departamental</label>
+                    <input type="text" className="form-control" placeholder="Escriba nombre completo"
                         name="nombres" value={nombres} onChange={handleInputChange} />
                     {error.nombres
                         ? <ValidationError text={error.nombres} />
@@ -91,7 +91,7 @@ const CreateGob = () => {
                 </div>
                 <div className="row">
                     <div className="form-group col-md-6 py-2">
-                        <label>Apellido Paterno</label>
+                        <label>Apellido paterno</label>
                         <input type="text" className="form-control" placeholder="Escriba apellido paterno"
                             name="paterno" value={paterno} onChange={handleInputChange} />
                         {error.paterno
@@ -99,7 +99,7 @@ const CreateGob = () => {
                             : ''}
                     </div>
                     <div className="form-group col-md-6 py-2">
-                        <label>Apellido Materno</label>
+                        <label>Apellido materno</label>
                         <input type="text" className="form-control" placeholder="Escriba apellido materno"
                             name="materno" value={materno} onChange={handleInputChange} />
                         {error.materno
@@ -109,7 +109,7 @@ const CreateGob = () => {
                 </div>
                 <div className="row">
                     <div className="form-group col-md-6 py-2">
-                        <label>Cedula de Identidad</label>
+                        <label>Cedula de identidad</label>
                         <input type="text" className="form-control" placeholder="Escriba la cedula de identidad"
                             name="ci" value={ci} onChange={handleInputChange} />
                         {error.ci
@@ -135,7 +135,7 @@ const CreateGob = () => {
                     </div>
                 </div>
                 <div className="form-group py-2">
-                    <label>Correo Electronico</label>
+                    <label>Correo electrónico</label>
                     <input type="email" className="form-control" placeholder="correo electronico de referencia"
                         name="email" value={email} onChange={handleInputChange} />
                     {error.email
@@ -154,7 +154,7 @@ const CreateGob = () => {
                     </div>
                     <div className="form-group col-md-6 py-2">
                         <div className="form-group">
-                            <label>Gobernacion Departamento </label>
+                            <label>Seleccione departamento </label>
                             <select className="form-control" id="exampleFormControlSelect1"
                                 name="institucion_id" value={institucion_id} onChange={handleInputChange}>
                                 <option value="1">BENI</option>
@@ -171,7 +171,7 @@ const CreateGob = () => {
                     </div>
                 </div>
                 <Link to='/admin/usuario-gobernaciones' type="submit" className="btn btn-danger my-4">Cancelar</Link>
-                <button type="submit" className="btn btn-primary my-4 mx-4">Enviar</button>
+                <button type="submit" className="btn btn-primary my-4 mx-4">Registrar</button>
             </form>
         </>
     )

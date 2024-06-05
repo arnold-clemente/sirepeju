@@ -163,13 +163,13 @@ const IndexRegistrados = () => {
       width: '120px',
     },
     {
-      name: 'Codigo',
+      name: 'Código',
       selector: row => row.codigo,
       sortable: true,
       width: '150px',
     },
     {
-      name: 'Fecha de Ingreso',
+      name: 'Fecha de registro',
       selector: row => row.fecha,
       sortable: true,
       width: '150px',
@@ -196,7 +196,7 @@ const IndexRegistrados = () => {
       width: '150px',
     },
     {
-      name: 'Observacion',
+      name: 'Tipo de registro',
       selector: row => row.observacion,
       width: '250px',
     },
@@ -216,7 +216,7 @@ const IndexRegistrados = () => {
 
     <div>
       {loading === true ? <Loading /> : ''}
-      <Banner text="LISTA DE REGISTRADOS ADECUACIÓN" />
+      <Banner text="REGISTROS DE ADECUACIÓN" />
 
       <div className='container-fluid d-flex flex-row md:flex-columns my-4'>
         <div className='input_search'>

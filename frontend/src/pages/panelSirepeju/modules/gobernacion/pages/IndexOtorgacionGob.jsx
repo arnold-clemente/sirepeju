@@ -168,6 +168,13 @@ const IndexOtorgacionGob = () => {
       width: '120px',
     },
     {
+      name: 'INSTITUCION',
+      selector: row => row.institucion,
+      sortable: true,
+      wrap: true,
+      width: '180px',
+    },
+    {
       name: 'Resolucion ',
       selector: row => row.resolucion,
       sortable: true,

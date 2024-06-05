@@ -125,13 +125,13 @@ const IndexReserva = () => {
             button: true,
             width: '120px',
         },
+        
         {
-            name: 'Hoja de Ruta',
+            name: 'hr',
             selector: row => row.id,
             sortable: true,
-            center: true,
             wrap: true,
-            width: '150px',
+            width: '100px',
         },
         {
             name: 'Nº Correlativo',
@@ -141,18 +141,11 @@ const IndexReserva = () => {
             width: '150px',
         },
         {
-            name: 'Tipo de Persona Colectiva',
-            selector: row => row.persona_colectiva,
-            sortable: true,
-            wrap: true,
-            width: '200px',
-        },
-        {
             name: 'Naturaleza',
             selector: row => row.naturaleza,
             sortable: true,
             wrap: true,
-            width: '200px',
+            width: '250px',
         },
         {
             name: 'Nombre de la Persona Colectiva',
@@ -169,11 +162,19 @@ const IndexReserva = () => {
             width: '150px',
         },
         {
-            name: 'Representante Legal',
+            name: 'Tipo de Personas Colectiva ',
+            selector: row => row.persona_colectiva,
+            sortable: true,
+            wrap: true,
+            width: '250px',
+        },
+        
+        {
+            name: 'Solicitante',
             selector: row => row.representante,
             sortable: true,
             wrap: true,
-            width: '200px',
+            width: '250px',
         },
 
         {
@@ -196,7 +197,8 @@ const IndexReserva = () => {
             sortable: true,
             wrap: true,
             width: '250px',
-        }
+        },
+
     ];
 
     const paginationOptions = {
@@ -241,7 +243,7 @@ const IndexReserva = () => {
             </div>
             <div className='table-responsive'>
                 <DataTable
-                    title={'TABLA DE SOLICITUDE DE RESERVA DE NOMBRE'}
+                    title={'TABLA DE SOLICITUD DE DE RESERVA DE NOMBRE'}
                     columns={columns}
                     data={filteredRegistros()}
                     paginationComponentOptions={paginationOptions}

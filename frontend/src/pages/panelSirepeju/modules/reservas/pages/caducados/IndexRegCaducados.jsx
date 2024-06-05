@@ -116,22 +116,15 @@ const IndexRegCaducados = () => {
             width: '120px',
         },
         {
-            name: 'Hoja de Ruta',
+            name: 'hr',
             selector: row => row.id,
             sortable: true,
             wrap: true,
-            width: '150px',
+            width: '100px',
         },
         {
             name: 'Nº Correlativo',
             selector: row => row.nro_certificado,
-            sortable: true,
-            wrap: true,
-            width: '150px',
-        },
-        {
-            name: 'Tipo de Personas Colectiva ',
-            selector: row => row.persona_colectiva,
             sortable: true,
             wrap: true,
             width: '150px',
@@ -158,7 +151,15 @@ const IndexRegCaducados = () => {
             width: '150px',
         },
         {
-            name: 'Representante Legal',
+            name: 'Tipo de Personas Colectiva ',
+            selector: row => row.persona_colectiva,
+            sortable: true,
+            wrap: true,
+            width: '250px',
+        },
+        
+        {
+            name: 'Solicitante',
             selector: row => row.representante,
             sortable: true,
             wrap: true,

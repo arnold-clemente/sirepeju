@@ -23,8 +23,8 @@ const EditRegistrados = () => {
     codigo: "",
     personalidad_juridica: "",
     sigla: "",
-    naturaleza: 'FUNDACION',
-    observacion: "Sin Observacion",
+    naturaleza: 'FUNDACIÓN',
+    observacion: "REGISTRO",
     estado: 1,
     created_at: "",
     updated_at: ""
@@ -106,7 +106,7 @@ const EditRegistrados = () => {
         <Banner text="ACTUALIZACIÓN DE REGISTRADO ADECUACIÓN" />
         <form onSubmit={handleUpdate} >
           <div className="form-group py-2">
-            <label>Personalidad Juridica</label>
+            <label>Nombre de la persona colectiva</label>
             <input type="text" className="form-control" placeholder="Escriba Nombre de la Entidad"
               name="personalidad_juridica" value={personalidad_juridica} onChange={handleInputChange} />
             {errorval.personalidad_juridica
@@ -126,7 +126,7 @@ const EditRegistrados = () => {
             <label>Naturaleza</label>
             <select className="form-control" id="exampleFormControlSelect1"
               name="naturaleza" value={naturaleza} onChange={handleInputChange}>
-              <option value="FUNDACION">FUNDACION</option>
+              <option value="FUNDACION">FUNDACIÓN</option>
               <option value="ENTIDAD SIN FINES DE LUCRO">ENTIDAD SIN FINES DE LUCRO</option>
               <option value="ONG">ONG</option>
               <option value="ORGANIZACIÓN SOCIA">ORGANIZACIÓN SOCIAL</option>
@@ -136,7 +136,7 @@ const EditRegistrados = () => {
           <div className='row'>
 
             <div className="col-md-6">
-              <label className="form-label">Fecha:</label>
+              <label className="form-label">Fecha de registro:</label>
               <input type="date" className="form-control" placeholder="fecha" aria-label="First name"
                 name="fecha" value={fecha} onChange={handleInputChange} />
               {errorval.fecha
@@ -145,7 +145,7 @@ const EditRegistrados = () => {
             </div>
 
             <div className="col-md-6">
-              <label className="form-label">Codigo</label>
+              <label className="form-label">Num_Registro</label>
               <input type="text" className="form-control" placeholder="Escriba codigo 123" aria-label="Codigo"
                 name="codigo" value={codigo} onChange={handleInputChange} />
               {errorval.codigo
@@ -154,7 +154,7 @@ const EditRegistrados = () => {
             </div>
 
             <div className="col-md-12">
-              <label className="form-label">Observacion</label>
+              <label className="form-label">Tipo de registro de adecuación</label>
               <textarea rows={5} className="form-control" placeholder="Escriba una Observacion" aria-label="Last name" name="observacion" value={observacion} onChange={handleInputChange} />
               {errorval.observacion
                 ? <ValidationError text={errorval.observacion} />
@@ -162,7 +162,7 @@ const EditRegistrados = () => {
             </div>
           </div>
           <Link to='/admin/registrados' type="submit" className="btn btn-danger my-4">Cancelar</Link>
-          <button type="submit" className="btn btn-primary my-4 mx-4">Actualizar</button>
+          <button type="submit" className="btn btn-primary my-4 mx-4">Actualizar cambios</button>
         </form>
       </>
     )

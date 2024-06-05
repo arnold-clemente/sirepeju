@@ -251,14 +251,14 @@ const IndexReg = () => {
             selector: row => Math.round((now - (new Date(row.fecha_reg).getTime())) / (1000 * 60 * 60 * 24)) + ' dias',
             sortable: true,
             wrap: true,
-            width: '150px',
+            width: '100px',
         },
         {
-            name: 'Hoja de Ruta',
+            name: 'hr',
             selector: row => row.id,
             sortable: true,
             wrap: true,
-            width: '150px',
+            width: '100px',
         },
         {
             name: 'Nº Correlativo',
@@ -266,13 +266,6 @@ const IndexReg = () => {
             sortable: true,
             wrap: true,
             width: '150px',
-        },
-        {
-            name: 'Tipo de Personas Colectiva ',
-            selector: row => row.persona_colectiva,
-            sortable: true,
-            wrap: true,
-            width: '250px',
         },
         {
             name: 'Naturaleza',
@@ -295,6 +288,14 @@ const IndexReg = () => {
             wrap: true,
             width: '150px',
         },
+        {
+            name: 'Tipo de Personas Colectiva ',
+            selector: row => row.persona_colectiva,
+            sortable: true,
+            wrap: true,
+            width: '250px',
+        },
+        
         {
             name: 'Representante Legal',
             selector: row => row.representante,
