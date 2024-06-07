@@ -283,7 +283,7 @@ const SelectOtorgaciones = ({ registro, modal, close }) => {
                                         return (
                                             <View style={styles.tableRow} key={row.id}>
                                                 <View style={styles.tableCol}>
-                                                    <Text style={styles.tableCell}>{row.personalidad_juridica}</Text>
+                                                    <Text style={styles.tableCell}>{row.personalidad_juridica} - ({row.sigla}) {"\n"}{"\n"}con naturaleza :{"\n"}{row.naturaleza}</Text>
                                                 </View>
                                                 <View style={styles.tableCol}>
                                                     <Text style={styles.tableCell}>{row.objeto}</Text>
