@@ -109,7 +109,7 @@ const FundOtorgacion = () => {
     return (
         <>
             {loading === true ? <Loading /> : ''}
-            <Banner text="INGRESAR FUNDADORES" />
+            <Banner text="INGRESE NOMBRE DE LOS MIEMBROS FUNDADORES / DIRECTIVA" />
             <div className='container-fluid mt-4'>
                 <form onSubmit={create} className='row'>
                     <div className='col-md-6 px-0'>
@@ -130,10 +130,10 @@ const FundOtorgacion = () => {
                 <table className="table mt-4">
                     <thead>
                         <tr>
-                            <th scope="col">Accion</th>
-                            <th scope="col">#</th>
-                            <th scope="col">Nombre Completo</th>
-                            <th scope="col">Cedula Indentidad</th>
+                            <th scope="col">Acción</th>
+                            <th scope="col">N°</th>
+                            <th scope="col">Nombre completo</th>
+                            <th scope="col">Cedula indentidad</th>
                         </tr>
                     </thead>
                     <tbody className="table-group-divider">

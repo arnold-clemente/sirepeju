@@ -63,7 +63,7 @@ const ModalPersonaOtorgacion = ({ persona, modalRegistro, openRegistrorModal, cl
         <>
             {loading === true ? <Loading /> : ''}
             {/* modal para registro persona colectiva  */}
-            <ModalMd isOpen={modalRegistro} closeModal={closeRegistrorModal} title={'REGISTRO PERSONA COLECTIVA'}>
+            <ModalMd isOpen={modalRegistro} closeModal={closeRegistrorModal} title={'ULTIMO REGISTRO DE PERSONERIA'}>
                 <form onSubmit={handleGuardarPersona} className='container-fluid' >
                     <div className='row mt-1'>
                         <div className='col-sm-5 px-0'>
@@ -89,7 +89,7 @@ const ModalPersonaOtorgacion = ({ persona, modalRegistro, openRegistrorModal, cl
                                 : ''}
                         </div>
                     </div>
-                    <div className='row mt-1'>
+                    {/* <div className='row mt-1'>
                         <div className='col-sm-5 px-0'>
                             <span className='font_span_input'>INFORME FINAL: </span>
                         </div>
@@ -100,10 +100,10 @@ const ModalPersonaOtorgacion = ({ persona, modalRegistro, openRegistrorModal, cl
                                 ? <ValidationError text={errorval.informe_final} />
                                 : ''}
                         </div>
-                    </div>
+                    </div> */}
                     <div className='row mt-1'>
                         <div className='col-sm-5 px-0'>
-                            <span className='font_span_input'>NOTA FINAL: </span>
+                            <span className='font_span_input'>RESOLUCIÓN MINISTERIAL: </span>
                         </div>
                         <div className='col-sm-7 px-0'>
                             <input type="file" className='form-control' placeholder='Rellenar Campo'
@@ -127,7 +127,7 @@ const ModalPersonaOtorgacion = ({ persona, modalRegistro, openRegistrorModal, cl
                     </div>
                     <div className='row mt-1'>
                         <div className='col-sm-5 px-0'>
-                            <span className='font_span_input'>FECHA RESOLUCION: </span>
+                            <span className='font_span_input'>FECHA RESOLUCIÓN: </span>
                         </div>
                         <div className='col-sm-7 px-0'>
                             <input type="date" className='form-control' placeholder='Rellenar Campo'

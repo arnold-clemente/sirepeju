@@ -71,7 +71,7 @@ const ModalInformeOtorgacion = ({ registrorModal, openRegistrorModal, closeRegis
                 <div className='container-fluid'>
                     <div className='row mt-1'>
                         <div className='col-sm-5 px-0'>
-                            <span className='font_span_input'>FECHA : </span>
+                            <span className='font_span_input'>FECHA DE EMISIÓN : </span>
                         </div>
                         <div className='col-sm-7 px-0'>
                             <input type="date" className='form-control' placeholder='Rellenar Campo'
@@ -83,7 +83,7 @@ const ModalInformeOtorgacion = ({ registrorModal, openRegistrorModal, closeRegis
                     </div>
                     <div className='row mt-1'>
                         <div className='col-sm-4 px-0'>
-                            <span className='font_span_input'>INFORME: </span>
+                            <span className='font_span_input'>REFERENCIA: </span>
                         </div>
                         <div className='col-sm-8 px-0'>
                             <textarea rows="4" className='form-control' placeholder='Se realizo'

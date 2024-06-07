@@ -306,7 +306,7 @@ const SelectRegistrados = ({ registro, modal, close }) => {
                   : null
                 }
               </View>
-                <Text style={styles.dato}>{"\n"}Fecha y Hora de Impresión: {"\n"}{getCurrentDateTime()}</Text>
+                <Text style={styles.dato}>Fecha y Hora de Impresión: {"\n"}{getCurrentDateTime()}</Text>
               </View>
               <View style={styles.watermark}>
                 <Text>SIREPEJU</Text>
@@ -316,8 +316,6 @@ const SelectRegistrados = ({ registro, modal, close }) => {
                 <View style={styles.line}></View>
                 <Text>Casa Grande del Pueblo,calle Ayacucho - esq.Potosí,Tel:(591-2)2184178 {"\n"}La Paz -Bolivia {"\n"}{"\n"}</Text>
               </View>
-
-
             </Page>
           </Document>
         </PDFViewer>

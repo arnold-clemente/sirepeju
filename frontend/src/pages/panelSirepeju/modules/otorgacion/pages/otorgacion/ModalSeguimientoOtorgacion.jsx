@@ -66,11 +66,11 @@ const ModalSeguimientoOtorgacion = ({ registrorModal, openRegistrorModal, closeR
         <>
             {loading === true ? <Loading /> : ''}
             {/* modal para el etapa final de registro  */}
-            <ModalSm isOpen={registrorModal} closeModal={closeRegistrorModal} title={'INSERTAR SEGUIMIENTO'}>
+            <ModalSm isOpen={registrorModal} closeModal={closeRegistrorModal} title={'INGRESAR SEGUIMIENTO'}>
                 <div className='container-fluid'>
                     <div className='row mt-1'>
                         <div className='col-sm-5 px-0'>
-                            <span className='font_span_input'>FECHA : </span>
+                            <span className='font_span_input'>FECHA: </span>
                         </div>
                         <div className='col-sm-7 px-0'>
                             <input type="date" className='form-control' placeholder='Rellenar Campo'

@@ -70,7 +70,7 @@ const ModalRegistroFinalOtorgacion = ({ registrorModal, openRegistrorModal, clos
                 <div className='container-fluid'>
                     <div className='row mt-1'>
                         <div className='col-sm-5 px-0'>
-                            <span className='font_span_input'>NOTA INTERNA FINAL: </span>
+                            <span className='font_span_input'>NOTA: </span>
                         </div>
                         <div className='col-sm-7 px-0'>
                             <input type="text" className='form-control' placeholder='Rellenar Campo'
@@ -83,7 +83,7 @@ const ModalRegistroFinalOtorgacion = ({ registrorModal, openRegistrorModal, clos
 
                     <div className='row mt-1'>
                         <div className='col-sm-5 px-0'>
-                            <span className='font_span_input'>NUMERO INFORME FINAL: </span>
+                            <span className='font_span_input'>INFORME FINAL: </span>
                         </div>
                         <div className='col-sm-7 px-0'>
                             <input type="text" className='form-control' placeholder='Rellenar Campo'
@@ -95,7 +95,7 @@ const ModalRegistroFinalOtorgacion = ({ registrorModal, openRegistrorModal, clos
                     </div>
                     <div className='row mt-1'>
                         <div className='col-sm-5 px-0'>
-                            <span className='font_span_input'>FECHA ENVIO: </span>
+                            <span className='font_span_input'>FECHA ENVÍO: </span>
                         </div>
                         <div className='col-sm-7 px-0'>
                             <input type="date" className='form-control' placeholder='Rellenar Campo'
@@ -107,7 +107,7 @@ const ModalRegistroFinalOtorgacion = ({ registrorModal, openRegistrorModal, clos
                     </div>
                     <div className='row mt-1'>
                         <div className='col-sm-4 px-0'>
-                            <span className='font_span_input'>ALFANUMERICO: </span>
+                            <span className='font_span_input'>ALFANUMÉRICO: </span>
                         </div>
                         <div className='col-sm-8 px-0'>
                             <textarea rows="4" type="text" className='form-control' disabled

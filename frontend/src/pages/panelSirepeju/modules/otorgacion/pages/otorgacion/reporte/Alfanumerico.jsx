@@ -1,9 +1,13 @@
-import React from 'react'
-
+import React, { useEffect, useRef, useState } from 'react'
 import Modal from 'components/ModalPdf'
 import { PDFViewer, Document, Page } from '@react-pdf/renderer'
-import { Text, View, StyleSheet, Image } from '@react-pdf/renderer'
+import { Font } from '@react-pdf/renderer'
+// import QRCode from "react-qr-code";
+import { QRCode } from 'react-qrcode-logo';
+import { Text, View, StyleSheet, Image, Svg } from '@react-pdf/renderer'
 import logo from 'assets/images/logovic.jpg'
+import qr_logo from 'assets/images/qr_logo.png'
+import { fuentes } from 'assets/estilos/Fonts'
 
 
 const Alfanumerico = ({ registro, modal, close }) => {
@@ -93,7 +97,7 @@ const Alfanumerico = ({ registro, modal, close }) => {
                         <Image style={styles.logo} src={logo} />
                         </View>
                             <View style={styles.contenedor}>
-                                <Text style={styles.title}>T Codigo</Text>
+                                <Text style={styles.title}>CÓDIGO UNICO DE OTORGACIÓN</Text>
                                 <Text style={styles.title}>Alfa[100]</Text>
                             </View>
                             <View style={styles.lista}>
