@@ -168,7 +168,7 @@ const Alfanumerico = ({ registro, modal, close }) => {
                         <Image style={styles.logo} src={logo} />
                         </View>
                            
-                                <Text style={styles.prueba}>UNIDAD DE PERSONALIDADES JURÍDICAS {"\n"} CÓDIGO UNICO DE OTORGACIÓN</Text>
+                                <Text style={styles.prueba}>UNIDAD DE PERSONALIDADES JURÍDICAS {"\n"} CÓDIGO ÚNICO</Text>
                                 
                             
                             <View style={styles.lista}>
@@ -176,29 +176,19 @@ const Alfanumerico = ({ registro, modal, close }) => {
                                 <Text style={styles.dato}>{registro.alfanumerico}</Text>
                             </View>
                             <View style={styles.lista}>
-                                <Text style={styles.tipo}>CÓDIGO: </Text>
+                                <Text style={styles.tipo}>CÓDIGO DE ORIGEN: </Text>
                                 <Text style={styles.dato}>{registro.codigo_otorgacion}</Text>
                             </View>
                             <View style={styles.lista}>
                                 <Text style={styles.tipo}>NOMBRE: </Text>
-                                <Text style={styles.dato}>{registro.personalidad_juridica}</Text>
+                                <Text style={styles.dato}>{registro.personalidad_juridica} - {registro.sigla}</Text>
                             </View>
                             <View style={styles.lista}>
                                 <Text style={styles.tipo}>NATURALEZA: </Text>
                                 <Text style={styles.dato}>{registro.naturaleza}</Text>
                             </View>
-                            <View style={styles.lista}>
-                                <Text style={styles.tipo}>NOTA INTERNA: </Text>
-                                <Text style={styles.dato}>{registro.nota_interna_final}</Text>
-                            </View>
-                            <View style={styles.lista}>
-                                <Text style={styles.tipo}>INFORME FINAL: </Text>
-                                <Text style={styles.dato}>{registro.numero_informe_final}</Text>
-                            </View>
-                            <View style={styles.lista}>
-                                <Text style={styles.tipo}>FECHA DE ENVIO: </Text>
-                                <Text style={styles.dato}>{registro.fecha_envio}</Text>
-                            </View>
+                           
+                            
                             <View style={styles.watermark}>
                             <Text>SIREPEJU</Text>
                             </View>

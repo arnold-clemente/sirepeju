@@ -67,11 +67,11 @@ const ModalExtinguirOtorgacion = ({ registrorModal, openRegistrorModal, closeReg
         <>
             {loading === true ? <Loading /> : ''}
             {/* modal para el etapa final de registro  */}
-            <ModalSm isOpen={registrorModal} closeModal={closeRegistrorModal} title={'EXTINGUIR PERSONALIDAD'}>
+            <ModalSm isOpen={registrorModal} closeModal={closeRegistrorModal} title={'PROCESO DE EXTINCIÓN'}>
                 <div className='container-fluid'>
                     <div className='row mt-1'>
                         <div className='col-sm-5 px-0'>
-                            <span className='font_span_input'>NOTA EXTINTO: </span>
+                            <span className='font_span_input'>NÚMERO DE RESOLUCIÓN: </span>
                         </div>
                         <div className='col-sm-7 px-0'>
                             <input type="text" className='form-control' placeholder='N° DE NOTA'
@@ -83,7 +83,7 @@ const ModalExtinguirOtorgacion = ({ registrorModal, openRegistrorModal, closeReg
                     </div>
                     <div className='row mt-1'>
                         <div className='col-sm-5 px-0'>
-                            <span className='font_span_input'>FECHA : </span>
+                            <span className='font_span_input'>FECHA DE RESOLUCIÓN: </span>
                         </div>
                         <div className='col-sm-7 px-0'>
                             <input type="date" className='form-control' placeholder='Rellenar Campo'
@@ -95,10 +95,10 @@ const ModalExtinguirOtorgacion = ({ registrorModal, openRegistrorModal, closeReg
                     </div>
                     <div className='row mt-1'>
                         <div className='col-sm-4 px-0'>
-                            <span className='font_span_input'>OBSERVACION: </span>
+                            <span className='font_span_input'>OBSERVACIÓN: </span>
                         </div>
                         <div className='col-sm-8 px-0'>
-                            <textarea rows="4" className='form-control' placeholder='Observacion de la revocatoria'
+                            <textarea rows="4" className='form-control' placeholder='Observación'
                                 name='observacion' value={observacion} onChange={handleInputExtinto} />
                             {errorval.observacion
                                 ? <ValidationError text={errorval.observacion} />

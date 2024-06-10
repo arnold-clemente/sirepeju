@@ -91,7 +91,7 @@ const ModalShowPersonalidadesOtor = ({ registro, modalRegistro, closeRegistro })
                                 ? <>
                                     <button className='btn btn-danger' onClick={openAlfanumerico} >
                                         <i className="fa-solid fa-print"></i>
-                                        <span className='mx-1'>Generar Alfanúmerico</span>
+                                        <span className='mx-1'>Mostrar alfanúmerico</span>
                                     </button>
                                     <div className='absolute'>
                                         <Alfanumerico registro={otorgacion} modal={modalAlfanumerico} close={closeAlfanumerico} />

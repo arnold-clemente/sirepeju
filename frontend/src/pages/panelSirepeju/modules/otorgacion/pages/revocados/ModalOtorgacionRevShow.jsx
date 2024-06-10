@@ -47,6 +47,8 @@ const ModalOtorgacionRevShow = ({ registro, modalRegistro, closeRegistro }) => {
     nota_final: '',
     resolucion_ministerial: '',
     fecha_resolucion: '',
+    fecha_revocatoria: '',
+    nota_revocatorio: '',
     estado: 0,
     registro_id: 0,
     administrativo_id: 0,
@@ -125,22 +127,27 @@ const ModalOtorgacionRevShow = ({ registro, modalRegistro, closeRegistro }) => {
                                     <div className="col-md-3 "><h2>{otorgacion.naturaleza}</h2></div>
                                 </div>
                                 <div className="row border-bottom p-1">
-                                    <div className="col-md-3 fw-bold ">Resolución Ministerial:</div>
-                                    <div className="col-md-3 "><h2>{otorgacion.resolucion_ministerial}</h2></div>
-                                    <div className="col-md-3 fw-bold ">Fecha de resolución ministerial</div>
-                                    <div className="col-md-3 "><h2>{otorgacion.fecha_resolucion}</h2></div>
+                                    <div className="col-md-3 fw-bold ">Resolución Ministerial de revocatoria:</div>
+                                    <div className="col-md-3 "><h2>{otorgacion.nota_revocatorio}</h2></div>
+                                    <div className="col-md-3 fw-bold ">Fecha de revocatorio</div>
+                                    <div className="col-md-3 "><h2>{otorgacion.fecha_revocatoria}</h2></div>
                                     
                                     
                                 </div>
                                 <div className="row border-bottom p-1">
                                     <div className="col-md-4 fw-bold ">Domicilio legal</div>
-                                    <div className="col-md-9 "><h2>{otorgacion.domicilio_legal}</h2></div>
+                                    <div className="col-md-12 "><h2>{otorgacion.domicilio_legal}</h2></div>
+                                </div>
+                                <div className="row border-bottom p-1">
+                                    <div className="col-md-4 fw-bold ">Objeto</div>
+                                    <div className="col-md-12 "><h2>{otorgacion.objeto}</h2></div>
                                 </div>
                                 
                                 <div className="row">
-                                    <div className="col-md-4 fw-bold ">Objeto</div>
-                                    <div className="col-md-13"><h2>{otorgacion.objeto}</h2></div>
+                                    <div className="col-md-4 fw-bold ">Resumen</div>
+                                    <div className="col-md-13"><h2>{otorgacion.revocatoria}</h2></div>
                                 </div>
+                                
                                
                                 
                             </div>

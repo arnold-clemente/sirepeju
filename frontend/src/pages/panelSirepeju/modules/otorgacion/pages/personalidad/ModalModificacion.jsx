@@ -92,11 +92,11 @@ const ModalModificacion = ({ registro, handleInputChange, modal, open, close }) 
   return (
     <>
       {loading === true ? <Loading /> : ''}
-      <ModalDiv isOpen={modal} closeModal={close} title={'MODIFICACIÓN OTORGACION'}>
+      <ModalDiv isOpen={modal} closeModal={close} title={'PROCESO DE MODIFICACIÓN'}>
         <form onSubmit={handleGuardar} className='container-fluid' >
           <div className='row mt-1'>
             <div className='col-sm-5 px-0'>
-              <span className='font_span_input'>FECHA</span>
+              <span className='font_span_input'>FECHA DE MODIFICACIÓN</span>
             </div>
             <div className='col-sm-7 px-0'>
               <input type="date" className='form-control' placeholder='Rellenar Campo'
@@ -108,7 +108,7 @@ const ModalModificacion = ({ registro, handleInputChange, modal, open, close }) 
           </div>
           <div className='row mt-1'>
             <div className='col-sm-5 px-0'>
-              <span className='font_span_input'>CODIGO DE MODIFICACIÓN: </span>
+              <span className='font_span_input'>CÓDIGO DE MODIFICACIÓN: </span>
             </div>
             <div className='col-sm-7 px-0'>
               <div className="input-group mb-3">

@@ -105,42 +105,10 @@ const OtorgacionRevocados = () => {
             width: '120px',
         },
         {
-            name: 'Nota Revocatoria',
-            selector: row => row.nota_revocatorio,
-            sortable: true,
-            width: '150px',
-        },
-        {
-            name: 'Fecha Revocatoria',
-            selector: row => row.fecha_revocatoria,
-            sortable: true,
-            width: '150px',
-        },
-        {
-            name: 'Observacion',
-            selector: row => row.revocatoria,
-            sortable: true,
-            wrap: true,
-            width: '250px',
-        },
-        {
             name: 'Codigo OPJ',
             selector: row => row.codigo_otorgacion,
             sortable: true,
             width: '150px',
-        },
-        {
-            name: 'Fecha de Ingreso',
-            selector: row => row.fecha_ingreso_tramite,
-            sortable: true,
-            width: '150px',
-        },
-        {
-            name: 'Tipo de Persona Colectiva',
-            selector: row => row.persona_colectiva,
-            sortable: true,
-            wrap: true,
-            width: '200px',
         },
         {
             name: 'Naturaleza',
@@ -164,10 +132,60 @@ const OtorgacionRevocados = () => {
             width: '150px',
         },
         {
+            name: 'Tipo de Persona Colectiva',
+            selector: row => row.persona_colectiva,
+            sortable: true,
+            wrap: true,
+            width: '200px',
+        },
+        {
+            name: 'Nota Revocatoria',
+            selector: row => row.nota_revocatorio,
+            sortable: true,
+            width: '150px',
+        },
+        {
+            name: 'Fecha Revocatoria',
+            selector: row => row.fecha_revocatoria,
+            sortable: true,
+            width: '150px',
+        },
+        {
+            name: 'Referencia',
+            selector: row => row.revocatoria,
+            sortable: true,
+            wrap: true,
+            width: '250px',
+        },
+           
+        {
             name: 'Objeto',
             selector: row => row.objeto,
             width: '300px',
         },
+        
+        {
+            name: 'Representante',
+            selector: row => row.representante,
+            sortable: true,
+            wrap: true,
+            width: '150px',
+        },
+        {
+            name: 'Cedula',
+            selector: row => row.ci_rep + " " + row.ext_ci_rep,
+            sortable: true,
+            wrap: true,
+            width: '150px',
+        },
+        {
+            name: 'Beneficiario final',
+            selector: row => row.miembros_fundador,
+            sortable: true,
+            wrap: true,
+            width: '300px',
+        },
+        
         {
             name: 'Informes',
             selector: row => row.cite_informe_preliminar,
@@ -179,27 +197,6 @@ const OtorgacionRevocados = () => {
             selector: row => row.seguimiento,
             wrap: true,
             width: '250px',
-        },
-        {
-            name: 'Representante',
-            selector: row => row.representante,
-            sortable: true,
-            wrap: true,
-            width: '150px',
-        },
-        {
-            name: 'Mienbros Fundadores',
-            selector: row => row.miembros_fundador,
-            sortable: true,
-            wrap: true,
-            width: '300px',
-        },
-        {
-            name: 'Cedula',
-            selector: row => row.ci_rep + " " + row.ext_ci_rep,
-            sortable: true,
-            wrap: true,
-            width: '150px',
         },
     ];
 
@@ -218,7 +215,7 @@ const OtorgacionRevocados = () => {
             {/* para le modal show otorgacion  */}
             <SelectOtorgacionRevocados registro={selectedRows} modal={selectpdf} close={closeSelectpdf} />
             <ModalOtorgacionRevShow registro={otorgacionShow} modalRegistro={modalOtorgacion} closeRegistro={closeOtorgacion} />
-            <Banner text="REVOCADOS OTORGACION" />
+            <Banner text="PERSONERÍAS JURÍDICAS REVOCADAS" />
             <div className='container-fluid d-flex flex-row md:flex-columns my-4'>
                 <div className='input_search'>
                     <i className="fa-solid fa-magnifying-glass"></i>
@@ -234,7 +231,7 @@ const OtorgacionRevocados = () => {
             </div>
             <div className='table-responsive'>
                 <DataTable
-                    title={'TABLA DE OTORGACIONES REVOCADOS'}
+                    title={'TABLA PERSONERÍAS JURÍDICAS REVOCADAS'}
                     columns={columns}
                     data={filteredRegistros()}
                     paginationComponentOptions={paginationOptions}

@@ -282,7 +282,7 @@ const IndexModificacionOtor = () => {
     },
     {
       name: 'Fecha de Ingreso',
-      selector: row => row.fecha_ingreso_tramite,
+      selector: row => row.fecha,
       sortable: true,
       width: '150px',
     },
