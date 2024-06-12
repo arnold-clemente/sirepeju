@@ -102,104 +102,97 @@ const RevAdecuacion = () => {
       width: '120px',
     },
     {
-      name: 'Nota Revocatoria',
+      name: 'RM REVOCATORIA',
       selector: row => row.nota_revocatorio,
       sortable: true,
       width: '150px',
-    },
-    {
-      name: 'Fecha Revocatoria',
+  },
+  {
+      name: 'Fecha REVOCATORIA',
       selector: row => row.fecha_revocatoria,
       sortable: true,
       width: '150px',
-    },
-    {
+  },
+  {
       name: 'Observacion',
-      selector: row => row.observacion,
+      selector: row => row.revocatoria,
       sortable: true,
       wrap: true,
       width: '250px',
-    },
-    {
+  },
+  {
       name: 'Codigo APJ',
       selector: row => row.codigo_adecuacion,
       sortable: true,
       width: '150px',
-    },
-    {
-      name: 'Fecha de Ingreso',
-      selector: row => row.fecha_ingreso_tramite,
-      sortable: true,
-      width: '150px',
-    },
+  },
     {
       name: 'Tipo de Persona Colectiva',
       selector: row => row.persona_colectiva,
       sortable: true,
       wrap: true,
       width: '200px',
-    },
-    {
+  },
+  {
       name: 'Naturaleza',
       selector: row => row.naturaleza,
       sortable: true,
       wrap: true,
       width: '150px',
-    },
-    {
+  },
+  {
       name: 'Nombre de la Persona Colectiva',
       selector: row => row.personalidad_juridica,
       sortable: true,
       wrap: true,
       width: '300px',
-    },
-    {
+  },
+  {
       name: 'Sigla',
       selector: row => row.sigla,
       sortable: true,
       wrap: true,
       width: '150px',
-    },
-    {
+  },
+  {
       name: 'Objeto',
       selector: row => row.objeto,
       width: '300px',
-    },
-    {
+  },
+  {
       name: 'Informes',
       selector: row => row.cite_informe_preliminar,
       wrap: true,
       width: '250px',
-    },
-    {
+  },
+  {
       name: 'Seguimiento',
       selector: row => row.seguimiento,
       wrap: true,
       width: '250px',
-    },
-    {
+  },
+  {
       name: 'Representante',
       selector: row => row.representante,
       sortable: true,
       wrap: true,
       width: '150px',
-    },
-    {
-      name: 'Mienbros Fundadores',
+  },
+  {
+      name: 'Beneficiario final',
       selector: row => row.miembros_fundador,
       sortable: true,
       wrap: true,
       width: '300px',
-    },
-    {
+  },
+  {
       name: 'Cedula',
       selector: row => row.ci_rep + " " + row.ext_ci_rep,
       sortable: true,
       wrap: true,
       width: '150px',
-    },
-  ];
-
+  },
+];
   const paginationOptions = {
     rowsPerPageText: 'Filas por Página',
     rangeSeparatorText: 'de',
@@ -214,7 +207,7 @@ const RevAdecuacion = () => {
       {/* para le modal show adecuacion  */}
       <ModalAdecuacionRevocadosShow registro={adecuacionShow} modalRegistro={modalAdecuacion} closeRegistro={closeAdecuacion} />
       <SelectRevocadosAdecuacion registro={selectedRows} modal={selectpdf} close={closeSelectpdf} />
-      <Banner text="REVOCATORIAS ADECUACIONES" />
+      <Banner text="PERSONERÍAS REVOCADAS" />
       <div className='container-fluid d-flex flex-row md:flex-columns my-4'>
         <div className='input_search'>
           <i className="fa-solid fa-magnifying-glass"></i>
@@ -230,7 +223,7 @@ const RevAdecuacion = () => {
       </div>
       <div className='table-responsive'>
         <DataTable
-          title='TABLA REVOCADOS ADECUACION'
+          title='TABLA PERSONERÍAS REVOCADAS'
           columns={columns}
           data={filteredRegistros()}
           paginationComponentOptions={paginationOptions}

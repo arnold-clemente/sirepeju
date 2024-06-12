@@ -176,7 +176,7 @@ const ModalShowPersonalidadesOtor = ({ registro, modalRegistro, closeRegistro })
                                 </div>
                                 <ViewPdf resource={otorgacion.estatuto_organico} modal={modalEstatuto} close={closeEstatuto} />
                                 <ViewPdf resource={otorgacion.reglamento_interno} modal={modalReglamento} close={closeReglamento} />
-                                <ViewPdf resource={otorgacion.informe_final} modal={modalInforme} close={closeInforme} />
+                                {/* <ViewPdf resource={otorgacion.informe_final} modal={modalInforme} close={closeInforme} /> */}
                                 <ViewPdf resource={otorgacion.nota_final} modal={modalNota} close={closeNota} />
                             </>
                             : null                            

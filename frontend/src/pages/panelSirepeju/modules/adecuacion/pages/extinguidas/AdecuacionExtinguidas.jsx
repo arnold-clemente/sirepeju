@@ -102,7 +102,7 @@ const AdecuacionExtinguidas = () => {
             width: '120px',
         },
         {
-            name: 'Nota Ext',
+            name: 'RM Ext',
             selector: row => row.nota_extincion,
             sortable: true,
             width: '150px',
@@ -185,7 +185,7 @@ const AdecuacionExtinguidas = () => {
             width: '150px',
         },
         {
-            name: 'Mienbros Fundadores',
+            name: 'Beneficiario final',
             selector: row => row.miembros_fundador,
             sortable: true,
             wrap: true,

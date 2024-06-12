@@ -82,10 +82,10 @@ const ModalAdecuacionRevocadosShow = ({ registro, modalRegistro, closeRegistro }
     });
     return (
         <>
-            <ModalDiv isOpen={modalRegistro} closeModal={closeRegistro} title={'LISTA DE PERSONERIAS JURIDICAS CON RESOLUCION MINISTERIAL'}>
+            <ModalDiv isOpen={modalRegistro} closeModal={closeRegistro} title={'ADECUACIONES REVOCADAS'}>
                 {!cargando
                     ? (<div className="container-fluid">
-                        <h2 className='text-center fs-4'>{adecuacion.personalidad_juridica} </h2>
+                        
                         {/* para el modal de pdf de alfanumerico  */}
                         <div className='container-fluid d-flex justify-content-end gap-1'>
                             {adecuacion.alfanumerico
@@ -114,12 +114,42 @@ const ModalAdecuacionRevocadosShow = ({ registro, modalRegistro, closeRegistro }
                                 : null
                             }
                         </div>
+                        <div className="card m-2">
+                            <div className="card-header">
+                                <h2 className='fw-bold'><center>{adecuacion.personalidad_juridica} - {adecuacion.sigla}</center></h2>
+                            </div>
+                            <div className="card-body">
+                                <div className="row border-bottom p-1">
+                                    <div className="col-md-3 fw-bold ">Código:</div>
+                                    <div className="col-md-3 "><h2>{adecuacion.codigo_adecuacion}</h2></div>
+                                    <div className="col-md-3 fw-bold ">Naturaleza:</div>
+                                    <div className="col-md-3 "><h2>{adecuacion.naturaleza}</h2></div>
+                                </div>
+                                <div className="row border-bottom p-1">
+                                    <div className="col-md-3 fw-bold ">Resolución Ministerial de revocatoria:</div>
+                                    <div className="col-md-3 "><h2>{adecuacion.nota_revocatorio}</h2></div>
+                                    <div className="col-md-3 fw-bold ">Fecha de revocatorio</div>
+                                    <div className="col-md-3 "><h2>{adecuacion.fecha_revocatoria}</h2></div>
+                                    
+                                    
+                                </div>
+                                <div className="row border-bottom p-1">
+                                    <div className="col-md-4 fw-bold ">Domicilio legal</div>
+                                    <div className="col-md-12 "><h2>{adecuacion.domicilio_legal}</h2></div>
+                                </div>
+                                <div className="row border-bottom p-1">
+                                    <div className="col-md-4 fw-bold ">Objeto</div>
+                                    <div className="col-md-12 "><h2>{adecuacion.objeto}</h2></div>
+                                </div>
+                                
+                                <div className="row">
+                                    <div className="col-md-4 fw-bold ">Resumen</div>
+                                    <div className="col-md-13"><h2>{adecuacion.revocatoria}</h2></div>
+                                </div>                               
+                            </div>
+                        </div>
 
-                        <h2 className="fs-6"><b>Codigo: {adecuacion.codigo_adecuacion}</b> &nbsp;&nbsp; <b>Naturaleza: {adecuacion.naturaleza}</b></h2> <hr />
-                        <h2 className="fs-6"><b>Institucion Sin Fin de Lucro:</b> &nbsp;&nbsp; <b>Sigla: {adecuacion.sigla}</b></h2> <hr />
-                        <h2 className="fs-6"><b>Domicilio Legal: {adecuacion.domicilio_legal}</b></h2> <hr />
-                        <h2 className="fs-6"><b>Objeto: <p className='fs-6'>{adecuacion.objeto}</p></b></h2><hr />
-
+                        
 
                         {adecuacion.estado == 0
                             ? (<div className='container-fluid '>
@@ -135,65 +165,57 @@ const ModalAdecuacionRevocadosShow = ({ registro, modalRegistro, closeRegistro }
                             ? <>
                                 <div className='container-fluid d-flex justify-content-between my-4'>
                                     <button className='btn btn-success' onClick={openEstatuto} >
-                                        Estatuto Organico
+                                        Estatuto organico
                                     </button>
                                     <button className='btn btn-success' onClick={openReglamento} >
-                                        Reglamento Interno
+                                        Reglamento interno
                                     </button>
-                                    <button className='btn btn-success' onClick={openInforme} >
+                                    {/* <button className='btn btn-success' onClick={openInforme} >
                                         Informe Final
-                                    </button>
+                                    </button> */}
                                     <button className='btn btn-success' onClick={openNota} >
-                                        Nota FInal
+                                        Resolución Ministerial
                                     </button>
                                 </div>
                                 <ViewPdf resource={adecuacion.estatuto_organico} modal={modalEstatuto} close={closeEstatuto} />
                                 <ViewPdf resource={adecuacion.reglamento_interno} modal={modalReglamento} close={closeReglamento} />
-                                <ViewPdf resource={adecuacion.informe_final} modal={modalInforme} close={closeInforme} />
+                                {/* <ViewPdf resource={adecuacion.informe_final} modal={modalInforme} close={closeInforme} /> */}
                                 <ViewPdf resource={adecuacion.nota_final} modal={modalNota} close={closeNota} />
                             </>
                             : null
                         }
 
-                        {fundadores.length > 0
-                            ? <div>
-                                <h2 className="fs-6"><b>Miembros Fundadores:</b>
-                                    <center>
-                                        <div className='d-flex'>
-                                            <table className='table'>
-                                                <thead>
-                                                    <tr>
-                                                        <th className='col'>ID</th>
-                                                        <th className='col'>Nombres</th>
-                                                        <th className='col'>Cedula Indentidad</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody className="table-group-divider">
-                                                    {fundadores.sort((a, b) => b.id - a.id).map((fundador) => {
-                                                        return (
-                                                            <tr key={fundador.id}>
-                                                                <td>{fundador.id}</td>
-                                                                <td>{fundador.nombre_completo}</td>
-                                                                <td>{fundador.ci}</td>
-                                                            </tr>
-                                                        )
-                                                    })}
+                       
+{fundadores.length > 0
+                            ? <div className='card mx-2'>
+                                <div className="card-header">
+                                <h2 className='fw-bold'> <center>BENEFICIARIO FINAL</center></h2>
+                            </div>
+                                <div className='card-body'>
+                                    {fundadores.sort((a, b) => b.id - a.id).map((fundador) => {
+                                        return (
+                                            <div className="row" key={fundador.id}>
+                                                <div className="col-md-2 fw-bold "><h2>Nombre:</h2></div>
+                                                <div className="col-md-4 "><h2>{fundador.nombre_completo}</h2></div>
+                                                <div className="col-md-3 fw-bold "><h2>C.I.:</h2></div>
+                                                <div className="col-md-3 "><h2>{fundador.ci}</h2></div>
+                                            </div>
 
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </center>
-                                </h2>
+                                        )
+                                    })}
+
+                                </div>
                             </div>
                             : null
                         }
 
 
-                    </div>)
-                    : <div className='spiner_content'><span className='loader_spiner'></span></div>
-                }
+           
+          </div>)
+          : <div className='spiner_content'><span className='loader_spiner'></span></div>
+        }
 
-            </ModalDiv >
+      </ModalDiv >
         </>
     )
 }

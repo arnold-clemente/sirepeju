@@ -104,42 +104,10 @@ const OtorgacionExtinguidas = () => {
             width: '120px',
         },
         {
-            name: 'Nota Ext',
-            selector: row => row.nota_extincion,
-            sortable: true,
-            width: '150px',
-        },
-        {
-            name: 'Fecha Ext',
-            selector: row => row.fecha_extenion,
-            sortable: true,
-            width: '150px',
-        },
-        {
-            name: 'Observacion',
-            selector: row => row.extincion,
-            sortable: true,
-            wrap: true,
-            width: '250px',
-        },
-        {
             name: 'Codigo OPJ',
             selector: row => row.codigo_otorgacion,
             sortable: true,
             width: '150px',
-        },
-        {
-            name: 'Fecha de Ingreso',
-            selector: row => row.fecha_ingreso_tramite,
-            sortable: true,
-            width: '150px',
-        },
-        {
-            name: 'Tipo de Persona Colectiva',
-            selector: row => row.persona_colectiva,
-            sortable: true,
-            wrap: true,
-            width: '200px',
         },
         {
             name: 'Naturaleza',
@@ -163,10 +131,60 @@ const OtorgacionExtinguidas = () => {
             width: '150px',
         },
         {
+            name: 'Tipo de Persona Colectiva',
+            selector: row => row.persona_colectiva,
+            sortable: true,
+            wrap: true,
+            width: '200px',
+        },
+        {
+            name: 'Nota de extinción',
+            selector: row => row.nota_extincion,
+            sortable: true,
+            width: '150px',
+        },
+        {
+            name: 'Fecha de extinción',
+            selector: row => row.fecha_extenion,
+            sortable: true,
+            width: '150px',
+        },
+        {
+            name: 'Referencia',
+            selector: row => row.extincion,
+            sortable: true,
+            wrap: true,
+            width: '250px',
+        },
+           
+        {
             name: 'Objeto',
             selector: row => row.objeto,
             width: '300px',
         },
+        
+        {
+            name: 'Representante',
+            selector: row => row.representante,
+            sortable: true,
+            wrap: true,
+            width: '150px',
+        },
+        {
+            name: 'Cedula',
+            selector: row => row.ci_rep + " " + row.ext_ci_rep,
+            sortable: true,
+            wrap: true,
+            width: '150px',
+        },
+        {
+            name: 'Beneficiario final',
+            selector: row => row.miembros_fundador,
+            sortable: true,
+            wrap: true,
+            width: '300px',
+        },
+        
         {
             name: 'Informes',
             selector: row => row.cite_informe_preliminar,
@@ -179,28 +197,8 @@ const OtorgacionExtinguidas = () => {
             wrap: true,
             width: '250px',
         },
-        {
-            name: 'Representante',
-            selector: row => row.representante,
-            sortable: true,
-            wrap: true,
-            width: '150px',
-        },
-        {
-            name: 'Mienbros Fundadores',
-            selector: row => row.miembros_fundador,
-            sortable: true,
-            wrap: true,
-            width: '300px',
-        },
-        {
-            name: 'Cedula',
-            selector: row => row.ci_rep + " " + row.ext_ci_rep,
-            sortable: true,
-            wrap: true,
-            width: '150px',
-        },
     ];
+
 
     const paginationOptions = {
         rowsPerPageText: 'Filas por Página',

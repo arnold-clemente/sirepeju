@@ -243,13 +243,7 @@ const PersAdecuacion = () => {
             width: '150px',
         },
         {
-            name: 'Fecha de Ingreso',
-            selector: row => row.fecha_ingreso_tramite,
-            sortable: true,
-            width: '150px',
-        },
-        {
-            name: 'Tipo de Persona Colectiva',
+            name: 'Tipo ',
             selector: row => row.persona_colectiva,
             sortable: true,
             wrap: true,
@@ -263,7 +257,7 @@ const PersAdecuacion = () => {
             width: '150px',
         },
         {
-            name: 'Nombre de la Persona Colectiva',
+            name: 'entidad',
             selector: row => row.personalidad_juridica,
             sortable: true,
             wrap: true,
@@ -277,42 +271,43 @@ const PersAdecuacion = () => {
             width: '150px',
         },
         {
+            name: 'Resolución',
+            selector: row => row.resolucion_ministerial,
+            sortable: true,
+            width: '150px',
+        },
+        {
+            name: 'Fecha de resolución',
+            selector: row => row.fecha_resolucion,
+            sortable: true,
+            width: '200px',
+        },
+        
+        {
             name: 'Objeto',
             selector: row => row.objeto,
             width: '300px',
-        },
-        {
-            name: 'Informes',
-            selector: row => row.cite_informe_preliminar,
-            wrap: true,
-            width: '250px',
-        },
-        {
-            name: 'Seguimiento',
-            selector: row => row.seguimiento,
-            wrap: true,
-            width: '250px',
         },
         {
             name: 'Representante',
             selector: row => row.representante,
             sortable: true,
             wrap: true,
-            width: '150px',
+            width: '200px',
         },
         {
-            name: 'Mienbros Fundadores',
-            selector: row => row.miembros_fundador,
-            sortable: true,
-            wrap: true,
-            width: '300px',
-        },
-        {
-            name: 'Cedula',
+            name: 'C.I.',
             selector: row => row.ci_rep + " " + row.ext_ci_rep,
             sortable: true,
             wrap: true,
             width: '150px',
+        },
+        {
+            name: 'Beneficiario Final',
+            selector: row => row.miembros_fundador,
+            sortable: true,
+            wrap: true,
+            width: '300px',
         },
     ];
 
@@ -339,7 +334,7 @@ const PersAdecuacion = () => {
 
             {/* para le modal show adecuacion  */}
             <ModalModificacionAde registro={update} handleInputChange={handleInputModificacion} modal={modificacion} open={openModificacion} close={closeModificacion} />
-            <Banner text="PERSONALIDAD JURIDICA ADECUACION" />
+            <Banner text="PERSONERÍAS JURIDICAS ADECUADAS" />
             <div className='container-fluid d-flex flex-row md:flex-columns my-4'>
                 <div className='input_search'>
                     <i className="fa-solid fa-magnifying-glass"></i>
@@ -355,7 +350,7 @@ const PersAdecuacion = () => {
             </div>
             <div className='table-responsive'>
                 <DataTable
-                    title='TABLA PROCESO DE PERSONALIDAD ADECUACION'
+                    title='TABLA DE PERSONALIDAD JURÍDICA'
                     columns={columns}
                     data={filteredRegistros()}
                     paginationComponentOptions={paginationOptions}

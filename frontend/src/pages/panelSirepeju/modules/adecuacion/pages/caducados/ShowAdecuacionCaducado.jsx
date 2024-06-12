@@ -79,7 +79,7 @@ const ShowAdecuacionCaducado = ({ registro, modalRegistro, closeRegistro }) => {
             <ModalDiv isOpen={modalRegistro} closeModal={closeRegistro} title={'TRÁMITE DE ADECUACIÓN CADUCADA'}>
                 {!cargando
                     ? (<div className="container-fluid">
-                        <h2 className='text-center fs-4'>{adecuacion.personalidad_juridica} </h2>
+                        
                         {/* para el modal de pdf de alfanumerico  */}
                         <div className='container-fluid d-flex justify-content-end gap-1'>
                             {adecuacion.alfanumerico
@@ -108,12 +108,90 @@ const ShowAdecuacionCaducado = ({ registro, modalRegistro, closeRegistro }) => {
                                 : null
                             }
                         </div>
-                        <h2 className="fs-6"><b>Codigo:</b> {adecuacion.codigo_adecuacion} &emsp;&emsp;&emsp; <b>Naturaleza:</b> {adecuacion.naturaleza}</h2> <hr />
-                        <h2 className="fs-6"><b>Tipo de persona Colectiva:</b>&emsp;{adecuacion.persona_colectiva}&emsp;&emsp;&emsp;<b>Sigla:</b> {adecuacion.sigla}</h2> <hr />
-                        <h2 className="fs-6"><b>Domicilio Legal:</b>&emsp;{adecuacion.domicilio_legal}</h2> <hr />
-                        <h2 className="fs-6"><b>Objeto:</b><p><mark>{adecuacion.objeto}</mark></p></h2><hr />
+                        <div className="card m-2">
+                            <div className="card-header">
+                                <h2 className='fw-bold'><center>{adecuacion.personalidad_juridica} - {adecuacion.sigla}</center></h2>
+                            </div>
+                            <div className="card-body">
+                                <div className="row border-bottom p-1">
+                                    <div className="col-md-3 fw-bold ">Código:</div>
+                                    <div className="col-md-3 "><h2>{adecuacion.codigo_adecuacion}</h2></div>
+                                    <div className="col-md-3 fw-bold ">Naturaleza:</div>
+                                    <div className="col-md-3 "><h2>{adecuacion.naturaleza}</h2></div>
+                                </div>
+                                <div className="row border-bottom p-1">
+                                    <div className="col-md-3 fw-bold ">Tipo:</div>
+                                    <div className="col-md-3 "><h2>{adecuacion.persona_colectiva}</h2></div>
+                                    <div className="col-md-3 fw-bold ">fecha:</div>
+                                    <div className="col-md-3 "><h2>{adecuacion.fecha_ingreso_tramite}</h2></div>
+                                    
+                                    
+                                </div>
+                                <div className="row border-bottom p-1">
+                                    <div className="col-md-4 fw-bold ">Domicilio legal</div>
+                                    <div className="col-md-9 "><h2>{adecuacion.domicilio_legal}</h2></div>
+                                </div>
+                                
+                                <div className="row">
+                                    <div className="col-md-4 fw-bold ">Objeto</div>
+                                    <div className="col-md-13"><h2>{adecuacion.objeto}</h2></div>
+                                </div>
+                                <div className="row">
+                                    <div className="col-md-4 fw-bold ">Observación</div>
+                                    <div className="col-md-11"><h2>{adecuacion.observacion}</h2></div>
+                                </div>
+                                
+                            </div>
+                            
+                        </div>
+                      {adecuacion.estado == 0
+                          ? (<div className='container-fluid '>
+                              <div className='row'>
+                                  <div className='col-md-3'> <h1>OBSERVACION</h1></div>
+                                  <div className='col-md-9'><span>{adecuacion.observacion}</span></div>
+                              </div>
+                          </div>)
+                          : ''
+                      }
+
   
-  
+<div className="card m-2">
+                        <div className="card-header">
+                                <h2 className='fw-bold'> <center>DATOS DEL REPRESENTANTE LEGAL</center></h2>
+                            </div>
+                            <div className="card-body">
+                                <div className="row border-bottom p-1">
+                                    <div className="col-md-3 fw-bold ">Nombre:</div>
+                                    <div className="col-md-3 "><h2>{adecuacion.representante}</h2></div>
+                                    <div className="col-md-2 fw-bold ">C.I.:</div>
+                                    <div className="col-md-2 "><h2>{adecuacion.ci_rep}</h2></div>
+                                </div>
+                                <div className="row border-bottom p-1">
+                                    <div className="col-md-6 fw-bold ">Número de celular de referencia</div>
+                                    <div className="col-md-9 "><h2>{adecuacion.telefono}</h2></div>
+                                </div>
+                                
+                                <div className="row">
+                                    <div className="col-md-4 fw-bold ">Correo electrónico </div>
+                                    <div className="col-md-11"><h2>{adecuacion.correo}</h2></div>
+                                </div>
+                        </div>
+                        </div>
+                        <div className="card m-2">
+                        
+                            <div className="card-body">
+                            <div className="row border-bottom p-1">
+                                    <div className="col-md-3 fw-bold ">Informes:</div>
+                                    <div className="col-md-9 "><h2>{adecuacion.cite_informe_preliminar}</h2></div>
+                                </div>
+                                
+                                <div className="row">
+                                    <div className="col-md-3 fw-bold ">Seguimiento </div>
+                                    <div className="col-md-5"><h2>{adecuacion.seguimiento}</h2></div>
+                                </div>
+                        </div>
+                        </div>
+
                         {adecuacion.estado == 0
                             ? (<div className='container-fluid '>
                                 <div className='row'>
@@ -123,45 +201,37 @@ const ShowAdecuacionCaducado = ({ registro, modalRegistro, closeRegistro }) => {
                             </div>)
                             : ''
                         }
-  
-                        {fundadores.length > 0
-                            ? <div>
-                                <h2 className="fs-6"><b>Miembros Fundadores:</b>
-                                    <center>
-                                        <div className='d-flex'>
-                                            <table className='table'>
-                                                <thead>
-                                                    <tr>
-                                                        <th className='col'>Nombres</th>
-                                                        <th className='col'>Cedula Indentidad</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody className="table-group-divider">
-                                                    {fundadores.sort((a, b) => b.id - a.id).map((fundador) => {
-                                                        return (
-                                                            <tr key={fundador.id}>
-                                                                <td>{fundador.id}</td>
-                                                                <td>{fundador.nombre_completo}</td>
-                                                                <td>{fundador.ci}</td>
-                                                            </tr>
-                                                        )
-                                                    })}
-  
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </center>
-                                </h2>
+
+{fundadores.length > 0
+                            ? <div className='card mx-2'>
+                                <div className="card-header">
+                                <h2 className='fw-bold'> <center>MIEMBROS FUNDADORES</center></h2>
+                            </div>
+                                <div className='card-body'>
+                                    {fundadores.sort((a, b) => b.id - a.id).map((fundador) => {
+                                        return (
+                                            <div className="row" key={fundador.id}>
+                                                <div className="col-md-2 fw-bold "><h2>Nombre:</h2></div>
+                                                <div className="col-md-4 "><h2>{fundador.nombre_completo}</h2></div>
+                                                <div className="col-md-3 fw-bold "><h2>C.I.:</h2></div>
+                                                <div className="col-md-3 "><h2>{fundador.ci}</h2></div>
+                                            </div>
+
+                                        )
+                                    })}
+
+                                </div>
                             </div>
                             : null
                         }
-  
-  
+
+
                     </div>)
                     : <div className='spiner_content'><span className='loader_spiner'></span></div>
                 }
-  
-            </ModalDiv >
+
+
+          </ModalDiv >
         </>
     )
 }

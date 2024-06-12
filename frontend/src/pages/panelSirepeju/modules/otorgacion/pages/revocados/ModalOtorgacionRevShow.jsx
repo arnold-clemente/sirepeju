@@ -47,8 +47,6 @@ const ModalOtorgacionRevShow = ({ registro, modalRegistro, closeRegistro }) => {
     nota_final: '',
     resolucion_ministerial: '',
     fecha_resolucion: '',
-    fecha_revocatoria: '',
-    nota_revocatorio: '',
     estado: 0,
     registro_id: 0,
     administrativo_id: 0,
@@ -182,7 +180,7 @@ const ModalOtorgacionRevShow = ({ registro, modalRegistro, closeRegistro }) => {
                                 </div>
                                 <ViewPdf resource={otorgacion.estatuto_organico} modal={modalEstatuto} close={closeEstatuto} />
                                 <ViewPdf resource={otorgacion.reglamento_interno} modal={modalReglamento} close={closeReglamento} />
-                                <ViewPdf resource={otorgacion.informe_final} modal={modalInforme} close={closeInforme} />
+                                {/* <ViewPdf resource={otorgacion.informe_final} modal={modalInforme} close={closeInforme} /> */}
                                 <ViewPdf resource={otorgacion.nota_final} modal={modalNota} close={closeNota} />
                             </>
                             : null                            

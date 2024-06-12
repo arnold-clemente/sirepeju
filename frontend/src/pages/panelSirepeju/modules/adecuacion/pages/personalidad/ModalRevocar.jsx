@@ -67,14 +67,14 @@ const ModalRevocar = ({ registrorModal, openRegistrorModal, closeRegistrorModal,
         <>
             {loading === true ? <Loading /> : ''}
             {/* modal para el etapa final de registro  */}
-            <ModalSm isOpen={registrorModal} closeModal={closeRegistrorModal} title={'REVOCAR PERSONALIDAD'}>
+            <ModalSm isOpen={registrorModal} closeModal={closeRegistrorModal} title={'PROCESO DE REVOCATORIA'}>
                 <div className='container-fluid'>
                     <div className='row mt-1'>
                         <div className='col-sm-5 px-0'>
-                            <span className='font_span_input'>NOTA REVOCATORIA: </span>
+                            <span className='font_span_input'>NUMERO DE RESOLUCIÓN: </span>
                         </div>
                         <div className='col-sm-7 px-0'>
-                            <input type="text" className='form-control' placeholder='N° DE NOTA'
+                            <input type="text" className='form-control' placeholder='N° RESOLUCION'
                                 name='nota_revocatorio' value={nota_revocatorio} onChange={handleInputChange} />
                             {errorval.nota_revocatorio
                                 ? <ValidationError text={errorval.nota_revocatorio} />
@@ -95,10 +95,10 @@ const ModalRevocar = ({ registrorModal, openRegistrorModal, closeRegistrorModal,
                     </div>
                     <div className='row mt-1'>
                         <div className='col-sm-4 px-0'>
-                            <span className='font_span_input'>OBSERVACION: </span>
+                            <span className='font_span_input'>DETALLE: </span>
                         </div>
                         <div className='col-sm-8 px-0'>
-                            <textarea rows="4" className='form-control' placeholder='Observacion de la revocatoria'
+                            <textarea rows="4" className='form-control' placeholder='la revocatoria'
                                 name='observacion' value={observacion} onChange={handleInputChange} />
                             {errorval.observacion
                                 ? <ValidationError text={errorval.observacion} />

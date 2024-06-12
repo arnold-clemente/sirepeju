@@ -277,14 +277,14 @@ const IndexModificacionAd = () => {
       width: '150px',
     },
     {
-      name: 'Codigo APJ',
+      name: 'Codigo OPJ',
       selector: row => row.codigo_adecuacion,
       sortable: true,
       width: '150px',
     },
     {
       name: 'Fecha de Ingreso',
-      selector: row => row.fecha_ingreso_tramite,
+      selector: row => row.fecha_modificacion,
       sortable: true,
       width: '150px',
     },
@@ -341,7 +341,7 @@ const IndexModificacionAd = () => {
       width: '150px',
     },
     {
-      name: 'Mienbros Fundadores',
+      name: 'BENEFICIARIOS',
       selector: row => row.miembros_fundador,
       sortable: true,
       wrap: true,
@@ -355,6 +355,8 @@ const IndexModificacionAd = () => {
       width: '150px',
     },
   ];
+
+
 
   const paginationOptions = {
     rowsPerPageText: 'Filas por Página',
@@ -397,7 +399,7 @@ const IndexModificacionAd = () => {
       </div>
       <div className='table-responsive'>
         <DataTable
-          title='TABLA MODIFICACIONES ADECUACION'
+          title='TABLA MODIFICACIÓN'
           columns={columns}
           data={filteredRegistros()}
           paginationComponentOptions={paginationOptions}

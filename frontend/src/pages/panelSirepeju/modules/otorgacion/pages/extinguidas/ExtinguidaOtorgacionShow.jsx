@@ -84,7 +84,7 @@ const ExtinguidaOtorgacionShow = ({ registro, modalRegistro, closeRegistro }) =>
             <ModalDiv isOpen={modalRegistro} closeModal={closeRegistro} title={'PERSONALIDADES JURÍDICAS EXTINGUIDAS'}>
                 {!cargando
                     ? (<div className="container-fluid">
-                        <h2 className='text-center fs-4'>{otorgacion.personalidad_juridica} </h2>
+                       
                         {/* para el modal de pdf de alfanumerico  */}
                         <div className='container-fluid d-flex justify-content-end gap-1'>
                             {otorgacion.alfanumerico
@@ -114,11 +114,44 @@ const ExtinguidaOtorgacionShow = ({ registro, modalRegistro, closeRegistro }) =>
                             }
                         </div>
 
-                        <h2 className="fs-6"><b>Codigo:</b> {otorgacion.codigo_otorgacion}&emsp;&emsp;&emsp; <b>Naturaleza: </b>{otorgacion.naturaleza}</h2> <hr />
-                        <h2 className="fs-6"><b>Tipo de personalidad jurídica:</b>{otorgacion.persona_colectiva} &emsp;&emsp; <b>Sigla:</b> {otorgacion.sigla}</h2> <hr />
-                        <h2 className="fs-6"><b>Domicilio Legal: </b>{otorgacion.domicilio_legal}</h2> <hr />
-                        <h2 className="fs-6"><b>Objeto: <p><>{otorgacion.objeto}</></p></b></h2><hr />
-
+                        <div className="card m-2">
+                            <div className="card-header">
+                                <h2 className='fw-bold'><center>{otorgacion.personalidad_juridica} - {otorgacion.sigla}</center></h2>
+                            </div>
+                            <div className="card-body">
+                                <div className="row border-bottom p-1">
+                                    <div className="col-md-3 fw-bold ">Código:</div>
+                                    <div className="col-md-3 "><h2>{otorgacion.codigo_otorgacion}</h2></div>
+                                    <div className="col-md-3 fw-bold ">Naturaleza:</div>
+                                    <div className="col-md-3 "><h2>{otorgacion.naturaleza}</h2></div>
+                                </div>
+                                <div className="row border-bottom p-1">
+                                    <div className="col-md-3 fw-bold ">Resolución Ministerial de extinción:</div>
+                                    <div className="col-md-3 "><h2>{otorgacion.nota_extincion}</h2></div>
+                                    <div className="col-md-3 fw-bold ">Fecha de extinción</div>
+                                    <div className="col-md-3 "><h2>{otorgacion.fecha_extenion}</h2></div>
+                                    
+                                    
+                                </div>
+                                <div className="row border-bottom p-1">
+                                    <div className="col-md-4 fw-bold ">Domicilio legal</div>
+                                    <div className="col-md-12 "><h2>{otorgacion.domicilio_legal}</h2></div>
+                                </div>
+                                <div className="row border-bottom p-1">
+                                    <div className="col-md-4 fw-bold ">Objeto</div>
+                                    <div className="col-md-12 "><h2>{otorgacion.objeto}</h2></div>
+                                </div>
+                                
+                                <div className="row">
+                                    <div className="col-md-4 fw-bold ">Resumen</div>
+                                    <div className="col-md-13"><h2>{otorgacion.revocatoria}</h2></div>
+                                </div>
+                                
+                               
+                                
+                            </div>
+                            
+                        </div>
 
                         {otorgacion.estado == 0
                             ? (<div className='container-fluid '>
@@ -134,16 +167,16 @@ const ExtinguidaOtorgacionShow = ({ registro, modalRegistro, closeRegistro }) =>
                             ? <>
                                 <div className='container-fluid d-flex justify-content-between my-4'>
                                     <button className='btn btn-success' onClick={openEstatuto} >
-                                        Estatuto Organico
+                                        Estatuto orgánico
                                     </button>
                                     <button className='btn btn-success' onClick={openReglamento} >
-                                        Reglamento Interno
+                                        Reglamento interno
                                     </button>
-                                    <button className='btn btn-success' onClick={openInforme} >
+                                    {/* <button className='btn btn-success' onClick={openInforme} >
                                         Informe Final
-                                    </button>
+                                    </button> */}
                                     <button className='btn btn-success' onClick={openNota} >
-                                        Nota interna Final
+                                        Resolución ministerial
                                     </button>
                                 </div>
                                 <ViewPdf resource={otorgacion.estatuto_organico} modal={modalEstatuto} close={closeEstatuto} />
@@ -151,44 +184,37 @@ const ExtinguidaOtorgacionShow = ({ registro, modalRegistro, closeRegistro }) =>
                                 <ViewPdf resource={otorgacion.informe_final} modal={modalInforme} close={closeInforme} />
                                 <ViewPdf resource={otorgacion.nota_final} modal={modalNota} close={closeNota} />
                             </>
-                            : null
+                            : null                            
                         }
 
                         {fundadores.length > 0
-                            ? <div>
-                                <h2 className="fs-6"><b><center>Miembros Fundadores:</center></b>
-                                    <center>
-                                        <div className='d-flex'>
-                                            <table className='table'>
-                                                <thead>
-                                                    <tr>
-                                                        <th className='col'>Nombres</th>
-                                                        <th className='col'>Cedula Indentidad</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody className="table-group-divider">
-                                                    {fundadores.sort((a, b) => b.id - a.id).map((fundador) => {
-                                                        return (
-                                                            <tr key={fundador.id}>
-                                                                <td><mark>{fundador.nombre_completo}</mark></td>
-                                                                <td><mark>{fundador.ci}</mark></td>
-                                                            </tr>
-                                                        )
-                                                    })}
+                            ? <div className='card mx-2'>
+                                <div className="card-header">
+                                <h2 className='fw-bold'> <center>BENEFICIARIO FINAL</center></h2>
+                            </div>
+                                <div className='card-body'>
+                                    {fundadores.sort((a, b) => b.id - a.id).map((fundador) => {
+                                        return (
+                                            <div className="row" key={fundador.id}>
+                                                <div className="col-md-2 fw-bold "><h2>Nombre:</h2></div>
+                                                <div className="col-md-4 "><h2>{fundador.nombre_completo}</h2></div>
+                                                <div className="col-md-3 fw-bold "><h2>C.I.:</h2></div>
+                                                <div className="col-md-3 "><h2>{fundador.ci}</h2></div>
+                                            </div>
 
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </center>
-                                </h2>
+                                        )
+                                    })}
+
+                                </div>
                             </div>
                             : null
                         }
 
-                    </div>)
-                    : <div className='spiner_content'><span className='loader_spiner'></span></div>
-                }
 
+           
+          </div>)
+          : <div className='spiner_content'><span className='loader_spiner'></span></div>
+        }
             </ModalDiv >
         </>
     )

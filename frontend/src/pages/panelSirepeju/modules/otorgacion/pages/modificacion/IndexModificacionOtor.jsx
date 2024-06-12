@@ -275,14 +275,14 @@ const IndexModificacionOtor = () => {
       width: '150px',
     },
     {
-      name: 'Codigo OPJ',
+      name: 'Codigo APJ',
       selector: row => row.codigo_otorgacion,
       sortable: true,
       width: '150px',
     },
     {
       name: 'Fecha de Ingreso',
-      selector: row => row.fecha,
+      selector: row => row.fecha_modificacion,
       sortable: true,
       width: '150px',
     },
@@ -339,7 +339,7 @@ const IndexModificacionOtor = () => {
       width: '150px',
     },
     {
-      name: 'Mienbros Fundadores',
+      name: 'BENEFICIARIO',
       selector: row => row.miembros_fundador,
       sortable: true,
       wrap: true,

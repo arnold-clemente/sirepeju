@@ -226,7 +226,7 @@ const IndexAdecuacionArchivados = () => {
             width: '150px',
         },
         {
-            name: 'Codigo OPJ',
+            name: 'Codigo APJ',
             selector: row => row.codigo_adecuacion,
             sortable: true,
             width: '150px',

@@ -262,7 +262,7 @@ const RepOtorgacionPersonalidad = ({ otorgacion, fundadores, modal, close }) => 
                                 <Image style={styles.logo} src={logo} />
                         </View>
                             
-                        <Text style={styles.prueba}> REGISTRO DE PERSONERÍA JURÍDICA AL (S.I.R.E.P.E.J.U.)</Text>                             
+                        <Text style={styles.prueba}> REGISTRO DE PERSONERÍA JURÍDICA AL (SIREPEJU)</Text>                             
                                 
                                 <Text style={styles.prueba2}>NATURALEZA:</Text>
                                 <Text style={styles.title}>{otorgacion.naturaleza}</Text>

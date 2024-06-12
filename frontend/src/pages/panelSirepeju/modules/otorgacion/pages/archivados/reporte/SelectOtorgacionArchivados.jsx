@@ -305,7 +305,7 @@ const SelectOtorgacionArchivados = ({ registro, modal, close }) => {
 
                             <View style={styles.content}>
                                 {/* Contenido de tu documento */}
-                                <Text style={styles.dato}>{"\n"}El contenido de este documento esta extraido del sistema SIREPEJU(Sistema de Registro de Personalidades Juridícas).</Text>
+                                <Text style={styles.dato}>{"\n"}El contenido de este documento esta extraido del sistema SIREPEJU (Sistema de Registro de Personalidades Juridícas).</Text>
                                 <View style={styles.contenedor_logo_qr}>
                 {imageqr != ''
                   ? <Image style={styles.logo} src={imageqr} />
