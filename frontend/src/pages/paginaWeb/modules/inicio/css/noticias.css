@@ -45,20 +45,20 @@
     font-weight: bold;
     text-transform: uppercase;
     text-align: center;
-    color: #112674;
+    color: #1b3653;;
 }
 
 .link_noticias{
     text-decoration: none;
     color: #fff;
-    background-color: #112674;
+    background-color: #1b3653;
     padding: 10px;
     font-size: 14px;
     transition: all 0.3s ease-in-out;
 }
 
 .link_noticias:hover{
-    color: #112674;
+    color: #1b3653;
     background-color: #fff;
    
 }

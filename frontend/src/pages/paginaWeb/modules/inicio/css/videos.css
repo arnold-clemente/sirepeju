@@ -7,13 +7,13 @@
 }
 
 .Videos_content {
-    width: 90%;
+    width: 100%;
     height: 140px;
     padding: 10px 0;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: #D9DADF;
+    background-color: #ecedf4;
 }
 
 .videos_text {
@@ -22,7 +22,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #112674;
+    background-color: #1b3653;
 }
 
 .videos_text h1 {
@@ -52,9 +52,9 @@
 }
 
 .videos_cards img {
-    height: 70px;
-    background-color: #112674;
-    padding: 10px;
+    height: 50px;
+    background-color:#1b3653;
+    padding: 5px;
 }
 
 .close_video_modal{
@@ -65,10 +65,10 @@
 }
 .close_video_modal i{
    padding: 5px 8px;
-   color: #001761;
+   color: #1b3653;
    font-weight: bold;
    font-size: 20px;
-   text-shadow: 1px 1px 2px red, 0 0 1em blue, 0 0 0.2em blue;
+   text-shadow: 1px 1px 2px rgb(93, 216, 254), 0 0 1em blue, 0 0 0.2em blue;
    max-width: 1000px;
 }
 

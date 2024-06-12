@@ -22,7 +22,7 @@
 
 .login_form button {
     width: 100%;
-    background-color: #412E34;
+    background-color: #1b3653;
     margin-top: 20px;
     padding: 10px 0;
     border-radius: 10px;
@@ -35,7 +35,7 @@
 
 .login_form button:hover {
     background-color: #fff;
-    color: #412E34;
+    color: #1b3653;
 }
 
 /* para el log princiopla  */
@@ -55,7 +55,7 @@
     align-items: center;
     justify-content: center;
     text-align: center;
-    background-color: #412E34;
+    background-color: #1b3653;
     border-radius: 30px 30px 0px 0px;
 }
 
@@ -70,7 +70,7 @@
     padding: 15px;
     font-size: 40px;
     color: #fff;
-    background-color: #694956;
+    background-color:#1b3653;
 }
 
 .form_logo h5 {
@@ -95,7 +95,7 @@
 .login_text p {
     font-size: 12px;
     text-transform: uppercase;
-    color: #412E34;
+    color: #1b3653;
     font-weight: 600;
 }
 
@@ -116,7 +116,7 @@
     height: 40px;
     text-align: center;
     /* background-color: #412E34; */
-    color: #412E34;
+    color: #1b3653;
     font-size: 20px;
 }
 
@@ -137,7 +137,7 @@
     left: 15px;
     line-height: 40px;
     font-size: 14px;
-    color: #777;
+    color: #1b3653;
     transition: 300ms all;
 }
 
@@ -177,7 +177,7 @@
     justify-content: center;
     gap: 2px;
     color: #fff;
-    background-color: #412E34;
+    background-color: #1b3653;
     margin-top: 20px;
     padding: 10px 0;
     border-radius: 10px;
@@ -189,6 +189,6 @@
 }
 
 .visible_password{
-    color: rgb(2, 2, 107);
+    color: #1b3653;rgb(2, 2, 107);
     pointer-events: all;
 }

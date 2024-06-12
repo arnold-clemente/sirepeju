@@ -5,8 +5,8 @@
   left: 0;
   top: 60px;
   z-index: 100;
-  background: rgb(10, 156, 188);
-  background: linear-gradient(180deg, rgba(10, 156, 188, 1) 0%, rgba(6, 92, 111, 1) 54%, rgba(2, 30, 36, 1) 100%);
+  background-color: #1b3653;
+  /* background: linear-gradient(180deg, rgba(10, 156, 188, 1) 0%, rgba(6, 92, 111, 1) 54%, rgba(2, 30, 36, 1) 100%); */
   overflow: auto;
   transition: all 0.3s ease-in-out;
 }
