@@ -24,7 +24,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #4a70fa;
+    color: #1b3653;
     gap: 10px;
     font-weight: bold;
 }
@@ -35,7 +35,7 @@
     justify-content: center;
 }
 .requisitos_navbar_subtitle i{
-    color: #4a70fa;
+    color: #1b3653;
 }
 
 .requisitos_navbar_subtitle p{
@@ -52,7 +52,7 @@
 
 .buscados_modal_header {
     /* width: 320px; */
-    background-color: #112674;
+    background-color: #1b3653;
     color: #fff;
     display: flex;
     align-items: center;
@@ -106,7 +106,7 @@
     font-size: 16px;
     font-weight: bold;
     text-transform: uppercase;
-    color: #112674;
+    color: #1b3653;
 }
 
 .requisitos_navbar_tramite {

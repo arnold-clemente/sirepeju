@@ -22,7 +22,7 @@
 }
 .buscados_modal_header{
     /* width: 320px; */
-    background-color: #112674;
+    background-color: #1b3653;
     color: #fff;
     display: flex;
     align-items: center;
@@ -36,7 +36,7 @@
     font-size: 16px;
     text-transform: uppercase;
     font-weight: bold;
-    text-align: center;
+   
 }
 
 .buscados_modal_header_button{
@@ -80,5 +80,6 @@
       }
       .buscados_modal_body_image{
         display: none;
+        
       }
 }

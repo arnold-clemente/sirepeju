@@ -29,7 +29,7 @@
 .card_requisito_main{
     border-width: 0 0 0 15px;
     border-style: solid;
-    border-color: blue;
+    border-color: #1b3653;
 }
 
 .card_requisito {
@@ -58,7 +58,7 @@
     font-weight: bold;
     text-align: justify;
     padding: 0 5px;
-    color: rgb(68, 68, 214);
+    color: #1b3653;
     text-transform: uppercase;
 }
 
@@ -71,11 +71,11 @@
     font-size: 14px;
     padding: 3px 5px;
     border-radius: 5px;
-    background-color: #112674;
+    background-color: #1b3653;
     color: #fff;
 }
 
 .card_requisito_main:hover .card_requisito_button p{
     transition: all 0.3s ease-in-out;
-    background-color: #4F5AA2;
+    background-color: #1b3653;
 }

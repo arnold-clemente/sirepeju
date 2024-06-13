@@ -33,7 +33,7 @@ class NoticiaController extends Controller
             ),
             array(
                 'titulo' => 'required|string|max:250',
-                'imagen' => 'required|file|max:1000|mimes:jpeg,jpg,png',
+                'imagen' => 'required|file|max:5000|mimes:jpeg,jpg,png',
             )
         );
 
@@ -61,7 +61,7 @@ class NoticiaController extends Controller
         if ($request->hasFile('imagen')) {
             $rules = array(
                 'titulo' => 'required|string|max:250',
-                'imagen' => 'required|file|max:1000|mimes:jpeg,jpg,png',
+                'imagen' => 'required|file|max:5000|mimes:jpeg,jpg,png',
             );
         } else {
             $rules = array(
